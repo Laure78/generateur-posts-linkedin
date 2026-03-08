@@ -23,7 +23,8 @@ export default function CopilotePage() {
   const [objective, setObjective] = useState<'visibilité' | 'leads' | 'autorité' | 'storytelling'>('visibilité');
   const [pastPosts, setPastPosts] = useState('');
   const [provider, setProvider] = useState<'openrouter' | 'openai' | 'claude'>('openrouter');
-  const [openRouterModel, setOpenRouterModel] = useState<string>(OPENROUTER_MODELS[0].id);
+  const defaultModel: string = OPENROUTER_MODELS[0].id;
+  const [openRouterModel, setOpenRouterModel] = useState<string>(defaultModel);
   const [result, setResult] = useState<{
     profileSummary: string;
     recommendedTopic: string;
@@ -166,7 +167,7 @@ export default function CopilotePage() {
             {provider === 'openrouter' && (
               <select
                 value={openRouterModel}
-                onChange={(e) => setOpenRouterModel(e.target.value)}
+                onChange={(e) => setOpenRouterModel(String(e.target.value))}
                 className="w-full max-w-xs rounded-xl border border-neutral-200 px-3 py-2 text-sm text-neutral-800 focus:border-[#377CF3] focus:outline-none focus:ring-2 focus:ring-[#377CF3]/20"
               >
                 {OPENROUTER_MODELS.map((m) => (
