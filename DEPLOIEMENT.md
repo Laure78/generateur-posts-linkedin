@@ -144,6 +144,7 @@ Ajoute ces variables **une par une** :
 | Nom de la variable | Où trouver la valeur ? | Obligatoire ? |
 |--------------------|------------------------|---------------|
 | `OPENAI_API_KEY` | [platform.openai.com](https://platform.openai.com) → API keys → Create new secret key | Oui |
+| `OPENROUTER_API_KEY` | [openrouter.ai](https://openrouter.ai) → Keys → Create key (pour Copilote LinkedIn : DeepSeek, Claude Haiku, Mistral) | Recommandé |
 | `ADMIN_SECRET` | Mot de passe que tu choisis pour te connecter à `/admin/login` | Oui |
 | `NEXT_PUBLIC_SUPABASE_URL` | Supabase → Settings → API → Project URL | Recommandé |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase → Settings → API → anon public | Recommandé |

@@ -61,6 +61,7 @@ const nav = [
     title: 'CROISSANCE',
     items: [
       { href: '/outil/croissance', label: 'Growth Engine', Icon: Rocket },
+      { href: '/outil/copilote', label: 'Copilote LinkedIn', Icon: Sparkles },
     ],
   },
   {
