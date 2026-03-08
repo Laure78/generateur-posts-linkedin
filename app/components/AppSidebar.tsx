@@ -33,6 +33,12 @@ const nav = [
     ],
   },
   {
+    title: 'CROISSANCE',
+    items: [
+      { href: '/outil/croissance', label: 'Growth Engine', icon: '🚀' },
+    ],
+  },
+  {
     title: 'SUIVRE',
     items: [
       { href: '/outil/metriques', label: 'Métriques', icon: '📈' },

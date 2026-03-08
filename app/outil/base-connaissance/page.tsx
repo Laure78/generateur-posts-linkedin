@@ -57,6 +57,7 @@ export default function BaseConnaissancePage() {
   const [saved, setSaved] = useState(false);
 
   const [styleSummary, setStyleSummary] = useState('');
+  const [analyzing, setAnalyzing] = useState(false);
 
   useEffect(() => {
     const kb = loadKnowledge();
@@ -167,31 +168,13 @@ export default function BaseConnaissancePage() {
           </div>
         </section>
 
-        {/* Résumé du style (optionnel) */}
-        <section className="rounded-2xl border border-violet-200 bg-violet-50/30 p-6 shadow-sm">
-          <h2 className="mb-1 text-lg font-semibold text-neutral-800">
-            Résumé de ton style
-          </h2>
-          <p className="mb-4 text-sm text-neutral-500">
-            Utilise &quot;Analyser mon style&quot; dans le générateur pour extraire les caractéristiques de tes posts, puis sauvegarde ici. Ce résumé sera appliqué à toutes les générations.
-          </p>
-          <textarea
-            value={styleSummary}
-            onChange={(e) => setStyleSummary(e.target.value)}
-            placeholder="Ex : • Ton direct et concret • Phrases courtes • Utilise des questions en accroche • Vocabulaire terrain BTP..."
-            rows={5}
-            className="w-full rounded-xl border border-violet-200 bg-white px-4 py-3 text-neutral-800 placeholder:text-neutral-400 focus:border-violet-500 focus:outline-none focus:ring-2 focus:ring-violet-500/20"
-          />
-        </section>
-
-        {/* Anciens posts */}
+        {/* Mes posts — source pour Apprendre mon style */}
         <section className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm">
           <h2 className="mb-1 text-lg font-semibold text-neutral-800">
-            Anciens posts (exemples de ton style)
+            Mes posts LinkedIn (5 à 10 pour apprendre mon style)
           </h2>
           <p className="mb-4 text-sm text-neutral-500">
-            Colle ici des posts que tu as déjà publiés. L&apos;IA les utilisera
-            pour reproduire ton ton et tes structures.
+            Colle ici tes posts publiés. Clique sur &quot;Analyser et extraire mon style&quot; pour créer ton profil d&apos;écriture.
           </p>
           <textarea
             value={oldPosts}
@@ -199,6 +182,49 @@ export default function BaseConnaissancePage() {
             placeholder="Colle tes anciens posts LinkedIn ici, un par paragraphe ou séparés par ---..."
             rows={10}
             className="w-full rounded-xl border border-neutral-200 px-4 py-3 text-neutral-800 placeholder:text-neutral-400 focus:border-violet-500 focus:outline-none focus:ring-2 focus:ring-violet-500/20"
+          />
+        </section>
+
+        {/* APPRENDRE MON STYLE */}
+        <section className="rounded-2xl border-2 border-[#377CF3]/30 bg-[#377CF3]/5 p-6 shadow-sm">
+          <h2 className="mb-1 text-lg font-semibold text-[#377CF3]">
+            Apprendre mon style
+          </h2>
+          <p className="mb-4 text-sm text-neutral-600">
+            L&apos;IA analyse ton ton, la longueur des phrases, le vocabulaire et la structure, puis adapte toutes les prochaines générations.
+          </p>
+          <div className="mb-4 flex gap-3">
+            <button
+              type="button"
+              onClick={async () => {
+                const posts = oldPosts.trim();
+                if (!posts) return;
+                setAnalyzing(true);
+                try {
+                  const res = await fetch('/api/analyze-style', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ posts }),
+                  });
+                  const d = await res.json();
+                  if (res.ok && d.styleSummary) setStyleSummary(d.styleSummary);
+                } finally {
+                  setAnalyzing(false);
+                }
+              }}
+              disabled={!oldPosts.trim() || analyzing}
+              className="rounded-xl bg-[#377CF3] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#2d6ad4] disabled:opacity-50"
+            >
+              {analyzing ? 'Analyse…' : 'Analyser et extraire mon style'}
+            </button>
+          </div>
+          <p className="mb-2 text-xs font-medium text-neutral-600">Profil d&apos;écriture extrait :</p>
+          <textarea
+            value={styleSummary}
+            onChange={(e) => setStyleSummary(e.target.value)}
+            placeholder="• Ton direct et concret • Phrases courtes • Questions en accroche... (rempli après analyse)"
+            rows={5}
+            className="w-full rounded-xl border border-[#377CF3]/30 bg-white px-4 py-3 text-neutral-800 placeholder:text-neutral-400 focus:border-[#377CF3] focus:outline-none focus:ring-2 focus:ring-[#377CF3]/20"
           />
         </section>
 

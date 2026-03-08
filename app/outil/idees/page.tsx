@@ -31,6 +31,7 @@ export default function IdeesPage() {
   const [showNewTheme, setShowNewTheme] = useState(false);
   const [ideas, setIdeas] = useState<Idea[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingBtp30, setIsLoadingBtp30] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [favorites, setFavorites] = useState<Set<number>>(new Set());
   const [launchesUsed, setLaunchesUsed] = useState(0);
@@ -71,6 +72,34 @@ export default function IdeesPage() {
       setError(e instanceof Error ? e.message : 'Erreur réseau');
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleGenerate30Btp = async () => {
+    if (launchesUsed >= MAX_FREE_LAUNCHES) {
+      setError(`Limite de ${MAX_FREE_LAUNCHES} lancements gratuits atteinte.`);
+      return;
+    }
+    setError(null);
+    setIsLoadingBtp30(true);
+    setIdeas([]);
+    try {
+      const res = await fetch('/api/generate-ideas-btp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ theme: currentTheme.trim() || undefined }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setError(data.error || 'Erreur lors de la génération');
+        return;
+      }
+      setIdeas(data.ideas || []);
+      setLaunchesUsed((prev) => prev + 1);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Erreur réseau');
+    } finally {
+      setIsLoadingBtp30(false);
     }
   };
 
@@ -157,16 +186,27 @@ export default function IdeesPage() {
         </p>
       </div>
 
-      {/* Generate button */}
-      <div className="mb-8">
+      {/* Generate buttons */}
+      <div className="mb-8 flex flex-wrap gap-3">
         <button
           type="button"
           onClick={handleGenerate}
-          disabled={isLoading || !currentTheme.trim() || launchesUsed >= MAX_FREE_LAUNCHES}
+          disabled={isLoading || isLoadingBtp30 || !currentTheme.trim() || launchesUsed >= MAX_FREE_LAUNCHES}
           className="rounded-xl bg-gradient-to-r from-violet-600 to-violet-500 px-8 py-3.5 text-base font-semibold text-white shadow-sm hover:from-violet-700 hover:to-violet-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
         >
-          {isLoading ? 'Génération en cours…' : 'Générer les idées'}
+          {isLoading ? 'Génération…' : 'Générer 6 idées'}
         </button>
+        <button
+          type="button"
+          onClick={handleGenerate30Btp}
+          disabled={isLoading || isLoadingBtp30 || launchesUsed >= MAX_FREE_LAUNCHES}
+          className="rounded-xl border-2 border-[#377CF3] bg-white px-8 py-3.5 text-base font-semibold text-[#377CF3] hover:bg-[#377CF3]/10 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+        >
+          {isLoadingBtp30 ? 'Génération…' : 'Générer 30 idées BTP'}
+        </button>
+        <p className="self-center text-sm text-neutral-500">
+          {currentTheme.trim() ? 'Thème : ' + currentTheme : '30 idées BTP variées'}
+        </p>
       </div>
 
       {error && (
