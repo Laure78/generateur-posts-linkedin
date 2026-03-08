@@ -29,6 +29,23 @@ const STYLE_LABELS: Record<string, string> = {
   expert: 'ton d\'autorité, données chiffrées, cas concrets, démonstration d\'expertise',
 }
 
+const POST_STYLE_MODULE: Record<string, string> = {
+  storytelling: 'Structure narrative : récit, anecdote, mise en situation. Hook = accroche qui crée une histoire.',
+  'conseil-expert': 'Post de conseil expert : autorité, données, cas concrets. Structure : problème → solution → méthode.',
+  'post-viral': 'Post viral : phrases courtes, 1 idée par ligne, hook percutant, tension narrative, question finale pour les commentaires. Optimisé mobile.',
+  educatif: 'Post éducatif : explication claire, pédagogique. Structure : concept → exemples → application.',
+  'polemique-soft': 'Polémique soft : contredit une idée reçue avec bienveillance. Crée débat sans agressivité.',
+  'etude-de-cas': 'Étude de cas : situation réelle, problématique, solution appliquée, résultats.',
+  'post-btp': 'Post BTP spécialisé : vocabulaire métier (chantier, devis, appel d\'offres, planning, conduite de travaux, maître d\'œuvre, bureau d\'études). Exemples concrets du bâtiment.',
+}
+
+const SECTEUR_LABELS: Record<string, string> = {
+  general: 'public général, vocabulaire universel',
+  btp: 'BTP : artisans, chefs de chantier, maîtres d\'œuvre, conducteurs de travaux. Vocabulaire : chantier, devis, appel d\'offres, planning, métier.',
+  automobile: 'automobile : constructeurs, concessionnaires, ateliers. Vocabulaire du secteur auto.',
+  service: 'services : entreprises de services, consultants. Vocabulaire business général.',
+}
+
 const BTP_AUDIENCE_LABELS: Record<string, string> = {
   artisans: 'artisans et TPE du BTP (vocabulaire chantier, devis, clients, quotidien terrain)',
   chefs: 'chefs d\'entreprise et dirigeants TP (vision stratégique, rentabilité, équipes)',
@@ -50,6 +67,8 @@ export async function POST(req: Request) {
       postType = 'instructif',
       category = 'explication-analyse',
       style = 'neutre',
+      postStyleModule = 'post-viral',
+      secteur = 'btp',
       btpMode = false,
       btpAudience = 'artisans',
       length = 'moyen',
@@ -99,16 +118,27 @@ Les éléments suivants définissent le style d'écriture de l'auteure. Tu DOIS 
 
 ${customKnowledge.trim()}`
     }
+    const styleModuleDesc = POST_STYLE_MODULE[postStyleModule] || POST_STYLE_MODULE['post-viral']
+    const secteurDesc = SECTEUR_LABELS[secteur] || SECTEUR_LABELS.general
+
     systemPrompt += `
 
-Règles :
-- Style : ${styleDesc}
-- Ton professionnel mais accessible, sans jargon inutile.
-- Accroche forte dans la première ligne pour capter l'attention.
-- Paragraphes courts (2-4 lignes max), avec des sauts de ligne pour la lisibilité.
-- Pas de hashtags dans le corps du post (on peut en ajouter après).
-- Longueur cible : ${lengthSpec.chars}
-- Utilise des listes à puces ou une structure claire quand c'est pertinent.`
+Règles rédactionnelles LinkedIn viral :
+- Phrases courtes. 1 idée par ligne. Paragraphes courts. Rythme rapide.
+- Structure : Hook puissant → ligne vide → développement → ligne vide → insight → ligne vide → call to action
+- Hook : curiosité, problème révélé, idée reçue contredite, ou annonce de découverte
+- Finir par une question pour déclencher les commentaires
+- Optimiser pour la lecture mobile
+
+STYLE DE POST : ${styleModuleDesc}
+SECTEUR : ${secteurDesc}
+
+Règles complémentaires :
+- Style tonal : ${styleDesc}
+- Ton professionnel mais accessible.
+- Accroche forte dans la première ligne.
+- Pas de hashtags dans le corps du post.
+- Longueur cible : ${lengthSpec.chars}.`
 
 
     if (tonalite === 'emojis') systemPrompt += '\n- Utilise quelques emojis pertinents pour rendre le post plus vivant.'

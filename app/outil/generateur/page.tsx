@@ -9,6 +9,24 @@ import PostPreview from '../../components/PostPreview';
 import SnippetsManager from '../../components/SnippetsManager';
 import VoiceRecorder from '../../components/VoiceRecorder';
 import BestTimeDisplay from '../../components/BestTimeDisplay';
+import VisualsSection from '../../components/VisualsSection';
+
+const POST_STYLE_MODULES = [
+  { value: 'storytelling', label: 'Storytelling', desc: 'Récit, anecdote, mise en situation' },
+  { value: 'conseil-expert', label: 'Conseil expert', desc: 'Autorité, données, cas concrets' },
+  { value: 'post-viral', label: 'Post viral', desc: 'Phrases courtes, hook percutant, optimisé engagement' },
+  { value: 'educatif', label: 'Éducatif', desc: 'Explication claire, pédagogique' },
+  { value: 'polemique-soft', label: 'Polémique soft', desc: 'Contredit une idée reçue avec bienveillance' },
+  { value: 'etude-de-cas', label: 'Étude de cas', desc: 'Situation réelle, problématique, solution, résultats' },
+  { value: 'post-btp', label: 'Post BTP', desc: 'Spécialisé métier (chantier, devis, appel d\'offres...)' },
+];
+
+const SECTEURS = [
+  { value: 'general', label: 'Général' },
+  { value: 'btp', label: 'BTP' },
+  { value: 'automobile', label: 'Automobile' },
+  { value: 'service', label: 'Service' },
+];
 
 const POST_STYLES = [
   { value: 'neutre', label: 'Neutre', desc: 'Ton professionnel équilibré' },
@@ -81,6 +99,8 @@ function GenerateurPage() {
   const [postType, setPostType] = useState('instructif');
   const [category, setCategory] = useState('explication-analyse');
   const [style, setStyle] = useState('neutre');
+  const [postStyleModule, setPostStyleModule] = useState('post-viral');
+  const [secteur, setSecteur] = useState('btp');
   const [btpMode, setBtpMode] = useState(true);
   const [btpAudience, setBtpAudience] = useState('artisans');
   const [length, setLength] = useState<'court' | 'moyen' | 'long'>('moyen');
@@ -129,7 +149,11 @@ function GenerateurPage() {
   const [error, setError] = useState<string | null>(null);
   const [savedToPostsMsg, setSavedToPostsMsg] = useState<string | null>(null);
   const [copiedMsg, setCopiedMsg] = useState(false);
-  const [carouselLoading, setCarouselLoading] = useState(false);
+  const [viralityScore, setViralityScore] = useState<{ score: number; suggestions: string[] } | null>(null);
+  const [boostLoading, setBoostLoading] = useState(false);
+  const [scoreLoading, setScoreLoading] = useState(false);
+  const [fullContentLoading, setFullContentLoading] = useState(false);
+  const [fullGenTrigger, setFullGenTrigger] = useState<number>(0);
   const errorRef = useRef<HTMLDivElement>(null);
 
   // Remplir le sujet depuis l'URL (?subject=...) quand on vient d'Idées ou Inspirations
@@ -266,6 +290,7 @@ function GenerateurPage() {
     setGeneratedPost(null);
     setVariants([]);
     setSelectedVariant(0);
+    setViralityScore(null);
 
     const template = TEMPLATES.find((t) => t.id === selectedTemplate);
     const templatePrompt = template?.prompt || '';
@@ -279,6 +304,8 @@ function GenerateurPage() {
           postType,
           category,
           style,
+          postStyleModule,
+          secteur,
           btpMode,
           btpAudience,
           length,
@@ -620,6 +647,47 @@ function GenerateurPage() {
           </div>
         </div>
 
+        {/* Style de post */}
+        <div className="mb-6">
+          <label className="mb-1.5 block text-sm font-medium text-neutral-600">
+            Style de post
+          </label>
+          <select
+            value={postStyleModule}
+            onChange={(e) => setPostStyleModule(e.target.value)}
+            className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-2.5 text-neutral-800 focus:border-violet-500 focus:outline-none focus:ring-2 focus:ring-violet-500/20"
+          >
+            {POST_STYLE_MODULES.map((s) => (
+              <option key={s.value} value={s.value}>
+                {s.label} — {s.desc}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {/* Secteur */}
+        <div className="mb-6">
+          <label className="mb-1.5 block text-sm font-medium text-neutral-600">
+            Secteur
+          </label>
+          <div className="flex flex-wrap gap-2">
+            {SECTEURS.map((s) => (
+              <button
+                key={s.value}
+                type="button"
+                onClick={() => setSecteur(s.value)}
+                className={`rounded-xl px-4 py-2.5 text-sm font-medium transition-colors ${
+                  secteur === s.value
+                    ? 'bg-violet-600 text-white'
+                    : 'border border-neutral-200 bg-white text-neutral-700 hover:bg-neutral-50'
+                }`}
+              >
+                {s.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
         {/* Tabs */}
         <div className="mb-4 flex gap-1 rounded-xl bg-neutral-100 p-1">
           {tabs.map((tab) => (
@@ -725,7 +793,8 @@ function GenerateurPage() {
           )}
         </div>
 
-        {/* Contexte BTP */}
+        {/* Contexte BTP (affiché quand secteur = BTP) */}
+        {secteur === 'btp' && (
         <div className="mb-6 rounded-xl border border-amber-200 bg-amber-50/50 p-4">
           <label className="flex cursor-pointer items-center gap-3">
             <input
@@ -734,10 +803,10 @@ function GenerateurPage() {
               onChange={(e) => setBtpMode(e.target.checked)}
               className="h-4 w-4 rounded border-neutral-300 text-violet-600 focus:ring-violet-500"
             />
-            <span className="font-medium text-neutral-800">Contexte BTP</span>
+            <span className="font-medium text-neutral-800">Public BTP détaillé</span>
           </label>
           <p className="mt-1 text-xs text-neutral-600">
-            Adapte le vocabulaire et les exemples au secteur du bâtiment et des travaux publics.
+            Cible plus précise : artisans, chefs d&apos;entreprise ou équipes chantier/admin.
           </p>
           {btpMode && (
             <div className="mt-3">
@@ -756,6 +825,7 @@ function GenerateurPage() {
             </div>
           )}
         </div>
+        )}
 
         {/* Collapsible: Paramètres */}
         <button
@@ -1072,15 +1142,86 @@ function GenerateurPage() {
           </div>
         )}
 
-        {/* Generate button */}
-        <button
-          type="button"
-          onClick={handleGenerate}
-          disabled={isLoading}
-          className="w-full rounded-xl bg-violet-600 py-4 text-base font-semibold text-white hover:bg-violet-700 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
-        >
-          {isLoading ? 'Génération en cours…' : 'Générer un post'}
-        </button>
+        {/* Generate buttons */}
+        <div className="flex gap-3">
+          <button
+            type="button"
+            onClick={handleGenerate}
+            disabled={isLoading || fullContentLoading}
+            className="flex-1 rounded-xl bg-violet-600 py-4 text-base font-semibold text-white hover:bg-violet-700 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+          >
+            {isLoading ? 'Génération…' : 'Générer un post'}
+          </button>
+          <button
+            type="button"
+            onClick={async () => {
+              const input =
+                activeTab === 'sujet' || activeTab === 'voix'
+                  ? subject.trim()
+                  : activeTab === 'url'
+                    ? urlInput.trim()
+                    : activeTab === 'fichier'
+                      ? fileContent.trim()
+                      : '';
+              if (!input) {
+                setError('Saisis un sujet d\'abord.');
+                return;
+              }
+              setError(null);
+              setFullContentLoading(true);
+              setGeneratedPost(null);
+              setVariants([]);
+              setViralityScore(null);
+              try {
+                const res = await fetch('/api/generate-post', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({
+                    subject: input,
+                    postType,
+                    category,
+                    style,
+                    postStyleModule,
+                    secteur,
+                    btpMode,
+                    btpAudience,
+                    length,
+                    tonalite,
+                    registre,
+                    genre,
+                    signatureEnabled,
+                    signature,
+                    accrocheEnabled,
+                    accroche,
+                    instructionsEnabled,
+                    instructions,
+                    provider,
+                    customKnowledge: getCustomKnowledge(),
+                    multiAngle,
+                    templatePrompt: TEMPLATES.find((t) => t.id === selectedTemplate)?.prompt || '',
+                  }),
+                });
+                const data = await res.json();
+                if (!res.ok) {
+                  setError(data.error || 'Erreur');
+                  return;
+                }
+                const content = data.content || '';
+                setGeneratedPost(content);
+                saveToHistory(content);
+                setFullGenTrigger(Date.now());
+              } catch (e) {
+                setError(e instanceof Error ? e.message : 'Erreur réseau');
+              } finally {
+                setFullContentLoading(false);
+              }
+            }}
+            disabled={isLoading || fullContentLoading}
+            className="rounded-xl border-2 border-[#377CF3] bg-white py-4 px-6 text-base font-semibold text-[#377CF3] hover:bg-[#377CF3]/10 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+          >
+            {fullContentLoading ? '…' : 'Générer contenu complet'}
+          </button>
+        </div>
       </div>
 
       {/* Generated result */}
@@ -1093,6 +1234,57 @@ function GenerateurPage() {
             </div>
             <div className="flex flex-wrap gap-2">
               <button type="button" onClick={() => setShowStyleModal(true)} className="rounded-lg px-3 py-1.5 text-sm text-neutral-600 hover:bg-neutral-100">Analyser mon style</button>
+              <button
+                type="button"
+                disabled={boostLoading}
+                onClick={async () => {
+                  const text = displayedPost || '';
+                  if (!text) return;
+                  setBoostLoading(true);
+                  try {
+                    const res = await fetch('/api/boost-virality', {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify({ post: text }),
+                    });
+                    const d = await res.json();
+                    if (res.ok && d.content) {
+                      setGeneratedPost(d.content);
+                      setVariants([]);
+                      setViralityScore(null);
+                    }
+                  } finally {
+                    setBoostLoading(false);
+                  }
+                }}
+                className="rounded-lg px-3 py-1.5 text-sm font-medium text-[#377CF3] hover:bg-blue-50 border border-[#377CF3]/30"
+              >
+                {boostLoading ? '…' : 'Booster viralité'}
+              </button>
+              <button
+                type="button"
+                disabled={scoreLoading}
+                onClick={async () => {
+                  const text = displayedPost || '';
+                  if (!text) return;
+                  setScoreLoading(true);
+                  setViralityScore(null);
+                  try {
+                    const res = await fetch('/api/virality-score', {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify({ post: text }),
+                    });
+                    const d = await res.json();
+                    if (res.ok) setViralityScore({ score: d.score, suggestions: d.suggestions || [] });
+                  } finally {
+                    setScoreLoading(false);
+                  }
+                }}
+                className="rounded-lg px-3 py-1.5 text-sm text-neutral-600 hover:bg-neutral-100"
+              >
+                {scoreLoading ? '…' : 'Score viralité'}
+              </button>
               <button
                 type="button"
                 onClick={async () => {
@@ -1156,35 +1348,6 @@ function GenerateurPage() {
               >
                 + À mes exemples
               </button>
-              <button
-                type="button"
-                onClick={async () => {
-                  const text = displayedPost || '';
-                  if (!text.trim()) return;
-                  setCarouselLoading(true);
-                  try {
-                    const res = await fetch('/api/generate-carousel', {
-                      method: 'POST',
-                      headers: { 'Content-Type': 'application/json' },
-                      body: JSON.stringify({ content: text, maxSlides: 10 }),
-                    });
-                    if (!res.ok) throw new Error('Erreur');
-                    const blob = await res.blob();
-                    const url = URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.href = url;
-                    a.download = 'carrousel-linkedin.pdf';
-                    a.click();
-                    URL.revokeObjectURL(url);
-                  } catch {}
-                  setCarouselLoading(false);
-                }}
-                disabled={carouselLoading}
-                className="rounded-lg px-3 py-1.5 text-sm text-neutral-600 hover:bg-neutral-100 disabled:opacity-50"
-                title="Télécharger un PDF carrousel pour LinkedIn"
-              >
-                {carouselLoading ? '…' : '📑 Carrousel'}
-              </button>
               <button type="button" onClick={() => setShowPublishLinkedIn(true)} className="rounded-lg px-3 py-1.5 text-sm text-neutral-600 hover:bg-neutral-100">Publier</button>
               <button type="button" onClick={() => copyToClipboard()} className="rounded-lg px-3 py-1.5 text-sm text-violet-600 hover:bg-violet-50">
                 {copiedMsg ? '✓ Copié !' : 'Copier'}
@@ -1209,6 +1372,27 @@ function GenerateurPage() {
             </div>
           )}
 
+          {viralityScore && (
+            <div className="mb-4 rounded-xl border border-[#377CF3]/30 bg-blue-50/30 p-4">
+              <h4 className="mb-2 text-sm font-semibold text-[#377CF3]">Score de viralité</h4>
+              <div className="flex items-center gap-3">
+                <span className="text-2xl font-bold text-[#377CF3]">{viralityScore.score}/100</span>
+                <div className="flex-1">
+                  {viralityScore.suggestions.length > 0 && (
+                    <div className="mt-2">
+                      <p className="text-xs font-medium text-neutral-600 mb-1">Suggestions d&apos;amélioration :</p>
+                      <ul className="text-xs text-neutral-600 space-y-1">
+                        {viralityScore.suggestions.map((s, i) => (
+                          <li key={i}>• {s}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+
           <div className="grid gap-6 md:grid-cols-2">
             <pre className="whitespace-pre-wrap rounded-xl bg-neutral-50 p-4 text-sm text-neutral-700 font-sans">
               {displayedPost}
@@ -1219,21 +1403,25 @@ function GenerateurPage() {
             </div>
           </div>
 
+          <div className="mt-6">
+            <VisualsSection postContent={displayedPost || ''} triggerFullGeneration={fullGenTrigger || undefined} />
+          </div>
+
           <div className="mt-6 grid gap-4 sm:grid-cols-2">
             <div className="rounded-xl border border-neutral-200 bg-neutral-50 p-4">
               <div className="flex justify-between items-center mb-2">
                 <p className="text-xs font-medium text-neutral-500">Hashtags suggérés</p>
-                <button type="button" onClick={() => copyToClipboard((displayedPost || '') + '\n\n' + getHashtagsForSector(btpMode ? 'btp' : 'business').join(' '))} className="text-xs text-violet-600 hover:underline">Copier avec hashtags</button>
+                <button type="button" onClick={() => copyToClipboard((displayedPost || '') + '\n\n' + getHashtagsForSector(secteur === 'btp' ? 'btp' : 'business').join(' '))} className="text-xs text-violet-600 hover:underline">Copier avec hashtags</button>
               </div>
               <div className="flex flex-wrap gap-1.5">
-                {getHashtagsForSector(btpMode ? 'btp' : 'business').map((tag) => (
+                {getHashtagsForSector(secteur === 'btp' ? 'btp' : 'business').map((tag) => (
                   <span key={tag} className="rounded-full bg-white px-2.5 py-1 text-xs text-neutral-600 border border-neutral-200">{tag}</span>
                 ))}
               </div>
             </div>
             <div className="rounded-xl border border-neutral-200 bg-neutral-50 p-4">
               <p className="text-xs font-medium text-neutral-500 mb-2">Meilleurs moments pour poster</p>
-              <BestTimeDisplay sector={btpMode ? 'btp' : 'default'} />
+              <BestTimeDisplay sector={secteur === 'btp' ? 'btp' : 'default'} />
             </div>
           </div>
         </div>

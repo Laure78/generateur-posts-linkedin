@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { PDFDocument, StandardFonts, rgb } from 'pdf-lib';
+import { generateWithAI } from '@/lib/aiProvider';
 
 const W = 1080;
 const H = 1350;
@@ -12,6 +13,37 @@ const MAX_LINES = 12;
 const BG_RGB = rgb(0.486, 0.227, 0.929); // #7c3aed
 const TEXT_RGB = rgb(1, 1, 1);
 const ACCENT_RGB = rgb(0.914, 0.835, 1); // #e9d5ff
+
+async function viralSlides(content: string): Promise<string[]> {
+  const prompt = `Transform this LinkedIn post into a viral carousel.
+7 slides maximum.
+Short sentences. Powerful hooks. Mobile friendly.
+Structure: Hook, Problem, Insight, Solution, Method, Conclusion, CTA.
+Output format: one slide per line, prefix each with "SLIDE: "
+Example:
+SLIDE: L'IA n'est pas que pour les informaticiens.
+SLIDE: 3 artisans sur 4 perdent 2h/jour sur les devis.
+...
+
+Post:
+---
+${content}
+---`;
+
+  const raw = await generateWithAI({
+    systemPrompt: 'Tu transformes des posts en structure de carrousel viral. Réponds UNIQUEMENT avec les lignes SLIDE:',
+    userPrompt: prompt,
+    maxTokens: 400,
+    temperature: 0.5,
+  });
+
+  const slides = raw
+    .split(/\n+/)
+    .map((s) => s.replace(/^SLIDE:\s*/i, '').trim())
+    .filter((s) => s.length > 2)
+    .slice(0, 7);
+  return slides.length ? slides : [content.trim().slice(0, 200)];
+}
 
 function splitIntoSlides(content: string, maxSlides = 12): string[] {
   const trimmed = content.trim();
@@ -46,12 +78,13 @@ export async function POST(req: Request) {
     const body = await req.json().catch(() => ({}));
     const content = typeof body.content === 'string' ? body.content.trim() : '';
     const maxSlides = typeof body.maxSlides === 'number' ? Math.min(20, Math.max(1, body.maxSlides)) : 10;
+    const viral = !!body.viral;
 
     if (!content) {
       return NextResponse.json({ error: 'Contenu requis' }, { status: 400 });
     }
 
-    const slides = splitIntoSlides(content, maxSlides);
+    const slides = viral ? await viralSlides(content) : splitIntoSlides(content, maxSlides);
     const doc = await PDFDocument.create();
     const font = await doc.embedFont(StandardFonts.Helvetica);
     const fontBold = await doc.embedFont(StandardFonts.HelveticaBold);
