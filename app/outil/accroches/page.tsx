@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 
 export default function AccrochesPage() {
   const [subject, setSubject] = useState('');
@@ -96,6 +97,17 @@ export default function AccrochesPage() {
           </ul>
         </div>
       )}
+
+      <div className="mt-12">
+        <Image
+          src="/banner-ia-btp.png"
+          alt="IA générative pour le BTP — Laure Olivié"
+          width={1200}
+          height={400}
+          className="w-full rounded-2xl object-cover"
+          priority={false}
+        />
+      </div>
     </div>
   );
 }
