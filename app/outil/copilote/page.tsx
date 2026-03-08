@@ -23,7 +23,7 @@ export default function CopilotePage() {
   const [objective, setObjective] = useState<'visibilité' | 'leads' | 'autorité' | 'storytelling'>('visibilité');
   const [pastPosts, setPastPosts] = useState('');
   const [provider, setProvider] = useState<'openrouter' | 'openai' | 'claude'>('openrouter');
-  const [openRouterModel, setOpenRouterModel] = useState(OPENROUTER_MODELS[0].id);
+  const [openRouterModel, setOpenRouterModel] = useState<string>(OPENROUTER_MODELS[0].id);
   const [result, setResult] = useState<{
     profileSummary: string;
     recommendedTopic: string;
