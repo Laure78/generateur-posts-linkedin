@@ -8,7 +8,7 @@ export async function POST(req: Request) {
 
     if (!post || typeof post !== 'string' || !post.trim()) {
       return NextResponse.json(
-        { error: 'Colle le post viral à analyser' },
+        { error: 'Colle le post LinkedIn à analyser' },
         { status: 400 }
       )
     }
@@ -16,35 +16,39 @@ export async function POST(req: Request) {
     const subjectInput = subject && typeof subject === 'string' ? subject.trim() : 'Sujet à définir'
     const audienceInput = audience && typeof audience === 'string' ? audience.trim() : 'Professionnels LinkedIn'
 
-    const systemPrompt = `Tu es un expert en copywriting LinkedIn, analyse de contenu viral et growth marketing.
+    const systemPrompt = `Tu es un expert en copywriting LinkedIn et analyse de contenu viral. Ta mission : reprendre la structure d'un post LinkedIn rédigé par un créateur de contenu pour générer un nouveau post optimisé.
 
-RÈGLE ABSOLUE : Ne jamais copier le contenu original. Tu reproduis UNIQUEMENT la structure et les techniques d'engagement.
+RÈGLE ABSOLUE : Ne jamais copier le contenu original. Tu reproduis UNIQUEMENT la structure narrative et les techniques d'engagement.
+
+Le post analysé peut être : storytelling, insight, marketing, business, etc.
 
 ---
 
-## Étape 1 — ANALYSE DU POST VIRAL
+## Étape 1 — ANALYSE DU POST
 
 Analyse le post et identifie :
-- Type de hook (polémique, curiosité, promesse, question, storytelling, statistique...)
+- Type de hook
 - Structure narrative
-- Techniques de persuasion utilisées
-- Type de CTA
+- Techniques d'engagement
+- Type de call to action
 
 Éléments à repérer :
 • Curiosité
-• Tension narrative
 • Storytelling
+• Tension narrative
 • Preuve (chiffres, témoignages)
 • Contraste (avant/après, eux/nous)
 • Insight inattendu
-• Promesse implicite
+• Liste d'arguments
 
 ---
 
 ## Étape 2 — EXTRACTION DE LA STRUCTURE
 
 Extraire la structure logique du post sous forme de blocs.
-Exemples de structures virales :
+Exemple type : Hook → Observation → Insight → Liste d'arguments → Résultat → CTA → Signature
+
+Autres structures possibles :
 
 STRUCTURE 1 — Hook polémique : Hook → Insight → Arguments → Conclusion → CTA
 STRUCTURE 2 — Story personnelle : Hook → Situation → Problème → Découverte → Leçon → CTA
@@ -67,7 +71,7 @@ Règles de rédaction :
 - 8 à 18 lignes
 
 CTA engageant (exemples) :
-"Qu'en pensez-vous ?" | "Curieux d'avoir votre avis." | "Vous avez déjà testé ?" | "Commentez si vous voulez le guide."
+"Qu'en pensez-vous ?" | "Vous avez déjà testé ?" | "Curieux d'avoir votre avis." | "Commentez si vous voulez le guide."
 
 ---
 
@@ -78,7 +82,7 @@ Réponds UNIQUEMENT avec un JSON valide :
   "newPost": "Le nouveau post optimisé prêt à publier, avec \\n\\n entre blocs"
 }`
 
-    const userPrompt = `Post viral à analyser :
+    const userPrompt = `Post LinkedIn d'un créateur de contenu à analyser :
 
 ---
 ${post.trim()}

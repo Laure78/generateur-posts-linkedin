@@ -388,12 +388,12 @@ function AnalyserPostViralTab() {
       <div className="mb-4 space-y-4">
         <div>
           <label className="mb-1 block text-sm font-medium text-neutral-700">
-            Post viral à analyser
+            Post LinkedIn d&apos;un créateur à analyser
           </label>
           <textarea
             value={post}
             onChange={(e) => setPost(e.target.value)}
-            placeholder="Colle ici le post LinkedIn performant..."
+            placeholder="Colle ici le post (storytelling, insight, marketing, business...)"
             rows={6}
             className="w-full rounded-xl border border-neutral-200 px-4 py-3 text-neutral-800 placeholder:text-neutral-400 focus:border-[#377CF3] focus:outline-none focus:ring-2 focus:ring-[#377CF3]/20"
           />
