@@ -161,7 +161,7 @@ export default function BaseConnaissancePage() {
             <button
               type="button"
               onClick={addReference}
-              className="flex w-full items-center justify-center gap-2 rounded-xl border-2 border-dashed border-neutral-300 py-4 text-sm font-medium text-neutral-600 hover:border-violet-400 hover:bg-violet-50 hover:text-violet-700"
+              className="flex w-full items-center justify-center gap-2 rounded-xl border-2 border-dashed border-neutral-300 py-4 text-sm font-medium text-neutral-600 hover:border-[#377CF3] hover:bg-[#377CF3]/5 hover:text-[#377CF3]"
             >
               + Ajouter une référence
             </button>
@@ -181,7 +181,7 @@ export default function BaseConnaissancePage() {
             onChange={(e) => setOldPosts(e.target.value)}
             placeholder="Colle tes anciens posts LinkedIn ici, un par paragraphe ou séparés par ---..."
             rows={10}
-            className="w-full rounded-xl border border-neutral-200 px-4 py-3 text-neutral-800 placeholder:text-neutral-400 focus:border-violet-500 focus:outline-none focus:ring-2 focus:ring-violet-500/20"
+            className="w-full rounded-xl border border-neutral-200 px-4 py-3 text-neutral-800 placeholder:text-neutral-400 focus:border-[#377CF3] focus:outline-none focus:ring-2 focus:ring-[#377CF3]/20"
           />
         </section>
 
@@ -232,14 +232,14 @@ export default function BaseConnaissancePage() {
         <div className="flex items-center justify-between">
           <Link
             href="/outil/generateur"
-            className="text-sm text-violet-600 hover:underline"
+            className="text-sm text-[#377CF3] hover:underline"
           >
             ← Retour au Générateur
           </Link>
           <button
             type="button"
             onClick={handleSave}
-            className="rounded-xl bg-violet-600 px-6 py-2.5 text-sm font-semibold text-white hover:bg-violet-700"
+            className="rounded-xl bg-[#377CF3] px-6 py-2.5 text-sm font-semibold text-white hover:bg-[#2d6ad4]"
           >
             {saved ? '✓ Enregistré' : 'Enregistrer'}
           </button>

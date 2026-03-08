@@ -174,7 +174,7 @@ const CATEGORY_LABELS: Record<PostCategory, string> = {
 const CARD_COLORS = [
   'bg-amber-50 border-amber-200',
   'bg-emerald-50 border-emerald-200',
-  'bg-violet-50 border-violet-200',
+  'bg-[#377CF3]/5 border-[#377CF3]/20',
   'bg-sky-50 border-sky-200',
   'bg-rose-50 border-rose-200',
   'bg-slate-100 border-slate-200',
@@ -208,7 +208,7 @@ export default function InspirationsPage() {
             onClick={() => setFilter(cat)}
             className={`rounded-xl px-4 py-2 text-sm font-medium transition-colors ${
               filter === cat
-                ? 'bg-violet-600 text-white'
+                ? 'bg-[#377CF3] text-white'
                 : 'border border-neutral-200 bg-white text-neutral-600 hover:bg-neutral-50'
             }`}
           >
@@ -267,7 +267,7 @@ export default function InspirationsPage() {
               </button>
               <Link
                 href={`/outil/generateur?subject=${encodeURIComponent(post.fullText.split('\n')[0])}`}
-                className="inline-flex items-center gap-1 rounded-lg bg-violet-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-violet-700"
+                className="inline-flex items-center gap-1 rounded-lg bg-[#377CF3] px-3 py-1.5 text-sm font-medium text-white hover:bg-[#2d6ad4]"
               >
                 Utiliser
                 <span className="text-xs">↗</span>

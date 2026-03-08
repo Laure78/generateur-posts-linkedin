@@ -404,7 +404,7 @@ function GenerateurPage() {
           <div className="flex items-center gap-2">
             <button
               type="button"
-              className="flex h-10 w-10 items-center justify-center rounded-xl bg-violet-100 text-violet-600 hover:bg-violet-200"
+              className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#377CF3]/10 text-[#377CF3] hover:bg-[#377CF3]/20"
               title="Mode rapide"
             >
               <span className="text-lg">⚡</span>
@@ -427,14 +427,14 @@ function GenerateurPage() {
               }}
               className={`flex items-center gap-2 rounded-xl border px-4 py-2.5 text-sm font-medium transition-colors ${
                 style !== 'neutre'
-                  ? 'border-violet-300 bg-violet-50 text-violet-700'
+                  ? 'border-[#377CF3]/30 bg-[#377CF3]/5 text-[#377CF3]'
                   : 'border-neutral-200 text-neutral-700 hover:bg-neutral-50'
               }`}
             >
               <span>⬇</span>
               Ajoute un style
               {style !== 'neutre' && (
-                <span className="rounded-full bg-violet-200 px-2 py-0.5 text-xs">
+                <span className="rounded-full bg-[#377CF3]/20 px-2 py-0.5 text-xs">
                   {POST_STYLES.find((s) => s.value === style)?.label}
                 </span>
               )}
@@ -464,7 +464,7 @@ function GenerateurPage() {
                     value={linkedInSearch}
                     onChange={(e) => setLinkedInSearch(e.target.value)}
                     placeholder="Rechercher un profil par nom"
-                    className="w-full rounded-xl border border-neutral-200 py-2.5 pl-10 pr-4 text-neutral-800 placeholder:text-neutral-400 focus:border-violet-500 focus:outline-none focus:ring-2 focus:ring-violet-500/20"
+                    className="w-full rounded-xl border border-neutral-200 py-2.5 pl-10 pr-4 text-neutral-800 placeholder:text-neutral-400 focus:border-[#377CF3] focus:outline-none focus:ring-2 focus:ring-[#377CF3]/20"
                   />
                 </div>
                 <p className="mt-2 text-xs text-neutral-500">
@@ -475,7 +475,7 @@ function GenerateurPage() {
                 Ou enrichis ta{' '}
                 <Link
                   href="/outil/base-connaissance"
-                  className="text-violet-600 hover:underline"
+                  className="text-[#377CF3] hover:underline"
                   onClick={() => setShowPersonnaliseModal(false)}
                 >
                   base de connaissance
@@ -494,7 +494,7 @@ function GenerateurPage() {
                     }}
                     className={`rounded-lg px-3 py-2 text-left text-sm transition-colors ${
                       style === s.value
-                        ? 'bg-violet-100 font-medium text-violet-800'
+                        ? 'bg-[#377CF3]/10 font-medium text-[#377CF3]'
                         : 'hover:bg-neutral-50 text-neutral-700'
                     }`}
                   >
@@ -532,7 +532,7 @@ function GenerateurPage() {
                       <button
                         type="button"
                         onClick={() => { setSubject(h.content.slice(0, 200)); setShowHistory(false); }}
-                        className="mt-2 text-xs text-violet-600 hover:underline"
+                        className="mt-2 text-xs text-[#377CF3] hover:underline"
                       >
                         Reprendre
                       </button>
@@ -565,7 +565,7 @@ function GenerateurPage() {
                   const d = await res.json();
                   if (res.ok) setStyleAnalysis(d.styleSummary);
                 }}
-                className="mt-3 rounded-lg bg-violet-600 px-4 py-2 text-sm text-white"
+                className="mt-3 rounded-lg bg-[#377CF3] px-4 py-2 text-sm text-white"
               >
                 Analyser
               </button>
@@ -585,7 +585,7 @@ function GenerateurPage() {
                         localStorage.setItem('createur_knowledge_base', JSON.stringify(kb));
                       } catch {}
                     }}
-                    className="mt-3 rounded-lg bg-violet-600 px-4 py-2 text-sm text-white"
+                    className="mt-3 rounded-lg bg-[#377CF3] px-4 py-2 text-sm text-white"
                   >
                     Sauvegarder dans ma base (utilisé pour tous les posts)
                   </button>
@@ -617,7 +617,7 @@ function GenerateurPage() {
             <select
               value={postType}
               onChange={(e) => setPostType(e.target.value)}
-              className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-2.5 text-neutral-800 focus:border-violet-500 focus:outline-none focus:ring-2 focus:ring-violet-500/20"
+              className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-2.5 text-neutral-800 focus:border-[#377CF3] focus:outline-none focus:ring-2 focus:ring-[#377CF3]/20"
             >
               {POST_TYPES.map((t) => (
                 <option key={t.value} value={t.value}>
@@ -633,7 +633,7 @@ function GenerateurPage() {
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-2.5 text-neutral-800 focus:border-violet-500 focus:outline-none focus:ring-2 focus:ring-violet-500/20"
+              className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-2.5 text-neutral-800 focus:border-[#377CF3] focus:outline-none focus:ring-2 focus:ring-[#377CF3]/20"
             >
               {POST_CATEGORIES.map((c) => (
                 <option key={c.value} value={c.value}>
@@ -655,7 +655,7 @@ function GenerateurPage() {
           <select
             value={postStyleModule}
             onChange={(e) => setPostStyleModule(e.target.value)}
-            className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-2.5 text-neutral-800 focus:border-violet-500 focus:outline-none focus:ring-2 focus:ring-violet-500/20"
+            className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-2.5 text-neutral-800 focus:border-[#377CF3] focus:outline-none focus:ring-2 focus:ring-[#377CF3]/20"
           >
             {POST_STYLE_MODULES.map((s) => (
               <option key={s.value} value={s.value}>
@@ -678,7 +678,7 @@ function GenerateurPage() {
                 onClick={() => setSecteur(s.value)}
                 className={`rounded-xl px-4 py-2.5 text-sm font-medium transition-colors ${
                   secteur === s.value
-                    ? 'bg-violet-600 text-white'
+                    ? 'bg-[#377CF3] text-white'
                     : 'border border-neutral-200 bg-white text-neutral-700 hover:bg-neutral-50'
                 }`}
               >
@@ -714,7 +714,7 @@ function GenerateurPage() {
               onChange={(e) => setSubject(e.target.value)}
               rows={5}
               placeholder="Décris ton sujet ou colle ton idée ici..."
-              className="w-full resize-none rounded-xl border border-neutral-200 px-4 py-3 pr-10 text-neutral-800 placeholder:text-neutral-400 focus:border-violet-500 focus:outline-none focus:ring-2 focus:ring-violet-500/20"
+              className="w-full resize-none rounded-xl border border-neutral-200 px-4 py-3 pr-10 text-neutral-800 placeholder:text-neutral-400 focus:border-[#377CF3] focus:outline-none focus:ring-2 focus:ring-[#377CF3]/20"
             />
           )}
           {activeTab === 'url' && (
@@ -723,11 +723,11 @@ function GenerateurPage() {
               value={urlInput}
               onChange={(e) => setUrlInput(e.target.value)}
               placeholder="Colle l'URL d'un article ou d'une page..."
-              className="w-full rounded-xl border border-neutral-200 px-4 py-3 text-neutral-800 placeholder:text-neutral-400 focus:border-violet-500 focus:outline-none focus:ring-2 focus:ring-violet-500/20"
+              className="w-full rounded-xl border border-neutral-200 px-4 py-3 text-neutral-800 placeholder:text-neutral-400 focus:border-[#377CF3] focus:outline-none focus:ring-2 focus:ring-[#377CF3]/20"
             />
           )}
           {activeTab === 'voix' && (
-            <div className="space-y-4 rounded-xl border-2 border-dashed border-violet-200 bg-violet-50/30 p-6">
+            <div className="space-y-4 rounded-xl border-2 border-dashed border-[#377CF3]/20 bg-[#377CF3]/5 p-6">
               <p className="text-sm text-neutral-600">
                 Dicte ton idée ou ta transcription. Au clic sur Arrêter, le texte sera copié dans le champ Sujet.
               </p>
@@ -762,14 +762,14 @@ function GenerateurPage() {
                   handleFileSelect(e.dataTransfer.files?.[0] || null);
                 }}
                 onDragOver={(e) => e.preventDefault()}
-                className="flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-neutral-200 bg-neutral-50 py-12 text-neutral-500 transition-colors hover:border-violet-300 hover:bg-violet-50/30 hover:text-violet-600"
+                className="flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-neutral-200 bg-neutral-50 py-12 text-neutral-500 transition-colors hover:border-[#377CF3]/30 hover:bg-[#377CF3]/5 hover:text-[#377CF3]"
               >
                 <span className="mb-2 text-3xl">📎</span>
                 {isExtracting ? (
                   <p className="text-sm font-medium">Extraction du texte en cours…</p>
                 ) : fileName ? (
                   <>
-                    <p className="text-sm font-medium text-violet-600">✓ {fileName}</p>
+                    <p className="text-sm font-medium text-[#377CF3]">✓ {fileName}</p>
                     <p className="mt-1 text-xs">Clique ou dépose un autre fichier pour remplacer</p>
                   </>
                 ) : (
@@ -801,7 +801,7 @@ function GenerateurPage() {
               type="checkbox"
               checked={btpMode}
               onChange={(e) => setBtpMode(e.target.checked)}
-              className="h-4 w-4 rounded border-neutral-300 text-violet-600 focus:ring-violet-500"
+              className="h-4 w-4 rounded border-neutral-300 text-[#377CF3] focus:ring-[#377CF3]"
             />
             <span className="font-medium text-neutral-800">Public BTP détaillé</span>
           </label>
@@ -873,7 +873,7 @@ function GenerateurPage() {
                   onClick={() => setProvider('openai')}
                   className={`rounded-lg px-3 py-1.5 text-sm ${
                     provider === 'openai'
-                      ? 'bg-violet-600 text-white'
+                      ? 'bg-[#377CF3] text-white'
                       : 'bg-white text-neutral-600 hover:bg-neutral-100'
                   }`}
                 >
@@ -884,7 +884,7 @@ function GenerateurPage() {
                   onClick={() => setProvider('claude')}
                   className={`rounded-lg px-3 py-1.5 text-sm ${
                     provider === 'claude'
-                      ? 'bg-violet-600 text-white'
+                      ? 'bg-[#377CF3] text-white'
                       : 'bg-white text-neutral-600 hover:bg-neutral-100'
                   }`}
                 >
@@ -907,7 +907,7 @@ function GenerateurPage() {
                     onClick={() => setLength(l)}
                     className={`rounded-lg px-3 py-1.5 text-sm ${
                       length === l
-                        ? 'bg-violet-600 text-white'
+                        ? 'bg-[#377CF3] text-white'
                         : 'bg-white text-neutral-600 hover:bg-neutral-100'
                     }`}
                   >
@@ -925,7 +925,7 @@ function GenerateurPage() {
                     type="button"
                     onClick={() => setTonalite(t)}
                     className={`rounded-lg px-3 py-1.5 text-sm ${
-                      tonalite === t ? 'bg-violet-600 text-white' : 'bg-white text-neutral-600 hover:bg-neutral-100'
+                      tonalite === t ? 'bg-[#377CF3] text-white' : 'bg-white text-neutral-600 hover:bg-neutral-100'
                     }`}
                   >
                     {t === 'conversationnel' ? 'Conversationnel' : t === 'emojis' ? 'Emojis' : 'Aucun'}
@@ -942,7 +942,7 @@ function GenerateurPage() {
                     type="button"
                     onClick={() => setRegistre(r)}
                     className={`rounded-lg px-3 py-1.5 text-sm ${
-                      registre === r ? 'bg-violet-600 text-white' : 'bg-white text-neutral-600 hover:bg-neutral-100'
+                      registre === r ? 'bg-[#377CF3] text-white' : 'bg-white text-neutral-600 hover:bg-neutral-100'
                     }`}
                   >
                     {r === 'vouvoiement' ? 'Vouvoiement' : 'Tutoiement'}
@@ -959,7 +959,7 @@ function GenerateurPage() {
                     type="button"
                     onClick={() => setGenre(g)}
                     className={`rounded-lg px-3 py-1.5 text-sm ${
-                      genre === g ? 'bg-violet-600 text-white' : 'bg-white text-neutral-600 hover:bg-neutral-100'
+                      genre === g ? 'bg-[#377CF3] text-white' : 'bg-white text-neutral-600 hover:bg-neutral-100'
                     }`}
                   >
                     {g === 'aucun' ? 'Pas de préférence' : g === 'masculin' ? 'Masculin' : 'Féminin'}
@@ -969,7 +969,7 @@ function GenerateurPage() {
             </div>
             <div>
               <label className="mb-1 block font-medium text-neutral-600">Langue</label>
-              <span className="inline-flex items-center rounded-lg bg-violet-100 px-3 py-1.5 text-sm font-medium text-violet-800">
+              <span className="inline-flex items-center rounded-lg bg-[#377CF3]/10 px-3 py-1.5 text-sm font-medium text-[#377CF3]">
                 Français 🇫🇷
               </span>
             </div>
@@ -1003,7 +1003,7 @@ function GenerateurPage() {
                 aria-checked={instructionsEnabled}
                 onClick={() => setInstructionsEnabled(!instructionsEnabled)}
                 className={`relative h-6 w-11 rounded-full transition-colors ${
-                  instructionsEnabled ? 'bg-violet-600' : 'bg-neutral-300'
+                  instructionsEnabled ? 'bg-[#377CF3]' : 'bg-neutral-300'
                 }`}
               >
                 <span
@@ -1030,7 +1030,7 @@ function GenerateurPage() {
                 aria-checked={signatureEnabled}
                 onClick={() => setSignatureEnabled(!signatureEnabled)}
                 className={`relative h-6 w-11 rounded-full transition-colors ${
-                  signatureEnabled ? 'bg-violet-600' : 'bg-neutral-300'
+                  signatureEnabled ? 'bg-[#377CF3]' : 'bg-neutral-300'
                 }`}
               >
                 <span
@@ -1057,7 +1057,7 @@ function GenerateurPage() {
                 aria-checked={accrocheEnabled}
                 onClick={() => setAccrocheEnabled(!accrocheEnabled)}
                 className={`relative h-6 w-11 rounded-full transition-colors ${
-                  accrocheEnabled ? 'bg-violet-600' : 'bg-neutral-300'
+                  accrocheEnabled ? 'bg-[#377CF3]' : 'bg-neutral-300'
                 }`}
               >
                 <span
@@ -1085,17 +1085,17 @@ function GenerateurPage() {
                     const d = await res.json();
                     if (res.ok) { setHooks(d.hooks || []); setShowHooks(true); }
                   }}
-                  className="mt-2 text-sm text-violet-600 hover:underline"
+                  className="mt-2 text-sm text-[#377CF3] hover:underline"
                 >
                   ✨ Générer des accroches (A/B)
                 </button>
               </>
             )}
             {showHooks && hooks.length > 0 && (
-              <div className="mt-2 rounded-lg border border-violet-200 bg-violet-50/50 p-2">
-                <p className="text-xs font-medium text-violet-700 mb-2">Choisis une accroche :</p>
+              <div className="mt-2 rounded-lg border border-[#377CF3]/20 bg-[#377CF3]/5 p-2">
+                <p className="text-xs font-medium text-[#377CF3] mb-2">Choisis une accroche :</p>
                 {hooks.map((h, i) => (
-                  <button key={i} type="button" onClick={() => { setAccroche(h); setShowHooks(false); }} className="block w-full rounded px-2 py-1.5 text-left text-sm hover:bg-violet-100">
+                  <button key={i} type="button" onClick={() => { setAccroche(h); setShowHooks(false); }} className="block w-full rounded px-2 py-1.5 text-left text-sm hover:bg-[#377CF3]/10">
                     {h}
                   </button>
                 ))}
@@ -1134,7 +1134,7 @@ function GenerateurPage() {
                 href="/api/test-openai"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-2 inline-block text-xs text-violet-600 underline hover:text-violet-800"
+                className="mt-2 inline-block text-xs text-[#377CF3] underline hover:text-[#377CF3]"
               >
                 Tester la connexion OpenAI →
               </a>
@@ -1148,7 +1148,7 @@ function GenerateurPage() {
             type="button"
             onClick={handleGenerate}
             disabled={isLoading || fullContentLoading}
-            className="flex-1 rounded-xl bg-violet-600 py-4 text-base font-semibold text-white hover:bg-violet-700 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+            className="flex-1 rounded-xl bg-[#377CF3] py-4 text-base font-semibold text-white hover:bg-[#2d6ad4] transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
           >
             {isLoading ? 'Génération…' : 'Générer un post'}
           </button>
@@ -1349,7 +1349,7 @@ function GenerateurPage() {
                 + À mes exemples
               </button>
               <button type="button" onClick={() => setShowPublishLinkedIn(true)} className="rounded-lg px-3 py-1.5 text-sm text-neutral-600 hover:bg-neutral-100">Publier</button>
-              <button type="button" onClick={() => copyToClipboard()} className="rounded-lg px-3 py-1.5 text-sm text-violet-600 hover:bg-violet-50">
+              <button type="button" onClick={() => copyToClipboard()} className="rounded-lg px-3 py-1.5 text-sm text-[#377CF3] hover:bg-[#377CF3]/5">
                 {copiedMsg ? '✓ Copié !' : 'Copier'}
               </button>
             </div>
@@ -1363,7 +1363,7 @@ function GenerateurPage() {
                   type="button"
                   onClick={() => setSelectedVariant(i)}
                   className={`rounded-lg px-4 py-2 text-sm font-medium ${
-                    selectedVariant === i ? 'bg-violet-600 text-white' : 'bg-neutral-100 text-neutral-600'
+                    selectedVariant === i ? 'bg-[#377CF3] text-white' : 'bg-neutral-100 text-neutral-600'
                   }`}
                 >
                   Version {i + 1}
@@ -1411,7 +1411,7 @@ function GenerateurPage() {
             <div className="rounded-xl border border-neutral-200 bg-neutral-50 p-4">
               <div className="flex justify-between items-center mb-2">
                 <p className="text-xs font-medium text-neutral-500">Hashtags suggérés</p>
-                <button type="button" onClick={() => copyToClipboard((displayedPost || '') + '\n\n' + getHashtagsForSector(secteur === 'btp' ? 'btp' : 'business').join(' '))} className="text-xs text-violet-600 hover:underline">Copier avec hashtags</button>
+                <button type="button" onClick={() => copyToClipboard((displayedPost || '') + '\n\n' + getHashtagsForSector(secteur === 'btp' ? 'btp' : 'business').join(' '))} className="text-xs text-[#377CF3] hover:underline">Copier avec hashtags</button>
               </div>
               <div className="flex flex-wrap gap-1.5">
                 {getHashtagsForSector(secteur === 'btp' ? 'btp' : 'business').map((tag) => (

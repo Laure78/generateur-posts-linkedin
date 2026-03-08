@@ -92,7 +92,7 @@ export async function POST(req: Request) {
     for (let i = 0; i < slides.length; i++) {
       const page = doc.addPage([W, H]);
 
-      // Fond violet
+      // Fond bleu #377CF3
       page.drawRectangle({
         x: 0,
         y: 0,

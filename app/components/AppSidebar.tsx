@@ -3,46 +3,67 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
+import {
+  Sparkles,
+  FileEdit,
+  Quote,
+  Lightbulb,
+  Eye,
+  Newspaper,
+  LayoutGrid,
+  Calendar,
+  BookOpen,
+  User,
+  BarChart2,
+  MessageCircle,
+  Rocket,
+  ChevronLeft,
+  ChevronRight,
+  Linkedin,
+} from 'lucide-react';
 
 const LINKEDIN_URL = 'https://www.linkedin.com/in/laure-olivie/';
+
+const BLUE = '#377CF3';
+const BLUE_HOVER = '#2d6ad4';
 
 const nav = [
   {
     title: 'CRÉER',
     items: [
-      { href: '/outil/generateur', label: 'Générateur', icon: '＋' },
-      { href: '/outil/editeur', label: 'Éditeur', icon: '✎' },
-      { href: '/outil/accroches', label: 'Accroches', icon: '♪' },
+      { href: '/outil/generateur', label: 'Générateur', Icon: Sparkles },
+      { href: '/outil/editeur', label: 'Éditeur', Icon: FileEdit },
+      { href: '/outil/accroches', label: 'Accroches', Icon: Quote },
     ],
   },
   {
     title: 'DÉCOUVRIR',
     items: [
-      { href: '/outil/idees', label: 'Idées', icon: '💡' },
-      { href: '/outil/inspirations', label: 'Inspirations', icon: '👁' },
-      { href: '/outil/veille', label: 'Veille', icon: '📰' },
+      { href: '/outil/idees', label: 'Idées', Icon: Lightbulb },
+      { href: '/outil/inspirations', label: 'Inspirations', Icon: Eye },
+      { href: '/outil/veille', label: 'Veille', Icon: Newspaper },
     ],
   },
   {
     title: 'GÉRER',
     items: [
-      { href: '/outil/mes-posts', label: 'Mes posts', icon: '▦' },
-      { href: '/outil/calendrier', label: 'Calendrier', icon: '📅' },
-      { href: '/outil/base-connaissance', label: 'Base de connaissance', icon: '📚' },
-      { href: '/outil/comptes', label: 'Comptes', icon: '👤' },
+      { href: '/outil/mes-posts', label: 'Mes posts', Icon: LayoutGrid },
+      { href: '/outil/calendrier', label: 'Calendrier', Icon: Calendar },
+      { href: '/outil/base-connaissance', label: 'Base de connaissance', Icon: BookOpen },
+      { href: '/outil/comptes', label: 'Comptes', Icon: User },
     ],
   },
   {
     title: 'CROISSANCE',
     items: [
-      { href: '/outil/croissance', label: 'Growth Engine', icon: '🚀' },
+      { href: '/outil/croissance', label: 'Growth Engine', Icon: Rocket },
     ],
   },
   {
     title: 'SUIVRE',
     items: [
-      { href: '/outil/metriques', label: 'Métriques', icon: '📈' },
-      { href: '/outil/engagement', label: 'Engagement', icon: '💬' },
+      { href: '/outil/metriques', label: 'Métriques', Icon: BarChart2 },
+      { href: '/outil/engagement', label: 'Engagement', Icon: MessageCircle },
     ],
   },
 ];
@@ -53,13 +74,16 @@ export default function AppSidebar() {
 
   return (
     <aside
-      className={`flex flex-col border-r border-neutral-200 bg-white transition-all duration-200 ${
+      className={`flex flex-col border-r border-neutral-200 bg-white shadow-sm transition-all duration-200 ${
         collapsed ? 'w-[72px]' : 'w-[240px]'
       }`}
     >
       <div className="flex h-14 items-center justify-between border-b border-neutral-200 px-4">
         <Link href="/outil" className="flex items-center gap-2 font-bold text-neutral-800">
-          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-violet-600 text-white text-sm">
+          <span
+            className="flex h-9 w-9 items-center justify-center rounded-xl text-white text-sm font-semibold"
+            style={{ backgroundColor: BLUE }}
+          >
             LO
           </span>
           {!collapsed && <span>Créateur</span>}
@@ -67,10 +91,10 @@ export default function AppSidebar() {
         <button
           type="button"
           onClick={() => setCollapsed(!collapsed)}
-          className="rounded p-1.5 text-neutral-500 hover:bg-neutral-100 hover:text-neutral-700"
+          className="rounded-lg p-2 text-neutral-500 hover:bg-neutral-100 hover:text-neutral-700 transition-colors"
           aria-label={collapsed ? 'Ouvrir le menu' : 'Réduire le menu'}
         >
-          <span className="text-sm">{collapsed ? '»' : '«'}</span>
+          {collapsed ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
         </button>
       </div>
 
@@ -78,26 +102,35 @@ export default function AppSidebar() {
         {nav.map((section) => (
           <div key={section.title} className="mb-6">
             {!collapsed && (
-              <p className="mb-2 px-4 text-xs font-semibold uppercase tracking-wider text-neutral-400">
+              <p className="mb-2 px-4 text-[11px] font-semibold uppercase tracking-wider text-neutral-400">
                 {section.title}
               </p>
             )}
             <ul className="space-y-0.5">
               {section.items.map((item) => {
                 const isActive = pathname === item.href;
+                const Icon = item.Icon;
                 return (
                   <li key={item.href}>
                     <Link
                       href={item.href}
-                      className={`flex items-center gap-3 px-4 py-2.5 text-sm transition-colors ${
+                      className={`flex items-center gap-3 px-4 py-2.5 text-sm transition-all rounded-lg mx-2 ${
                         isActive
-                          ? 'bg-violet-100 font-semibold text-violet-700'
-                          : 'text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900'
-                      } ${collapsed ? 'justify-center px-0' : ''}`}
+                          ? 'font-semibold'
+                          : 'text-neutral-600 hover:text-neutral-900'
+                      }`}
+                      style={
+                        isActive
+                          ? { backgroundColor: 'rgba(55, 124, 243, 0.08)', color: BLUE }
+                          : undefined
+                      }
                     >
-                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-base">
-                        {item.icon}
-                      </span>
+                      <Icon
+                        size={20}
+                        strokeWidth={2}
+                        className="shrink-0"
+                        style={isActive ? { color: BLUE } : undefined}
+                      />
                       {!collapsed && <span>{item.label}</span>}
                     </Link>
                   </li>
@@ -116,13 +149,20 @@ export default function AppSidebar() {
               href={LINKEDIN_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="mb-3 flex w-full items-center justify-center gap-2 rounded-xl bg-violet-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-violet-700"
+              className="mb-3 flex w-full items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:opacity-90"
+              style={{ backgroundColor: BLUE }}
             >
+              <Linkedin size={18} />
               Voir mon LinkedIn
             </a>
             <button
               type="button"
-              className="w-full rounded-xl border border-violet-300 bg-violet-50 px-4 py-2.5 text-sm font-semibold text-violet-700 hover:bg-violet-100"
+              className="w-full rounded-xl border px-4 py-2.5 text-sm font-semibold transition-colors"
+              style={{
+                borderColor: 'rgba(55, 124, 243, 0.25)',
+                color: BLUE,
+                backgroundColor: 'rgba(55, 124, 243, 0.05)',
+              }}
             >
               Mise à niveau
             </button>

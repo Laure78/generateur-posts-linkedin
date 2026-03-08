@@ -234,7 +234,7 @@ export default function VeillePage() {
                   href={n.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex flex-col rounded-xl border border-neutral-200 p-4 transition-colors hover:border-violet-300 hover:bg-violet-50/30"
+                  className="flex flex-col rounded-xl border border-neutral-200 p-4 transition-colors hover:border-[#377CF3]/30 hover:bg-[#377CF3]/5"
                 >
                   <span className="font-medium text-neutral-800">{n.name}</span>
                   <span className="text-xs text-neutral-500">{n.author}</span>
@@ -255,7 +255,7 @@ export default function VeillePage() {
                   href={n.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex flex-col rounded-xl border border-neutral-200 p-4 transition-colors hover:border-violet-300 hover:bg-violet-50/30"
+                  className="flex flex-col rounded-xl border border-neutral-200 p-4 transition-colors hover:border-[#377CF3]/30 hover:bg-[#377CF3]/5"
                 >
                   <span className="font-medium text-neutral-800">{n.name}</span>
                   <span className="text-xs text-neutral-500">{n.author}</span>
@@ -281,7 +281,7 @@ export default function VeillePage() {
                   href={c.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex flex-col rounded-xl border border-neutral-200 p-4 transition-colors hover:border-violet-300 hover:bg-violet-50/30"
+                  className="flex flex-col rounded-xl border border-neutral-200 p-4 transition-colors hover:border-[#377CF3]/30 hover:bg-[#377CF3]/5"
                 >
                   <span className="font-medium text-neutral-800">{c.name}</span>
                   <p className="mt-1 text-sm text-neutral-600">{c.desc}</p>
@@ -301,7 +301,7 @@ export default function VeillePage() {
                   href={c.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex flex-col rounded-xl border border-neutral-200 p-4 transition-colors hover:border-violet-300 hover:bg-violet-50/30"
+                  className="flex flex-col rounded-xl border border-neutral-200 p-4 transition-colors hover:border-[#377CF3]/30 hover:bg-[#377CF3]/5"
                 >
                   <span className="font-medium text-neutral-800">{c.name}</span>
                   <p className="mt-1 text-sm text-neutral-600">{c.desc}</p>
@@ -326,7 +326,7 @@ export default function VeillePage() {
                   href={c.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex flex-col rounded-xl border border-neutral-200 p-4 transition-colors hover:border-violet-300 hover:bg-violet-50/30"
+                  className="flex flex-col rounded-xl border border-neutral-200 p-4 transition-colors hover:border-[#377CF3]/30 hover:bg-[#377CF3]/5"
                 >
                   <span className="font-medium text-neutral-800">{c.name}</span>
                   <p className="mt-1 text-sm text-neutral-600">{c.desc}</p>
@@ -346,7 +346,7 @@ export default function VeillePage() {
                   href={c.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex flex-col rounded-xl border border-neutral-200 p-4 transition-colors hover:border-violet-300 hover:bg-violet-50/30"
+                  className="flex flex-col rounded-xl border border-neutral-200 p-4 transition-colors hover:border-[#377CF3]/30 hover:bg-[#377CF3]/5"
                 >
                   <span className="font-medium text-neutral-800">{c.name}</span>
                   <p className="mt-1 text-sm text-neutral-600">{c.desc}</p>
@@ -371,7 +371,7 @@ export default function VeillePage() {
                   href={c.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex flex-col rounded-xl border border-neutral-200 p-4 transition-colors hover:border-violet-300 hover:bg-violet-50/30"
+                  className="flex flex-col rounded-xl border border-neutral-200 p-4 transition-colors hover:border-[#377CF3]/30 hover:bg-[#377CF3]/5"
                 >
                   <span className="font-medium text-neutral-800">{c.name}</span>
                   <p className="mt-1 text-sm text-neutral-600">{c.desc}</p>
@@ -391,7 +391,7 @@ export default function VeillePage() {
                   href={c.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex flex-col rounded-xl border border-neutral-200 p-4 transition-colors hover:border-violet-300 hover:bg-violet-50/30"
+                  className="flex flex-col rounded-xl border border-neutral-200 p-4 transition-colors hover:border-[#377CF3]/30 hover:bg-[#377CF3]/5"
                 >
                   <span className="font-medium text-neutral-800">{c.name}</span>
                   <p className="mt-1 text-sm text-neutral-600">{c.desc}</p>
@@ -404,7 +404,7 @@ export default function VeillePage() {
 
       <p className="mt-8 text-center text-sm text-neutral-500">
         Sources sélectionnées pour ta veille IA — tu peux les compléter dans ta{' '}
-        <Link href="/outil/base-connaissance" className="text-violet-600 hover:underline">
+        <Link href="/outil/base-connaissance" className="text-[#377CF3] hover:underline">
           base de connaissance
         </Link>
         .

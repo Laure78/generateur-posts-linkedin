@@ -63,7 +63,7 @@ export default function SnippetsManager({
         <button
           type="button"
           onClick={() => setShowAdd(!showAdd)}
-          className="text-sm text-violet-600 hover:text-violet-700"
+          className="text-sm text-[#377CF3] hover:text-[#2d6ad4]"
         >
           {showAdd ? 'Annuler' : '+ Ajouter'}
         </button>
@@ -88,7 +88,7 @@ export default function SnippetsManager({
           <button
             type="button"
             onClick={add}
-            className="rounded bg-violet-600 px-3 py-1.5 text-sm text-white"
+            className="rounded bg-[#377CF3] px-3 py-1.5 text-sm text-white"
           >
             Enregistrer
           </button>
@@ -101,7 +101,7 @@ export default function SnippetsManager({
             <button
               type="button"
               onClick={() => onInsert(s.content)}
-              className="flex-1 truncate text-left text-neutral-700 hover:text-violet-600"
+              className="flex-1 truncate text-left text-neutral-700 hover:text-[#377CF3]"
               title={s.content}
             >
               {s.label}

@@ -14,7 +14,7 @@ const PRESET_THEMES = [
 const CARD_COLORS = [
   'bg-amber-100',
   'bg-emerald-100',
-  'bg-violet-100',
+  'bg-[#377CF3]/10',
   'bg-sky-100',
   'bg-rose-100',
   'bg-neutral-100',
@@ -128,7 +128,7 @@ export default function IdeesPage() {
               setShowNewTheme(true);
               setCustomTheme('');
             }}
-            className="rounded-xl border border-violet-300 bg-violet-50 px-4 py-2 text-sm font-medium text-violet-700 hover:bg-violet-100"
+            className="rounded-xl border border-[#377CF3]/30 bg-[#377CF3]/5 px-4 py-2 text-sm font-medium text-[#377CF3] hover:bg-[#377CF3]/10"
           >
             + Nouveau thème
           </button>
@@ -139,7 +139,7 @@ export default function IdeesPage() {
                 value={customTheme}
                 onChange={(e) => setCustomTheme(e.target.value)}
                 placeholder="Ex : IA et devis BTP"
-                className="rounded-xl border border-neutral-200 px-4 py-2 text-sm text-neutral-800 placeholder:text-neutral-400 focus:border-violet-500 focus:outline-none focus:ring-2 focus:ring-violet-500/20"
+                className="rounded-xl border border-neutral-200 px-4 py-2 text-sm text-neutral-800 placeholder:text-neutral-400 focus:border-[#377CF3] focus:outline-none focus:ring-2 focus:ring-[#377CF3]/20"
                 autoFocus
               />
               <button
@@ -154,7 +154,7 @@ export default function IdeesPage() {
             <select
               value={theme}
               onChange={(e) => setTheme(e.target.value)}
-              className="rounded-xl border border-neutral-200 bg-white px-4 py-2 text-sm text-neutral-800 focus:border-violet-500 focus:outline-none focus:ring-2 focus:ring-violet-500/20"
+              className="rounded-xl border border-neutral-200 bg-white px-4 py-2 text-sm text-neutral-800 focus:border-[#377CF3] focus:outline-none focus:ring-2 focus:ring-[#377CF3]/20"
             >
               {PRESET_THEMES.map((t) => (
                 <option key={t} value={t}>
@@ -192,7 +192,7 @@ export default function IdeesPage() {
           type="button"
           onClick={handleGenerate}
           disabled={isLoading || isLoadingBtp30 || !currentTheme.trim() || launchesUsed >= MAX_FREE_LAUNCHES}
-          className="rounded-xl bg-gradient-to-r from-violet-600 to-violet-500 px-8 py-3.5 text-base font-semibold text-white shadow-sm hover:from-violet-700 hover:to-violet-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+          className="rounded-xl bg-gradient-to-r from-[#377CF3] to-[#4d8bf7] px-8 py-3.5 text-base font-semibold text-white shadow-sm hover:from-[#2d6ad4] hover:to-[#377CF3] disabled:opacity-50 disabled:cursor-not-allowed transition-all"
         >
           {isLoading ? 'Génération…' : 'Générer 6 idées'}
         </button>
@@ -241,7 +241,7 @@ export default function IdeesPage() {
                 <button
                   type="button"
                   onClick={() => handleUtiliser(idea)}
-                  className="flex items-center gap-1.5 rounded-lg bg-white px-3 py-1.5 text-xs font-medium text-violet-700 shadow-sm hover:bg-violet-50 transition-colors"
+                  className="flex items-center gap-1.5 rounded-lg bg-white px-3 py-1.5 text-xs font-medium text-[#377CF3] shadow-sm hover:bg-[#377CF3]/5 transition-colors"
                 >
                   <span>↗</span>
                   Utiliser

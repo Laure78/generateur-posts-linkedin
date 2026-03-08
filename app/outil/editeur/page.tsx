@@ -128,7 +128,7 @@ function EditeurPage() {
         {/* Header avec profil */}
         <div className="flex items-start justify-between border-b border-neutral-100 p-4">
           <div className="flex items-center gap-3">
-            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-violet-100 text-violet-600 font-bold text-lg">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#377CF3]/10 text-[#377CF3] font-bold text-lg">
               LO
             </div>
             <div>
@@ -194,11 +194,11 @@ function EditeurPage() {
               type="button"
               onClick={handleAITransform}
               disabled={isTransforming || !content.trim()}
-              className="relative flex h-10 w-10 items-center justify-center rounded-full bg-violet-600 text-white hover:bg-violet-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="relative flex h-10 w-10 items-center justify-center rounded-full bg-[#377CF3] text-white hover:bg-violet-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               title="Transformer avec l'IA"
             >
               <span className="text-lg">✨</span>
-              <span className="absolute -top-0.5 -right-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-white text-[10px] font-bold text-violet-600 border border-violet-200">
+              <span className="absolute -top-0.5 -right-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-white text-[10px] font-bold text-[#377CF3] border border-[#377CF3]/20">
                 A
               </span>
             </button>
@@ -207,7 +207,7 @@ function EditeurPage() {
       </div>
 
       <p className="mt-4 text-center text-sm text-neutral-500">
-        <Link href="/outil/generateur" className="text-violet-600 hover:underline">
+        <Link href="/outil/generateur" className="text-[#377CF3] hover:underline">
           Générer un post depuis le sujet
         </Link>
       </p>

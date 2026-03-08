@@ -56,9 +56,9 @@ export default function MetriquesPage() {
       {!connected ? (
         <>
           {/* CTA Connexion */}
-          <div className="mb-8 rounded-2xl border border-violet-200 bg-violet-50/50 p-8 text-center">
+          <div className="mb-8 rounded-2xl border border-[#377CF3]/20 bg-[#377CF3]/5 p-8 text-center">
             <h2 className="text-xl font-bold text-neutral-900">
-              Accède à tes <span className="text-violet-600">métriques</span> LinkedIn™
+              Accède à tes <span className="text-[#377CF3]">métriques</span> LinkedIn™
             </h2>
             <p className="mt-3 max-w-xl mx-auto text-neutral-600">
               Analyse toutes tes performances au même endroit : impressions, engagement, followers gagnés, thèmes qui fonctionnent…
@@ -66,7 +66,7 @@ export default function MetriquesPage() {
             <button
               type="button"
               onClick={() => setConnected(true)}
-              className="mt-6 rounded-xl bg-violet-600 px-8 py-3 text-base font-semibold text-white hover:bg-violet-700"
+              className="mt-6 rounded-xl bg-[#377CF3] px-8 py-3 text-base font-semibold text-white hover:bg-[#2d6ad4]"
             >
               Se connecter à LinkedIn
             </button>
@@ -104,7 +104,7 @@ export default function MetriquesPage() {
           {/* Dashboard connecté — Statistiques et outils */}
           <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-violet-100 text-violet-600 font-bold">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#377CF3]/10 text-[#377CF3] font-bold">
                 LO
               </div>
               <div>
@@ -174,7 +174,7 @@ export default function MetriquesPage() {
             <div className="flex gap-2">
               <button
                 type="button"
-                className="rounded-xl bg-violet-600 px-4 py-2 text-sm font-semibold text-white"
+                className="rounded-xl bg-[#377CF3] px-4 py-2 text-sm font-semibold text-white"
               >
                 Reporting
               </button>
@@ -240,7 +240,7 @@ export default function MetriquesPage() {
               {MONTHLY_DATA.map((d, i) => (
                 <div
                   key={d.month}
-                  className="flex-1 rounded-t bg-violet-200 transition-opacity hover:opacity-80"
+                  className="flex-1 rounded-t bg-[#377CF3]/20 transition-opacity hover:opacity-80"
                   style={{ height: `${(d.value / 5200) * 100}%`, minHeight: 8 }}
                   title={`${d.month}: ${d.value}`}
                 />

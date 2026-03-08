@@ -158,7 +158,7 @@ export default function CalendrierPage() {
         <button
           type="button"
           onClick={() => openModal()}
-          className="rounded-xl bg-violet-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-violet-700"
+          className="rounded-xl bg-[#377CF3] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#2d6ad4]"
         >
           + Nouvelle publication
         </button>
@@ -184,7 +184,7 @@ export default function CalendrierPage() {
                   <span
                     className={`block text-lg font-semibold ${
                       formatDateKey(d) === formatDateKey(new Date())
-                        ? 'rounded-full bg-violet-600 text-white'
+                        ? 'rounded-full bg-[#377CF3] text-white'
                         : 'text-neutral-800'
                     }`}
                   >
@@ -214,7 +214,7 @@ export default function CalendrierPage() {
                   return (
                     <div
                       key={dateKey}
-                      className="min-h-[48px] cursor-pointer p-1 hover:bg-violet-50/50 transition-colors"
+                      className="min-h-[48px] cursor-pointer p-1 hover:bg-[#377CF3]/5 transition-colors"
                       onClick={() => openModal(dateKey, hour)}
                     >
                       {slotEvents.map((ev) => (
@@ -225,7 +225,7 @@ export default function CalendrierPage() {
                             e.stopPropagation();
                             openEditModal(ev);
                           }}
-                          className="mb-1 w-full rounded-lg bg-violet-100 px-2 py-1.5 text-left text-xs font-medium text-violet-900 hover:bg-violet-200 truncate"
+                          className="mb-1 w-full rounded-lg bg-[#377CF3]/10 px-2 py-1.5 text-left text-xs font-medium text-neutral-900 hover:bg-[#377CF3]/20 truncate"
                         >
                           {ev.title}
                         </button>
@@ -263,7 +263,7 @@ export default function CalendrierPage() {
                   type="date"
                   value={formData.date}
                   onChange={(e) => setFormData((p) => ({ ...p, date: e.target.value }))}
-                  className="w-full rounded-xl border border-neutral-200 px-4 py-2.5 text-neutral-800 focus:border-violet-500 focus:outline-none focus:ring-2 focus:ring-violet-500/20"
+                  className="w-full rounded-xl border border-neutral-200 px-4 py-2.5 text-neutral-800 focus:border-[#377CF3] focus:outline-none focus:ring-2 focus:ring-[#377CF3]/20"
                 />
               </div>
               <div>
@@ -272,7 +272,7 @@ export default function CalendrierPage() {
                   type="time"
                   value={formData.time}
                   onChange={(e) => setFormData((p) => ({ ...p, time: e.target.value }))}
-                  className="w-full rounded-xl border border-neutral-200 px-4 py-2.5 text-neutral-800 focus:border-violet-500 focus:outline-none focus:ring-2 focus:ring-violet-500/20"
+                  className="w-full rounded-xl border border-neutral-200 px-4 py-2.5 text-neutral-800 focus:border-[#377CF3] focus:outline-none focus:ring-2 focus:ring-[#377CF3]/20"
                 />
               </div>
               <div>
@@ -282,7 +282,7 @@ export default function CalendrierPage() {
                   value={formData.title}
                   onChange={(e) => setFormData((p) => ({ ...p, title: e.target.value }))}
                   placeholder="Ex : Post sur l'effectuation"
-                  className="w-full rounded-xl border border-neutral-200 px-4 py-2.5 text-neutral-800 placeholder:text-neutral-400 focus:border-violet-500 focus:outline-none focus:ring-2 focus:ring-violet-500/20"
+                  className="w-full rounded-xl border border-neutral-200 px-4 py-2.5 text-neutral-800 placeholder:text-neutral-400 focus:border-[#377CF3] focus:outline-none focus:ring-2 focus:ring-[#377CF3]/20"
                 />
               </div>
             </div>
@@ -309,7 +309,7 @@ export default function CalendrierPage() {
                 type="button"
                 onClick={saveEvent}
                 disabled={!formData.title.trim()}
-                className="rounded-xl bg-violet-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-violet-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="rounded-xl bg-[#377CF3] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#2d6ad4] disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {editingEvent ? 'Enregistrer' : 'Planifier'}
               </button>

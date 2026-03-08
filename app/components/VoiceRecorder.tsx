@@ -95,7 +95,7 @@ export default function VoiceRecorder({ onTranscript, disabled, className = '' }
         className={`flex items-center gap-2 rounded-xl px-4 py-3 text-sm font-medium ${
           isListening
             ? 'bg-red-100 text-red-700'
-            : 'bg-violet-100 text-violet-700 hover:bg-violet-200'
+            : 'bg-[#377CF3]/10 text-[#377CF3] hover:bg-[#377CF3]/20'
         }`}
       >
         <span className="text-xl">{isListening ? '⏹' : '🎤'}</span>

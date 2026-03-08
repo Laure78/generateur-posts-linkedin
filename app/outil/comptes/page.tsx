@@ -166,15 +166,15 @@ export default function ComptesPage() {
                 onClick={() => switchAccount(acc.id)}
                 className={`flex items-center gap-2 rounded-xl border px-4 py-2.5 text-sm font-medium transition-colors ${
                   acc.id === currentId
-                    ? 'border-violet-500 bg-violet-50 text-violet-700'
+                    ? 'border-[#377CF3] bg-[#377CF3]/5 text-[#377CF3]'
                     : 'border-neutral-200 bg-white text-neutral-600 hover:bg-neutral-50'
                 }`}
               >
-                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-violet-100 text-violet-600 text-xs font-bold">
+                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#377CF3]/10 text-[#377CF3] text-xs font-bold">
                   {acc.name.slice(0, 2).toUpperCase()}
                 </span>
                 {acc.name}
-                {acc.id === currentId && <span className="text-violet-600">✓</span>}
+                {acc.id === currentId && <span className="text-[#377CF3]">✓</span>}
               </button>
             ))}
           </div>
@@ -201,7 +201,7 @@ export default function ComptesPage() {
               type="button"
               onClick={addAccount}
               disabled={!newAccountName.trim() || !newAccountEmail.trim()}
-              className="rounded-lg bg-violet-600 px-4 py-2 text-sm font-medium text-white hover:bg-violet-700 disabled:opacity-50"
+              className="rounded-lg bg-[#377CF3] px-4 py-2 text-sm font-medium text-white hover:bg-[#2d6ad4] disabled:opacity-50"
             >
               Ajouter
             </button>
@@ -238,7 +238,7 @@ export default function ComptesPage() {
               type="button"
               onClick={inviteMember}
               disabled={!inviteEmail.trim()}
-              className="rounded-lg bg-violet-600 px-4 py-2 text-sm font-medium text-white hover:bg-violet-700 disabled:opacity-50"
+              className="rounded-lg bg-[#377CF3] px-4 py-2 text-sm font-medium text-white hover:bg-[#2d6ad4] disabled:opacity-50"
             >
               Envoyer l&apos;invitation
             </button>
@@ -253,7 +253,7 @@ export default function ComptesPage() {
           <div className="space-y-2">
             <div className="flex items-center gap-4 rounded-lg border border-neutral-200 bg-neutral-50 px-4 py-3 text-sm">
               <span className="font-medium text-neutral-800">{currentAccount?.email}</span>
-              <span className="rounded-full bg-violet-100 px-2 py-0.5 text-xs font-medium text-violet-700">
+              <span className="rounded-full bg-[#377CF3]/10 px-2 py-0.5 text-xs font-medium text-[#377CF3]">
                 Propriétaire
               </span>
             </div>

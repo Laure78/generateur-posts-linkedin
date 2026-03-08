@@ -70,7 +70,7 @@ export default function EngagementPage() {
         </p>
         <button
           type="button"
-          className="mt-4 rounded-xl bg-violet-600 px-6 py-2.5 text-sm font-semibold text-white hover:bg-violet-700"
+          className="mt-4 rounded-xl bg-[#377CF3] px-6 py-2.5 text-sm font-semibold text-white hover:bg-[#2d6ad4]"
         >
           Mettre à niveau mon plan
         </button>
@@ -93,7 +93,7 @@ export default function EngagementPage() {
           ))}
           <button
             type="button"
-            className="rounded-lg px-4 py-2 text-sm font-medium text-violet-600 hover:bg-violet-50"
+            className="rounded-lg px-4 py-2 text-sm font-medium text-[#377CF3] hover:bg-[#377CF3]/5"
           >
             Ajouter une liste +
           </button>
@@ -138,7 +138,7 @@ export default function EngagementPage() {
               key={post.id}
               className="flex flex-wrap gap-4 rounded-xl border border-neutral-200 bg-neutral-50/50 p-4"
             >
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-violet-100 text-violet-600 font-bold">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#377CF3]/10 text-[#377CF3] font-bold">
                 {post.avatar}
               </div>
               <div className="min-w-0 flex-1">
@@ -148,7 +148,7 @@ export default function EngagementPage() {
                   <span className="text-neutral-400">{post.followers} abonnés</span>
                 </div>
                 <p className="mt-1 text-sm text-neutral-700">
-                  {post.excerpt} <span className="text-violet-600">... Voir plus</span>
+                  {post.excerpt} <span className="text-[#377CF3]">... Voir plus</span>
                 </p>
                 <div className="mt-2 flex h-16 w-24 items-center justify-center rounded-lg bg-neutral-200 text-xs text-neutral-500">
                   {post.media}

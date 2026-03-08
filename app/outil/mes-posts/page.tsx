@@ -83,7 +83,7 @@ function savePostsToStorage(posts: Post[]) {
 const LABEL_COLORS: Record<PostLabel, string> = {
   Instructif: 'bg-amber-100 text-amber-800',
   Inspirant: 'bg-rose-100 text-rose-800',
-  Storytelling: 'bg-violet-100 text-violet-800',
+  Storytelling: 'bg-[#377CF3]/10 text-[#377CF3]',
   Conseil: 'bg-emerald-100 text-emerald-800',
   Ressources: 'bg-sky-100 text-sky-800',
 };
@@ -264,7 +264,7 @@ export default function MesPostsPage() {
           </div>
           <Link
             href="/outil/generateur"
-            className="flex items-center gap-2 rounded-xl bg-violet-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-violet-700"
+            className="flex items-center gap-2 rounded-xl bg-[#377CF3] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#2d6ad4]"
           >
             <span>+</span>
             Créer un post
@@ -380,7 +380,7 @@ export default function MesPostsPage() {
 
       {filtered.length === 0 && (
         <p className="mt-6 text-center text-neutral-500">
-          Aucun post trouvé. <Link href="/outil/generateur" className="text-violet-600 hover:underline">Créer un post</Link>
+          Aucun post trouvé. <Link href="/outil/generateur" className="text-[#377CF3] hover:underline">Créer un post</Link>
         </p>
       )}
     </div>

@@ -19,7 +19,7 @@ export default function PostPreview({ content, authorName = 'Laure Olivié', aut
           type="button"
           onClick={() => setView('desktop')}
           className={`rounded-lg px-3 py-1.5 text-sm font-medium ${
-            view === 'desktop' ? 'bg-violet-600 text-white' : 'bg-neutral-100 text-neutral-600'
+            view === 'desktop' ? 'bg-[#377CF3] text-white' : 'bg-neutral-100 text-neutral-600'
           }`}
         >
           💻 Desktop
@@ -28,7 +28,7 @@ export default function PostPreview({ content, authorName = 'Laure Olivié', aut
           type="button"
           onClick={() => setView('mobile')}
           className={`rounded-lg px-3 py-1.5 text-sm font-medium ${
-            view === 'mobile' ? 'bg-violet-600 text-white' : 'bg-neutral-100 text-neutral-600'
+            view === 'mobile' ? 'bg-[#377CF3] text-white' : 'bg-neutral-100 text-neutral-600'
           }`}
         >
           📱 Mobile
@@ -42,7 +42,7 @@ export default function PostPreview({ content, authorName = 'Laure Olivié', aut
       >
         {/* En-tête LinkedIn */}
         <div className="flex items-center gap-3 border-b border-neutral-100 p-4">
-          <div className="h-12 w-12 flex-shrink-0 rounded-full bg-gradient-to-br from-violet-400 to-violet-600" />
+          <div className="h-12 w-12 flex-shrink-0 rounded-full bg-gradient-to-br from-[#4d8bf7] to-[#377CF3]" />
           <div className="min-w-0 flex-1">
             <p className="truncate font-semibold text-neutral-900">{authorName}</p>
             <p className="truncate text-sm text-neutral-500">{authorTitle}</p>

@@ -56,14 +56,14 @@ export default function AccrochesPage() {
           value={subject}
           onChange={(e) => setSubject(e.target.value)}
           placeholder="Les 4 étapes pour..."
-          className="flex-1 rounded-xl border border-neutral-200 px-4 py-3 text-neutral-800 placeholder:text-neutral-400 focus:border-violet-500 focus:outline-none focus:ring-2 focus:ring-violet-500/20"
+          className="flex-1 rounded-xl border border-neutral-200 px-4 py-3 text-neutral-800 placeholder:text-neutral-400 focus:border-[#377CF3] focus:outline-none focus:ring-2 focus:ring-[#377CF3]/20"
           onKeyDown={(e) => e.key === 'Enter' && handleGenerate()}
         />
         <button
           type="button"
           onClick={handleGenerate}
           disabled={isLoading}
-          className="rounded-xl bg-gradient-to-r from-violet-600 to-violet-500 px-6 py-3 font-semibold text-white hover:from-violet-700 hover:to-violet-600 disabled:opacity-60 disabled:cursor-not-allowed transition-all shadow-sm"
+          className="rounded-xl bg-gradient-to-r from-[#377CF3] to-[#4d8bf7] px-6 py-3 font-semibold text-white hover:from-[#2d6ad4] hover:to-[#377CF3] disabled:opacity-60 disabled:cursor-not-allowed transition-all shadow-sm"
         >
           {isLoading ? 'Génération…' : 'Générer les accroches'}
         </button>
@@ -80,13 +80,13 @@ export default function AccrochesPage() {
             {hooks.map((hook, i) => (
               <li
                 key={i}
-                className="group flex items-center justify-between gap-4 rounded-xl border border-neutral-100 bg-neutral-50/50 px-4 py-3 hover:bg-violet-50/50 transition-colors"
+                className="group flex items-center justify-between gap-4 rounded-xl border border-neutral-100 bg-neutral-50/50 px-4 py-3 hover:bg-[#377CF3]/5 transition-colors"
               >
                 <span className="text-neutral-800">{hook}</span>
                 <button
                   type="button"
                   onClick={() => copyHook(hook)}
-                  className="shrink-0 rounded-lg p-2 text-neutral-400 hover:bg-violet-100 hover:text-violet-600 transition-colors"
+                  className="shrink-0 rounded-lg p-2 text-neutral-400 hover:bg-[#377CF3]/10 hover:text-[#377CF3] transition-colors"
                   title="Copier"
                 >
                   📋
