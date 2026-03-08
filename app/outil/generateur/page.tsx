@@ -129,6 +129,7 @@ function GenerateurPage() {
   const [error, setError] = useState<string | null>(null);
   const [savedToPostsMsg, setSavedToPostsMsg] = useState<string | null>(null);
   const [copiedMsg, setCopiedMsg] = useState(false);
+  const [carouselLoading, setCarouselLoading] = useState(false);
   const errorRef = useRef<HTMLDivElement>(null);
 
   // Remplir le sujet depuis l'URL (?subject=...) quand on vient d'Idées ou Inspirations
@@ -1154,6 +1155,35 @@ function GenerateurPage() {
                 title="Ajouter ce post à tes exemples (base de connaissance)"
               >
                 + À mes exemples
+              </button>
+              <button
+                type="button"
+                onClick={async () => {
+                  const text = displayedPost || '';
+                  if (!text.trim()) return;
+                  setCarouselLoading(true);
+                  try {
+                    const res = await fetch('/api/generate-carousel', {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify({ content: text, maxSlides: 10 }),
+                    });
+                    if (!res.ok) throw new Error('Erreur');
+                    const blob = await res.blob();
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'carrousel-linkedin.pdf';
+                    a.click();
+                    URL.revokeObjectURL(url);
+                  } catch {}
+                  setCarouselLoading(false);
+                }}
+                disabled={carouselLoading}
+                className="rounded-lg px-3 py-1.5 text-sm text-neutral-600 hover:bg-neutral-100 disabled:opacity-50"
+                title="Télécharger un PDF carrousel pour LinkedIn"
+              >
+                {carouselLoading ? '…' : '📑 Carrousel'}
               </button>
               <button type="button" onClick={() => setShowPublishLinkedIn(true)} className="rounded-lg px-3 py-1.5 text-sm text-neutral-600 hover:bg-neutral-100">Publier</button>
               <button type="button" onClick={() => copyToClipboard()} className="rounded-lg px-3 py-1.5 text-sm text-violet-600 hover:bg-violet-50">
