@@ -20,6 +20,7 @@ import {
   ChevronLeft,
   ChevronRight,
   Linkedin,
+  Zap,
 } from 'lucide-react';
 
 const LINKEDIN_URL = 'https://www.linkedin.com/in/laure-olivie/';
@@ -34,6 +35,7 @@ const nav = [
       { href: '/outil/generateur', label: 'Générateur', Icon: Sparkles },
       { href: '/outil/editeur', label: 'Éditeur', Icon: FileEdit },
       { href: '/outil/accroches', label: 'Accroches', Icon: Quote },
+      { href: '/outil/contenu-avance', label: 'Hooks & Transformer', Icon: Zap },
     ],
   },
   {
