@@ -22,6 +22,7 @@ import {
   Linkedin,
   Zap,
   Layers,
+  Bot,
 } from 'lucide-react';
 
 const LINKEDIN_URL = 'https://www.linkedin.com/in/laure-olivie/';
@@ -33,15 +34,15 @@ const nav = [
   {
     title: 'CRÉER',
     items: [
-      { href: '/outil/generateur', label: 'Générateur', Icon: Sparkles },
+      { href: '/outil/generateur', label: 'Générer un post', Icon: Sparkles },
       { href: '/outil/editeur', label: 'Éditeur', Icon: FileEdit },
       { href: '/outil/accroches', label: 'Accroches', Icon: Quote },
-      { href: '/outil/contenu-avance', label: 'Hooks & Transformer', Icon: Zap },
+      { href: '/outil/contenu-avance', label: 'Hooks & contenu', Icon: Zap },
       { href: '/outil/structures', label: 'Structures', Icon: Layers },
     ],
   },
   {
-    title: 'DÉCOUVRIR',
+    title: 'INSPIRATION',
     items: [
       { href: '/outil/idees', label: 'Idées', Icon: Lightbulb },
       { href: '/outil/inspirations', label: 'Inspirations', Icon: Eye },
@@ -49,26 +50,26 @@ const nav = [
     ],
   },
   {
-    title: 'GÉRER',
+    title: 'ORGANISER',
     items: [
       { href: '/outil/mes-posts', label: 'Mes posts', Icon: LayoutGrid },
       { href: '/outil/calendrier', label: 'Calendrier', Icon: Calendar },
-      { href: '/outil/base-connaissance', label: 'Base de connaissance', Icon: BookOpen },
-      { href: '/outil/comptes', label: 'Comptes', Icon: User },
     ],
   },
   {
     title: 'CROISSANCE',
     items: [
-      { href: '/outil/croissance', label: 'Growth Engine', Icon: Rocket },
-      { href: '/outil/copilote', label: 'Copilote LinkedIn', Icon: Sparkles },
+      { href: '/outil/copilote', label: 'Copilote', Icon: Bot },
+      { href: '/outil/croissance', label: 'Growth', Icon: Rocket },
+      { href: '/outil/metriques', label: 'Métriques', Icon: BarChart2 },
+      { href: '/outil/engagement', label: 'Engagement', Icon: MessageCircle },
     ],
   },
   {
-    title: 'SUIVRE',
+    title: 'PARAMÈTRES',
     items: [
-      { href: '/outil/metriques', label: 'Métriques', Icon: BarChart2 },
-      { href: '/outil/engagement', label: 'Engagement', Icon: MessageCircle },
+      { href: '/outil/base-connaissance', label: 'Ma base', Icon: BookOpen },
+      { href: '/outil/comptes', label: 'Comptes', Icon: User },
     ],
   },
 ];
@@ -119,6 +120,7 @@ export default function AppSidebar() {
                   <li key={item.href}>
                     <Link
                       href={item.href}
+                      title={item.label}
                       className={`flex items-center gap-3 px-4 py-2.5 text-sm transition-all rounded-lg mx-2 ${
                         isActive
                           ? 'font-semibold'
