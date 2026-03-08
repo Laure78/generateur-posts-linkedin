@@ -14,7 +14,10 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Ouvre ton navigateur. Le serveur écoute sur **http://localhost:3000**. Si ce port est déjà utilisé, Next.js choisira le suivant (3001, 3002, etc.) — vérifie l’URL affichée dans le terminal.
+
+- Accueil : http://localhost:3000/
+- Générateur de posts : http://localhost:3000/outil/generateur
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
