@@ -23,6 +23,7 @@ import {
   PenLine,
   Menu,
   X,
+  Bot,
 } from 'lucide-react';
 
 const LINKEDIN_URL = 'https://www.linkedin.com/in/laure-olivie/';
@@ -34,6 +35,7 @@ const SECTIONS = [
     title: 'Créer',
     defaultOpen: true,
     items: [
+      { href: '/outil/autopilot', label: 'Autopilot LinkedIn', Icon: Bot },
       { href: '/outil/generateur', label: 'Générer un post', Icon: Sparkles },
       { href: '/outil/ghostwriter', label: 'Ghostwriter', Icon: PenLine },
       { href: '/outil/contenu-avance', label: 'Hooks', Icon: Zap },
