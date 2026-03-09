@@ -31,6 +31,12 @@ const NEWSLETTERS = {
       url: 'https://substack.com/discover',
       desc: 'IA en entreprise, adoption, formation',
     },
+    {
+      name: 'Melissa Tauqnam',
+      author: 'Substack',
+      url: 'https://substack.com/@melissatauqnam',
+      desc: 'Newsletter IA et tech',
+    },
   ],
   us: [
     {
@@ -69,6 +75,11 @@ const NEWSLETTERS = {
 const YOUTUBE = {
   fr: [
     {
+      name: 'Ludo Salenne',
+      url: 'https://www.youtube.com/@LudovicSalenne',
+      desc: 'IA, ChatGPT, automatisation, tutoriels (250K abonnés)',
+    },
+    {
       name: 'Hugging Face',
       url: 'https://www.youtube.com/@HuggingFace',
       desc: 'Modèles open source, LLMs, tutoriels',
@@ -101,6 +112,11 @@ const YOUTUBE = {
       desc: 'Actualités IA, analyses hebdo',
     },
     {
+      name: 'Shubham Sharma',
+      url: 'https://www.youtube.com/@Shubham_Sharma',
+      desc: 'IA, tech, tutoriels',
+    },
+    {
       name: 'Two Minute Papers',
       url: 'https://www.youtube.com/@TwoMinutePapers',
       desc: 'Recherche IA/ML vulgarisée',
@@ -131,12 +147,15 @@ const YOUTUBE = {
 const LINKEDIN = {
   fr: [
     { name: 'Laure Olivié', url: 'https://www.linkedin.com/in/laure-olivie/', desc: 'Formatrice IA BTP, formation professionnelle' },
+    { name: 'Pauline Ebel', url: 'https://www.linkedin.com/in/paulineebel/', desc: 'IA, ChatGPT, prompts, formation (Les prompts de Pauline)' },
+    { name: 'Jean-Baptiste Berthoux', url: 'https://www.linkedin.com/in/jean-baptiste-berthoux/', desc: 'IA, transformation, conseil' },
     { name: 'Julien Dubois', url: 'https://www.linkedin.com/in/juliendubois/', desc: 'IA, transformation digitale, conseil' },
     { name: 'Anne-Sophie de Branche', url: 'https://www.linkedin.com/in/annesophiedebranche/', desc: 'IA générative, formation, RH' },
     { name: 'Fabien Girardin', url: 'https://www.linkedin.com/in/fabiengirardin/', desc: 'Data science, IA, innovation' },
     { name: 'Marie de Moy', url: 'https://www.linkedin.com/in/mariedemoy/', desc: 'IA, transformation, conseil' },
   ],
   us: [
+    { name: 'Ruben Hassid', url: 'https://www.linkedin.com/in/ruben-hassid/', desc: 'IA, LinkedIn, EasyGen, 600K+ abonnés' },
     { name: 'Andrew Ng', url: 'https://www.linkedin.com/in/andrewyng/', desc: 'DeepLearning.AI, ML, formation IA' },
     { name: 'Allie K. Miller', url: 'https://www.linkedin.com/in/alliekmiller/', desc: 'IA business, product, stratégie' },
     { name: 'Ethan Mollick', url: 'https://www.linkedin.com/in/emollick/', desc: 'IA en éducation, recherche Wharton' },

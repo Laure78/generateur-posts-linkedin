@@ -1,11 +1,14 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { Copy, Send, Sparkles } from 'lucide-react';
+import { Copy, Send, Sparkles, Paperclip, X } from 'lucide-react';
 import { OPENROUTER_MODELS } from '../../../lib/aiProvider';
 
 const BLUE = '#377CF3';
 const STORAGE_KEY = 'createur_knowledge_base';
+const MEMORY_KEY = 'ghostwriter_memory';
+
+type Attachment = { id: string; name: string; content: string };
 
 const QUICK_ACTIONS = [
   { label: 'Génère un brouillon', text: "J'ai une idée de post mais je ne sais pas par où commencer. Peux-tu m'écrire un brouillon ? (je te donnerai le sujet dans le message suivant si besoin)" },
@@ -39,15 +42,54 @@ function getCustomKnowledge(): string {
 
 type Message = { role: 'user' | 'assistant'; content: string };
 
+function loadMemory(): { messages: Message[]; attachments: Attachment[] } {
+  if (typeof window === 'undefined') return { messages: [], attachments: [] };
+  try {
+    const raw = localStorage.getItem(MEMORY_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw) as { messages?: Message[]; attachments?: Attachment[] };
+      return {
+        messages: Array.isArray(parsed?.messages) ? parsed.messages : [],
+        attachments: Array.isArray(parsed?.attachments) ? parsed.attachments : [],
+      };
+    }
+  } catch {
+    // ignore
+  }
+  return { messages: [], attachments: [] };
+}
+
+function saveMemory(messages: Message[], attachments: Attachment[]) {
+  if (typeof window === 'undefined') return;
+  try {
+    localStorage.setItem(MEMORY_KEY, JSON.stringify({ messages, attachments }));
+  } catch {
+    // ignore
+  }
+}
+
 export default function GhostwriterPage() {
   const [messages, setMessages] = useState<Message[]>([]);
+  const [attachments, setAttachments] = useState<Attachment[]>([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
+  const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [provider, setProvider] = useState<'openrouter' | 'openai'>('openrouter');
   const [openRouterModel, setOpenRouterModel] = useState<string>(OPENROUTER_MODELS[0].id);
   const [copiedId, setCopiedId] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const { messages: m, attachments: a } = loadMemory();
+    setMessages(m);
+    setAttachments(a);
+  }, []);
+
+  useEffect(() => {
+    saveMemory(messages, attachments);
+  }, [messages, attachments]);
 
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -65,12 +107,16 @@ export default function GhostwriterPage() {
 
     try {
       const history = [...messages, userMsg].map((m) => ({ role: m.role, content: m.content }));
+      const attachmentsContext = attachments.length > 0
+        ? attachments.map((a) => `[${a.name}]\n${a.content}`).join('\n\n---\n\n')
+        : '';
       const res = await fetch('/api/ghostwriter', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           messages: history,
           customKnowledge: getCustomKnowledge(),
+          attachmentsContext,
           provider,
           openRouterModel: provider === 'openrouter' ? openRouterModel : undefined,
         }),
@@ -94,12 +140,48 @@ export default function GhostwriterPage() {
   const handleQuickAction = (item: (typeof QUICK_ACTIONS)[number]) => {
     if (item.isReset) {
       setMessages([]);
+      setAttachments([]);
       setError(null);
       return;
     }
     if (item.text) {
       sendMessage(item.text);
     }
+  };
+
+  const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files?.length) return;
+    setUploading(true);
+    setError(null);
+    try {
+      for (const file of Array.from(files)) {
+        const formData = new FormData();
+        formData.append('file', file);
+        const res = await fetch('/api/extract-file-text', { method: 'POST', body: formData });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Erreur extraction');
+        const text = data.text || '';
+        if (text && text !== '(fichier vide)' && text !== '(aucun texte extrait)') {
+          setAttachments((prev) => [...prev, {
+            id: crypto.randomUUID(),
+            name: file.name,
+            content: text.slice(0, 15000),
+          }]);
+        } else {
+          setError(`Impossible d'extraire le texte de ${file.name}`);
+        }
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Erreur');
+    } finally {
+      setUploading(false);
+      if (fileInputRef.current) fileInputRef.current.value = '';
+    }
+  };
+
+  const removeAttachment = (id: string) => {
+    setAttachments((prev) => prev.filter((a) => a.id !== id));
   };
 
   const copyContent = (content: string, id: string) => {
@@ -149,6 +231,52 @@ export default function GhostwriterPage() {
         )}
       </div>
 
+      {/* PJ + Contexte */}
+      <div className="mb-4 flex flex-wrap items-center gap-2">
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept=".txt,.md,.pdf,.doc,.docx,.csv,.json,.html,.htm,.xml"
+          multiple
+          onChange={handleFileSelect}
+          className="hidden"
+        />
+        <button
+          type="button"
+          onClick={() => fileInputRef.current?.click()}
+          disabled={uploading}
+          className="flex items-center gap-2 rounded-xl border border-dashed border-neutral-300 px-3 py-2 text-xs font-medium text-neutral-600 hover:bg-neutral-50 disabled:opacity-50"
+        >
+          <Paperclip size={14} />
+          {uploading ? 'Extraction…' : 'Ajouter des PJ (PDF, TXT, Word)'}
+        </button>
+        {attachments.length > 0 && (
+          <span className="text-xs text-neutral-500">
+            {attachments.length} doc{attachments.length > 1 ? 's' : ''} en contexte
+          </span>
+        )}
+      </div>
+      {attachments.length > 0 && (
+        <div className="mb-4 flex flex-wrap gap-2">
+          {attachments.map((a) => (
+            <div
+              key={a.id}
+              className="flex items-center gap-1 rounded-lg bg-neutral-100 px-2 py-1.5 text-xs"
+            >
+              <span className="max-w-[120px] truncate" title={a.name}>{a.name}</span>
+              <button
+                type="button"
+                onClick={() => removeAttachment(a.id)}
+                className="rounded p-0.5 text-neutral-500 hover:bg-neutral-200 hover:text-neutral-700"
+                title="Retirer"
+              >
+                <X size={12} />
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
+
       {/* Raccourcis */}
       <div className="mb-4 flex flex-wrap gap-2">
         {QUICK_ACTIONS.map((item, i) => (
@@ -178,7 +306,7 @@ export default function GhostwriterPage() {
                 Commence par décrire ton idée, ou clique sur un raccourci ci-dessus.
               </p>
               <p className="mt-1 text-xs text-neutral-400">
-                Mon style sera chargé depuis Ma base si configurée.
+                Dépose des PJ pour le contexte. Ma base + conversation sont mémorisés.
               </p>
             </div>
           )}

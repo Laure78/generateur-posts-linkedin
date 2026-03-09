@@ -23,6 +23,7 @@ export async function POST(req: Request) {
     const {
       messages = [],
       customKnowledge = '',
+      attachmentsContext = '',
       provider = 'openrouter' as AIProvider,
       openRouterModel,
     } = body || {}
@@ -38,6 +39,13 @@ export async function POST(req: Request) {
 ---
 TON ET STYLE DE L'UTILISATEUR (à reproduire) :
 ${customKnowledge.trim()}`
+    }
+    if (attachmentsContext && typeof attachmentsContext === 'string' && attachmentsContext.trim()) {
+      systemPrompt += `
+
+---
+DOCUMENTS DÉPOSÉS PAR L'UTILISATEUR (contexte additionnel pour tes réponses) :
+${attachmentsContext.trim()}`
     }
 
     // Construire le prompt utilisateur à partir des messages

@@ -9,6 +9,8 @@ const PRESET_THEMES = [
   'Devis et chiffrage avec l\'IA',
   'Productivité des artisans',
   'Transformation numérique BTP',
+  'Outils IA',
+  'Appel d\'offres BTP',
 ];
 
 const CARD_COLORS = [
