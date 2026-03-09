@@ -6,7 +6,6 @@ import { useState } from 'react';
 import {
   Sparkles,
   FileEdit,
-  Quote,
   Lightbulb,
   Eye,
   Newspaper,
@@ -23,6 +22,7 @@ import {
   Zap,
   Layers,
   Bot,
+  PenLine,
 } from 'lucide-react';
 
 const LINKEDIN_URL = 'https://www.linkedin.com/in/laure-olivie/';
@@ -35,8 +35,8 @@ const nav = [
     title: 'CRÉER',
     items: [
       { href: '/outil/generateur', label: 'Générer un post', Icon: Sparkles },
+      { href: '/outil/ghostwriter', label: 'Ghostwriter', Icon: PenLine },
       { href: '/outil/editeur', label: 'Éditeur', Icon: FileEdit },
-      { href: '/outil/accroches', label: 'Accroches', Icon: Quote },
       { href: '/outil/contenu-avance', label: 'Hooks & contenu', Icon: Zap },
       { href: '/outil/structures', label: 'Structures', Icon: Layers },
     ],
