@@ -9,9 +9,10 @@ import {
   LayoutGrid,
   Search,
   MessageSquareReply,
-  Rocket,
   BarChart2,
   PenLine,
+  MessageCircle,
+  UserSearch,
 } from 'lucide-react';
 
 const COMMANDS = [
@@ -21,7 +22,8 @@ const COMMANDS = [
   { id: 'ideas', label: 'Générateur d\'idées', href: '/outil/idees', icon: Lightbulb },
   { id: 'drafts', label: 'Mes brouillons', href: '/outil/mes-posts', icon: LayoutGrid },
   { id: 'replies', label: 'Répondre aux commentaires', href: '/outil/repondre-commentaires', icon: MessageSquareReply },
-  { id: 'growth', label: 'Growth', href: '/outil/croissance', icon: Rocket },
+  { id: 'commenter', label: 'Commenter un post', href: '/outil/croissance', icon: MessageCircle },
+  { id: 'analyser', label: 'Analyser profil LinkedIn', href: '/outil/analyser-profil', icon: UserSearch },
   { id: 'metrics', label: 'Métriques', href: '/outil/metriques', icon: BarChart2 },
 ];
 

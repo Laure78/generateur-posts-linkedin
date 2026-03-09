@@ -12,7 +12,6 @@ import {
   User,
   BarChart2,
   MessageSquareReply,
-  Rocket,
   ChevronLeft,
   ChevronRight,
   Linkedin,
@@ -21,6 +20,8 @@ import {
   PenLine,
   Menu,
   X,
+  MessageCircle,
+  UserSearch,
 } from 'lucide-react';
 
 const LINKEDIN_URL = 'https://www.linkedin.com/in/laure-olivie/';
@@ -61,7 +62,8 @@ const SECTIONS = [
     defaultOpen: true,
     items: [
       { href: '/outil/repondre-commentaires', label: 'Répondre aux commentaires', Icon: MessageSquareReply },
-      { href: '/outil/croissance', label: 'Growth', Icon: Rocket },
+      { href: '/outil/croissance', label: 'Commenter un post', Icon: MessageCircle },
+      { href: '/outil/analyser-profil', label: 'Analyser profil LinkedIn', Icon: UserSearch },
       { href: '/outil/metriques', label: 'Métriques', Icon: BarChart2 },
     ],
   },
