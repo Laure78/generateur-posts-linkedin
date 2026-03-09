@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
+import { useTeam } from '@/lib/TeamContext';
 import {
   Sparkles,
   Lightbulb,
@@ -12,7 +13,6 @@ import {
   BookOpen,
   User,
   BarChart2,
-  MessageCircle,
   MessageSquareReply,
   Rocket,
   ChevronLeft,
@@ -58,7 +58,6 @@ const nav = [
       { href: '/outil/repondre-commentaires', label: 'Répondre aux commentaires', Icon: MessageSquareReply },
       { href: '/outil/croissance', label: 'Growth', Icon: Rocket },
       { href: '/outil/metriques', label: 'Métriques', Icon: BarChart2 },
-      { href: '/outil/engagement', label: 'Engagement', Icon: MessageCircle },
     ],
   },
   {
@@ -73,6 +72,7 @@ const nav = [
 export default function AppSidebar() {
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(false);
+  const { isPreviewMode, role } = useTeam();
 
   return (
     <aside
@@ -100,6 +100,19 @@ export default function AppSidebar() {
         </button>
       </div>
 
+      {isPreviewMode && !collapsed && (
+        <div className="mx-2 mb-2 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2">
+          <p className="text-xs font-medium text-amber-800">
+            Mode test : {role === 'lecteur' ? 'Lecteur' : 'Éditeur'}
+          </p>
+          <Link
+            href="/outil/comptes"
+            className="mt-1 block text-xs text-amber-700 hover:underline"
+          >
+            Revenir en Propriétaire →
+          </Link>
+        </div>
+      )}
       <nav className="flex-1 overflow-y-auto py-4">
         {nav.map((section) => (
           <div key={section.title} className="mb-6">

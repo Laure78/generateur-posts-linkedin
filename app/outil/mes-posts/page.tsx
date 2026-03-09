@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useTeam } from '@/lib/TeamContext';
 
 type PostStatus = 'tous' | 'brouillons' | 'planifies' | 'publies' | 'favoris';
 type PostLabel = 'Instructif' | 'Inspirant' | 'Storytelling' | 'Conseil' | 'Ressources';
@@ -89,6 +90,7 @@ const LABEL_COLORS: Record<PostLabel, string> = {
 };
 
 export default function MesPostsPage() {
+  const { canCreate, canEdit } = useTeam();
   const [posts, setPosts] = useState<Post[]>(DEFAULT_POSTS);
   const [filter, setFilter] = useState<PostStatus>('tous');
   const [search, setSearch] = useState('');
@@ -223,6 +225,11 @@ export default function MesPostsPage() {
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-neutral-800">Mes posts</h1>
         <p className="mt-1 text-neutral-600">Prépare tes posts pour les publier. {useSupabase && <span className="text-xs text-emerald-600">(Supabase)</span>}</p>
+        {!canEdit && (
+          <p className="mt-2 rounded-lg border border-amber-200 bg-amber-50 px-4 py-2 text-sm text-amber-800">
+            Mode lecture seule : tu peux consulter les posts mais pas les modifier.
+          </p>
+        )}
       </div>
 
       {loading && (
@@ -262,13 +269,20 @@ export default function MesPostsPage() {
               className="w-56 rounded-xl border border-neutral-200 py-2 pl-9 pr-4 text-sm"
             />
           </div>
-          <Link
-            href="/outil/generateur"
-            className="flex items-center gap-2 rounded-xl bg-[#377CF3] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#2d6ad4]"
-          >
-            <span>+</span>
-            Créer un post
-          </Link>
+          {canCreate ? (
+            <Link
+              href="/outil/generateur"
+              className="flex items-center gap-2 rounded-xl bg-[#377CF3] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#2d6ad4]"
+            >
+              <span>+</span>
+              Créer un post
+            </Link>
+          ) : (
+            <span className="flex items-center gap-2 rounded-xl border border-neutral-200 bg-neutral-100 px-4 py-2.5 text-sm font-medium text-neutral-400 cursor-not-allowed">
+              <span>+</span>
+              Créer un post (lecture seule)
+            </span>
+          )}
         </div>
       </div>
 
@@ -282,6 +296,7 @@ export default function MesPostsPage() {
                   type="checkbox"
                   checked={filtered.length > 0 && selectedIds.size === filtered.length}
                   onChange={toggleSelectAll}
+                  disabled={!canEdit}
                   className="rounded"
                 />
               </th>
@@ -301,6 +316,7 @@ export default function MesPostsPage() {
                     type="checkbox"
                     checked={selectedIds.has(post.id)}
                     onChange={() => toggleSelect(post.id)}
+                    disabled={!canEdit}
                     className="rounded"
                   />
                 </td>
@@ -323,7 +339,8 @@ export default function MesPostsPage() {
                 <td className="px-4 py-3">
                   <button
                     type="button"
-                    className="rounded-lg border border-dashed border-neutral-200 px-2 py-1 text-xs text-neutral-500 hover:bg-neutral-50"
+                    disabled={!canEdit}
+                    className="rounded-lg border border-dashed border-neutral-200 px-2 py-1 text-xs text-neutral-500 hover:bg-neutral-50 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     + Ajouter
                   </button>
@@ -332,7 +349,8 @@ export default function MesPostsPage() {
                   <select
                     value={post.label}
                     onChange={(e) => updateLabel(post.id, e.target.value as PostLabel)}
-                    className={`rounded-lg border-0 px-2 py-1 text-xs font-medium ${LABEL_COLORS[post.label]}`}
+                    disabled={!canEdit}
+                    className={`rounded-lg border-0 px-2 py-1 text-xs font-medium ${LABEL_COLORS[post.label]} disabled:opacity-60 disabled:cursor-not-allowed`}
                   >
                     {(Object.keys(LABEL_COLORS) as PostLabel[]).map((l) => (
                       <option key={l} value={l}>
@@ -346,30 +364,33 @@ export default function MesPostsPage() {
                     <button
                       type="button"
                       onClick={() => toggleFavorite(post.id)}
-                      className={`rounded p-1.5 ${post.favorite ? 'text-rose-500' : 'text-neutral-400 hover:text-rose-400'}`}
+                      disabled={!canEdit}
+                      className={`rounded p-1.5 ${post.favorite ? 'text-rose-500' : 'text-neutral-400 hover:text-rose-400'} disabled:opacity-50 disabled:cursor-not-allowed`}
                     >
                       {post.favorite ? '♥' : '♡'}
                     </button>
-                    <div className="relative group">
-                      <button type="button" className="rounded p-1.5 text-neutral-400 hover:bg-neutral-100 hover:text-neutral-600">
-                        ⋮
-                      </button>
-                      <div className="absolute right-0 top-full z-10 mt-1 hidden w-36 rounded-lg border border-neutral-200 bg-white py-1 shadow-lg group-hover:block">
-                        <Link
-                          href={`/outil/editeur?post=${post.id}`}
-                          className="block px-3 py-2 text-left text-sm text-neutral-700 hover:bg-neutral-50"
-                        >
-                          Modifier
-                        </Link>
-                        <button
-                          type="button"
-                          onClick={() => deletePost(post.id)}
-                          className="block w-full px-3 py-2 text-left text-sm text-red-600 hover:bg-red-50"
-                        >
-                          Supprimer
+                    {canEdit && (
+                      <div className="relative group">
+                        <button type="button" className="rounded p-1.5 text-neutral-400 hover:bg-neutral-100 hover:text-neutral-600">
+                          ⋮
                         </button>
+                        <div className="absolute right-0 top-full z-10 mt-1 hidden w-36 rounded-lg border border-neutral-200 bg-white py-1 shadow-lg group-hover:block">
+                          <Link
+                            href={`/outil/editeur?post=${post.id}`}
+                            className="block px-3 py-2 text-left text-sm text-neutral-700 hover:bg-neutral-50"
+                          >
+                            Modifier
+                          </Link>
+                          <button
+                            type="button"
+                            onClick={() => deletePost(post.id)}
+                            className="block w-full px-3 py-2 text-left text-sm text-red-600 hover:bg-red-50"
+                          >
+                            Supprimer
+                          </button>
+                        </div>
                       </div>
-                    </div>
+                    )}
                   </div>
                 </td>
               </tr>

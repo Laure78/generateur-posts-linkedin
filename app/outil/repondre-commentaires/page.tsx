@@ -1,12 +1,14 @@
 'use client';
 
 import { useState } from 'react';
+import { useTeam } from '@/lib/TeamContext';
 import { Copy, Sparkles, Check } from 'lucide-react';
 import { OPENROUTER_MODELS } from '../../../lib/aiProvider';
 
 const BLUE = '#377CF3';
 
 export default function RepondreCommentairesPage() {
+  const { canCreate } = useTeam();
   const [comments, setComments] = useState('');
   const [originalPost, setOriginalPost] = useState('');
   const [provider, setProvider] = useState<'openrouter' | 'openai'>('openrouter');
@@ -126,10 +128,15 @@ export default function RepondreCommentairesPage() {
           )}
         </div>
 
+        {!canCreate && (
+          <p className="rounded-lg border border-amber-200 bg-amber-50 px-4 py-2 text-sm text-amber-800">
+            Mode lecture seule : tu n&apos;as pas les droits pour générer des réponses.
+          </p>
+        )}
         <button
           type="button"
           onClick={handleGenerate}
-          disabled={loading || !comments.trim()}
+          disabled={loading || !comments.trim() || !canCreate}
           className="flex w-full items-center justify-center gap-2 rounded-xl px-6 py-4 text-sm font-semibold text-white disabled:opacity-50"
           style={{ backgroundColor: BLUE }}
         >

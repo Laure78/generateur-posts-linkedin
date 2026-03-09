@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useState, useRef, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
+import { useTeam } from '@/lib/TeamContext';
 import { TEMPLATES } from '../../../lib/templates';
 import { getHashtagsForSector } from '../../../lib/hashtags';
 import PostPreview from '../../components/PostPreview';
@@ -95,6 +96,7 @@ type TabId = 'sujet' | 'url' | 'fichier' | 'voix';
 const DEFAULT_SUBJECT = "Comment l'IA peut m'aider à gagner du temps sur mes devis et mes emails chantier ?";
 
 function GenerateurPage() {
+  const { canCreate } = useTeam();
   const searchParams = useSearchParams();
   const [postType, setPostType] = useState('instructif');
   const [category, setCategory] = useState('explication-analyse');
@@ -1143,11 +1145,16 @@ function GenerateurPage() {
         )}
 
         {/* Generate buttons */}
+        {!canCreate && (
+          <p className="mb-3 rounded-lg border border-amber-200 bg-amber-50 px-4 py-2 text-sm text-amber-800">
+            Mode lecture seule : tu n&apos;as pas les droits pour générer des posts.
+          </p>
+        )}
         <div className="flex gap-3">
           <button
             type="button"
             onClick={handleGenerate}
-            disabled={isLoading || fullContentLoading}
+            disabled={isLoading || fullContentLoading || !canCreate}
             className="flex-1 rounded-xl bg-[#377CF3] py-4 text-base font-semibold text-white hover:bg-[#2d6ad4] transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
           >
             {isLoading ? 'Génération…' : 'Générer un post'}
@@ -1216,7 +1223,7 @@ function GenerateurPage() {
                 setFullContentLoading(false);
               }
             }}
-            disabled={isLoading || fullContentLoading}
+            disabled={isLoading || fullContentLoading || !canCreate}
             className="rounded-xl border-2 border-[#377CF3] bg-white py-4 px-6 text-base font-semibold text-[#377CF3] hover:bg-[#377CF3]/10 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
           >
             {fullContentLoading ? '…' : 'Générer contenu complet'}

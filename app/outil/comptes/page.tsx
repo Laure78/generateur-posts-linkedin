@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useTeam } from '@/lib/TeamContext';
 
 type Role = 'proprietaire' | 'editeur' | 'lecteur';
 
@@ -60,6 +61,7 @@ function saveToStorage(key: string, value: unknown) {
 }
 
 export default function ComptesPage() {
+  const { role, isPreviewMode, canManageTeam, setPreviewRole } = useTeam();
   const [accounts, setAccounts] = useState<Account[]>(() =>
     loadFromStorage(STORAGE_ACCOUNTS, DEFAULT_ACCOUNTS)
   );
@@ -147,6 +149,44 @@ export default function ComptesPage() {
         <p className="mt-1 text-neutral-600">
           Gère tes comptes et partage l&apos;accès à l&apos;outil avec ton équipe.
         </p>
+        {members.length > 0 && (
+          <span className="mt-2 inline-flex items-center rounded-full bg-emerald-100 px-3 py-1 text-xs font-medium text-emerald-800">
+            ✓ Travail en équipe activé — {members.length} collaborateur{members.length > 1 ? 's' : ''}
+          </span>
+        )}
+        {isPreviewMode && (
+          <div className="mt-4 flex flex-wrap items-center gap-2 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3">
+            <span className="text-sm font-medium text-amber-800">
+              Mode test : tu simules le rôle &quot;{role === 'lecteur' ? 'Lecteur' : 'Éditeur'}&quot;
+            </span>
+            <button
+              type="button"
+              onClick={() => setPreviewRole(null)}
+              className="rounded-lg bg-amber-200 px-3 py-1.5 text-xs font-medium text-amber-900 hover:bg-amber-300"
+            >
+              Revenir en Propriétaire
+            </button>
+          </div>
+        )}
+        {!isPreviewMode && (
+          <div className="mt-4 flex flex-wrap items-center gap-2">
+            <span className="text-xs text-neutral-500">Tester en tant que :</span>
+            <button
+              type="button"
+              onClick={() => setPreviewRole('editeur')}
+              className="rounded-lg border border-neutral-200 bg-white px-3 py-1.5 text-xs font-medium text-neutral-600 hover:bg-neutral-50"
+            >
+              Éditeur
+            </button>
+            <button
+              type="button"
+              onClick={() => setPreviewRole('lecteur')}
+              className="rounded-lg border border-neutral-200 bg-white px-3 py-1.5 text-xs font-medium text-neutral-600 hover:bg-neutral-50"
+            >
+              Lecteur (lecture seule)
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Multi-comptes */}
@@ -295,8 +335,8 @@ export default function ComptesPage() {
         </div>
 
         <p className="mt-6 text-xs text-neutral-500">
-          Les invitations sont envoyées par email. Le partage est géré localement pour cette démo.
-          Pour une version production, connecte Supabase Auth.
+          Le partage est actif : invite des collaborateurs, attribue un rôle (Éditeur ou Lecteur)
+          et gère les accès depuis cette page. Pour envoyer de vraies invitations par email, connecte Supabase Auth.
         </p>
       </section>
     </div>

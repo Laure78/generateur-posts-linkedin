@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
+import { useTeam } from '@/lib/TeamContext';
 import { Copy, Send, Sparkles, X, Lock, FileText, Plus } from 'lucide-react';
 import { OPENROUTER_MODELS } from '../../../lib/aiProvider';
 
@@ -98,6 +99,7 @@ function saveMemory(messages: Message[], attachments: Attachment[]) {
 }
 
 export default function GhostwriterPage() {
+  const { canCreate } = useTeam();
   const [messages, setMessages] = useState<Message[]>([]);
   const [attachments, setAttachments] = useState<Attachment[]>([]);
   const [input, setInput] = useState('');
@@ -355,6 +357,11 @@ export default function GhostwriterPage() {
 
         {error && <p className="px-4 py-2 text-sm text-red-600">{error}</p>}
 
+        {!canCreate && (
+          <p className="mx-4 mt-2 rounded-lg border border-amber-200 bg-amber-50 px-4 py-2 text-sm text-amber-800">
+            Mode lecture seule : tu n&apos;as pas les droits pour envoyer des messages.
+          </p>
+        )}
         <form onSubmit={handleSubmit} className="border-t border-neutral-200 p-4">
           <div className="flex gap-2">
             <input
@@ -363,11 +370,11 @@ export default function GhostwriterPage() {
               onChange={(e) => setInput(e.target.value)}
               placeholder="Ton message…"
               className="flex-1 rounded-xl border border-neutral-200 px-4 py-3 text-sm focus:border-[#377CF3] focus:outline-none focus:ring-2 focus:ring-[#377CF3]/20"
-              disabled={loading}
+              disabled={loading || !canCreate}
             />
             <button
               type="submit"
-              disabled={loading}
+              disabled={loading || !canCreate}
               className="flex items-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold text-white disabled:opacity-50"
               style={{ backgroundColor: BLUE }}
             >
