@@ -239,24 +239,32 @@ export default function MesPostsPage() {
       {/* Filtres + Actions */}
       <div className="mb-4 flex flex-wrap items-center justify-between gap-4">
         <div className="flex flex-wrap gap-2">
-          {(['tous', 'brouillons', 'planifies', 'publies', 'favoris'] as const).map((f) => (
-            <button
-              key={f}
-              type="button"
-              onClick={() => setFilter(f)}
-              className={`flex items-center gap-1.5 rounded-xl px-4 py-2 text-sm font-medium transition-colors ${
-                filter === f
-                  ? 'bg-neutral-200 text-neutral-900'
-                  : 'border border-neutral-200 bg-white text-neutral-600 hover:bg-neutral-50'
-              }`}
-            >
-              {f === 'tous' && 'Tous'}
-              {f === 'brouillons' && <>📄 Brouillons</>}
-              {f === 'planifies' && <>📅 Planifiés</>}
-              {f === 'publies' && <>✓ Publiés</>}
-              {f === 'favoris' && <>★ Favoris</>}
-            </button>
-          ))}
+          {(['tous', 'brouillons', 'planifies', 'publies', 'favoris'] as const).map((f) => {
+            const count = f === 'tous' ? posts.length : f === 'brouillons' ? posts.filter((p) => p.status === 'brouillon').length : f === 'planifies' ? posts.filter((p) => p.status === 'planifie').length : f === 'publies' ? posts.filter((p) => p.status === 'publie').length : posts.filter((p) => p.favorite).length;
+            return (
+              <button
+                key={f}
+                type="button"
+                onClick={() => setFilter(f)}
+                className={`flex items-center gap-1.5 rounded-xl px-4 py-2 text-sm font-medium transition-colors ${
+                  filter === f
+                    ? 'bg-[#377CF3] text-white shadow-sm'
+                    : 'border border-neutral-200 bg-white text-neutral-600 hover:bg-neutral-50 hover:border-neutral-300'
+                }`}
+              >
+                {f === 'tous' && 'Tous'}
+                {f === 'brouillons' && <>📄 Brouillons</>}
+                {f === 'planifies' && <>📅 Planifiés</>}
+                {f === 'publies' && <>✓ Publiés</>}
+                {f === 'favoris' && <>★ Favoris</>}
+                {count > 0 && (
+                  <span className={`rounded-full px-2 py-0.5 text-xs font-semibold ${filter === f ? 'bg-white/20' : 'bg-neutral-100 text-neutral-500'}`}>
+                    {count}
+                  </span>
+                )}
+              </button>
+            );
+          })}
         </div>
         <div className="flex items-center gap-2">
           <div className="relative">

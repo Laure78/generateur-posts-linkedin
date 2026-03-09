@@ -486,7 +486,7 @@ function GenerateurPage() {
               <p className="mt-4 text-xs font-medium text-neutral-500">
                 Ou enrichis ta{' '}
                 <Link
-                  href="/outil/base-connaissance"
+                  href="/outil/ghostwriter"
                   className="text-[#377CF3] hover:underline"
                   onClick={() => setShowPersonnaliseModal(false)}
                 >

@@ -11,11 +11,11 @@ import {
   MessageSquareReply,
   Rocket,
   BarChart2,
-  Bot,
+  PenLine,
 } from 'lucide-react';
 
 const COMMANDS = [
-  { id: 'autopilot', label: 'Autopilot LinkedIn', href: '/outil/autopilot', icon: Bot },
+  { id: 'ghostwriter', label: 'Ghostwriter', href: '/outil/ghostwriter', icon: PenLine },
   { id: 'post', label: 'Générer un post', href: '/outil/generateur', icon: Sparkles },
   { id: 'hooks', label: 'Générer des hooks', href: '/outil/contenu-avance', icon: Zap },
   { id: 'ideas', label: 'Générateur d\'idées', href: '/outil/idees', icon: Lightbulb },

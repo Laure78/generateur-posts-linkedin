@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { useTeam } from '@/lib/TeamContext';
-import { Copy, Send, Sparkles, X, Lock, FileText, Plus } from 'lucide-react';
+import { Copy, Send, Sparkles, X, Lock, FileText, Plus, BookOpen } from 'lucide-react';
 import { OPENROUTER_MODELS } from '../../../lib/aiProvider';
 
 const BLUE = '#377CF3';
@@ -10,9 +10,39 @@ const STORAGE_KEY = 'createur_knowledge_base';
 const MEMORY_KEY = 'ghostwriter_memory';
 const ASSISTANT_CONFIG_KEY = 'ghostwriter_assistant_config';
 
+type Reference = { id: string; label: string; url: string; content: string };
+type KnowledgeBase = { references: Reference[]; oldPosts: string; styleSummary?: string };
+
 type Attachment = { id: string; name: string; content: string };
 
 type AssistantConfig = { instructions: string; projectMemory: string };
+
+function loadKnowledgeBase(): KnowledgeBase {
+  if (typeof window === 'undefined') return { references: [], oldPosts: '', styleSummary: '' };
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw) as Partial<KnowledgeBase>;
+      return {
+        references: Array.isArray(parsed?.references) ? parsed.references : [],
+        oldPosts: typeof parsed?.oldPosts === 'string' ? parsed.oldPosts : '',
+        styleSummary: typeof parsed?.styleSummary === 'string' ? parsed.styleSummary : '',
+      };
+    }
+  } catch {
+    // ignore
+  }
+  return { references: [], oldPosts: '', styleSummary: '' };
+}
+
+function saveKnowledgeBase(kb: KnowledgeBase) {
+  if (typeof window === 'undefined') return;
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(kb));
+  } catch {
+    // ignore
+  }
+}
 
 function loadAssistantConfig(): AssistantConfig {
   if (typeof window === 'undefined') return { instructions: '', projectMemory: '' };
@@ -112,16 +142,24 @@ export default function GhostwriterPage() {
   const [instructions, setInstructions] = useState('');
   const [projectMemory, setProjectMemory] = useState('');
   const [configPanelOpen, setConfigPanelOpen] = useState(true);
+  const [references, setReferences] = useState<Reference[]>([]);
+  const [oldPosts, setOldPosts] = useState('');
+  const [styleSummary, setStyleSummary] = useState('');
+  const [analyzing, setAnalyzing] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const { messages: m, attachments: a } = loadMemory();
     const config = loadAssistantConfig();
+    const kb = loadKnowledgeBase();
     setMessages(m);
     setAttachments(a);
     setInstructions(config.instructions);
     setProjectMemory(config.projectMemory);
+    setReferences(kb.references);
+    setOldPosts(kb.oldPosts);
+    setStyleSummary(kb.styleSummary || '');
   }, []);
 
   useEffect(() => {
@@ -131,6 +169,22 @@ export default function GhostwriterPage() {
   useEffect(() => {
     saveAssistantConfig({ instructions, projectMemory });
   }, [instructions, projectMemory]);
+
+  useEffect(() => {
+    saveKnowledgeBase({ references, oldPosts, styleSummary });
+  }, [references, oldPosts, styleSummary]);
+
+  const addReference = () => {
+    setReferences([...references, { id: crypto.randomUUID(), label: '', url: '', content: '' }]);
+  };
+
+  const updateReference = (id: string, updates: Partial<Reference>) => {
+    setReferences(references.map((r) => (r.id === id ? { ...r, ...updates } : r)));
+  };
+
+  const removeReference = (id: string) => {
+    setReferences(references.filter((r) => r.id !== id));
+  };
 
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -487,6 +541,113 @@ export default function GhostwriterPage() {
                 ))}
               </div>
             )}
+          </div>
+
+          {/* Base de connaissance */}
+          <div className="border-t border-neutral-100 pt-4">
+            <div className="mb-2 flex items-center gap-2">
+              <BookOpen size={14} className="text-neutral-400" />
+              <h3 className="text-xs font-semibold text-neutral-700">Base de connaissance</h3>
+            </div>
+            <p className="mb-3 text-xs text-neutral-500">
+              Références, posts LinkedIn et profil d&apos;écriture pour personnaliser l&apos;IA.
+            </p>
+
+            <div className="space-y-3">
+              <div>
+                <h4 className="mb-1 text-[11px] font-medium text-neutral-600">Références et liens</h4>
+                <div className="space-y-2">
+                  {references.map((ref) => (
+                    <div key={ref.id} className="rounded-lg border border-neutral-200 bg-neutral-50/80 p-2">
+                      <div className="mb-1 flex gap-1">
+                        <input
+                          type="text"
+                          value={ref.label}
+                          onChange={(e) => updateReference(ref.id, { label: e.target.value })}
+                          placeholder="Label"
+                          className="flex-1 rounded border border-neutral-200 px-2 py-1 text-[11px]"
+                        />
+                        <input
+                          type="url"
+                          value={ref.url}
+                          onChange={(e) => updateReference(ref.id, { url: e.target.value })}
+                          placeholder="URL"
+                          className="flex-1 rounded border border-neutral-200 px-2 py-1 text-[11px]"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => removeReference(ref.id)}
+                          className="rounded p-1 text-red-600 hover:bg-red-50"
+                          title="Supprimer"
+                        >
+                          <X size={12} />
+                        </button>
+                      </div>
+                      <textarea
+                        value={ref.content}
+                        onChange={(e) => updateReference(ref.id, { content: e.target.value })}
+                        placeholder="Contenu pertinent..."
+                        rows={2}
+                        className="w-full rounded border border-neutral-200 px-2 py-1 text-[11px]"
+                      />
+                    </div>
+                  ))}
+                  <button
+                    type="button"
+                    onClick={addReference}
+                    className="flex w-full items-center justify-center gap-1 rounded-lg border border-dashed border-neutral-300 py-2 text-[11px] text-neutral-500 hover:border-[#377CF3] hover:bg-[#377CF3]/5 hover:text-[#377CF3]"
+                  >
+                    <Plus size={12} />
+                    Ajouter une référence
+                  </button>
+                </div>
+              </div>
+
+              <div>
+                <h4 className="mb-1 text-[11px] font-medium text-neutral-600">Mes posts LinkedIn</h4>
+                <textarea
+                  value={oldPosts}
+                  onChange={(e) => setOldPosts(e.target.value)}
+                  placeholder="Colle tes posts, séparés par ---..."
+                  rows={3}
+                  className="w-full resize-y rounded-lg border border-neutral-200 px-2 py-1.5 text-[11px] placeholder:text-neutral-400 focus:border-[#377CF3] focus:outline-none focus:ring-2 focus:ring-[#377CF3]/20"
+                />
+              </div>
+
+              <div className="rounded-lg border border-[#377CF3]/30 bg-[#377CF3]/5 p-2">
+                <h4 className="mb-1 text-[11px] font-medium text-[#377CF3]">Apprendre mon style</h4>
+                <button
+                  type="button"
+                  onClick={async () => {
+                    const posts = oldPosts.trim();
+                    if (!posts) return;
+                    setAnalyzing(true);
+                    try {
+                      const res = await fetch('/api/analyze-style', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ posts }),
+                      });
+                      const d = await res.json();
+                      if (res.ok && d.styleSummary) setStyleSummary(d.styleSummary);
+                    } finally {
+                      setAnalyzing(false);
+                    }
+                  }}
+                  disabled={!oldPosts.trim() || analyzing}
+                  className="mb-2 rounded-lg bg-[#377CF3] px-3 py-1.5 text-[11px] font-medium text-white hover:bg-[#2d6ad4] disabled:opacity-50"
+                >
+                  {analyzing ? 'Analyse…' : 'Analyser et extraire mon style'}
+                </button>
+                <textarea
+                  value={styleSummary}
+                  onChange={(e) => setStyleSummary(e.target.value)}
+                  placeholder="Profil d'écriture (rempli après analyse)"
+                  rows={2}
+                  className="w-full rounded border border-[#377CF3]/30 bg-white px-2 py-1 text-[11px] placeholder:text-neutral-400 focus:border-[#377CF3] focus:outline-none focus:ring-1 focus:ring-[#377CF3]/20"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>

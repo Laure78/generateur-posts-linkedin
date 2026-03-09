@@ -2,13 +2,13 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Sparkles, Zap, Lightbulb, LayoutGrid, BarChart2, Bot } from 'lucide-react';
+import { Sparkles, Zap, Lightbulb, LayoutGrid, BarChart2, PenLine } from 'lucide-react';
 import { Card, CardHeader } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { SectionHeader } from '../components/ui/SectionHeader';
 
 const QUICK_ACTIONS = [
-  { href: '/outil/autopilot', label: 'Générer mon mois de contenu', Icon: Bot, desc: 'Autopilot : stratégie complète sur 30 jours' },
+  { href: '/outil/ghostwriter', label: 'Ghostwriter', Icon: PenLine, desc: 'Assistant rédactionnel avec base de connaissance' },
   { href: '/outil/generateur', label: 'Générer un post', Icon: Sparkles, desc: 'Crée un post LinkedIn à partir d\'un sujet' },
   { href: '/outil/contenu-avance', label: 'Générer des hooks', Icon: Zap, desc: 'Accroches percutantes pour tes posts' },
   { href: '/outil/idees', label: 'Générateur d\'idées', Icon: Lightbulb, desc: 'Trouve des sujets à traiter' },

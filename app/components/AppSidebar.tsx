@@ -8,9 +8,7 @@ import {
   Sparkles,
   Lightbulb,
   Eye,
-  Newspaper,
   LayoutGrid,
-  BookOpen,
   User,
   BarChart2,
   MessageSquareReply,
@@ -23,7 +21,6 @@ import {
   PenLine,
   Menu,
   X,
-  Bot,
 } from 'lucide-react';
 
 const LINKEDIN_URL = 'https://www.linkedin.com/in/laure-olivie/';
@@ -35,7 +32,6 @@ const SECTIONS = [
     title: 'Créer',
     defaultOpen: true,
     items: [
-      { href: '/outil/autopilot', label: 'Autopilot LinkedIn', Icon: Bot },
       { href: '/outil/generateur', label: 'Générer un post', Icon: Sparkles },
       { href: '/outil/ghostwriter', label: 'Ghostwriter', Icon: PenLine },
       { href: '/outil/contenu-avance', label: 'Hooks', Icon: Zap },
@@ -49,7 +45,6 @@ const SECTIONS = [
     items: [
       { href: '/outil/idees', label: 'Idées', Icon: Lightbulb },
       { href: '/outil/inspirations', label: 'Inspirations', Icon: Eye },
-      { href: '/outil/veille', label: 'Veille', Icon: Newspaper },
     ],
   },
   {
@@ -58,7 +53,6 @@ const SECTIONS = [
     defaultOpen: true,
     items: [
       { href: '/outil/mes-posts', label: 'Mes posts', Icon: LayoutGrid },
-      { href: '/outil/base-connaissance', label: 'Ma base', Icon: BookOpen },
     ],
   },
   {

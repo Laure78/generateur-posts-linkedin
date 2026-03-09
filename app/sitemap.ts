@@ -35,11 +35,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'weekly',
       priority: 0.8,
     },
-    {
-      url: `${baseUrl}/outil/autopilot`,
-      lastModified: now,
-      changeFrequency: 'weekly',
-      priority: 0.9,
-    },
   ]
 }
