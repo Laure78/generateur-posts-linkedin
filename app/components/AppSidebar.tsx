@@ -5,23 +5,21 @@ import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import {
   Sparkles,
-  FileEdit,
   Lightbulb,
   Eye,
   Newspaper,
   LayoutGrid,
-  Calendar,
   BookOpen,
   User,
   BarChart2,
   MessageCircle,
+  MessageSquareReply,
   Rocket,
   ChevronLeft,
   ChevronRight,
   Linkedin,
   Zap,
   Layers,
-  Bot,
   PenLine,
 } from 'lucide-react';
 
@@ -36,7 +34,6 @@ const nav = [
     items: [
       { href: '/outil/generateur', label: 'Générer un post', Icon: Sparkles },
       { href: '/outil/ghostwriter', label: 'Ghostwriter', Icon: PenLine },
-      { href: '/outil/editeur', label: 'Éditeur', Icon: FileEdit },
       { href: '/outil/contenu-avance', label: 'Hooks & contenu', Icon: Zap },
       { href: '/outil/structures', label: 'Structures', Icon: Layers },
     ],
@@ -53,13 +50,12 @@ const nav = [
     title: 'ORGANISER',
     items: [
       { href: '/outil/mes-posts', label: 'Mes posts', Icon: LayoutGrid },
-      { href: '/outil/calendrier', label: 'Calendrier', Icon: Calendar },
     ],
   },
   {
     title: 'CROISSANCE',
     items: [
-      { href: '/outil/copilote', label: 'Copilote', Icon: Bot },
+      { href: '/outil/repondre-commentaires', label: 'Répondre aux commentaires', Icon: MessageSquareReply },
       { href: '/outil/croissance', label: 'Growth', Icon: Rocket },
       { href: '/outil/metriques', label: 'Métriques', Icon: BarChart2 },
       { href: '/outil/engagement', label: 'Engagement', Icon: MessageCircle },

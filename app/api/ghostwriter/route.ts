@@ -24,6 +24,8 @@ export async function POST(req: Request) {
       messages = [],
       customKnowledge = '',
       attachmentsContext = '',
+      customInstructions = '',
+      projectMemory = '',
       provider = 'openrouter' as AIProvider,
       openRouterModel,
     } = body || {}
@@ -33,6 +35,25 @@ export async function POST(req: Request) {
     }
 
     let systemPrompt = GHOSTWRITER_SYSTEM
+
+    // Instructions personnalisées (priorité haute)
+    if (customInstructions && typeof customInstructions === 'string' && customInstructions.trim()) {
+      systemPrompt += `
+
+---
+INSTRUCTIONS PERSONNALISÉES DE L'UTILISATEUR (à respecter strictement) :
+${customInstructions.trim()}`
+    }
+
+    // Mémoire du projet
+    if (projectMemory && typeof projectMemory === 'string' && projectMemory.trim()) {
+      systemPrompt += `
+
+---
+MÉMOIRE DU PROJET (contexte à mémoriser entre les conversations) :
+${projectMemory.trim()}`
+    }
+
     if (customKnowledge && typeof customKnowledge === 'string' && customKnowledge.trim()) {
       systemPrompt += `
 
@@ -44,7 +65,7 @@ ${customKnowledge.trim()}`
       systemPrompt += `
 
 ---
-DOCUMENTS DÉPOSÉS PAR L'UTILISATEUR (contexte additionnel pour tes réponses) :
+DOCUMENTS / BASE DE CONNAISSANCES (contexte additionnel pour tes réponses) :
 ${attachmentsContext.trim()}`
     }
 

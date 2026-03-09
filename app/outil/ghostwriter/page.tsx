@@ -1,14 +1,43 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { Copy, Send, Sparkles, Paperclip, X } from 'lucide-react';
+import { Copy, Send, Sparkles, X, Lock, FileText, Plus } from 'lucide-react';
 import { OPENROUTER_MODELS } from '../../../lib/aiProvider';
 
 const BLUE = '#377CF3';
 const STORAGE_KEY = 'createur_knowledge_base';
 const MEMORY_KEY = 'ghostwriter_memory';
+const ASSISTANT_CONFIG_KEY = 'ghostwriter_assistant_config';
 
 type Attachment = { id: string; name: string; content: string };
+
+type AssistantConfig = { instructions: string; projectMemory: string };
+
+function loadAssistantConfig(): AssistantConfig {
+  if (typeof window === 'undefined') return { instructions: '', projectMemory: '' };
+  try {
+    const raw = localStorage.getItem(ASSISTANT_CONFIG_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw) as AssistantConfig;
+      return {
+        instructions: typeof parsed?.instructions === 'string' ? parsed.instructions : '',
+        projectMemory: typeof parsed?.projectMemory === 'string' ? parsed.projectMemory : '',
+      };
+    }
+  } catch {
+    // ignore
+  }
+  return { instructions: '', projectMemory: '' };
+}
+
+function saveAssistantConfig(config: AssistantConfig) {
+  if (typeof window === 'undefined') return;
+  try {
+    localStorage.setItem(ASSISTANT_CONFIG_KEY, JSON.stringify(config));
+  } catch {
+    // ignore
+  }
+}
 
 const QUICK_ACTIONS = [
   { label: 'Génère un brouillon', text: "J'ai une idée de post mais je ne sais pas par où commencer. Peux-tu m'écrire un brouillon ? (je te donnerai le sujet dans le message suivant si besoin)" },
@@ -78,18 +107,28 @@ export default function GhostwriterPage() {
   const [provider, setProvider] = useState<'openrouter' | 'openai'>('openrouter');
   const [openRouterModel, setOpenRouterModel] = useState<string>(OPENROUTER_MODELS[0].id);
   const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [instructions, setInstructions] = useState('');
+  const [projectMemory, setProjectMemory] = useState('');
+  const [configPanelOpen, setConfigPanelOpen] = useState(true);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const { messages: m, attachments: a } = loadMemory();
+    const config = loadAssistantConfig();
     setMessages(m);
     setAttachments(a);
+    setInstructions(config.instructions);
+    setProjectMemory(config.projectMemory);
   }, []);
 
   useEffect(() => {
     saveMemory(messages, attachments);
   }, [messages, attachments]);
+
+  useEffect(() => {
+    saveAssistantConfig({ instructions, projectMemory });
+  }, [instructions, projectMemory]);
 
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -117,6 +156,8 @@ export default function GhostwriterPage() {
           messages: history,
           customKnowledge: getCustomKnowledge(),
           attachmentsContext,
+          customInstructions: instructions.trim(),
+          projectMemory: projectMemory.trim(),
           provider,
           openRouterModel: provider === 'openrouter' ? openRouterModel : undefined,
         }),
@@ -191,16 +232,18 @@ export default function GhostwriterPage() {
   };
 
   return (
-    <div className="mx-auto flex max-w-3xl flex-col px-6 py-10">
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-neutral-800">Ghostwriter LinkedIn</h1>
-        <p className="mt-1 text-neutral-600">
-          Ton assistant rédactionnel. Brainstorme, écris, réécris — comme un vrai ghostwriter, à ton style.
-        </p>
-      </div>
+    <div className="mx-auto flex max-w-6xl flex-col gap-6 px-6 py-10 lg:flex-row">
+      {/* Zone principale : chat */}
+      <div className="min-w-0 flex-1">
+        <div className="mb-6">
+          <h1 className="text-2xl font-bold text-neutral-800">Ghostwriter LinkedIn</h1>
+          <p className="mt-1 text-neutral-600">
+            Ton assistant rédactionnel. Brainstorme, écris, réécris — comme un vrai ghostwriter, à ton style.
+          </p>
+        </div>
 
-      {/* Options */}
-      <div className="mb-4 flex flex-wrap items-center gap-2">
+        {/* Options */}
+        <div className="mb-4 flex flex-wrap items-center gap-2">
         <span className="text-xs font-medium text-neutral-500">Modèle :</span>
         <button
           type="button"
@@ -231,52 +274,6 @@ export default function GhostwriterPage() {
         )}
       </div>
 
-      {/* PJ + Contexte */}
-      <div className="mb-4 flex flex-wrap items-center gap-2">
-        <input
-          ref={fileInputRef}
-          type="file"
-          accept=".txt,.md,.pdf,.doc,.docx,.csv,.json,.html,.htm,.xml"
-          multiple
-          onChange={handleFileSelect}
-          className="hidden"
-        />
-        <button
-          type="button"
-          onClick={() => fileInputRef.current?.click()}
-          disabled={uploading}
-          className="flex items-center gap-2 rounded-xl border border-dashed border-neutral-300 px-3 py-2 text-xs font-medium text-neutral-600 hover:bg-neutral-50 disabled:opacity-50"
-        >
-          <Paperclip size={14} />
-          {uploading ? 'Extraction…' : 'Ajouter des PJ (PDF, TXT, Word)'}
-        </button>
-        {attachments.length > 0 && (
-          <span className="text-xs text-neutral-500">
-            {attachments.length} doc{attachments.length > 1 ? 's' : ''} en contexte
-          </span>
-        )}
-      </div>
-      {attachments.length > 0 && (
-        <div className="mb-4 flex flex-wrap gap-2">
-          {attachments.map((a) => (
-            <div
-              key={a.id}
-              className="flex items-center gap-1 rounded-lg bg-neutral-100 px-2 py-1.5 text-xs"
-            >
-              <span className="max-w-[120px] truncate" title={a.name}>{a.name}</span>
-              <button
-                type="button"
-                onClick={() => removeAttachment(a.id)}
-                className="rounded p-0.5 text-neutral-500 hover:bg-neutral-200 hover:text-neutral-700"
-                title="Retirer"
-              >
-                <X size={12} />
-              </button>
-            </div>
-          ))}
-        </div>
-      )}
-
       {/* Raccourcis */}
       <div className="mb-4 flex flex-wrap gap-2">
         {QUICK_ACTIONS.map((item, i) => (
@@ -306,7 +303,7 @@ export default function GhostwriterPage() {
                 Commence par décrire ton idée, ou clique sur un raccourci ci-dessus.
               </p>
               <p className="mt-1 text-xs text-neutral-400">
-                Dépose des PJ pour le contexte. Ma base + conversation sont mémorisés.
+                Configure ton assistant (instructions, mémoire, fichiers) dans le panneau à droite.
               </p>
             </div>
           )}
@@ -380,6 +377,122 @@ export default function GhostwriterPage() {
           </div>
         </form>
       </div>
+      </div>
+
+      {/* Panneau de configuration assistant */}
+      <div
+        className={`w-full shrink-0 rounded-2xl border border-neutral-200 bg-white shadow-sm lg:w-80 ${
+          configPanelOpen ? '' : 'hidden'
+        }`}
+      >
+        <div className="border-b border-neutral-200 p-3">
+          <h2 className="text-sm font-semibold text-neutral-800">Paramètres de l'assistant</h2>
+          <button
+            type="button"
+            onClick={() => setConfigPanelOpen(false)}
+            className="mt-1 text-xs text-neutral-500 hover:text-neutral-700"
+          >
+            Masquer le panneau
+          </button>
+        </div>
+        <div className="space-y-4 p-4">
+          {/* Mémoire */}
+          <div>
+            <div className="mb-2 flex items-center gap-2">
+              <Lock size={14} className="text-neutral-400" />
+              <h3 className="text-xs font-semibold text-neutral-700">Mémoire</h3>
+            </div>
+            <p className="mb-2 text-xs text-neutral-500">
+              Contexte et préférences à mémoriser entre les conversations.
+            </p>
+            <textarea
+              value={projectMemory}
+              onChange={(e) => setProjectMemory(e.target.value)}
+              placeholder="Ex : Je suis expert RH, je parle toujours au « vous ». J'évite le jargon..."
+              rows={3}
+              className="w-full resize-y rounded-lg border border-neutral-200 px-3 py-2 text-xs text-neutral-800 placeholder:text-neutral-400 focus:border-[#377CF3] focus:outline-none focus:ring-2 focus:ring-[#377CF3]/20"
+            />
+          </div>
+
+          {/* Instructions */}
+          <div>
+            <div className="mb-2 flex items-center justify-between">
+              <h3 className="text-xs font-semibold text-neutral-700">Instructions</h3>
+              <Plus size={12} className="text-neutral-400" />
+            </div>
+            <p className="mb-2 text-xs text-neutral-500">
+              Personnalise les réponses de l'assistant selon tes besoins.
+            </p>
+            <textarea
+              value={instructions}
+              onChange={(e) => setInstructions(e.target.value)}
+              placeholder="Ex : Toujours proposer une version courte et une longue. Utiliser des emojis modérément..."
+              rows={3}
+              className="w-full resize-y rounded-lg border border-neutral-200 px-3 py-2 text-xs text-neutral-800 placeholder:text-neutral-400 focus:border-[#377CF3] focus:outline-none focus:ring-2 focus:ring-[#377CF3]/20"
+            />
+          </div>
+
+          {/* Fichiers (base de connaissances) */}
+          <div>
+            <div className="mb-2 flex items-center justify-between">
+              <h3 className="text-xs font-semibold text-neutral-700">Fichiers</h3>
+              <FileText size={12} className="text-neutral-400" />
+            </div>
+            <p className="mb-2 text-xs text-neutral-500">
+              PDF, documents ou textes à utiliser comme références pour les réponses.
+            </p>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept=".txt,.md,.pdf,.doc,.docx,.csv,.json,.html,.htm,.xml"
+              multiple
+              onChange={handleFileSelect}
+              className="hidden"
+            />
+            <button
+              type="button"
+              onClick={() => fileInputRef.current?.click()}
+              disabled={uploading}
+              className="flex w-full items-center justify-center gap-2 rounded-lg border border-dashed border-neutral-300 px-3 py-2 text-xs font-medium text-neutral-600 hover:bg-neutral-50 disabled:opacity-50"
+            >
+              <Plus size={14} />
+              {uploading ? 'Extraction…' : 'Ajouter des fichiers'}
+            </button>
+            {attachments.length > 0 && (
+              <div className="mt-2 space-y-1">
+                {attachments.map((a) => (
+                  <div
+                    key={a.id}
+                    className="flex items-center justify-between rounded-lg bg-neutral-50 px-2 py-1.5 text-xs"
+                  >
+                    <span className="max-w-[160px] truncate text-neutral-700" title={a.name}>
+                      {a.name}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => removeAttachment(a.id)}
+                      className="rounded p-0.5 text-neutral-500 hover:bg-neutral-200 hover:text-neutral-700"
+                      title="Retirer"
+                    >
+                      <X size={12} />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {!configPanelOpen && (
+        <button
+          type="button"
+          onClick={() => setConfigPanelOpen(true)}
+          className="fixed right-6 top-24 rounded-lg border border-neutral-200 bg-white px-3 py-2 text-xs font-medium text-neutral-600 shadow-sm hover:bg-neutral-50"
+        >
+          Paramètres assistant
+        </button>
+      )}
     </div>
   );
 }
