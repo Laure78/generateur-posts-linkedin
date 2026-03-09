@@ -1,6 +1,27 @@
 @import "tailwindcss";
 
 :root {
+  /* Design system - 8px grid */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 18px;
+  --radius-2xl: 24px;
+  --max-content: 1200px;
+  --sidebar-width: 256px;
+  --sidebar-collapsed: 72px;
+  --topbar-height: 56px;
+
   /* Couleur Primaire Institutionnelle */
   --primary-900: #0F2B46;
   --primary-800: #144057;
@@ -23,7 +44,7 @@
   --accent-400: #5A9FD4;
   --accent-50: #EBF4FB;
 
-  /* Couleurs Neutres */
+  /* Couleurs Neutres - Light mode */
   --neutral-900: #1A202C;
   --neutral-700: #4A5568;
   --neutral-500: #718096;
@@ -33,6 +54,16 @@
   --neutral-50: #F7FAFC;
   --white: #FFFFFF;
 
+  /* Surface & backgrounds */
+  --bg-base: #FAFBFC;
+  --bg-elevated: #FFFFFF;
+  --bg-muted: #F5F7FA;
+  --text-primary: #1A202C;
+  --text-secondary: #4A5568;
+  --text-muted: #718096;
+  --border: #E2E8F0;
+  --border-strong: #CBD5E0;
+
   /* États Fonctionnels */
   --success: #2D8659;
   --warning: #C05621;
@@ -40,10 +71,10 @@
   --info: #2C5F8D;
 
   /* Variables de compatibilité */
-  --background: #FAFBFC; /* Blanc cassé avec légère teinte bleutée */
-  --background-alt: #F5F7FA; /* Fond alterné légèrement plus foncé */
-  --foreground: var(--primary-700); /* Moins de noir, plus de bleu */
-  --foreground-strong: var(--primary-900); /* Pour les titres importants */
+  --background: var(--bg-base);
+  --background-alt: var(--bg-muted);
+  --foreground: var(--text-primary);
+  --foreground-strong: var(--text-primary);
   --hero-start: var(--primary-50);
   --hero-end: rgba(240, 245, 249, 0.6);
 
@@ -57,6 +88,20 @@
   --outil-accent: #377CF3;
   --outil-accent-hover: #2d6ad4;
   --outil-accent-light: rgba(55, 124, 243, 0.08);
+}
+
+/* Dark mode ready - tokens préparés */
+@media (prefers-color-scheme: dark) {
+  :root.dark-mode {
+    --bg-base: #0f1117;
+    --bg-elevated: #1a1d24;
+    --bg-muted: #161922;
+    --text-primary: #f7fafc;
+    --text-secondary: #cbd5e0;
+    --text-muted: #94a3b8;
+    --border: #2d3748;
+    --border-strong: #4a5568;
+  }
 }
 
 @theme inline {

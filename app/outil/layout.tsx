@@ -1,5 +1,6 @@
-import AppSidebar from '../components/AppSidebar';
 import { TeamProvider } from '@/lib/TeamContext';
+import { CommandPaletteProvider } from '@/lib/CommandPaletteContext';
+import OutilLayoutClient from '../components/OutilLayoutClient';
 
 export default function OutilLayout({
   children,
@@ -8,12 +9,9 @@ export default function OutilLayout({
 }) {
   return (
     <TeamProvider>
-      <div className="flex min-h-screen bg-neutral-50">
-        <AppSidebar />
-        <main className="flex-1 overflow-auto">
-          {children}
-        </main>
-      </div>
+      <CommandPaletteProvider>
+        <OutilLayoutClient>{children}</OutilLayoutClient>
+      </CommandPaletteProvider>
     </TeamProvider>
   );
 }

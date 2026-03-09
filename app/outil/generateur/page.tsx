@@ -399,7 +399,17 @@ function GenerateurPage() {
   ];
 
   return (
-    <div className="mx-auto max-w-3xl px-6 py-10">
+    <div className="mx-auto max-w-3xl">
+      <div className="mb-6 flex items-center gap-2 overflow-x-auto pb-2">
+        {['Type', 'Style', 'Secteur', 'Sujet', 'Générer'].map((step, i) => (
+          <span
+            key={step}
+            className="shrink-0 rounded-full px-3 py-1 text-xs font-medium text-neutral-500 bg-neutral-100"
+          >
+            {i + 1}. {step}
+          </span>
+        ))}
+      </div>
       <div className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm">
         {/* Header */}
         <div className="mb-6 flex items-center justify-between">
@@ -610,8 +620,10 @@ function GenerateurPage() {
           </div>
         )}
 
-        {/* Type & Category */}
-        <div className="mb-6 grid gap-4 sm:grid-cols-2">
+        {/* Step 1: Type & Category */}
+        <div className="mb-8">
+          <h3 className="mb-3 text-sm font-semibold uppercase tracking-wider text-neutral-500">1. Type de post</h3>
+          <div className="grid gap-4 sm:grid-cols-2">
           <div>
             <label className="mb-1.5 block text-sm font-medium text-neutral-600">
               Type de post
@@ -648,9 +660,11 @@ function GenerateurPage() {
             </p>
           </div>
         </div>
+        </div>
 
-        {/* Style de post */}
-        <div className="mb-6">
+        {/* Step 2: Style de post */}
+        <div className="mb-8">
+          <h3 className="mb-3 text-sm font-semibold uppercase tracking-wider text-neutral-500">2. Style</h3>
           <label className="mb-1.5 block text-sm font-medium text-neutral-600">
             Style de post
           </label>

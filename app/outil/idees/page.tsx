@@ -2,6 +2,12 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { Lightbulb } from 'lucide-react';
+import { Card } from '../../components/ui/Card';
+import { SectionHeader } from '../../components/ui/SectionHeader';
+import { EmptyState } from '../../components/ui/EmptyState';
+import { Button } from '../../components/ui/Button';
+import { CardSkeleton } from '../../components/ui/Skeleton';
 
 const PRESET_THEMES = [
   'Formation IA et ChatGPT',
@@ -120,9 +126,14 @@ export default function IdeesPage() {
   };
 
   return (
-    <div className="mx-auto max-w-5xl px-6 py-10">
+    <div className="mx-auto max-w-5xl">
+      <SectionHeader
+        title="Générateur d'idées"
+        description="Choisis un thème et génère des idées de posts pour LinkedIn"
+      />
       {/* Header */}
-      <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
+      <Card className="mb-6">
+      <div className="flex flex-wrap items-center justify-between gap-4">
         <div className="flex items-center gap-3">
           <button
             type="button"
@@ -180,16 +191,8 @@ export default function IdeesPage() {
         </span>
       </div>
 
-      {/* Title */}
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-neutral-800">Générateur d&apos;idées</h1>
-        <p className="mt-1 text-neutral-600">
-          Choisis un thème et génère des idées de posts
-        </p>
-      </div>
-
       {/* Generate buttons */}
-      <div className="mb-8 flex flex-wrap gap-3">
+      <div className="flex flex-wrap gap-3">
         <button
           type="button"
           onClick={handleGenerate}
@@ -210,13 +213,22 @@ export default function IdeesPage() {
           {currentTheme.trim() ? 'Thème : ' + currentTheme : '30 idées BTP variées'}
         </p>
       </div>
+      </Card>
 
       {error && (
         <p className="mb-6 rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700">{error}</p>
       )}
 
+      {isLoading && (
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {[1, 2, 3, 4, 5, 6].map((i) => (
+            <CardSkeleton key={i} />
+          ))}
+        </div>
+      )}
+
       {/* Idea cards */}
-      {ideas.length > 0 && (
+      {!isLoading && ideas.length > 0 && (
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {ideas.map((idea, index) => (
             <div
@@ -255,11 +267,21 @@ export default function IdeesPage() {
       )}
 
       {!isLoading && ideas.length === 0 && (
-        <div className="rounded-2xl border-2 border-dashed border-neutral-200 bg-neutral-50/50 py-16 text-center text-neutral-500">
-          <span className="text-4xl">💡</span>
-          <p className="mt-4 font-medium">Aucune idée pour l&apos;instant</p>
-          <p className="mt-1 text-sm">Choisis un thème et clique sur &quot;Générer les idées&quot;</p>
-        </div>
+        <EmptyState
+          icon={<Lightbulb size={48} />}
+          title="Aucune idée pour l'instant"
+          description="Choisis un thème ci-dessus et clique sur Générer 6 idées pour commencer."
+          action={
+            <Button
+              variant="primary"
+              onClick={handleGenerate}
+              disabled={!currentTheme.trim() || launchesUsed >= MAX_FREE_LAUNCHES}
+              icon={<Lightbulb size={18} />}
+            >
+              Générer mes premières idées
+            </Button>
+          }
+        />
       )}
     </div>
   );
