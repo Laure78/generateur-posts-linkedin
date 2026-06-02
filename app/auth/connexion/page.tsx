@@ -84,7 +84,7 @@ function ConnexionForm() {
       {error && <p className="text-sm text-red-600">{error}</p>}
       <button
         type="submit"
-        disabled={loading}
+        disabled={loading || (!DEV_BYPASS && !SUPABASE_OK)}
         className="w-full rounded-xl bg-[var(--bework-blue)] py-3 font-semibold text-white disabled:opacity-50"
       >
         {loading ? 'Connexion…' : 'Se connecter'}
