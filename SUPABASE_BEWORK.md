@@ -44,7 +44,15 @@ npm run db:bework
      - `https://TON-DOMAINE.railway.app/**`
      - `https://plateforme.bework.fr/**` (si domaine custom)
 
-## 4. Vérifier
+## 4. Enregistrer les clés dans `.env.local`
+
+```bash
+npm run env:supabase -- "eyJ...anon..." "eyJ...service_role..."
+```
+
+(les guillemets évitent que le shell coupe la clé JWT)
+
+## 5. Vérifier
 
 ```bash
 npm run check:supabase

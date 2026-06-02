@@ -19,18 +19,22 @@ export type LocalMission = {
 const DATA_DIR = path.join(process.cwd(), '.data');
 const FILE = path.join(DATA_DIR, 'missions.json');
 
+async function writeAll(missions: LocalMission[]) {
+  await fs.mkdir(DATA_DIR, { recursive: true });
+  await fs.writeFile(FILE, JSON.stringify(missions, null, 2), 'utf8');
+}
+
 async function readAll(): Promise<LocalMission[]> {
   try {
     const raw = await fs.readFile(FILE, 'utf8');
     return JSON.parse(raw) as LocalMission[];
-  } catch {
+  } catch (err) {
+    if ((err as NodeJS.ErrnoException).code === 'ENOENT') {
+      await writeAll([]);
+      return [];
+    }
     return [];
   }
-}
-
-async function writeAll(missions: LocalMission[]) {
-  await fs.mkdir(DATA_DIR, { recursive: true });
-  await fs.writeFile(FILE, JSON.stringify(missions, null, 2), 'utf8');
 }
 
 export async function listMissions(userId: string): Promise<LocalMission[]> {

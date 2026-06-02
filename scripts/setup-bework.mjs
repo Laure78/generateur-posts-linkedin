@@ -26,7 +26,7 @@ const urls = [
 console.log('\n🔧 Setup BeWork\n');
 console.log('1. SQL migration copié dans le presse-papiers → colle dans SQL Editor → Run');
 console.log('2. Onglets Supabase + Railway ouverts dans le navigateur');
-console.log('3. Copie anon key + service_role dans .env.local et Railway Variables\n');
+console.log('3. Copie anon key + service_role : npm run env:supabase -- "<anon>" "<service_role>"\n');
 
 try {
   execSync('pbcopy', { input: sql });

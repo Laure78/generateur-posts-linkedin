@@ -16,11 +16,11 @@ export default function NotFound() {
           >
             Retour à l'accueil
           </Link>
-          <Link 
-            href="/outil" 
-            className="inline-block rounded-2xl border border-neutral-300 px-6 py-3 text-primary-500 font-extrabold hover:bg-primary-50 transition-colors"
+          <Link
+            href="/auth/connexion"
+            className="inline-block rounded-2xl border border-slate-300 px-6 py-3 text-slate-700 font-semibold hover:bg-slate-50 transition-colors"
           >
-            Accéder à l'outil
+            Connexion plateforme
           </Link>
         </div>
       </div>
