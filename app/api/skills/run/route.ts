@@ -2,19 +2,13 @@ import { NextResponse } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
 import { createClient } from '@/lib/supabase/server';
 import { getSkillById } from '@/lib/skills/registry';
+import { loadSkillPrompt } from '@/lib/skills/load-skill';
 
 const SYSTEM_BASE = `Tu es un assistant travaux BeWork (bework.fr), relais administratif pour entreprises BTP et MOE en France.
 Tu rédiges en français professionnel, concret, sans jargon startup. Tu ne t'engages jamais au nom du client sans validation.
 Supervision humaine depuis la France.`;
 
-const SKILL_PROMPTS: Record<string, string> = {
-  'compte-rendu-chantier': `Structure un compte rendu de chantier : participants, avancement, réserves, photos à prévoir, actions et relances MOE/MOA.`,
-  'relance-moe': `Rédige une relance formelle et courtoise pour MOA/MOE : objet, rappel du contexte marché, pièce attendue, délai souhaité.`,
-  'dossier-intervention': `Liste les pièces d'un dossier d'intervention (DT/DICT si besoin, autorisations, planning, contacts) et les manques éventuels.`,
-  'situation-travaux': `Aide à structurer une situation de travaux : lots, avancement, points de blocage BPU/DPGF, pièces justificatives.`,
-  'analyse-dce': `Synthétise un DCE : enjeux, pièces clés, points de vigilance pour mémoire technique, sans inventer de contraintes.`,
-  'assistant-travaux': `Qualifie la demande administrative BTP et propose un plan d'action en étapes claires.`,
-};
+const FALLBACK_PROMPT = `Qualifie la demande administrative BTP et propose un plan d'action en étapes claires.`;
 
 export async function POST(request: Request) {
   if (!process.env.ANTHROPIC_API_KEY) {
@@ -48,7 +42,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Skill traité par outil intégré' }, { status: 400 });
   }
 
-  const skillPrompt = SKILL_PROMPTS[mission.skill_id] ?? SKILL_PROMPTS['assistant-travaux'];
+  const skillPrompt = loadSkillPrompt(mission.skill_id) ?? FALLBACK_PROMPT;
 
   const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
   const message = await anthropic.messages.create({

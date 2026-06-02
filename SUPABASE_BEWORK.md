@@ -36,7 +36,8 @@ npm run db:bework
 
 ## 3. Authentification email
 
-1. **Authentication → Providers → Email** : activé
+1. **Authentication → Providers → Email** : activé  
+   (pour tests rapides : désactiver « Confirm email » ; en prod, laisser activé → l’utilisateur reçoit un lien avant la 1ʳᵉ connexion)
 2. **Authentication → URL Configuration** :
    - Site URL : `https://app.bework.fr` (prod) ou `http://localhost:3000` (dev)
    - Redirect URLs :
