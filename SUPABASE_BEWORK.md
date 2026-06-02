@@ -39,10 +39,10 @@ npm run db:bework
 1. **Authentication → Providers → Email** : activé  
    (pour tests rapides : désactiver « Confirm email » ; en prod, laisser activé → l’utilisateur reçoit un lien avant la 1ʳᵉ connexion)
 2. **Authentication → URL Configuration** :
-   - Site URL : `https://app.bework.fr` (prod) ou `http://localhost:3000` (dev)
+  - Site URL : `https://app.laureolivie.fr` (prod) ou `http://localhost:3000` (dev)
    - Redirect URLs :
      - `http://localhost:3000/**`
-     - `https://app.bework.fr/**`
+    - `https://app.laureolivie.fr/**`
 
 ## 4. Enregistrer les clés dans `.env.local`
 

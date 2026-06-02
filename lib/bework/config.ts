@@ -3,7 +3,7 @@ export const BEWORK = {
   name: 'BeWork',
   tagline: 'Relais administratif pour marchés travaux BTP',
   url: 'https://www.bework.fr',
-  appUrl: 'https://app.bework.fr',
+  appUrl: 'https://app.laureolivie.fr',
   email: 'contact@bework.fr',
   accent: '#1D4ED8',
   accentSoft: '#DBEAFE',

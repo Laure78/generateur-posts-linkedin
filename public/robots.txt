@@ -4,4 +4,4 @@ Disallow: /admin/
 Disallow: /api/
 Disallow: /plateforme/
 
-Sitemap: https://app.bework.fr/sitemap.xml
+Sitemap: https://app.laureolivie.fr/sitemap.xml
