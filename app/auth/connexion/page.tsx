@@ -3,8 +3,9 @@
 import { useState, Suspense } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { PasswordInput } from '@/components/auth/PasswordInput';
 import { useSupabaseReady } from '@/components/auth/use-supabase-ready';
-import { BEWORK } from '@/lib/bework/config';
+import { AuthShell, AuthFooterLink } from '@/components/brand/AuthShell';
 
 const DEV_BYPASS = process.env.NEXT_PUBLIC_DEV_BYPASS === 'true';
 
@@ -53,9 +54,9 @@ function ConnexionForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="mt-8 space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-4">
       {DEV_BYPASS && (
-        <p className="rounded-lg bg-blue-50 px-3 py-2 text-sm text-blue-900">
+        <p className="rounded-lg bg-[var(--bework-blue-soft)] px-3 py-2 text-sm text-[var(--bework-blue-dark)]">
           Mode local : connexion automatique sans Supabase (email libre).
         </p>
       )}
@@ -65,7 +66,7 @@ function ConnexionForm() {
         </p>
       )}
       <div>
-        <label htmlFor="email" className="block text-sm font-medium">
+        <label htmlFor="email" className="block text-sm font-medium text-slate-700">
           Email professionnel
         </label>
         <input
@@ -75,31 +76,33 @@ function ConnexionForm() {
           onChange={(e) => setEmail(e.target.value)}
           required
           autoComplete="email"
-          className="mt-1 w-full rounded-lg border border-slate-300 px-4 py-3"
+          className="bework-input mt-1.5"
         />
       </div>
       {!DEV_BYPASS && (
         <div>
-          <label htmlFor="password" className="block text-sm font-medium">
-            Mot de passe
-          </label>
-          <input
+          <div className="flex items-center justify-between gap-2">
+            <label htmlFor="password" className="text-sm font-medium text-slate-700">
+              Mot de passe
+            </label>
+            <Link
+              href="/auth/mot-de-passe-oublie"
+              className="text-sm font-medium text-[var(--bework-blue)] hover:underline"
+            >
+              Mot de passe oublié ?
+            </Link>
+          </div>
+          <PasswordInput
             id="password"
-            type="password"
+            label=""
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
+            onChange={setPassword}
             autoComplete="current-password"
-            className="mt-1 w-full rounded-lg border border-slate-300 px-4 py-3"
           />
         </div>
       )}
       {error && <p className="text-sm text-red-600">{error}</p>}
-      <button
-        type="submit"
-        disabled={loading || !canSubmit}
-        className="w-full rounded-xl bg-[var(--bework-blue)] py-3 font-semibold text-white disabled:opacity-50"
-      >
+      <button type="submit" disabled={loading || !canSubmit} className="bework-btn-primary w-full py-3">
         {loading ? 'Connexion…' : 'Se connecter'}
       </button>
     </form>
@@ -108,20 +111,18 @@ function ConnexionForm() {
 
 export default function ConnexionPage() {
   return (
-    <div className="mx-auto flex min-h-screen max-w-md flex-col justify-center px-4">
-      <Link href="/" className="font-display text-2xl font-bold text-slate-900">
-        {BEWORK.name}
-      </Link>
-      <h1 className="mt-8 text-xl font-semibold">Connexion entreprise</h1>
-      <Suspense fallback={<p className="mt-8 text-slate-500">Chargement…</p>}>
+    <AuthShell
+      title="Connexion entreprise"
+      subtitle="Accédez à la plateforme et à vos assistants travaux."
+      footer={
+        <p className="text-slate-600">
+          Pas de compte ? <AuthFooterLink href="/auth/inscription">Créer un compte</AuthFooterLink>
+        </p>
+      }
+    >
+      <Suspense fallback={<p className="text-slate-500">Chargement…</p>}>
         <ConnexionForm />
       </Suspense>
-      <p className="mt-6 text-center text-sm text-slate-600">
-        Pas de compte ?{' '}
-        <Link href="/auth/inscription" className="font-medium text-[var(--bework-blue)] hover:underline">
-          S&apos;inscrire
-        </Link>
-      </p>
-    </div>
+    </AuthShell>
   );
 }

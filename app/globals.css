@@ -6,11 +6,156 @@
 }
 
 :root {
-  --bework-blue: #1d4ed8;
+  /* Charte BeWork — bleu tech industriel */
+  --bework-blue: #2563eb;
+  --bework-blue-bright: #377cf3;
+  --bework-blue-dark: #1d4ed8;
   --bework-blue-soft: #dbeafe;
-  --bework-slate: #0f172a;
+  --bework-blue-glow: rgb(55 124 243 / 0.15);
+  --bework-navy: #0f172a;
+  --bework-charcoal: #1e293b;
+  --bework-surface: #f8fafc;
+  --bework-grid: rgb(37 99 235 / 0.06);
+  --bework-grid-strong: rgb(37 99 235 / 0.1);
 }
 
 .font-display {
   font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Fond plan / blueprint */
+.bework-blueprint-bg {
+  background-color: var(--bework-surface);
+  background-image:
+    linear-gradient(var(--bework-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--bework-grid) 1px, transparent 1px),
+    radial-gradient(ellipse 70% 45% at 50% -5%, var(--bework-blue-glow), transparent);
+  background-size: 28px 28px, 28px 28px, 100% 100%;
+}
+
+.platform-main {
+  background-color: var(--bework-surface);
+  background-image:
+    linear-gradient(var(--bework-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--bework-grid) 1px, transparent 1px),
+    radial-gradient(ellipse 80% 50% at 50% -20%, var(--bework-blue-glow), transparent);
+  background-size: 28px 28px, 28px 28px, 100% 100%;
+}
+
+.bework-card {
+  border-radius: 0.75rem;
+  border: 1px solid rgb(226 232 240);
+  background: white;
+  box-shadow:
+    0 1px 2px rgb(15 23 42 / 0.04),
+    0 0 0 1px rgb(255 255 255 / 0.8) inset;
+}
+
+.bework-card-tech {
+  position: relative;
+  overflow: hidden;
+}
+
+.bework-card-tech::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--bework-blue-bright), var(--bework-blue));
+}
+
+.bework-kicker {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--bework-blue);
+}
+
+.bework-heading-accent {
+  color: var(--bework-blue);
+}
+
+.bework-input {
+  width: 100%;
+  border-radius: 0.625rem;
+  border: 1px solid rgb(203 213 225);
+  background: white;
+  padding: 0.75rem 1rem;
+  font-size: 0.9375rem;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.bework-input:focus {
+  outline: none;
+  border-color: var(--bework-blue);
+  box-shadow: 0 0 0 3px var(--bework-blue-glow);
+}
+
+.bework-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 0.75rem;
+  background: linear-gradient(180deg, var(--bework-blue-bright) 0%, var(--bework-blue) 100%);
+  padding: 0.625rem 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: white;
+  box-shadow: 0 2px 8px rgb(37 99 235 / 0.35);
+  transition: filter 0.15s, transform 0.1s;
+}
+
+.bework-btn-primary:hover:not(:disabled) {
+  filter: brightness(1.05);
+}
+
+.bework-btn-primary:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.bework-btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.bework-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 0.75rem;
+  border: 1.5px solid var(--bework-blue);
+  background: white;
+  padding: 0.625rem 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--bework-blue);
+  transition: background 0.15s;
+}
+
+.bework-btn-secondary:hover {
+  background: var(--bework-blue-soft);
+}
+
+.bework-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 0.75rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--bework-charcoal);
+  transition: background 0.15s, color 0.15s;
+}
+
+.bework-btn-ghost:hover {
+  background: rgb(241 245 249);
+  color: var(--bework-navy);
 }

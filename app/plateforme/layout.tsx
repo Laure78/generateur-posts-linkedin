@@ -13,7 +13,7 @@ export default async function PlateformeLayout({ children }: { children: React.R
   return (
     <div className="flex min-h-screen">
       <PlatformSidebar />
-      <div className="min-w-0 flex-1">{children}</div>
+      <main className="platform-main min-w-0 flex-1">{children}</main>
     </div>
   );
 }

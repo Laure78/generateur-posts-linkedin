@@ -1,10 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useSupabaseReady } from '@/components/auth/use-supabase-ready';
-import { BEWORK } from '@/lib/bework/config';
+import { PasswordInput } from '@/components/auth/PasswordInput';
+import { AuthShell, AuthFooterLink } from '@/components/brand/AuthShell';
 
 const DEV_BYPASS = process.env.NEXT_PUBLIC_DEV_BYPASS === 'true';
 
@@ -69,80 +69,74 @@ export default function InscriptionPage() {
   };
 
   return (
-    <div className="mx-auto flex min-h-screen max-w-md flex-col justify-center px-4">
-      <Link href="/" className="font-display text-2xl font-bold">
-        {BEWORK.name}
-      </Link>
-      <h1 className="mt-8 text-xl font-semibold">Créer un compte entreprise</h1>
+    <AuthShell
+      title="Créer un compte entreprise"
+      subtitle="Accédez aux assistants travaux BeWork pour vos marchés BTP."
+      footer={
+        <p className="text-slate-600">
+          Déjà inscrit ? <AuthFooterLink href="/auth/connexion">Se connecter</AuthFooterLink>
+        </p>
+      }
+    >
       {DEV_BYPASS && (
-        <p className="mt-2 rounded-lg bg-blue-50 px-3 py-2 text-sm text-blue-900">
+        <p className="mb-4 rounded-lg bg-[var(--bework-blue-soft)] px-3 py-2 text-sm text-[var(--bework-blue-dark)]">
           Mode local actif — pas besoin de Supabase pour tester.
         </p>
       )}
       {!DEV_BYPASS && supabaseReady === false && (
-        <p className="mt-2 rounded-lg bg-red-50 px-3 py-2 text-sm text-red-800">
-          Configuration Supabase absente sur le serveur. Dans Railway → Variables, ajoutez{' '}
-          <code className="text-xs">NEXT_PUBLIC_SUPABASE_URL</code> et{' '}
-          <code className="text-xs">NEXT_PUBLIC_SUPABASE_ANON_KEY</code>, puis redeploy.
+        <p className="mb-4 rounded-lg bg-red-50 px-3 py-2 text-sm text-red-800">
+          Configuration Supabase absente. Ajoutez les variables Railway puis redeploy.
         </p>
       )}
       {!DEV_BYPASS && supabaseReady === null && (
-        <p className="mt-2 text-sm text-slate-500">Vérification de la configuration…</p>
+        <p className="mb-4 text-sm text-slate-500">Vérification de la configuration…</p>
       )}
       {success && (
-        <p className="mt-2 rounded-lg bg-green-50 px-3 py-2 text-sm text-green-900">{success}</p>
+        <p className="mb-4 rounded-lg bg-green-50 px-3 py-2 text-sm text-green-900">{success}</p>
       )}
-      <form onSubmit={handleSubmit} className="mt-8 space-y-4">
+
+      <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="block text-sm font-medium">Entreprise</label>
+          <label className="block text-sm font-medium text-slate-700">Entreprise</label>
           <input
             value={company}
             onChange={(e) => setCompany(e.target.value)}
             required
             autoComplete="organization"
-            className="mt-1 w-full rounded-lg border border-slate-300 px-4 py-3"
+            className="bework-input mt-1.5"
           />
         </div>
         <div>
-          <label className="block text-sm font-medium">Email</label>
+          <label className="block text-sm font-medium text-slate-700">Email professionnel</label>
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
             autoComplete="email"
-            className="mt-1 w-full rounded-lg border border-slate-300 px-4 py-3"
+            className="bework-input mt-1.5"
           />
         </div>
         {!DEV_BYPASS && (
-          <div>
-            <label className="block text-sm font-medium">Mot de passe</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              minLength={6}
-              autoComplete="new-password"
-              className="mt-1 w-full rounded-lg border border-slate-300 px-4 py-3"
-            />
-            <p className="mt-1 text-xs text-slate-500">6 caractères minimum</p>
-          </div>
+          <PasswordInput
+            id="password"
+            label="Mot de passe"
+            value={password}
+            onChange={setPassword}
+            autoComplete="new-password"
+            minLength={6}
+            hint="6 caractères minimum"
+          />
         )}
         {error && <p className="text-sm text-red-600">{error}</p>}
         <button
           type="submit"
           disabled={loading || !canSubmit || Boolean(success)}
-          className="w-full rounded-xl bg-[var(--bework-blue)] py-3 font-semibold text-white disabled:opacity-50"
+          className="bework-btn-primary w-full py-3"
         >
           {loading ? 'Création…' : 'Créer le compte'}
         </button>
       </form>
-      <p className="mt-6 text-center text-sm">
-        <Link href="/auth/connexion" className="text-[var(--bework-blue)] hover:underline">
-          Déjà inscrit ?
-        </Link>
-      </p>
-    </div>
+    </AuthShell>
   );
 }

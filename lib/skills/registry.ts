@@ -35,6 +35,13 @@ export const BEWORK_SKILLS: SkillDefinition[] = [
     missionTypes: ['cr-chantier-moex'],
   },
   {
+    id: 'promotech-suivi-observations',
+    name: 'Suivi des observations',
+    description:
+      'Tableau de suivi des points ouverts entre réunions, retards, relances entreprises et ordre du jour.',
+    missionTypes: ['suivi-observations'],
+  },
+  {
     id: 'promotech-courrier-moe',
     name: 'Courriers MOE / relances',
     description: 'Relances, mises en demeure, courriers MOA, notes de diffusion, certificats administratifs.',
@@ -65,6 +72,13 @@ export const BEWORK_SKILLS: SkillDefinition[] = [
     missionTypes: ['comparatif-offres'],
   },
   {
+    id: 'promotech-conformite-offre',
+    name: 'Conformité offre au CCTP',
+    description:
+      'Vérification d’une offre entreprise face au CCTP : non-conformités, variantes, postes manquants, cohérence mémoire/prix.',
+    missionTypes: ['conformite-offre'],
+  },
+  {
     id: 'balas-analyser-dce-mh',
     name: 'Analyse DCE — Monument Historique',
     description: 'Fiche AO patrimoine : Qualibat MH, références ACMH, contraintes ABF, sujétions cachées.',
@@ -93,6 +107,13 @@ export const BEWORK_SKILLS: SkillDefinition[] = [
     name: 'Situation & attachements',
     description: 'Structuration situation de travaux, BPU/DPGF et pièces justificatives.',
     missionTypes: ['situation-travaux'],
+  },
+  {
+    id: 'promotech-suivi-acquereurs',
+    name: 'Suivi acquéreurs & GPA',
+    description:
+      'Réponses acquéreurs VEFA, réserves à la livraison, suivi GPA et courriers de levée.',
+    missionTypes: ['suivi-acquereurs'],
   },
   {
     id: 'assistant-travaux',

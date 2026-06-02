@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { ArrowLeft } from 'lucide-react';
 import { getAppUser } from '@/lib/auth/get-user';
 import { MISSION_TYPES } from '@/lib/bework/config';
 import { getSkillForMissionType } from '@/lib/skills/registry';
@@ -32,44 +33,71 @@ export default async function DemandeDetailPage({ params }: { params: Promise<{ 
 
   if (!mission) notFound();
 
-  const typeLabel = MISSION_TYPES.find((t) => t.id === mission.type)?.label ?? mission.type;
+  const typeMeta = MISSION_TYPES.find((t) => t.id === mission.type);
   const skill = getSkillForMissionType(mission.type);
 
+  const statusLabel: Record<string, string> = {
+    recue: 'Reçue',
+    en_cours: 'En cours',
+    en_attente_validation: 'À valider',
+    terminee: 'Terminée',
+  };
+
   return (
-    <div className="mx-auto max-w-3xl p-8">
-      <Link href="/plateforme" className="text-sm text-[var(--bework-blue)] hover:underline">
-        ← Tableau de bord
+    <div className="mx-auto max-w-3xl px-6 py-8 lg:px-10">
+      <Link
+        href="/plateforme"
+        className="inline-flex items-center gap-1 text-sm font-medium text-[var(--bework-blue)] hover:underline"
+      >
+        <ArrowLeft size={16} />
+        Tableau de bord
       </Link>
-      <h1 className="mt-4 font-display text-2xl font-bold">{mission.title}</h1>
-      <p className="mt-1 text-slate-600">{typeLabel}</p>
-      <div className="mt-6 flex flex-wrap gap-2">
-        <span className="rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-[var(--bework-blue)]">
-          {mission.status}
-        </span>
-        {skill && (
-          <span className="rounded-full bg-slate-100 px-3 py-1 text-xs text-slate-700">{skill.name}</span>
-        )}
-      </div>
+
+      <header className="mt-6">
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-[var(--bework-blue)]">
+            {statusLabel[mission.status] ?? mission.status}
+          </span>
+          {typeMeta && (
+            <span className="rounded-full bg-slate-100 px-3 py-1 text-xs text-slate-600">
+              {typeMeta.icon} {typeMeta.label}
+            </span>
+          )}
+        </div>
+        <h1 className="font-display mt-3 text-2xl font-bold text-slate-900">{mission.title}</h1>
+        {skill && <p className="mt-1 text-sm text-slate-500">Assistant : {skill.name}</p>}
+      </header>
+
       {mission.chantier && (
         <p className="mt-4 text-sm text-slate-600">
-          <strong>Chantier :</strong> {mission.chantier}
+          <strong className="text-slate-700">Chantier :</strong> {mission.chantier}
         </p>
       )}
-      <div className="mt-6 rounded-xl border border-slate-200 bg-white p-6">
-        <h2 className="text-sm font-semibold text-slate-800">Brief</h2>
-        <pre className="mt-3 whitespace-pre-wrap font-sans text-sm text-slate-700">{mission.brief}</pre>
+
+      <div className="bework-card mt-6 p-6">
+        <h2 className="text-sm font-semibold text-slate-800">Votre demande</h2>
+        <pre className="mt-3 whitespace-pre-wrap font-sans text-sm leading-relaxed text-slate-700">
+          {mission.brief}
+        </pre>
       </div>
+
       {mission.ai_result && (
-        <div className="mt-6 rounded-xl border border-emerald-200 bg-emerald-50/50 p-6">
-          <h2 className="text-sm font-semibold text-emerald-900">Résultat assistant</h2>
-          <pre className="mt-3 whitespace-pre-wrap text-sm text-slate-800">{mission.ai_result}</pre>
+        <div className="mt-6 rounded-xl border border-emerald-200 bg-emerald-50/80 p-6">
+          <h2 className="text-sm font-semibold text-emerald-900">Résultat de l&apos;assistant</h2>
+          <pre className="mt-3 whitespace-pre-wrap text-sm leading-relaxed text-slate-800">
+            {mission.ai_result}
+          </pre>
         </div>
       )}
+
+      {!mission.ai_result && mission.status === 'recue' && (
+        <p className="mt-6 rounded-lg bg-slate-50 px-4 py-3 text-sm text-slate-600">
+          Votre demande est en file de traitement. Le résultat apparaîtra ici dès qu&apos;il sera prêt.
+        </p>
+      )}
+
       {skill?.integrated && skill.toolPath && (
-        <Link
-          href={skill.toolPath}
-          className="mt-6 inline-block rounded-xl bg-[var(--bework-blue)] px-6 py-3 text-sm font-semibold text-white hover:bg-blue-700"
-        >
+        <Link href={skill.toolPath} className="bework-btn-primary mt-6 inline-flex">
           Ouvrir l&apos;outil {skill.name}
         </Link>
       )}
