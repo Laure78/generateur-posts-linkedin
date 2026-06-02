@@ -43,6 +43,12 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 COPY --from=builder --chown=nextjs:nodejs /app/skills ./skills
 
+USER root
+RUN apk add --no-cache python3 py3-pip \
+  && pip3 install --break-system-packages python-docx Pillow \
+  && mkdir -p /app/.data/mission-outputs /app/.data/tmp \
+  && chown -R nextjs:nodejs /app/.data
+
 USER nextjs
 EXPOSE 3000
 CMD ["node", "server.js"]

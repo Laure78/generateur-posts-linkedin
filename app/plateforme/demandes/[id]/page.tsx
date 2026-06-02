@@ -4,7 +4,9 @@ import { ArrowLeft } from 'lucide-react';
 import { getAppUser } from '@/lib/auth/get-user';
 import { MISSION_TYPES } from '@/lib/bework/config';
 import { getSkillById, getSkillForMissionType } from '@/lib/skills/registry';
+import { MissionDocumentDownload } from '@/components/platform/MissionDocumentDownload';
 import { MissionSkillRunner } from '@/components/platform/MissionSkillRunner';
+import { missionDocxExists } from '@/lib/skills/mission-output';
 import { DEV_BYPASS } from '@/lib/dev/config';
 import { getMission } from '@/lib/dev/local-missions';
 import { createClient } from '@/lib/supabase/server';
@@ -36,6 +38,7 @@ export default async function DemandeDetailPage({ params }: { params: Promise<{ 
 
   if (!mission) notFound();
 
+  const hasDocx = await missionDocxExists(id);
   const typeMeta = MISSION_TYPES.find((t) => t.id === mission.type);
   const skill = getSkillById(mission.skill_id) ?? getSkillForMissionType(mission.type);
 
@@ -95,9 +98,10 @@ export default async function DemandeDetailPage({ params }: { params: Promise<{ 
       {mission.ai_result && (
         <div className="mt-6 rounded-xl border border-emerald-200 bg-emerald-50/80 p-6">
           <h2 className="text-sm font-semibold text-emerald-900">Résultat de l&apos;assistant</h2>
-          <pre className="mt-3 whitespace-pre-wrap text-sm leading-relaxed text-slate-800">
-            {mission.ai_result}
-          </pre>
+          <div className="prose prose-sm mt-3 max-w-none text-slate-800">
+            <pre className="whitespace-pre-wrap font-sans text-sm leading-relaxed">{mission.ai_result}</pre>
+          </div>
+          <MissionDocumentDownload missionId={id} hasDocx={hasDocx} />
         </div>
       )}
 

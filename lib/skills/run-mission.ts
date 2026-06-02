@@ -4,12 +4,18 @@ import { getMission, updateMission } from '@/lib/dev/local-missions';
 import { createClient } from '@/lib/supabase/server';
 import { getSkillById } from '@/lib/skills/registry';
 import { loadSkillPrompt } from '@/lib/skills/load-skill';
+import { run3dmCrChantierSkill } from './run-3dm-cr-chantier';
 
 const SYSTEM_BASE = `Tu es un assistant travaux BeWork (bework.fr), relais administratif pour entreprises BTP et MOE en France.
 Tu rédiges en français professionnel, concret, sans jargon startup. Tu ne t'engages jamais au nom du client sans validation.
-Supervision humaine depuis la France.`;
+Supervision humaine depuis la France.
 
-const FALLBACK_PROMPT = `Qualifie la demande administrative BTP et propose un plan d'action en étapes claires.`;
+RÈGLE PLATEFORME : tu dois LIVRER le résultat final complet dans ta réponse (document structuré, prêt à copier ou valider).
+N'inclus PAS de commandes shell, de chemins serveur (/mnt/…), ni de promesses (« je vais maintenant… ») : le client ne voit que ton texte.`;
+
+const FALLBACK_PROMPT = `Qualifie la demande administrative BTP et rédige le livrable demandé (tableaux, courrier, synthèse…) de façon complète et actionnable.`;
+
+const DOCX_SKILL_IDS = new Set(['3dmanager-cr-chantier']);
 
 export type MissionForSkill = {
   id: string;
@@ -30,6 +36,13 @@ export class SkillRunError extends Error {
     super(message);
     this.name = 'SkillRunError';
   }
+}
+
+function anthropicText(message: Anthropic.Message): string {
+  return message.content
+    .filter((b): b is Anthropic.TextBlock => b.type === 'text')
+    .map((b) => b.text)
+    .join('\n\n');
 }
 
 async function loadMission(missionId: string, userId: string): Promise<MissionForSkill | null> {
@@ -85,7 +98,36 @@ async function markProcessing(missionId: string, userId: string): Promise<boolea
   return Boolean(data);
 }
 
-/** Exécute le skill Claude associé à la mission (hors outils intégrés). */
+async function runClaudeSkill(mission: MissionForSkill): Promise<string> {
+  const skill = getSkillById(mission.skill_id);
+  const skillPrompt = loadSkillPrompt(mission.skill_id) ?? FALLBACK_PROMPT;
+  const skillMeta = skill
+    ? `Skill actif : ${skill.name}\n${skill.description}`
+    : `Skill actif : assistant-travaux (général)`;
+
+  const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+  const message = await anthropic.messages.create({
+    model: process.env.ANTHROPIC_MODEL || 'claude-sonnet-4-20250514',
+    max_tokens: 8192,
+    system: `${SYSTEM_BASE}\n\n${skillMeta}\n\n--- Instructions du skill ---\n\n${skillPrompt}`,
+    messages: [
+      {
+        role: 'user',
+        content: `Mission : ${mission.title}\nChantier / marché : ${mission.chantier || '—'}\n\nBrief client :\n${mission.brief}`,
+      },
+    ],
+  });
+
+  if (message.stop_reason === 'max_tokens') {
+    const partial = anthropicText(message);
+    return `${partial}\n\n---\n⚠️ *Réponse tronquée (limite de longueur). Scindez la demande ou précisez un lot unique.*`;
+  }
+
+  const text = anthropicText(message);
+  return text.trim() || 'Réponse vide — réessayez ou contactez le support BeWork.';
+}
+
+/** Exécute le skill associé à la mission (hors outils intégrés). */
 export async function runMissionSkill(
   missionId: string,
   userId: string
@@ -118,25 +160,13 @@ export async function runMissionSkill(
     throw new SkillRunError('Traitement déjà en cours ou terminé', 409);
   }
 
-  const skillPrompt = loadSkillPrompt(mission.skill_id) ?? FALLBACK_PROMPT;
-  const skillMeta = skill
-    ? `Skill actif : ${skill.name}\n${skill.description}`
-    : `Skill actif : assistant-travaux (général)`;
+  let text: string;
+  if (DOCX_SKILL_IDS.has(mission.skill_id)) {
+    text = await run3dmCrChantierSkill(mission);
+  } else {
+    text = await runClaudeSkill(mission);
+  }
 
-  const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
-  const message = await anthropic.messages.create({
-    model: process.env.ANTHROPIC_MODEL || 'claude-sonnet-4-20250514',
-    max_tokens: 4096,
-    system: `${SYSTEM_BASE}\n\n${skillMeta}\n\n--- Instructions du skill ---\n\n${skillPrompt}`,
-    messages: [
-      {
-        role: 'user',
-        content: `Mission : ${mission.title}\nChantier / marché : ${mission.chantier || '—'}\n\nBrief client :\n${mission.brief}`,
-      },
-    ],
-  });
-
-  const text = message.content[0]?.type === 'text' ? message.content[0].text : 'Réponse vide';
   await persistResult(missionId, userId, text, 'en_attente_validation');
   return { result: text };
 }
