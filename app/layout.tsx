@@ -14,6 +14,17 @@ export const metadata: Metadata = {
   description:
     'Relais administratif des marchés travaux pour entreprises BTP et MOE. Assistants travaux augmentés par l\'IA, supervisés depuis la France.',
   metadataBase: new URL(getSiteUrl()),
+  manifest: '/manifest.webmanifest',
+  themeColor: '#2563EB',
+  appleWebApp: {
+    capable: true,
+    title: 'BeWork',
+    statusBarStyle: 'default',
+  },
+  icons: {
+    icon: [{ url: '/icon-192.png', sizes: '192x192', type: 'image/png' }],
+    apple: [{ url: '/icon-192.png', sizes: '180x180', type: 'image/png' }],
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

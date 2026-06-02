@@ -13,7 +13,8 @@
     "check:supabase": "node scripts/check-supabase.js",
     "setup": "node scripts/setup-bework.mjs",
     "env:supabase": "node scripts/apply-supabase-keys.mjs",
-    "dev:local": "NEXT_PUBLIC_DEV_BYPASS=true DEV_BYPASS=true next dev"
+    "dev:local": "NEXT_PUBLIC_DEV_BYPASS=true DEV_BYPASS=true next dev",
+    "icons:generate": "node scripts/generate-icons.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.100.1",
