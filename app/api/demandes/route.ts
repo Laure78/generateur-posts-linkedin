@@ -5,6 +5,7 @@ import { getSkillForMissionType } from '@/lib/skills/registry';
 import { runMissionSkill } from '@/lib/skills/run-mission';
 import { DEV_BYPASS } from '@/lib/dev/config';
 import { createMission } from '@/lib/dev/local-missions';
+import { insertMissionRow } from '@/lib/supabase/missions-db';
 import { createClient } from '@/lib/supabase/server';
 
 export async function POST(request: Request) {
@@ -50,26 +51,24 @@ export async function POST(request: Request) {
     missionId = mission.id;
   } else {
     const supabase = await createClient();
-    const { data: mission, error } = await supabase
-      .from('missions')
-      .insert({
-        user_id: user.id,
-        type,
-        title: title.trim(),
-        brief: brief.trim(),
-        chantier: chantier?.trim() || null,
-        skill_id: skill?.id ?? 'assistant-travaux',
-        status,
+    const result = await insertMissionRow(supabase, {
+      user_id: user.id,
+      type,
+      title: title.trim(),
+      brief: brief.trim(),
+      chantier: chantier?.trim() || null,
+      skill_id: skill?.id ?? 'assistant-travaux',
+      status,
+      options: {
         output_format: deliverableFormat,
         use_skill_charter: applySkillCharter,
-      })
-      .select('id')
-      .single();
+      },
+    });
 
-    if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+    if ('error' in result) {
+      return NextResponse.json({ error: result.error }, { status: 500 });
     }
-    missionId = mission.id;
+    missionId = result.id;
   }
 
   const shouldRunSkill = !skill?.integrated && Boolean(process.env.ANTHROPIC_API_KEY);

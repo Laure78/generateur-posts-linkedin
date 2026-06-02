@@ -11,6 +11,7 @@ import {
   DELIVERABLE_FORMAT_LABELS,
   parseDeliverableFormat,
 } from '@/lib/bework/deliverable-formats';
+import { resolveMissionOptions, stripMissionMetaFromBrief } from '@/lib/bework/mission-meta';
 import { missionDeliverableExists } from '@/lib/skills/mission-output';
 import { DEV_BYPASS } from '@/lib/dev/config';
 import { getMission } from '@/lib/dev/local-missions';
@@ -45,7 +46,13 @@ export default async function DemandeDetailPage({ params }: { params: Promise<{ 
 
   if (!mission) notFound();
 
-  const outputFormat = parseDeliverableFormat(mission.output_format);
+  const missionOptions = resolveMissionOptions({
+    brief: mission.brief,
+    output_format: mission.output_format,
+    use_skill_charter: mission.use_skill_charter,
+  });
+  const displayBrief = stripMissionMetaFromBrief(mission.brief);
+  const outputFormat = missionOptions.output_format;
   const hasDeliverable = await missionDeliverableExists(id, outputFormat);
   const typeMeta = MISSION_TYPES.find((t) => t.id === mission.type);
   const skill = getSkillById(mission.skill_id) ?? getSkillForMissionType(mission.type);
@@ -84,7 +91,7 @@ export default async function DemandeDetailPage({ params }: { params: Promise<{ 
         {!skill?.integrated && (
           <p className="mt-2 text-xs text-slate-500">
             Livrable : {DELIVERABLE_FORMAT_LABELS[outputFormat].label}
-            {mission.use_skill_charter !== false ? ' · charte du skill appliquée' : ' · sans charte propriétaire'}
+            {missionOptions.use_skill_charter ? ' · charte du skill appliquée' : ' · sans charte propriétaire'}
           </p>
         )}
       </header>
@@ -106,7 +113,7 @@ export default async function DemandeDetailPage({ params }: { params: Promise<{ 
       <div className="bework-card mt-6 p-6">
         <h2 className="text-sm font-semibold text-slate-800">Votre demande</h2>
         <pre className="mt-3 whitespace-pre-wrap font-sans text-sm leading-relaxed text-slate-700">
-          {mission.brief}
+          {displayBrief}
         </pre>
       </div>
 

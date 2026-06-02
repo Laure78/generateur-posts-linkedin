@@ -18,13 +18,14 @@ DATABASE_URL=postgresql://postgres.[ref]:[MOT_DE_PASSE]@...pooler.supabase.com:6
 
 `DATABASE_URL` : **Settings → Database → Connection string → URI** (mode Transaction ou Session).
 
-## 2. Migration (tables missions)
+## 2. Migrations (tables missions)
 
-**Option A — SQL Editor (recommandé la 1ère fois)**
+**Option A — SQL Editor (recommandé)**
 
 1. **SQL Editor → New query**
-2. Colle le contenu de `supabase/migrations/001_bework_platform.sql`
-3. **Run**
+2. Exécute dans l’ordre :
+   - `supabase/migrations/001_bework_platform.sql`
+   - `supabase/migrations/002_mission_deliverable_options.sql` *(format livrable + charte skill)*
 
 **Option B — CLI**
 
@@ -32,7 +33,20 @@ DATABASE_URL=postgresql://postgres.[ref]:[MOT_DE_PASSE]@...pooler.supabase.com:6
 npm run db:bework
 ```
 
-(nécessite `DATABASE_URL` dans `.env.local`)
+(nécessite `DATABASE_URL` dans `.env.local` — applique toutes les migrations du dossier)
+
+Si erreur *« Could not find the output_format column »* : la migration **002** n’est pas appliquée. Colle uniquement :
+
+```sql
+alter table public.missions
+  add column if not exists output_format text not null default 'docx'
+    check (output_format in ('docx', 'doc', 'pdf', 'xls', 'pptx'));
+
+alter table public.missions
+  add column if not exists use_skill_charter boolean not null default true;
+```
+
+Puis **Settings → API → Reload schema** (ou attendre 1–2 min).
 
 ## 3. Authentification email
 

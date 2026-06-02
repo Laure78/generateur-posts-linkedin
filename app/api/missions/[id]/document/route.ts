@@ -8,6 +8,7 @@ import {
   isDeliverableFormat,
   parseDeliverableFormat,
 } from '@/lib/bework/deliverable-formats';
+import { resolveMissionOptions } from '@/lib/bework/mission-meta';
 import { missionDeliverablePath, missionDocxPath } from '@/lib/skills/mission-output';
 import { createClient } from '@/lib/supabase/server';
 
@@ -33,17 +34,17 @@ export async function GET(
     missionTitle = m.title;
   } else {
     const supabase = await createClient();
-    const { data } = await supabase
-      .from('missions')
-      .select('id, title, output_format')
-      .eq('id', id)
-      .eq('user_id', user.id)
-      .single();
+    const { data } = await supabase.from('missions').select('*').eq('id', id).eq('user_id', user.id).single();
     if (!data) {
       return NextResponse.json({ error: 'Mission introuvable' }, { status: 404 });
     }
-    missionFormat = data.output_format;
-    missionTitle = data.title;
+    const resolved = resolveMissionOptions({
+      brief: data.brief as string,
+      output_format: data.output_format as string | null | undefined,
+      use_skill_charter: data.use_skill_charter as boolean | null | undefined,
+    });
+    missionFormat = resolved.output_format;
+    missionTitle = data.title as string;
   }
 
   const url = new URL(request.url);

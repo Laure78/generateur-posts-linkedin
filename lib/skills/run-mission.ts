@@ -5,6 +5,7 @@ import { createClient } from '@/lib/supabase/server';
 import { getSkillById } from '@/lib/skills/registry';
 import { loadSkillPrompt } from '@/lib/skills/load-skill';
 import { parseDeliverableFormat } from '@/lib/bework/deliverable-formats';
+import { resolveMissionOptions } from '@/lib/bework/mission-meta';
 import { run3dmCrChantierSkill } from './run-3dm-cr-chantier';
 import { buildCharterSystemBlock, buildDeliverableFormatBlock } from './charter-prompt';
 import { exportMissionDeliverable } from './export-deliverable';
@@ -58,15 +59,33 @@ async function loadMission(missionId: string, userId: string): Promise<MissionFo
     return m;
   }
   const supabase = await createClient();
-  const { data } = await supabase
+  const { data, error } = await supabase
     .from('missions')
-    .select(
-      'id, user_id, skill_id, title, brief, chantier, status, ai_result, output_format, use_skill_charter'
-    )
+    .select('*')
     .eq('id', missionId)
     .eq('user_id', userId)
     .single();
-  return data;
+
+  if (error || !data) return null;
+
+  const resolved = resolveMissionOptions({
+    brief: data.brief as string,
+    output_format: data.output_format as string | null | undefined,
+    use_skill_charter: data.use_skill_charter as boolean | null | undefined,
+  });
+
+  return {
+    id: data.id as string,
+    user_id: data.user_id as string,
+    skill_id: data.skill_id as string,
+    title: data.title as string,
+    brief: resolved.brief,
+    chantier: (data.chantier as string | null) ?? null,
+    status: data.status as string,
+    ai_result: (data.ai_result as string | null) ?? null,
+    output_format: resolved.output_format,
+    use_skill_charter: resolved.use_skill_charter,
+  };
 }
 
 async function persistResult(
