@@ -4,7 +4,12 @@ import { getMission, updateMission } from '@/lib/dev/local-missions';
 import { createClient } from '@/lib/supabase/server';
 import { getSkillById } from '@/lib/skills/registry';
 import { loadSkillPrompt } from '@/lib/skills/load-skill';
+import { parseDeliverableFormat } from '@/lib/bework/deliverable-formats';
 import { run3dmCrChantierSkill } from './run-3dm-cr-chantier';
+import { buildCharterSystemBlock, buildDeliverableFormatBlock } from './charter-prompt';
+import { exportMissionDeliverable } from './export-deliverable';
+import { missionDocxPath, missionDeliverablePath } from './mission-output';
+import { promises as fs } from 'fs';
 
 const SYSTEM_BASE = `Tu es un assistant travaux BeWork (bework.fr), relais administratif pour entreprises BTP et MOE en France.
 Tu rédiges en français professionnel, concret, sans jargon startup. Tu ne t'engages jamais au nom du client sans validation.
@@ -26,6 +31,8 @@ export type MissionForSkill = {
   chantier: string | null;
   status: string;
   ai_result: string | null;
+  output_format?: string | null;
+  use_skill_charter?: boolean | null;
 };
 
 export class SkillRunError extends Error {
@@ -53,7 +60,9 @@ async function loadMission(missionId: string, userId: string): Promise<MissionFo
   const supabase = await createClient();
   const { data } = await supabase
     .from('missions')
-    .select('id, user_id, skill_id, title, brief, chantier, status, ai_result')
+    .select(
+      'id, user_id, skill_id, title, brief, chantier, status, ai_result, output_format, use_skill_charter'
+    )
     .eq('id', missionId)
     .eq('user_id', userId)
     .single();
@@ -98,18 +107,53 @@ async function markProcessing(missionId: string, userId: string): Promise<boolea
   return Boolean(data);
 }
 
+async function persistDeliverableFile(mission: MissionForSkill, aiResult: string): Promise<void> {
+  const format = parseDeliverableFormat(mission.output_format);
+  const useCharter = mission.use_skill_charter !== false;
+  const skill = getSkillById(mission.skill_id);
+
+  if (
+    DOCX_SKILL_IDS.has(mission.skill_id) &&
+    useCharter &&
+    (format === 'docx' || format === 'doc')
+  ) {
+    try {
+      await fs.access(missionDocxPath(mission.id));
+      if (format === 'doc') {
+        const buf = await fs.readFile(missionDocxPath(mission.id));
+        await fs.writeFile(missionDeliverablePath(mission.id, 'doc'), buf);
+      }
+      return;
+    } catch {
+      /* pas de docx charte — export texte */
+    }
+  }
+
+  await exportMissionDeliverable({
+    missionId: mission.id,
+    title: mission.title,
+    content: aiResult,
+    format,
+    skillName: skill?.name,
+  });
+}
+
 async function runClaudeSkill(mission: MissionForSkill): Promise<string> {
   const skill = getSkillById(mission.skill_id);
   const skillPrompt = loadSkillPrompt(mission.skill_id) ?? FALLBACK_PROMPT;
   const skillMeta = skill
     ? `Skill actif : ${skill.name}\n${skill.description}`
     : `Skill actif : assistant-travaux (général)`;
+  const useCharter = mission.use_skill_charter !== false;
+  const format = parseDeliverableFormat(mission.output_format);
+  const charterBlock = buildCharterSystemBlock(mission.skill_id, useCharter);
+  const formatBlock = buildDeliverableFormatBlock(format);
 
   const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
   const message = await anthropic.messages.create({
     model: process.env.ANTHROPIC_MODEL || 'claude-sonnet-4-20250514',
     max_tokens: 8192,
-    system: `${SYSTEM_BASE}\n\n${skillMeta}\n\n--- Instructions du skill ---\n\n${skillPrompt}`,
+    system: `${SYSTEM_BASE}\n\n${charterBlock}\n\n${formatBlock}\n\n${skillMeta}\n\n--- Instructions du skill ---\n\n${skillPrompt}`,
     messages: [
       {
         role: 'user',
@@ -160,11 +204,18 @@ export async function runMissionSkill(
     throw new SkillRunError('Traitement déjà en cours ou terminé', 409);
   }
 
+  const useCharter = mission.use_skill_charter !== false;
   let text: string;
-  if (DOCX_SKILL_IDS.has(mission.skill_id)) {
+  if (DOCX_SKILL_IDS.has(mission.skill_id) && useCharter) {
     text = await run3dmCrChantierSkill(mission);
   } else {
     text = await runClaudeSkill(mission);
+  }
+
+  try {
+    await persistDeliverableFile(mission, text);
+  } catch (err) {
+    console.error('export livrable:', err);
   }
 
   await persistResult(missionId, userId, text, 'en_attente_validation');

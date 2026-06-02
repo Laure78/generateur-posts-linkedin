@@ -22,7 +22,11 @@ Ton factuel, neutre, sans jugement.
 
 RÈGLE ABSOLUE : réponds UNIQUEMENT avec le JSON (pas de markdown, pas de \`\`\`, pas de texte avant/après).`;
 
-function buildCrSummary(crData: Record<string, unknown>, filename: string): string {
+function buildCrSummary(
+  crData: Record<string, unknown>,
+  filename: string,
+  outputFormat?: string
+): string {
   const op = String(crData.operation ?? 'Opération');
   const crNum = crData.cr_numero != null ? ` n°${crData.cr_numero}` : '';
   const date = String(crData.date_visite ?? '');
@@ -33,7 +37,8 @@ function buildCrSummary(crData: Record<string, unknown>, filename: string): stri
 **Date de visite :** ${date || '—'}  
 **Lots traités :** ${lots}
 
-Le document Word à la charte **3D MANAGER** a été généré : **${filename}**.
+Le document à la charte **3D MANAGER** a été généré : **${filename}**.
+${outputFormat && outputFormat !== 'docx' ? `\nUn export **.${outputFormat}** est également disponible au téléchargement.` : ''}
 
 Téléchargez le fichier ci-dessous, relisez-le et validez avant diffusion (délai d’approbation mentionné dans le CR).
 
@@ -75,5 +80,5 @@ ${mission.brief}`,
   const crData = extractJsonFromText(rawText) as Record<string, unknown>;
   const { filename } = await generate3dmCrDocx(crData, mission.id);
 
-  return buildCrSummary(crData, filename);
+  return buildCrSummary(crData, filename, mission.output_format ?? 'docx');
 }

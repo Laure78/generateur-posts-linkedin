@@ -33,6 +33,73 @@
   background-size: 28px 28px, 28px 28px, 100% 100%;
 }
 
+/* Pages légales (mentions, CGU, CGV, RGPD, cookies) */
+.legal-prose section {
+  margin-top: 2rem;
+}
+
+.legal-prose section:first-child {
+  margin-top: 0;
+}
+
+.legal-prose h2 {
+  font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--bework-navy);
+  margin-bottom: 0.75rem;
+}
+
+.legal-prose p {
+  margin-top: 0.75rem;
+  line-height: 1.65;
+  color: rgb(51 65 85);
+}
+
+.legal-prose ul {
+  margin-top: 0.75rem;
+  padding-left: 1.25rem;
+  list-style: disc;
+  color: rgb(51 65 85);
+  line-height: 1.65;
+}
+
+.legal-prose li + li {
+  margin-top: 0.35rem;
+}
+
+.legal-prose a {
+  color: var(--bework-blue);
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.legal-prose a:hover {
+  color: var(--bework-blue-dark);
+}
+
+.legal-prose table {
+  margin-top: 1rem;
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.legal-prose th,
+.legal-prose td {
+  border: 1px solid rgb(226 232 240);
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.legal-prose th {
+  background: rgb(248 250 252);
+  font-weight: 600;
+  color: var(--bework-navy);
+}
+
 .platform-main {
   background-color: var(--bework-surface);
   background-image:

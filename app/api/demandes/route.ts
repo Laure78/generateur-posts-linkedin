@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getAppUser } from '@/lib/auth/get-user';
+import { parseDeliverableFormat } from '@/lib/bework/deliverable-formats';
 import { getSkillForMissionType } from '@/lib/skills/registry';
 import { runMissionSkill } from '@/lib/skills/run-mission';
 import { DEV_BYPASS } from '@/lib/dev/config';
@@ -13,12 +14,17 @@ export async function POST(request: Request) {
   }
 
   const body = await request.json();
-  const { type, title, brief, chantier } = body as {
+  const { type, title, brief, chantier, output_format, use_skill_charter } = body as {
     type?: string;
     title?: string;
     brief?: string;
     chantier?: string;
+    output_format?: string;
+    use_skill_charter?: boolean;
   };
+
+  const deliverableFormat = parseDeliverableFormat(output_format);
+  const applySkillCharter = use_skill_charter !== false;
 
   if (!type || !title?.trim() || !brief?.trim()) {
     return NextResponse.json({ error: 'Type, titre et brief requis' }, { status: 400 });
@@ -38,6 +44,8 @@ export async function POST(request: Request) {
       chantier: chantier?.trim() || null,
       skill_id: skill?.id ?? 'assistant-travaux',
       status,
+      output_format: deliverableFormat,
+      use_skill_charter: applySkillCharter,
     });
     missionId = mission.id;
   } else {
@@ -52,6 +60,8 @@ export async function POST(request: Request) {
         chantier: chantier?.trim() || null,
         skill_id: skill?.id ?? 'assistant-travaux',
         status,
+        output_format: deliverableFormat,
+        use_skill_charter: applySkillCharter,
       })
       .select('id')
       .single();

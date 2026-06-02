@@ -9,6 +9,11 @@ import { getCatalogMissions } from '@/lib/bework/mission-catalog';
 import { getSkillForMissionType } from '@/lib/skills/registry';
 import { MissionTypePicker } from '@/components/platform/MissionTypePicker';
 import { MissionIcon } from '@/lib/bework/mission-icons';
+import {
+  DEFAULT_DELIVERABLE_FORMAT,
+  type DeliverableFormat,
+} from '@/lib/bework/deliverable-formats';
+import { DeliverableOptionsFields } from '@/components/platform/DeliverableOptionsFields';
 
 function initialMissionType(typeParam: string | null): string {
   if (typeParam && MISSION_TYPES.some((t) => t.id === typeParam)) {
@@ -29,6 +34,8 @@ function NouvelleDemandeForm() {
   const [title, setTitle] = useState('');
   const [brief, setBrief] = useState('');
   const [chantier, setChantier] = useState('');
+  const [outputFormat, setOutputFormat] = useState<DeliverableFormat>(DEFAULT_DELIVERABLE_FORMAT);
+  const [useSkillCharter, setUseSkillCharter] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -43,7 +50,14 @@ function NouvelleDemandeForm() {
       const res = await fetch('/api/demandes', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ type, title, brief, chantier }),
+        body: JSON.stringify({
+          type,
+          title,
+          brief,
+          chantier,
+          output_format: outputFormat,
+          use_skill_charter: useSkillCharter,
+        }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Erreur');
@@ -189,6 +203,16 @@ function NouvelleDemandeForm() {
                 <p className="mt-2 text-xs text-slate-500">{catalogMission.briefHint}</p>
               )}
             </div>
+
+            {!skill?.integrated && (
+              <DeliverableOptionsFields
+                outputFormat={outputFormat}
+                onOutputFormatChange={setOutputFormat}
+                useSkillCharter={useSkillCharter}
+                onUseSkillCharterChange={setUseSkillCharter}
+                skillName={catalogMission?.skillName}
+              />
+            )}
           </div>
 
           {error && (

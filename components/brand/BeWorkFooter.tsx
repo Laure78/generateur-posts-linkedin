@@ -1,5 +1,7 @@
+import Link from 'next/link';
 import { ExternalLink } from 'lucide-react';
 import { BEWORK } from '@/lib/bework/config';
+import { LEGAL_NAV } from '@/lib/bework/legal-nav';
 
 type BeWorkFooterProps = {
   className?: string;
@@ -19,7 +21,25 @@ export function BeWorkFooter({ className = '', compact = false }: BeWorkFooterPr
           {BEWORK.name} — {BEWORK.brandTagline}
         </p>
       )}
-      <p className={compact ? '' : 'mt-2'}>
+
+      <nav
+        aria-label="Informations légales"
+        className={`flex flex-wrap items-center justify-center gap-x-3 gap-y-2 ${compact ? 'text-xs' : 'mt-4 text-xs sm:text-sm'}`}
+      >
+        {LEGAL_NAV.map(({ href, label }, i) => (
+          <span key={href} className="inline-flex items-center gap-3">
+            {i > 0 && <span className="hidden text-slate-300 sm:inline" aria-hidden>|</span>}
+            <Link
+              href={href}
+              className="font-medium text-slate-600 hover:text-[var(--bework-blue)] hover:underline"
+            >
+              {label}
+            </Link>
+          </span>
+        ))}
+      </nav>
+
+      <p className={compact ? 'mt-3' : 'mt-4'}>
         <a
           href={BEWORK.url}
           target="_blank"
@@ -41,11 +61,10 @@ export function BeWorkFooter({ className = '', compact = false }: BeWorkFooterPr
           </>
         )}
       </p>
-      {!compact && (
-        <p className="mt-3 text-xs text-slate-400">
-          © {new Date().getFullYear()} {BEWORK.name} — Relais administratif marchés travaux BTP
-        </p>
-      )}
+
+      <p className={`text-xs text-slate-400 ${compact ? 'mt-2' : 'mt-3'}`}>
+        © {new Date().getFullYear()} {BEWORK.name} — Relais administratif marchés travaux BTP
+      </p>
     </footer>
   );
 }

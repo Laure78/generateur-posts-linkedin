@@ -12,6 +12,8 @@ export type LocalMission = {
   chantier: string | null;
   status: string;
   ai_result: string | null;
+  output_format: string;
+  use_skill_charter: boolean;
   created_at: string;
   updated_at: string;
 };
@@ -44,9 +46,18 @@ export async function listMissions(userId: string): Promise<LocalMission[]> {
     .sort((a, b) => b.created_at.localeCompare(a.created_at));
 }
 
+function normalizeMission(m: LocalMission & Partial<LocalMission>): LocalMission {
+  return {
+    ...m,
+    output_format: m.output_format ?? 'docx',
+    use_skill_charter: m.use_skill_charter ?? true,
+  };
+}
+
 export async function getMission(id: string, userId: string): Promise<LocalMission | null> {
   const all = await readAll();
-  return all.find((m) => m.id === id && m.user_id === userId) ?? null;
+  const found = all.find((m) => m.id === id && m.user_id === userId);
+  return found ? normalizeMission(found as LocalMission & Partial<LocalMission>) : null;
 }
 
 export async function createMission(input: {
@@ -57,11 +68,15 @@ export async function createMission(input: {
   brief: string;
   chantier: string | null;
   status: string;
+  output_format?: string;
+  use_skill_charter?: boolean;
 }): Promise<LocalMission> {
   const now = new Date().toISOString();
   const mission: LocalMission = {
     id: randomUUID(),
     ...input,
+    output_format: input.output_format ?? 'docx',
+    use_skill_charter: input.use_skill_charter ?? true,
     ai_result: null,
     created_at: now,
     updated_at: now,

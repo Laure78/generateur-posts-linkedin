@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSupabaseReady } from '@/components/auth/use-supabase-ready';
 import { PasswordInput } from '@/components/auth/PasswordInput';
+import Link from 'next/link';
 import { AuthShell, AuthFooterLink } from '@/components/brand/AuthShell';
 
 const DEV_BYPASS = process.env.NEXT_PUBLIC_DEV_BYPASS === 'true';
@@ -17,8 +18,9 @@ export default function InscriptionPage() {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [acceptLegal, setAcceptLegal] = useState(false);
 
-  const canSubmit = DEV_BYPASS || supabaseReady === true;
+  const canSubmit = (DEV_BYPASS || supabaseReady === true) && acceptLegal;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -128,6 +130,33 @@ export default function InscriptionPage() {
             hint="6 caractères minimum"
           />
         )}
+        <label className="flex items-start gap-2 text-sm text-slate-600">
+          <input
+            type="checkbox"
+            checked={acceptLegal}
+            onChange={(e) => setAcceptLegal(e.target.checked)}
+            required
+            className="mt-1 rounded border-slate-300 text-[var(--bework-blue)] focus:ring-[var(--bework-blue)]"
+          />
+          <span>
+            J&apos;accepte les{' '}
+            <Link href="/cgu" className="font-medium text-[var(--bework-blue)] hover:underline">
+              CGU
+            </Link>
+            , les{' '}
+            <Link href="/cgv" className="font-medium text-[var(--bework-blue)] hover:underline">
+              CGV
+            </Link>{' '}
+            et la{' '}
+            <Link
+              href="/politique-confidentialite"
+              className="font-medium text-[var(--bework-blue)] hover:underline"
+            >
+              politique de confidentialité
+            </Link>
+            .
+          </span>
+        </label>
         {error && <p className="text-sm text-red-600">{error}</p>}
         <button
           type="submit"

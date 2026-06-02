@@ -5,9 +5,13 @@ import { getAppUser } from '@/lib/auth/get-user';
 import { MISSION_TYPES } from '@/lib/bework/config';
 import { MissionIcon } from '@/lib/bework/mission-icons';
 import { getSkillById, getSkillForMissionType } from '@/lib/skills/registry';
-import { MissionDocumentDownload } from '@/components/platform/MissionDocumentDownload';
+import { MissionDeliverableDownload } from '@/components/platform/MissionDeliverableDownload';
 import { MissionSkillRunner } from '@/components/platform/MissionSkillRunner';
-import { missionDocxExists } from '@/lib/skills/mission-output';
+import {
+  DELIVERABLE_FORMAT_LABELS,
+  parseDeliverableFormat,
+} from '@/lib/bework/deliverable-formats';
+import { missionDeliverableExists } from '@/lib/skills/mission-output';
 import { DEV_BYPASS } from '@/lib/dev/config';
 import { getMission } from '@/lib/dev/local-missions';
 import { createClient } from '@/lib/supabase/server';
@@ -26,6 +30,8 @@ export default async function DemandeDetailPage({ params }: { params: Promise<{ 
     chantier: string | null;
     brief: string;
     ai_result: string | null;
+    output_format?: string | null;
+    use_skill_charter?: boolean | null;
   } | null = null;
 
   if (DEV_BYPASS) {
@@ -39,7 +45,8 @@ export default async function DemandeDetailPage({ params }: { params: Promise<{ 
 
   if (!mission) notFound();
 
-  const hasDocx = await missionDocxExists(id);
+  const outputFormat = parseDeliverableFormat(mission.output_format);
+  const hasDeliverable = await missionDeliverableExists(id, outputFormat);
   const typeMeta = MISSION_TYPES.find((t) => t.id === mission.type);
   const skill = getSkillById(mission.skill_id) ?? getSkillForMissionType(mission.type);
 
@@ -74,6 +81,12 @@ export default async function DemandeDetailPage({ params }: { params: Promise<{ 
         </div>
         <h1 className="font-display mt-3 text-2xl font-bold text-slate-900">{mission.title}</h1>
         {skill && <p className="mt-1 text-sm text-slate-500">Assistant : {skill.name}</p>}
+        {!skill?.integrated && (
+          <p className="mt-2 text-xs text-slate-500">
+            Livrable : {DELIVERABLE_FORMAT_LABELS[outputFormat].label}
+            {mission.use_skill_charter !== false ? ' · charte du skill appliquée' : ' · sans charte propriétaire'}
+          </p>
+        )}
       </header>
 
       {mission.chantier && (
@@ -103,7 +116,11 @@ export default async function DemandeDetailPage({ params }: { params: Promise<{ 
           <div className="prose prose-sm mt-3 max-w-none text-slate-800">
             <pre className="whitespace-pre-wrap font-sans text-sm leading-relaxed">{mission.ai_result}</pre>
           </div>
-          <MissionDocumentDownload missionId={id} hasDocx={hasDocx} />
+          <MissionDeliverableDownload
+            missionId={id}
+            hasFile={hasDeliverable}
+            outputFormat={outputFormat}
+          />
         </div>
       )}
 
