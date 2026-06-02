@@ -1,0 +1,430 @@
+{
+  "_metadata": {
+    "date_maj": "2026-05-15",
+    "note": "Échantillon projet laureolivie.fr — reformulations maison uniquement ; ne pas y coller de texte officiel DTU."
+  },
+  "dtus": [
+    {
+      "reference": "NF DTU 20.1",
+      "titre_court": "Maçonnerie des bâtiments",
+      "titre": "Ouvrages en maçonnerie",
+      "famille": "Gros œuvre",
+      "metiers": ["maçon", "gros œuvre", "mur", "parpaing", "agglo", "bloc béton"],
+      "mots_cles": ["maçonnerie", "mur porteur", "cloison béton", "hourdis", "agglo", "parpaing"],
+      "articles_typiques": [
+        "Compatibilité supports et reprises",
+        "Charges et liaisons entre ouvrages",
+        "Reprises et dispositions constructives",
+        "Article exact à confirmer dans le document officiel AFNOR ou CSTB"
+      ],
+      "resume_maison": "Cadre général des ouvrages maçonnés en bâtiment ; vérifier compatibilité avec autres lots et reprises."
+    },
+    {
+      "reference": "NF DTU 26.1",
+      "titre_court": "Montage de cloisons et doubles cloisons métalliques",
+      "titre": "Cloisons métalliques et doublages ossature métallique",
+      "famille": "Cloisons / doublages",
+      "metiers": ["plaquiste", "cloison", "doublage"],
+      "mots_cles": ["cloison", "doublage plaque", "rail montant", "GK", "plaques de plâtre", "ossature métallique"],
+      "articles_typiques": [
+        "Nature et épaisseur des plaques",
+        "Isolation intercalaire éventuelle",
+        "Points singuliers et désolidarisation",
+        "Article exact à confirmer dans le document officiel AFNOR ou CSTB"
+      ],
+      "resume_maison": "Montage de cloisons et contre-cloisons à ossature métallique ; points singuliers et performances à croiser avec le CCTP."
+    },
+    {
+      "reference": "NF DTU 31.1",
+      "titre_court": "Charpente bois",
+      "titre": "Ouvrages de charpente en bois",
+      "famille": "Charpente / bois",
+      "metiers": ["charpentier", "bois", "ossature bois"],
+      "mots_cles": ["charpente", "fermes", "chevrons", "pannes", "ossature bois", "lamellé-collé"],
+      "articles_typiques": [
+        "Mise en œuvre et liaisons",
+        "Protection au feu et traitements si prévus",
+        "Reception des bois et conditions de pose",
+        "Article exact à confirmer dans le document officiel AFNOR ou CSTB"
+      ],
+      "resume_maison": "Ouvrages structurels bois ; arbitrer avec le type de couverture et les charges climatiques du projet."
+    },
+    {
+      "reference": "NF DTU 31.3",
+      "titre_court": "Charpente industrielle",
+      "titre": "Charpentes industrielles",
+      "famille": "Charpente / métal",
+      "metiers": ["charpente métallique", "ossature métallique"],
+      "mots_cles": ["charpente métallique", "poutrelles", "portique", "ossature acier", "bm", "fermes métalliques"],
+      "articles_typiques": [
+        "Assemblages et contreventement",
+        "Traitments anticorrosion",
+        "Interfaces avec enveloppe et second œuvre",
+        "Article exact à confirmer dans le document officiel AFNOR ou CSTB"
+      ],
+      "resume_maison": "Structures industrielles métalliques ; cohérence avec la couverture et les écrans de façade."
+    },
+    {
+      "reference": "NF DTU 35.1",
+      "titre_court": "Bardage extérieur",
+      "titre": "Murs extérieurs du bâtiment",
+      "famille": "Enveloppe",
+      "metiers": ["bardage", "façadier", "menuiserie extérieure"],
+      "mots_cles": ["bardage", "ventilé", "lame", "collage", "fixation", "panneau façade"],
+      "articles_typiques": [
+        "Parement et fixations",
+        "Pare-pluie et étanchéité à l’air",
+        "Ponctuation des profilés et reprises",
+        "Article exact à confirmer dans le document officiel AFNOR ou CSTB"
+      ],
+      "resume_maison": "Façades rapportées ; vérifier continuité pare-pluie et compatible avec étanchéité à l’air."
+    },
+    {
+      "reference": "NF DTU 36.2",
+      "titre_court": "Fenêtres et portes extérieures",
+      "titre": "Jointement des fenêtres et portes extérieures",
+      "famille": "Menuiserie",
+      "metiers": ["menuisier", "fenêtre", "portes extérieures"],
+      "mots_cles": ["fenêtre", "menuiserie", "baie vitrée", "volet", "pose en applique", "pose en tunnel"],
+      "articles_typiques": [
+        "Type de pose et appui",
+        "Étanchéité périphérique au bâti",
+        "Performance thermique et acoustique déclarées",
+        "Article exact à confirmer dans le document officiel AFNOR ou CSTB"
+      ],
+      "resume_maison": "Interfaces menuiseries / mur ; le type de pose conditionne étanchéité et ponts thermiques."
+    },
+    {
+      "reference": "NF DTU 39.1",
+      "titre_court": "Étanchéité des toitures-terrasses",
+      "titre": "Travaux d’étanchéité des toitures-terrasses",
+      "famille": "Étanchéité",
+      "metiers": ["étancheur", "couvreur étanchéité"],
+      "mots_cles": ["étanchéité", "toiture terrasse", "membrane", "bitume élastomère", "pvc", "epdm"],
+      "articles_typiques": [
+        "Support et poussiérage",
+        "Relevés et points singuliers",
+        "Protection mécanique et évacuation des eaux",
+        "Article exact à confirmer dans le document officiel AFNOR ou CSTB"
+      ],
+      "resume_maison": "Toitures accessibles ou non ; relevés et évacuation des eaux conditionnent la durabilité."
+    },
+    {
+      "reference": "NF DTU 40.11",
+      "titre_court": "Planchers chauffants / refroidissants électriques",
+      "titre": "Planchers chauffants et planchers refroidissants électriques",
+      "famille": "Chauffage / sol",
+      "metiers": ["électricien", "chauffagiste", "sol"],
+      "mots_cles": ["plancher chauffant", "électrique", "câble chauffant", "tapis résistif", "pefa"],
+      "articles_typiques": [
+        "Registre et essais de mise en service",
+        "Couches de protection et planéité",
+        "Interface avec revêtements",
+        "Article exact à confirmer dans le document officiel AFNOR ou CSTB"
+      ],
+      "resume_maison": "Chauffage par le sol à résistance électrique ; contrôler essais et compatibilité revêtements."
+    },
+    {
+      "reference": "NF DTU 40.21",
+      "titre_court": "Planchers chauffants à eau",
+      "titre": "Planchers chauffants à eau chaude",
+      "famille": "Chauffage / sol",
+      "metiers": ["plombier", "chauffagiste"],
+      "mots_cles": ["plancher chauffant", "eau", "tube", "dalle série", "chape", "hydraulique"],
+      "articles_typiques": [
+        "Essai pression avant scellement",
+        "Enrobage et dilatations",
+        "Raccordements et équilibrage",
+        "Article exact à confirmer dans le document officiel AFNOR ou CSTB"
+      ],
+      "resume_maison": "Réseaux encastrés dans chape ou dalle ; l’essai de pression est un jalon critique."
+    },
+    {
+      "reference": "NF DTU 43.1",
+      "titre_court": "Revêtements muraux métalliques",
+      "titre": "Revêtements muraux métalliques",
+      "famille": "Enveloppe / paroi",
+      "metiers": ["couvreur", "bardage métallique"],
+      "mots_cles": ["bac acier", "tôle", "bardage métallique", "joint debout"],
+      "articles_typiques": [
+        "Fixations et jeu",
+        "Traitements anticorrosion",
+        "Points d’étanchéité en rive et naissance",
+        "Article exact à confirmer dans le document officiel AFNOR ou CSTB"
+      ],
+      "resume_maison": "Bardages en tôle ; cohérence avec l’isolant et l’étanchéité en sous-face."
+    },
+    {
+      "reference": "NF DTU 43.11",
+      "titre_court": "Parements en panneaux minces sur ossature bois/métallique",
+      "titre": "Parements rapportés sur ossature",
+      "famille": "Enveloppe",
+      "metiers": ["bardage", "façadier"],
+      "mots_cles": ["parement", "panneau mince", "cassette", "ossature façade"],
+      "articles_typiques": [
+        "Mode de fixation et ventilation",
+        "Pare-pluie",
+        "Reprises de charges",
+        "Article exact à confirmer dans le document officiel AFNOR ou CSTB"
+      ],
+      "resume_maison": "Parements légers rapportés ; détail des fixations et ventilation arrière-paroi."
+    },
+    {
+      "reference": "NF DTU 43.4",
+      "titre_court": "Parements en pierre naturelle ou reconstituée",
+      "titre": "Parements pierre",
+      "famille": "Enveloppe",
+      "metiers": ["tailleur", "pierre", "façadier"],
+      "mots_cles": ["pierre naturelle", "pierre reconstituée", "bardage pierre", "ancrage"],
+      "articles_typiques": [
+        "Système d’accroche et charges",
+        "Pare-pluie et lame d’air",
+        "Morphologie des appuis",
+        "Article exact à confirmer dans le document officiel AFNOR ou CSTB"
+      ],
+      "resume_maison": "Pierre en parement rapporté ; ancrages et relevés d’étanchéité au nu des appuis."
+    },
+    {
+      "reference": "NF DTU 45.1",
+      "titre_court": "Imperméabilisation des ouvrages enterrés",
+      "titre": "Étanchéité des sous-sols",
+      "famille": "Étanchéité",
+      "metiers": ["étancheur", "génie civil"],
+      "mots_cles": ["enterre", "sous-sol", "imperméabilisation", "voile contre terre"],
+      "articles_typiques": [
+        "Solivage drain et protection géo",
+        "Reprise en limite voisinage",
+        "Points singuliers et regards",
+        "Article exact à confirmer dans le document officiel AFNOR ou CSTB"
+      ],
+      "resume_maison": "Zone enterrée ; continuité des barrières et protection mécanique des complexes."
+    },
+    {
+      "reference": "NF DTU 51.4",
+      "titre_court": "Chapes",
+      "titre": "Ouvrages en chapes",
+      "famille": "Sols — support",
+      "metiers": ["solier", "chapiste"],
+      "mots_cles": ["chape", "chape fluide", "chape traditionnelle", "chape flottante", "bande périphérique"],
+      "articles_typiques": [
+        "Préparation du support",
+        "Isolant sous chape et bandes périphériques",
+        "Planéité et séchage",
+        "Article exact à confirmer dans le document officiel AFNOR ou CSTB"
+      ],
+      "resume_maison": "Forme des supports avant revêtements ; chape flottante exige dispositifs périphériques."
+    },
+    {
+      "reference": "NF DTU 52.1",
+      "titre_court": "Revêtements de sol en pierre",
+      "titre": "Revêtements de sol en pierre",
+      "famille": "Revêtement dur",
+      "metiers": ["marbrier", "carreleur", "tailleur"],
+      "mots_cles": ["dalles pierre naturelle", "marbre", "granit", "pierre au sol"],
+      "articles_typiques": [
+        "Absorption pierre vs colle",
+        "Préparation support",
+        "Joints et pentes",
+        "Article exact à confirmer dans le document officiel AFNOR ou CSTB"
+      ],
+      "resume_maison": "Dalles pierre ; liaison colle et besoins hydro si locaux mouillés."
+    },
+    {
+      "reference": "NF DTU 52.2",
+      "titre_court": "Carrelages céramiques",
+      "titre": "Pose des carrelages céramiques",
+      "famille": "Revêtement dur",
+      "metiers": ["carreleur", "faïence"],
+      "mots_cles": ["carrelage", "faïence", "grès cérame", "émaux", "mosaïque", "collé"],
+      "articles_typiques": [
+        "Support admissible et planéité",
+        "Classe de collage à confirmer au contexte",
+        "Joints et pentes locales",
+        "Locaux humides : compatibilité avec système sous carrelage",
+        "Article exact à confirmer dans le document officiel AFNOR ou CSTB"
+      ],
+      "resume_maison": "Carreaux céramiques collés ; en local humide, croiser avec un système sous carrelage validé."
+    },
+    {
+      "reference": "NF DTU 53.2",
+      "titre_court": "Parquets collés",
+      "titre": "Pose des parquets collés",
+      "famille": "Revêtement souple/dur",
+      "metiers": ["parqueteur", "solier"],
+      "mots_cles": ["parquet", "massif", "contrecollé", "collé", "lames bois"],
+      "articles_typiques": [
+        "Humidité support et taux à confirmer sur site",
+        "Colle et rack",
+        "Finition et protection",
+        "Article exact à confirmer dans le document officiel AFNOR ou CSTB"
+      ],
+      "resume_maison": "Parquet encollé ; hygrométrie du support et cycles de séchage à anticiper."
+    },
+    {
+      "reference": "NF DTU 54.1",
+      "titre_court": "Revêtements plastiques",
+      "titre": "Revêtements de sol plastiques",
+      "famille": "Sol souple",
+      "metiers": ["solier", "pvc", "vinyle"],
+      "mots_cles": ["sol pvc", "lames vinyle", "revêtement plastique", "collé semi-rigide"],
+      "articles_typiques": [
+        "Classe usage à préciser avec le fabricant",
+        "Préparation support",
+        "Pentes dans locaux mouillés",
+        "Article exact à confirmer dans le document officiel AFNOR ou CSTB"
+      ],
+      "resume_maison": "Sols vinyle ou PVC ; l’usage (trafic local / collectif) guide le choix produit."
+    },
+    {
+      "reference": "NF DTU 56.1",
+      "titre_court": "Isolation thermique des toitures",
+      "titre": "Isolation des combles perdus",
+      "famille": "Isolation",
+      "metiers": ["isolation", "couvreur", "plaquiste"],
+      "mots_cles": ["combles perdus", "soufflage", "laine minérale rampant", "isolation thermique"],
+      "articles_typiques": [
+        "Épaisseur et résistance déclarée",
+        "Barrière vapeur ou pare-vapeur si prévu",
+        "Points lumineux et trémies",
+        "Article exact à confirmer dans le document officiel AFNOR ou CSTB"
+      ],
+      "resume_maison": "Isolation de combles perdus ; cohérence avec ventilation de toiture."
+    },
+    {
+      "reference": "NF DTU 56.4",
+      "titre_court": "Isolation des murs",
+      "titre": "Isolation des murs",
+      "famille": "Isolation",
+      "metiers": ["isolation", "ITE", "ITI"],
+      "mots_cles": ["isolant mur", "ite", "iti", "doublage isolé", "laine rouleaux"],
+      "articles_typiques": [
+        "Système d’isolant et fixation",
+        "Ponts thermiques des appuis",
+        "Parements et coupe-feu selon zonage REI demandé",
+        "Article exact à confirmer dans le document officiel AFNOR ou CSTB"
+      ],
+      "resume_maison": "Isolation enveloppe ou par l’intérieur ; coupe-feu et pare-vapeur à caler sur CCTP."
+    },
+    {
+      "reference": "NF DTU 57.2",
+      "titre_court": "Isolation des planchers contre terre ou sur terre plein",
+      "titre": "Isolation sous plancher bas",
+      "famille": "Isolation",
+      "metiers": ["isolation", "sol"],
+      "mots_cles": ["isolation plancher bas", "terre plein", "chape isolante"],
+      "articles_typiques": [
+        "Système de sol et pont thermique périmétrique",
+        "Barrière vapeur située coté chauffé",
+        "Réduction impact acoustique si exigée",
+        "Article exact à confirmer dans le document officiel AFNOR ou CSTB"
+      ],
+      "resume_maison": "Plancher sur terreplein ; traiter pont thermique et interfacing avec chape."
+    },
+    {
+      "reference": "NF DTU 59.1",
+      "titre_court": "Peinture intérieure",
+      "titre": "Travaux de peinture des bâtiments",
+      "famille": "Peinture",
+      "metiers": ["peintre", "décoration"],
+      "mots_cles": ["peinture", "acrylique", "glycéro", "lessivable", "murs", "plafonds"],
+      "articles_typiques": [
+        "Préparation des subjectiles",
+        "Classe de finition à préciser avec le niveau décoratif attendu",
+        "Nombre couches et temps de séchage",
+        "Humidité résiduelle en locaux mouillés",
+        "Article exact à confirmer dans le document officiel AFNOR ou CSTB"
+      ],
+      "resume_maison": "Système peinture sur supports bâtiment ; la classe de finition conditionne préparation."
+    },
+    {
+      "reference": "NF DTU 59.4",
+      "titre_court": "Travaux de peinture de bâtiments — parties extérieures",
+      "titre": "Peinture façade",
+      "famille": "Peinture",
+      "metiers": ["peintre façade", "ravalement"],
+      "mots_cles": ["peinture façade", "enduit façade", "revêtement extérieur mural"],
+      "articles_typiques": [
+        "Support et porosité façade",
+        "Classe exposition face au vent mouillé",
+        "Ponts couches et système primaire-accroche",
+        "Article exact à confirmer dans le document officiel AFNOR ou CSTB"
+      ],
+      "resume_maison": "Peintures / enduits façade ; exposition et ancien revêtement dictent préparation."
+    },
+    {
+      "reference": "NF DTU 60.1",
+      "titre_court": "Installations sanitaires",
+      "titre": "Réalisation des installations sanitaires",
+      "famille": "Plomberie",
+      "metiers": ["plombier", "sanitaire"],
+      "mots_cles": ["wc", "lavabo", "évier", "siphon", "alimentation eau", "évacuation", "plomberie sanitaire"],
+      "articles_typiques": [
+        "Essais d’étanchéité et pression",
+        "Matériaux canalisations",
+        "Points d’accès et trappes",
+        "Article exact à confirmer dans le document officiel AFNOR ou CSTB"
+      ],
+      "resume_maison": "Équipements sanitaires et raccordements ; essais et accessibilité maintenance."
+    },
+    {
+      "reference": "NF DTU 60.11",
+      "titre_court": "Canalisations d’ÉV sous bâtiments",
+      "titre": "Évacuations eaux vannes",
+      "famille": "Plomberie",
+      "metiers": ["plombier", "assainissement"],
+      "mots_cles": ["évacuation", "ev", "ep", "pvc assainissement", "tuyaux horizontaux"],
+      "articles_typiques": [
+        "Pentes et diamètres : consulter le DTU officiel et les fiches produit",
+        "Odeurs et équipements de ventilation primaire secondaire selon dossier",
+        "Tranchées et graves",
+        "Article exact à confirmer dans le document officiel AFNOR ou CSTB"
+      ],
+      "resume_maison": "Réseaux d’évacuation pluviale et EU/EV domestiques sous bâtiments."
+    },
+    {
+      "reference": "NF DTU 60.5",
+      "titre_court": "Alimentations d’équipements en eau sous pression",
+      "titre": "Réalisation des réseaux d’équipements en eau sous pression",
+      "famille": "Plomberie",
+      "metiers": ["plombier"],
+      "mots_cles": ["distribution eau", "multicouche", "per", "compteur", "réseau alimentation"],
+      "articles_typiques": [
+        "Pression disponible au point d’usage",
+        "Isolation thermique canalisation ACS",
+        "Fixations dilatations",
+        "Article exact à confirmer dans le document officiel AFNOR ou CSTB"
+      ],
+      "resume_maison": "Alimentations eau glacée sous pression jusqu’aux appareillage."
+    },
+    {
+      "reference": "NF DTU 65.11",
+      "titre_court": "Installations fixes de courant fort",
+      "titre": "Installations fixes de basses tension domestiques ou assimilées",
+      "famille": "Électricité",
+      "metiers": ["électricien"],
+      "mots_cles": ["électricité courant fort", "tableau divisionnaire", "câblage", "prises", "circuit"],
+      "articles_typiques": [
+        "Nature des protections différentiels",
+        "Sections et protections des conducteurs à confirmer sur schémas",
+        "Traversees et fourreaux conformes usages",
+        "Article exact à confirmer dans le document officiel AFNOR ou CSTB"
+      ],
+      "resume_maison": "Installations domestiques NF C 15-100 en parallèle ; le DTU donne précisions mise en œuvre bâtiment."
+    },
+    {
+      "reference": "NF DTU 68.1",
+      "titre_court": "Installations fixes de très basse tension",
+      "titre": "Câblages TBT",
+      "famille": "Électricité / courant faible",
+      "metiers": ["électricien", "courant faible"],
+      "mots_cles": ["courant faible", "tbt", "sonnerie", "interphone", "vdi"],
+      "articles_typiques": [
+        "Séparation strong/weak",
+        "Topologie et repérage",
+        "Passages communs et fourreaux",
+        "Article exact à confirmer dans le document officiel AFNOR ou CSTB"
+      ],
+      "resume_maison": "Câblages et supports pour signaux et contrôles bas voltage."
+    }
+  ]
+}

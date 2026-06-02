@@ -1,63 +1,24 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
+import type { Metadata } from 'next';
+import { DM_Sans, Outfit } from 'next/font/google';
+import './globals.css';
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const dmSans = DM_Sans({ variable: '--font-sans', subsets: ['latin'] });
+const outfit = Outfit({ variable: '--font-display', subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: {
-    default: "Laure Olivié — Créateur de contenu LinkedIn",
-    template: "%s | Laure Olivié"
+    default: 'BeWork — Plateforme assistants travaux BTP',
+    template: '%s | BeWork',
   },
-  description: "Plateforme outil dédiée à la création de contenu pour LinkedIn. Générateur de posts, idées, accroches et suivi pour développer ta présence professionnelle.",
-  keywords: ["LinkedIn", "création de contenu", "posts LinkedIn", "générateur de posts", "Laure Olivié", "réseau professionnel"],
-  authors: [{ name: "Laure Olivié", url: "https://www.linkedin.com/in/laure-olivie/" }],
-  creator: "Laure Olivié",
-  metadataBase: new URL("https://laureolivie.fr"),
-  alternates: {
-    canonical: "/",
-  },
-  openGraph: {
-    type: "website",
-    locale: "fr_FR",
-    url: "https://laureolivie.fr",
-    siteName: "Laure Olivié — Créateur LinkedIn",
-    title: "Laure Olivié — Créateur de contenu LinkedIn",
-    description: "Plateforme outil dédiée à la création de contenu pour LinkedIn. Générateur de posts, idées et suivi.",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Laure Olivié — Créateur LinkedIn",
-    description: "Plateforme de création de contenu pour LinkedIn",
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
-  },
+  description:
+    'Relais administratif des marchés travaux pour entreprises BTP et MOE. Assistants travaux augmentés par l\'IA, supervisés depuis la France.',
+  metadataBase: new URL('https://www.bework.fr'),
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="fr">
-      <body
-        className={`${inter.className} min-h-screen antialiased`}
-        style={{
-          margin: 0,
-          backgroundColor: '#FAFBFC',
-          color: '#1a202c',
-        }}
-      >
+      <body className={`${dmSans.variable} ${outfit.variable} font-sans antialiased bg-slate-50 text-slate-900`}>
         {children}
       </body>
     </html>

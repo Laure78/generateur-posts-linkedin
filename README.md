@@ -1,39 +1,36 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# BeWork — Plateforme client
 
-## Getting Started
+Relais administratif pour marchés travaux BTP / MOE. Les entreprises clientes déposent des demandes ; les **skills Claude AI** (vérification DTU, CR chantier, relances MOE, etc.) préparent le travail.
 
-First, run the development server:
+Site vitrine : [bework.fr](https://www.bework.fr)
+
+## Démarrage
 
 ```bash
+npm install
+cp .env.example .env.local
+# Remplir Supabase + ANTHROPIC_API_KEY
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Ouvre ton navigateur. Le serveur écoute sur **http://localhost:3000**. Si ce port est déjà utilisé, Next.js choisira le suivant (3001, 3002, etc.) — vérifie l’URL affichée dans le terminal.
+## Supabase
 
-- Accueil : http://localhost:3000/
-- Générateur de posts : http://localhost:3000/outil/generateur
+Exécuter `supabase/migrations/001_bework_platform.sql` dans le SQL Editor du projet Supabase.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Activer **Email** dans Authentication → Providers.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Structure
 
-## Learn More
+| Route | Description |
+|-------|-------------|
+| `/` | Accueil plateforme |
+| `/auth/connexion` | Connexion entreprise |
+| `/plateforme` | Tableau de bord |
+| `/plateforme/demandes/nouvelle` | Nouvelle demande |
+| `/plateforme/outils/verification-dtu` | Outil DTU intégré |
+| `/api/skills/run` | Traitement Claude (autres skills) |
 
-To learn more about Next.js, take a look at the following resources:
+## Skills
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **verification-dtu-bework** — intégré (`lib/dtu-verification/`)
+- Autres skills — prompts dans `app/api/skills/run/route.ts` + fichier `.cursor/skills/`
