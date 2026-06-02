@@ -3,21 +3,22 @@
 import { useState, Suspense } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { createClient } from '@/lib/supabase/client';
-import { isSupabaseConfigured } from '@/lib/supabase/env';
+import { useSupabaseReady } from '@/components/auth/use-supabase-ready';
 import { BEWORK } from '@/lib/bework/config';
 
 const DEV_BYPASS = process.env.NEXT_PUBLIC_DEV_BYPASS === 'true';
-const SUPABASE_OK = isSupabaseConfigured();
 
 function ConnexionForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const next = searchParams.get('next') || '/plateforme';
-  const [email, setEmail] = useState('demo@entreprise-btp.fr');
-  const [password, setPassword] = useState('demo1234');
+  const supabaseReady = useSupabaseReady();
+  const [email, setEmail] = useState(DEV_BYPASS ? 'demo@entreprise-btp.fr' : '');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+
+  const canSubmit = DEV_BYPASS || supabaseReady === true;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,9 +34,15 @@ function ConnexionForm() {
         router.refresh();
         return;
       }
-      const supabase = createClient();
-      const { error: err } = await supabase.auth.signInWithPassword({ email, password });
-      if (err) throw err;
+
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = (await res.json()) as { error?: string };
+      if (!res.ok) throw new Error(data.error || 'Connexion impossible');
+
       router.push(next);
       router.refresh();
     } catch (err) {
@@ -52,31 +59,37 @@ function ConnexionForm() {
           Mode local : connexion automatique sans Supabase (email libre).
         </p>
       )}
-      {!DEV_BYPASS && !SUPABASE_OK && (
+      {!DEV_BYPASS && supabaseReady === false && (
         <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-800">
-          Connexion indisponible : variables Supabase manquantes sur Railway. Redéployez après les avoir ajoutées.
+          Variables Supabase manquantes sur Railway → redeploy après configuration.
         </p>
       )}
       <div>
-        <label htmlFor="email" className="block text-sm font-medium">Email professionnel</label>
+        <label htmlFor="email" className="block text-sm font-medium">
+          Email professionnel
+        </label>
         <input
           id="email"
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
+          autoComplete="email"
           className="mt-1 w-full rounded-lg border border-slate-300 px-4 py-3"
         />
       </div>
       {!DEV_BYPASS && (
         <div>
-          <label htmlFor="password" className="block text-sm font-medium">Mot de passe</label>
+          <label htmlFor="password" className="block text-sm font-medium">
+            Mot de passe
+          </label>
           <input
             id="password"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            autoComplete="current-password"
             className="mt-1 w-full rounded-lg border border-slate-300 px-4 py-3"
           />
         </div>
@@ -84,7 +97,7 @@ function ConnexionForm() {
       {error && <p className="text-sm text-red-600">{error}</p>}
       <button
         type="submit"
-        disabled={loading || (!DEV_BYPASS && !SUPABASE_OK)}
+        disabled={loading || !canSubmit}
         className="w-full rounded-xl bg-[var(--bework-blue)] py-3 font-semibold text-white disabled:opacity-50"
       >
         {loading ? 'Connexion…' : 'Se connecter'}

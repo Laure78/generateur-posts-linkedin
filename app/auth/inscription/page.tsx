@@ -3,20 +3,22 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { isSupabaseConfigured } from '@/lib/supabase/env';
+import { useSupabaseReady } from '@/components/auth/use-supabase-ready';
 import { BEWORK } from '@/lib/bework/config';
 
 const DEV_BYPASS = process.env.NEXT_PUBLIC_DEV_BYPASS === 'true';
-const SUPABASE_OK = isSupabaseConfigured();
 
 export default function InscriptionPage() {
   const router = useRouter();
+  const supabaseReady = useSupabaseReady();
   const [email, setEmail] = useState(DEV_BYPASS ? 'demo@entreprise-btp.fr' : '');
   const [password, setPassword] = useState('');
   const [company, setCompany] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+
+  const canSubmit = DEV_BYPASS || supabaseReady === true;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -37,11 +39,7 @@ export default function InscriptionPage() {
       const res = await fetch('/api/auth/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email,
-          password,
-          company_name: company,
-        }),
+        body: JSON.stringify({ email, password, company_name: company }),
       });
       const data = (await res.json()) as {
         error?: string;
@@ -81,10 +79,15 @@ export default function InscriptionPage() {
           Mode local actif — pas besoin de Supabase pour tester.
         </p>
       )}
-      {!DEV_BYPASS && !SUPABASE_OK && (
+      {!DEV_BYPASS && supabaseReady === false && (
         <p className="mt-2 rounded-lg bg-red-50 px-3 py-2 text-sm text-red-800">
-          Inscription indisponible : ajoutez les variables Supabase sur Railway puis redéployez.
+          Configuration Supabase absente sur le serveur. Dans Railway → Variables, ajoutez{' '}
+          <code className="text-xs">NEXT_PUBLIC_SUPABASE_URL</code> et{' '}
+          <code className="text-xs">NEXT_PUBLIC_SUPABASE_ANON_KEY</code>, puis redeploy.
         </p>
+      )}
+      {!DEV_BYPASS && supabaseReady === null && (
+        <p className="mt-2 text-sm text-slate-500">Vérification de la configuration…</p>
       )}
       {success && (
         <p className="mt-2 rounded-lg bg-green-50 px-3 py-2 text-sm text-green-900">{success}</p>
@@ -129,7 +132,7 @@ export default function InscriptionPage() {
         {error && <p className="text-sm text-red-600">{error}</p>}
         <button
           type="submit"
-          disabled={loading || (!DEV_BYPASS && !SUPABASE_OK) || Boolean(success)}
+          disabled={loading || !canSubmit || Boolean(success)}
           className="w-full rounded-xl bg-[var(--bework-blue)] py-3 font-semibold text-white disabled:opacity-50"
         >
           {loading ? 'Création…' : 'Créer le compte'}
