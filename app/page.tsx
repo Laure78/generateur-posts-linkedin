@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { BEWORK } from '@/lib/bework/config';
 import { BeWorkLogo } from '@/components/brand/BeWorkLogo';
 import { BeWorkFooter } from '@/components/brand/BeWorkFooter';
+import { BeWorkProcessSteps } from '@/components/brand/BeWorkProcessSteps';
 import { ArrowRight, Shield, Zap, Users } from 'lucide-react';
 
 export default function HomePage() {
@@ -58,6 +59,8 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      <BeWorkProcessSteps />
 
       <section className="border-t border-slate-200/80 bg-white/60 py-16">
         <div className="mx-auto grid max-w-6xl gap-8 px-4 md:grid-cols-3 lg:px-6">
