@@ -12,7 +12,7 @@ export function AuthShell({ title, subtitle, children, footer }: AuthShellProps)
   return (
     <div className="bework-blueprint-bg min-h-screen">
       <div className="mx-auto flex min-h-screen w-full max-w-md flex-col justify-center px-4 py-10">
-        <BeWorkLogo variant="auth" href="/" className="mx-auto items-center [&_img]:object-center" showTagline />
+        <BeWorkLogo variant="auth" href="/" className="mx-auto w-full max-w-[300px] [&_img]:object-center" />
 
         <div className="bework-card mt-8 p-6 shadow-md">
           <h1 className="font-display text-xl font-bold text-[var(--bework-navy)]">{title}</h1>

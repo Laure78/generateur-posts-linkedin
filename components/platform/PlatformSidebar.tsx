@@ -23,7 +23,7 @@ export function PlatformSidebar() {
   return (
     <aside className="flex w-[17.5rem] shrink-0 flex-col border-r border-slate-200/80 bg-white">
       <div className="border-b border-slate-100 px-4 py-4">
-        <BeWorkLogo variant="sidebar" href="/plateforme" showTagline />
+        <BeWorkLogo variant="sidebar" href="/plateforme" />
       </div>
 
       <div className="p-3">

@@ -12,7 +12,7 @@ export const BEWORK = {
   accentBright: '#377CF3',
   accentSoft: '#DBEAFE',
   logo: '/images/bework-logo.png',
-  logoBlueprint: '/images/bework-logo-blueprint.png',
+  logoBlueprint: '/images/bework-logo.png',
 } as const;
 
 /** Types de demande affichés à la création — 1 entrée = 1 skill (voir lib/skills/registry.ts) */
