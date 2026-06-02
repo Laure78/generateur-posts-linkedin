@@ -3,7 +3,8 @@ import { notFound } from 'next/navigation';
 import { ArrowLeft } from 'lucide-react';
 import { getAppUser } from '@/lib/auth/get-user';
 import { MISSION_TYPES } from '@/lib/bework/config';
-import { getSkillForMissionType } from '@/lib/skills/registry';
+import { getSkillById, getSkillForMissionType } from '@/lib/skills/registry';
+import { MissionSkillRunner } from '@/components/platform/MissionSkillRunner';
 import { DEV_BYPASS } from '@/lib/dev/config';
 import { getMission } from '@/lib/dev/local-missions';
 import { createClient } from '@/lib/supabase/server';
@@ -14,8 +15,10 @@ export default async function DemandeDetailPage({ params }: { params: Promise<{ 
   if (!user) return null;
 
   let mission: {
+    id: string;
     title: string;
     type: string;
+    skill_id: string;
     status: string;
     chantier: string | null;
     brief: string;
@@ -34,7 +37,7 @@ export default async function DemandeDetailPage({ params }: { params: Promise<{ 
   if (!mission) notFound();
 
   const typeMeta = MISSION_TYPES.find((t) => t.id === mission.type);
-  const skill = getSkillForMissionType(mission.type);
+  const skill = getSkillById(mission.skill_id) ?? getSkillForMissionType(mission.type);
 
   const statusLabel: Record<string, string> = {
     recue: 'Reçue',
@@ -74,6 +77,14 @@ export default async function DemandeDetailPage({ params }: { params: Promise<{ 
         </p>
       )}
 
+      <MissionSkillRunner
+        missionId={mission.id}
+        status={mission.status}
+        aiResult={mission.ai_result}
+        integrated={Boolean(skill?.integrated)}
+        skillName={skill?.name ?? 'Assistant BeWork'}
+      />
+
       <div className="bework-card mt-6 p-6">
         <h2 className="text-sm font-semibold text-slate-800">Votre demande</h2>
         <pre className="mt-3 whitespace-pre-wrap font-sans text-sm leading-relaxed text-slate-700">
@@ -88,12 +99,6 @@ export default async function DemandeDetailPage({ params }: { params: Promise<{ 
             {mission.ai_result}
           </pre>
         </div>
-      )}
-
-      {!mission.ai_result && mission.status === 'recue' && (
-        <p className="mt-6 rounded-lg bg-slate-50 px-4 py-3 text-sm text-slate-600">
-          Votre demande est en file de traitement. Le résultat apparaîtra ici dès qu&apos;il sera prêt.
-        </p>
       )}
 
       {skill?.integrated && skill.toolPath && (

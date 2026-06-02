@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getAppUser } from '@/lib/auth/get-user';
 import { getSkillForMissionType } from '@/lib/skills/registry';
+import { runMissionSkill } from '@/lib/skills/run-mission';
 import { DEV_BYPASS } from '@/lib/dev/config';
 import { createMission } from '@/lib/dev/local-missions';
 import { createClient } from '@/lib/supabase/server';
@@ -26,6 +27,8 @@ export async function POST(request: Request) {
   const skill = getSkillForMissionType(type);
   const status = skill?.integrated ? 'en_cours' : 'recue';
 
+  let missionId: string;
+
   if (DEV_BYPASS) {
     const mission = await createMission({
       user_id: user.id,
@@ -36,37 +39,42 @@ export async function POST(request: Request) {
       skill_id: skill?.id ?? 'assistant-travaux',
       status,
     });
-    return NextResponse.json({ id: mission.id });
+    missionId = mission.id;
+  } else {
+    const supabase = await createClient();
+    const { data: mission, error } = await supabase
+      .from('missions')
+      .insert({
+        user_id: user.id,
+        type,
+        title: title.trim(),
+        brief: brief.trim(),
+        chantier: chantier?.trim() || null,
+        skill_id: skill?.id ?? 'assistant-travaux',
+        status,
+      })
+      .select('id')
+      .single();
+
+    if (error) {
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+    missionId = mission.id;
   }
 
-  const supabase = await createClient();
-  const { data: mission, error } = await supabase
-    .from('missions')
-    .insert({
-      user_id: user.id,
-      type,
-      title: title.trim(),
-      brief: brief.trim(),
-      chantier: chantier?.trim() || null,
-      skill_id: skill?.id ?? 'assistant-travaux',
-      status,
-    })
-    .select('id')
-    .single();
+  const shouldRunSkill = !skill?.integrated && Boolean(process.env.ANTHROPIC_API_KEY);
 
-  if (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  if (shouldRunSkill) {
+    void runMissionSkill(missionId, user.id).catch((err) => {
+      console.error('runMissionSkill après création:', err);
+    });
   }
 
-  if (!skill?.integrated && process.env.ANTHROPIC_API_KEY) {
-    const { getSiteUrl } = await import('@/lib/bework/site-url');
-    const base = getSiteUrl();
-    fetch(`${base}/api/skills/run`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ missionId: mission.id }),
-    }).catch(() => {});
-  }
-
-  return NextResponse.json({ id: mission.id });
+  return NextResponse.json({
+    id: missionId,
+    skillId: skill?.id ?? 'assistant-travaux',
+    skillName: skill?.name ?? 'Assistant travaux',
+    processing: shouldRunSkill,
+    integrated: Boolean(skill?.integrated),
+  });
 }

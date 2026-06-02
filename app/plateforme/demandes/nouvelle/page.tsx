@@ -47,7 +47,7 @@ function NouvelleDemandeForm() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Erreur');
 
-      if (skill?.integrated && skill.toolPath) {
+      if (data.integrated && skill?.toolPath) {
         router.push(`${skill.toolPath}?mission=${data.id}`);
       } else {
         router.push(`/plateforme/demandes/${data.id}`);
@@ -201,7 +201,11 @@ function NouvelleDemandeForm() {
             </button>
             <button type="submit" disabled={loading} className="bework-btn-primary flex-1 sm:flex-none">
               <Send size={18} />
-              {loading ? 'Envoi en cours…' : 'Envoyer la demande'}
+              {loading
+            ? skill?.integrated
+              ? 'Envoi…'
+              : 'Envoi et traitement par l\'assistant…'
+            : 'Envoyer la demande'}
             </button>
           </div>
         </form>
