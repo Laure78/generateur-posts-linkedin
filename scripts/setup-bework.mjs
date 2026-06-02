@@ -9,7 +9,7 @@ import { fileURLToPath } from 'url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, '..');
-const PROJECT = 'xzwxtocaqffzwuylxvzl';
+const PROJECT = 'hiskonqyzpkjcvdsfyho';
 
 const sql = readFileSync(
   join(root, 'supabase/migrations/001_bework_platform.sql'),

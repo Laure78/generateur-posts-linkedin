@@ -2,7 +2,7 @@
 
 ## 1. Projet Supabase BeWork
 
-**Projet :** [xzwxtocaqffzwuylxvzl](https://supabase.com/dashboard/project/xzwxtocaqffzwuylxvzl)
+**Projet :** [hiskonqyzpkjcvdsfyho](https://supabase.com/dashboard/project/hiskonqyzpkjcvdsfyho)
 
 Si `npm run check:supabase` affiche **Invalid API key**, régénère les clés :
 **Settings → API → anon public → Regenerate** (puis mets à jour `.env.local` et Railway).

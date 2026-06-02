@@ -22,6 +22,8 @@
 | `ANTHROPIC_API_KEY` | Oui | Skills Claude (demandes hors DTU) |
 | `NEXT_PUBLIC_SITE_URL` | Oui | URL Railway générée, ex. `https://xxx.up.railway.app` |
 | `SUPABASE_SERVICE_ROLE_KEY` | Recommandé | Tâches serveur si besoin |
+| `NEXT_PUBLIC_DEV_BYPASS` | Oui (prod) | `false` en production |
+| `DEV_BYPASS` | Oui (prod) | `false` en production |
 | `ANTHROPIC_MODEL` | Non | Défaut : `claude-sonnet-4-20250514` |
 
 Après ajout des variables, Railway redéploie automatiquement.
