@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { BeWorkFooter } from './BeWorkFooter';
 import { BeWorkLogo } from './BeWorkLogo';
 
 type AuthShellProps = {
@@ -10,8 +11,8 @@ type AuthShellProps = {
 
 export function AuthShell({ title, subtitle, children, footer }: AuthShellProps) {
   return (
-    <div className="bework-blueprint-bg min-h-screen">
-      <div className="mx-auto flex min-h-screen w-full max-w-md flex-col justify-center px-4 py-10">
+    <div className="bework-blueprint-bg flex min-h-screen flex-col">
+      <div className="mx-auto flex w-full max-w-md flex-1 flex-col justify-center px-4 py-10">
         <BeWorkLogo variant="auth" href="/" className="mx-auto w-full max-w-[300px] [&_img]:object-center" />
 
         <div className="bework-card mt-8 p-6 shadow-md">
@@ -22,6 +23,7 @@ export function AuthShell({ title, subtitle, children, footer }: AuthShellProps)
 
         {footer && <div className="mt-6 text-center text-sm">{footer}</div>}
       </div>
+      <BeWorkFooter compact />
     </div>
   );
 }

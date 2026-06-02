@@ -2,11 +2,12 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { BEWORK } from '@/lib/bework/config';
 import { BeWorkLogo } from '@/components/brand/BeWorkLogo';
+import { BeWorkFooter } from '@/components/brand/BeWorkFooter';
 import { ArrowRight, Shield, Zap, Users } from 'lucide-react';
 
 export default function HomePage() {
   return (
-    <div className="bework-blueprint-bg min-h-screen">
+    <div className="bework-blueprint-bg flex min-h-screen flex-col">
       <header className="border-b border-slate-200/80 bg-white/90 backdrop-blur-sm">
         <div className="mx-auto flex h-[4.5rem] max-w-6xl items-center justify-between px-4 lg:px-6">
           <BeWorkLogo variant="header" href="/" showTagline={false} />
@@ -21,7 +22,7 @@ export default function HomePage() {
         </div>
       </header>
 
-      <section className="mx-auto max-w-6xl px-4 py-12 lg:grid lg:grid-cols-2 lg:items-center lg:gap-12 lg:px-6 lg:py-20">
+      <section className="mx-auto flex-1 max-w-6xl px-4 py-12 lg:grid lg:grid-cols-2 lg:items-center lg:gap-12 lg:px-6 lg:py-20">
         <div>
           <p className="bework-kicker">Relais administratif des marchés travaux</p>
           <h1 className="font-display mt-4 text-4xl font-bold leading-tight text-[var(--bework-navy)] md:text-5xl">
@@ -74,13 +75,9 @@ export default function HomePage() {
             </div>
           ))}
         </div>
-        <p className="mt-12 text-center text-sm text-slate-500">
-          Site vitrine :{' '}
-          <a href={BEWORK.url} className="font-medium text-[var(--bework-blue)] hover:underline">
-            {BEWORK.url}
-          </a>
-        </p>
       </section>
+
+      <BeWorkFooter />
     </div>
   );
 }
