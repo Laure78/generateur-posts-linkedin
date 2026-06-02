@@ -4,7 +4,7 @@ import { BEWORK } from '@/lib/bework/config';
 
 const LOGO_SRC = BEWORK.logo;
 /** Dimensions source officielles (PNG blueprint BeWork). */
-const LOGO_ASPECT = 760 / 296;
+const LOGO_ASPECT = 786 / 328;
 
 type BeWorkLogoProps = {
   variant?: 'full' | 'sidebar' | 'auth' | 'header';
@@ -19,10 +19,10 @@ function logoHeight(width: number) {
 }
 
 const SIZES = {
-  header: { width: 200, height: logoHeight(200) },
-  sidebar: { width: 200, height: logoHeight(200) },
-  auth: { width: 300, height: logoHeight(300) },
-  full: { width: 320, height: logoHeight(320) },
+  header: { width: 220, height: logoHeight(220) },
+  sidebar: { width: 210, height: logoHeight(210) },
+  auth: { width: 320, height: logoHeight(320) },
+  full: { width: 360, height: logoHeight(360) },
 } as const;
 
 export function BeWorkLogo({
