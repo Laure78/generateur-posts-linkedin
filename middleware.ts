@@ -1,8 +1,15 @@
-import { type NextRequest } from 'next/server';
-import { updateSession } from '@/lib/supabase/middleware';
+import { type NextRequest, NextResponse } from 'next/server';
 
 export async function middleware(request: NextRequest) {
-  return await updateSession(request);
+  if (
+    process.env.NEXT_PUBLIC_DEV_BYPASS === 'true' ||
+    process.env.DEV_BYPASS === 'true'
+  ) {
+    return NextResponse.next({ request });
+  }
+
+  const { updateSession } = await import('@/lib/supabase/middleware');
+  return updateSession(request);
 }
 
 export const config = {

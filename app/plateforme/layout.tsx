@@ -1,13 +1,11 @@
 import { redirect } from 'next/navigation';
-import { createClient } from '@/lib/supabase/server';
 import { PlatformSidebar } from '@/components/platform/PlatformSidebar';
+import { getAppUser } from '@/lib/auth/get-user';
 
 export const dynamic = 'force-dynamic';
 
 export default async function PlateformeLayout({ children }: { children: React.ReactNode }) {
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
-
+  const user = await getAppUser();
   if (!user) {
     redirect('/auth/connexion?next=/plateforme');
   }

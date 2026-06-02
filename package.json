@@ -9,7 +9,9 @@
     "lint": "eslint",
     "db:migrate": "node scripts/run-migrations.js",
     "db:bework": "node scripts/run-bework-migration.js",
-    "check:supabase": "node scripts/check-supabase.js"
+    "check:supabase": "node scripts/check-supabase.js",
+    "setup": "node scripts/setup-bework.mjs",
+    "dev:local": "NEXT_PUBLIC_DEV_BYPASS=true DEV_BYPASS=true next dev"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.100.1",
