@@ -5,4 +5,6 @@ node_modules
 !.env.example
 .git
 *.md
+!skills/**/SKILL.md
+!skills/README.md
 .venv
