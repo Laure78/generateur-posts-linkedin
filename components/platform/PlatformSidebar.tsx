@@ -1,24 +1,37 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import {
-  LayoutDashboard,
-  PlusCircle,
-  Wrench,
-  ExternalLink,
-  LogOut,
-} from 'lucide-react';
+import { usePathname, useSearchParams } from 'next/navigation';
+import { LayoutDashboard, PlusCircle, ExternalLink, LogOut } from 'lucide-react';
 import { BEWORK } from '@/lib/bework/config';
+import { getMissionIcon } from '@/lib/bework/mission-icons';
 import { BeWorkLogo } from '@/components/brand/BeWorkLogo';
+import { getSidebarAssistantGroups } from '@/lib/skills/sidebar-nav';
 
-const NAV = [
-  { href: '/plateforme', label: 'Tableau de bord', icon: LayoutDashboard, exact: true },
-  { href: '/plateforme/outils/verification-dtu', label: 'Vérification DTU', icon: Wrench },
-];
+const ASSISTANT_GROUPS = getSidebarAssistantGroups();
+
+function isAssistantActive(
+  pathname: string,
+  typeParam: string | null,
+  href: string,
+  missionType: string,
+  integrated: boolean
+): boolean {
+  if (integrated) {
+    return pathname === href || pathname.startsWith(`${href}/`);
+  }
+  if (pathname.startsWith('/plateforme/demandes/nouvelle')) {
+    return typeParam === missionType;
+  }
+  return false;
+}
 
 export function PlatformSidebar() {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const typeParam = searchParams.get('type');
+
+  const dashboardActive = pathname === '/plateforme';
 
   return (
     <aside className="flex w-[17.5rem] shrink-0 flex-col border-r border-slate-200/80 bg-white">
@@ -30,7 +43,7 @@ export function PlatformSidebar() {
         <Link
           href="/plateforme/demandes/nouvelle"
           className={`flex w-full items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold transition-all ${
-            pathname.startsWith('/plateforme/demandes/nouvelle')
+            pathname.startsWith('/plateforme/demandes/nouvelle') && !typeParam
               ? 'bework-btn-primary shadow-md'
               : 'bework-btn-primary'
           }`}
@@ -40,26 +53,69 @@ export function PlatformSidebar() {
         </Link>
       </div>
 
-      <nav className="flex-1 space-y-0.5 px-3">
-        {NAV.map(({ href, label, icon: Icon, exact }) => {
-          const active = exact
-            ? pathname === href
-            : pathname === href || pathname.startsWith(`${href}/`);
-          return (
-            <Link
-              key={href}
-              href={href}
-              className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
-                active
-                  ? 'bg-[var(--bework-blue-soft)] text-[var(--bework-blue)]'
-                  : 'text-slate-600 hover:bg-slate-50 hover:text-[var(--bework-navy)]'
-              }`}
-            >
-              <Icon size={18} strokeWidth={active ? 2.25 : 2} />
-              {label}
-            </Link>
-          );
-        })}
+      <nav className="flex min-h-0 flex-1 flex-col overflow-hidden px-3">
+        <Link
+          href="/plateforme"
+          className={`mb-2 flex shrink-0 items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
+            dashboardActive
+              ? 'bg-[var(--bework-blue-soft)] text-[var(--bework-blue)]'
+              : 'text-slate-600 hover:bg-slate-50 hover:text-[var(--bework-navy)]'
+          }`}
+        >
+          <LayoutDashboard size={18} strokeWidth={dashboardActive ? 2.25 : 2} />
+          Tableau de bord
+        </Link>
+
+        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain pb-2">
+          <p className="sticky top-0 z-10 bg-white px-3 py-2 text-[0.65rem] font-semibold uppercase tracking-wider text-slate-400">
+            Assistants
+          </p>
+
+          {ASSISTANT_GROUPS.map(({ category, items }) => (
+            <div key={category.id} className="mb-3">
+              <p className="px-3 py-1 text-[0.65rem] font-medium uppercase tracking-wide text-slate-400">
+                {category.label}
+              </p>
+              <ul className="space-y-0.5">
+                {items.map(({ missionType, label, href, integrated }) => {
+                  const active = isAssistantActive(
+                    pathname,
+                    typeParam,
+                    href,
+                    missionType,
+                    integrated
+                  );
+                  const Icon = getMissionIcon(missionType);
+                  return (
+                    <li key={missionType}>
+                      <Link
+                        href={href}
+                        title={label}
+                        className={`flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm font-medium transition-colors ${
+                          active
+                            ? 'bg-[var(--bework-blue-soft)] text-[var(--bework-blue)]'
+                            : 'text-slate-600 hover:bg-slate-50 hover:text-[var(--bework-navy)]'
+                        }`}
+                      >
+                        <span
+                          className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg ${
+                            active
+                              ? 'bg-white text-[var(--bework-blue)] ring-1 ring-[var(--bework-blue)]/20'
+                              : 'bg-slate-50 text-[var(--bework-blue)]'
+                          }`}
+                          aria-hidden
+                        >
+                          <Icon size={16} strokeWidth={2} />
+                        </span>
+                        <span className="line-clamp-2 leading-snug">{label}</span>
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          ))}
+        </div>
       </nav>
 
       <div className="space-y-0.5 border-t border-slate-100 p-3">
