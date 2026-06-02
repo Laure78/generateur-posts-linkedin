@@ -1,51 +1,19 @@
-import { MetadataRoute } from 'next'
+import { MetadataRoute } from 'next';
+import { getSiteUrl } from '@/lib/bework/site-url';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://laureolivie.fr'
-  const now = new Date()
+  const baseUrl = getSiteUrl();
+  const now = new Date();
 
   return [
+    { url: baseUrl, lastModified: now, changeFrequency: 'weekly', priority: 1 },
+    { url: `${baseUrl}/auth/connexion`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
+    { url: `${baseUrl}/auth/inscription`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     {
-      url: baseUrl,
+      url: `${baseUrl}/plateforme/outils/verification-dtu`,
       lastModified: now,
-      changeFrequency: 'weekly',
-      priority: 1,
-    },
-    {
-      url: `${baseUrl}/outil`,
-      lastModified: now,
-      changeFrequency: 'weekly',
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/outil/generateur`,
-      lastModified: now,
-      changeFrequency: 'weekly',
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/outil/repondre-commentaires`,
-      lastModified: now,
-      changeFrequency: 'weekly',
+      changeFrequency: 'monthly',
       priority: 0.8,
     },
-    {
-      url: `${baseUrl}/outil/ghostwriter`,
-      lastModified: now,
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/outil/croissance`,
-      lastModified: now,
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/outil/analyser-profil`,
-      lastModified: now,
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-  ]
+  ];
 }

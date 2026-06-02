@@ -4,9 +4,11 @@ import { useState, Suspense } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
+import { isSupabaseConfigured } from '@/lib/supabase/env';
 import { BEWORK } from '@/lib/bework/config';
 
 const DEV_BYPASS = process.env.NEXT_PUBLIC_DEV_BYPASS === 'true';
+const SUPABASE_OK = isSupabaseConfigured();
 
 function ConnexionForm() {
   const router = useRouter();
@@ -48,6 +50,11 @@ function ConnexionForm() {
       {DEV_BYPASS && (
         <p className="rounded-lg bg-blue-50 px-3 py-2 text-sm text-blue-900">
           Mode local : connexion automatique sans Supabase (email libre).
+        </p>
+      )}
+      {!DEV_BYPASS && !SUPABASE_OK && (
+        <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-800">
+          Connexion indisponible : variables Supabase manquantes sur Railway. Redéployez après les avoir ajoutées.
         </p>
       )}
       <div>

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { DM_Sans, Outfit } from 'next/font/google';
+import { getSiteUrl } from '@/lib/bework/site-url';
 import './globals.css';
 
 const dmSans = DM_Sans({ variable: '--font-sans', subsets: ['latin'] });
@@ -12,7 +13,7 @@ export const metadata: Metadata = {
   },
   description:
     'Relais administratif des marchés travaux pour entreprises BTP et MOE. Assistants travaux augmentés par l\'IA, supervisés depuis la France.',
-  metadataBase: new URL('https://www.bework.fr'),
+  metadataBase: new URL(getSiteUrl()),
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -20,7 +20,7 @@
 | `NEXT_PUBLIC_SUPABASE_URL` | Oui | URL projet Supabase |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Oui | Clé anon / publishable |
 | `ANTHROPIC_API_KEY` | Oui | Skills Claude (demandes hors DTU) |
-| `NEXT_PUBLIC_SITE_URL` | Oui | URL Railway générée, ex. `https://xxx.up.railway.app` |
+| `NEXT_PUBLIC_SITE_URL` | Oui | **`https://app.bework.fr`** (domaine custom Railway) |
 | `SUPABASE_SERVICE_ROLE_KEY` | Recommandé | Tâches serveur si besoin |
 | `NEXT_PUBLIC_DEV_BYPASS` | Oui (prod) | `false` en production |
 | `DEV_BYPASS` | Oui (prod) | `false` en production |
@@ -28,17 +28,20 @@
 
 Après ajout des variables, Railway redéploie automatiquement.
 
-## 3. Domaine public
+**Important :** `NEXT_PUBLIC_SUPABASE_URL` et `NEXT_PUBLIC_SUPABASE_ANON_KEY` doivent être renseignées **avant** le build Docker (sinon l’inscription affiche une erreur Supabase). Après toute modification de ces deux variables → **Redeploy**.
 
-**Settings → Networking → Generate Domain**
+## 3. Domaine public — `app.bework.fr`
 
-Copie l’URL dans `NEXT_PUBLIC_SITE_URL` et dans Supabase (redirect URLs).
+1. **Settings → Networking → Custom Domain** → `app.bework.fr`
+2. Chez votre registrar (DNS du domaine `bework.fr`), ajoutez l’enregistrement indiqué par Railway (souvent **CNAME** `app` → `xxxx.up.railway.app`)
+3. Variable Railway : `NEXT_PUBLIC_SITE_URL` = `https://app.bework.fr`
+4. Supabase → Auth → redirect URLs : `https://app.bework.fr/**`
 
-## 4. Domaine custom (optionnel)
+(Optionnel : gardez aussi le domaine `*.up.railway.app` en redirect si besoin.)
 
-**Settings → Networking → Custom Domain** → ex. `app.bework.fr`
+## 4. Ancien domaine `app.laureolivie.fr`
 
-Mettre à jour Supabase redirect URLs en conséquence.
+Si encore actif sur Railway, retirez-le ou redirigez vers `app.bework.fr` pour éviter deux URLs de prod.
 
 ## 5. Mises à jour
 

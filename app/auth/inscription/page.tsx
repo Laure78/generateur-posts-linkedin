@@ -4,9 +4,11 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
+import { isSupabaseConfigured } from '@/lib/supabase/env';
 import { BEWORK } from '@/lib/bework/config';
 
 const DEV_BYPASS = process.env.NEXT_PUBLIC_DEV_BYPASS === 'true';
+const SUPABASE_OK = isSupabaseConfigured();
 
 export default function InscriptionPage() {
   const router = useRouter();
@@ -63,6 +65,12 @@ export default function InscriptionPage() {
           Mode local actif — pas besoin de Supabase pour tester.
         </p>
       )}
+      {!DEV_BYPASS && !SUPABASE_OK && (
+        <p className="mt-2 rounded-lg bg-red-50 px-3 py-2 text-sm text-red-800">
+          Inscription indisponible : configuration Supabase manquante sur le serveur. Ajoutez les variables
+          Railway puis redéployez.
+        </p>
+      )}
       <form onSubmit={handleSubmit} className="mt-8 space-y-4">
         <div>
           <label className="block text-sm font-medium">Entreprise</label>
@@ -99,7 +107,7 @@ export default function InscriptionPage() {
         {error && <p className="text-sm text-red-600">{error}</p>}
         <button
           type="submit"
-          disabled={loading}
+          disabled={loading || (!DEV_BYPASS && !SUPABASE_OK)}
           className="w-full rounded-xl bg-[var(--bework-blue)] py-3 font-semibold text-white disabled:opacity-50"
         >
           {loading ? 'Création…' : 'Créer le compte'}

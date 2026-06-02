@@ -2,7 +2,10 @@
 export const BEWORK = {
   name: 'BeWork',
   tagline: 'Relais administratif pour marchés travaux BTP',
+  /** Site vitrine */
   url: 'https://www.bework.fr',
+  /** Plateforme client (prod) */
+  appUrl: 'https://app.bework.fr',
   email: 'contact@bework.fr',
   accent: '#1D4ED8',
   accentSoft: '#DBEAFE',

@@ -38,11 +38,10 @@ npm run db:bework
 
 1. **Authentication → Providers → Email** : activé
 2. **Authentication → URL Configuration** :
-   - Site URL : `http://localhost:3000` (dev) puis ton URL Railway
+   - Site URL : `https://app.bework.fr` (prod) ou `http://localhost:3000` (dev)
    - Redirect URLs :
      - `http://localhost:3000/**`
-     - `https://TON-DOMAINE.railway.app/**`
-     - `https://plateforme.bework.fr/**` (si domaine custom)
+     - `https://app.bework.fr/**`
 
 ## 4. Enregistrer les clés dans `.env.local`
 

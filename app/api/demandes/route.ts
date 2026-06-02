@@ -59,7 +59,8 @@ export async function POST(request: Request) {
   }
 
   if (!skill?.integrated && process.env.ANTHROPIC_API_KEY) {
-    const base = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+    const { getSiteUrl } = await import('@/lib/bework/site-url');
+    const base = getSiteUrl();
     fetch(`${base}/api/skills/run`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

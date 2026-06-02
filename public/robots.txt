@@ -2,5 +2,6 @@ User-agent: *
 Allow: /
 Disallow: /admin/
 Disallow: /api/
+Disallow: /plateforme/
 
-Sitemap: https://laureolivie.fr/sitemap.xml
+Sitemap: https://app.bework.fr/sitemap.xml
