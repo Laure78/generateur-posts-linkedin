@@ -6,6 +6,7 @@ import { listMissions } from '@/lib/dev/local-missions';
 import { createClient } from '@/lib/supabase/server';
 import { PlusCircle, Clock, CheckCircle2, ChevronRight } from 'lucide-react';
 import { SkillActionGrid } from '@/components/platform/SkillActionGrid';
+import { MissionIcon } from '@/lib/bework/mission-icons';
 
 export default async function PlateformeDashboardPage() {
   const user = await getAppUser();
@@ -109,8 +110,9 @@ export default async function PlateformeDashboardPage() {
                       <p className="truncate font-medium text-slate-900">{m.title}</p>
                       <p className="mt-0.5 flex items-center gap-2 text-sm text-slate-500">
                         {typeMeta && (
-                          <span>
-                            {typeMeta.icon} {typeMeta.label}
+                          <span className="inline-flex items-center gap-2">
+                            <MissionIcon missionTypeId={typeMeta.id} size="sm" />
+                            {typeMeta.label}
                           </span>
                         )}
                       </p>

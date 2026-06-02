@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { ArrowRight, Sparkles, Wrench } from 'lucide-react';
+import { MissionIcon } from '@/lib/bework/mission-icons';
 import { getDashboardActionGroups, newDemandeUrl } from '@/lib/skills/skill-actions';
 
 export function SkillActionGrid() {
@@ -27,24 +28,22 @@ export function SkillActionGrid() {
                   className="group bework-card flex flex-col p-4 transition-all hover:border-[var(--bework-blue)] hover:shadow-md"
                 >
                   <div className="flex items-start gap-3">
-                    <span className="text-2xl" aria-hidden>
-                      {action.icon}
-                    </span>
+                    <MissionIcon missionTypeId={action.missionType} size="md" />
                     <div className="min-w-0 flex-1">
                       <p className="font-semibold text-slate-900 leading-snug">{action.label}</p>
                       <p className="mt-1 text-xs text-slate-500 line-clamp-2">{action.description}</p>
                     </div>
                   </div>
                   <span className="mt-4 flex items-center justify-between text-sm">
-                    <span className="inline-flex items-center gap-1 text-xs text-slate-400">
+                    <span className="inline-flex items-center gap-1 text-xs font-medium text-[var(--bework-blue)]/70">
                       {action.integrated ? (
                         <>
-                          <Wrench size={12} />
+                          <Wrench size={12} className="text-[var(--bework-blue)]" />
                           Outil
                         </>
                       ) : (
                         <>
-                          <Sparkles size={12} />
+                          <Sparkles size={12} className="text-[var(--bework-blue)]" />
                           IA
                         </>
                       )}

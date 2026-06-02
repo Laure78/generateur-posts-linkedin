@@ -178,7 +178,6 @@ export function getMissionCategory(missionTypeId: string): MissionCategoryId {
 export type CatalogMission = {
   id: string;
   label: string;
-  icon: string;
   category: MissionCategoryId;
   skillName: string;
   skillDescription: string;
@@ -195,7 +194,6 @@ export function getCatalogMissions(): CatalogMission[] {
     return {
       id: t.id,
       label: t.label,
-      icon: t.icon,
       category: meta.category,
       skillName: skill?.name ?? 'Assistant BeWork',
       skillDescription: skill?.description ?? 'Traitement par un assistant IA supervisé.',

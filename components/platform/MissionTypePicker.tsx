@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import { Check, Sparkles, Wrench } from 'lucide-react';
+import { MissionIcon } from '@/lib/bework/mission-icons';
 import {
   MISSION_CATEGORIES,
   getCatalogMissions,
@@ -81,20 +82,18 @@ export function MissionTypePicker({ value, onChange }: MissionTypePickerProps) {
                   <Check size={14} aria-hidden />
                 </span>
               )}
-              <span className="text-2xl" aria-hidden>
-                {mission.icon}
-              </span>
-              <span className="mt-2 pr-8 font-semibold text-slate-900 leading-snug">{mission.label}</span>
+              <MissionIcon missionTypeId={mission.id} size="md" className="mb-1" />
+              <span className="mt-1 pr-8 font-semibold text-slate-900 leading-snug">{mission.label}</span>
               <span className="mt-1 text-xs text-slate-500 line-clamp-2">{mission.skillDescription}</span>
-              <span className="mt-3 inline-flex items-center gap-1 text-xs font-medium text-slate-500">
+              <span className="mt-3 inline-flex items-center gap-1 text-xs font-medium text-[var(--bework-blue)]/80">
                 {mission.integrated ? (
                   <>
-                    <Wrench size={12} aria-hidden />
+                    <Wrench size={12} aria-hidden className="text-[var(--bework-blue)]" />
                     Outil intégré
                   </>
                 ) : (
                   <>
-                    <Sparkles size={12} aria-hidden />
+                    <Sparkles size={12} aria-hidden className="text-[var(--bework-blue)]" />
                     Assistant IA
                   </>
                 )}

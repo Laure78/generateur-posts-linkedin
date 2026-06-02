@@ -7,7 +7,6 @@ export function newDemandeUrl(missionType: string): string {
 export type SkillAction = {
   missionType: string;
   label: string;
-  icon: string;
   description: string;
   integrated: boolean;
 };
@@ -43,7 +42,6 @@ export function getDashboardActionGroups(): SkillActionGroup[] {
       .map((m) => ({
         missionType: m.id,
         label: m.label,
-        icon: m.icon,
         description: m.skillDescription,
         integrated: m.integrated,
       })),

@@ -8,6 +8,7 @@ import { MISSION_TYPES } from '@/lib/bework/config';
 import { getCatalogMissions } from '@/lib/bework/mission-catalog';
 import { getSkillForMissionType } from '@/lib/skills/registry';
 import { MissionTypePicker } from '@/components/platform/MissionTypePicker';
+import { MissionIcon } from '@/lib/bework/mission-icons';
 
 function initialMissionType(typeParam: string | null): string {
   if (typeParam && MISSION_TYPES.some((t) => t.id === typeParam)) {
@@ -125,8 +126,10 @@ function NouvelleDemandeForm() {
             <div className="flex flex-wrap items-start justify-between gap-3">
               <div>
                 <p className="text-xs font-medium uppercase tracking-wide text-slate-500">Assistant sélectionné</p>
-                <p className="mt-1 font-semibold text-slate-900">
-                  <span className="mr-2">{catalogMission?.icon}</span>
+                <p className="mt-2 flex items-center gap-3 font-semibold text-slate-900">
+                  {catalogMission && (
+                    <MissionIcon missionTypeId={catalogMission.id} size="md" />
+                  )}
                   {catalogMission?.label}
                 </p>
                 <p className="mt-1 text-sm text-slate-500">{catalogMission?.skillName}</p>

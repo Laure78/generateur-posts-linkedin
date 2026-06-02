@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { ArrowLeft } from 'lucide-react';
 import { getAppUser } from '@/lib/auth/get-user';
 import { MISSION_TYPES } from '@/lib/bework/config';
+import { MissionIcon } from '@/lib/bework/mission-icons';
 import { getSkillById, getSkillForMissionType } from '@/lib/skills/registry';
 import { MissionDocumentDownload } from '@/components/platform/MissionDocumentDownload';
 import { MissionSkillRunner } from '@/components/platform/MissionSkillRunner';
@@ -65,8 +66,9 @@ export default async function DemandeDetailPage({ params }: { params: Promise<{ 
             {statusLabel[mission.status] ?? mission.status}
           </span>
           {typeMeta && (
-            <span className="rounded-full bg-slate-100 px-3 py-1 text-xs text-slate-600">
-              {typeMeta.icon} {typeMeta.label}
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-3 py-1 text-xs text-[var(--bework-blue)]">
+              <MissionIcon missionTypeId={typeMeta.id} size="sm" className="!h-6 !w-6 rounded-lg" />
+              {typeMeta.label}
             </span>
           )}
         </div>
