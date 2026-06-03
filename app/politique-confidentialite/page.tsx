@@ -4,14 +4,14 @@ import { LEGAL } from '@/lib/bework/legal';
 import { BEWORK } from '@/lib/bework/config';
 
 export const metadata: Metadata = {
-  title: 'Politique de confidentialité',
-  description: 'Protection des données personnelles (RGPD) — plateforme BeWork.',
+  title: 'Confidentialité BeWork',
+  description: 'Conditions de confidentialité et protection des données (RGPD) — plateforme MOEX BeWork.',
   robots: { index: true, follow: true },
 };
 
 export default function PolitiqueConfidentialitePage() {
   return (
-    <LegalPageShell title="Politique de confidentialité (RGPD)">
+    <LegalPageShell title="Confidentialité BeWork (RGPD)">
       <section>
         <h2>1. Responsable de traitement</h2>
         <p>

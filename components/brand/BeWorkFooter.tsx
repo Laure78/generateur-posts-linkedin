@@ -1,7 +1,9 @@
 import Link from 'next/link';
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink, Shield } from 'lucide-react';
 import { BEWORK } from '@/lib/bework/config';
 import { LEGAL_NAV } from '@/lib/bework/legal-nav';
+
+const CONFIDENTIALITE_HREF = '/politique-confidentialite';
 
 type BeWorkFooterProps = {
   className?: string;
@@ -22,16 +24,40 @@ export function BeWorkFooter({ className = '', compact = false }: BeWorkFooterPr
         </p>
       )}
 
+      <div
+        className={`mx-auto max-w-lg rounded-xl border border-blue-100 bg-blue-50/60 px-4 py-3 ${compact ? 'text-xs' : 'mt-4 text-sm'}`}
+      >
+        <p className="inline-flex items-center justify-center gap-1.5 font-semibold text-[var(--bework-navy)]">
+          <Shield size={16} className="text-[var(--bework-blue)]" aria-hidden />
+          Conditions de confidentialité
+        </p>
+        <p className="mt-1.5 leading-relaxed text-slate-600">
+          Vos demandes MOEX et documents sont traités de façon confidentielle : accès sécurisé par compte,
+          isolation entre utilisateurs, pas de revente des données. Détails dans les{' '}
+          <Link
+            href={CONFIDENTIALITE_HREF}
+            className="font-semibold text-[var(--bework-blue)] hover:underline"
+          >
+            Confidentialité BeWork
+          </Link>
+          .
+        </p>
+      </div>
+
       <nav
         aria-label="Informations légales"
-        className={`flex flex-wrap items-center justify-center gap-x-3 gap-y-2 ${compact ? 'text-xs' : 'mt-4 text-xs sm:text-sm'}`}
+        className={`flex flex-wrap items-center justify-center gap-x-3 gap-y-2 ${compact ? 'mt-3 text-xs' : 'mt-4 text-xs sm:text-sm'}`}
       >
         {LEGAL_NAV.map(({ href, label }, i) => (
           <span key={href} className="inline-flex items-center gap-3">
             {i > 0 && <span className="hidden text-slate-300 sm:inline" aria-hidden>|</span>}
             <Link
               href={href}
-              className="font-medium text-slate-600 hover:text-[var(--bework-blue)] hover:underline"
+              className={`font-medium hover:text-[var(--bework-blue)] hover:underline ${
+                href === CONFIDENTIALITE_HREF
+                  ? 'text-[var(--bework-blue)]'
+                  : 'text-slate-600'
+              }`}
             >
               {label}
             </Link>
