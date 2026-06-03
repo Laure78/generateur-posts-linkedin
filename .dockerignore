@@ -7,4 +7,6 @@ node_modules
 *.md
 !skills/**/SKILL.md
 !skills/README.md
+!skills/**/assets/**
+!skills/**/scripts/**
 .venv

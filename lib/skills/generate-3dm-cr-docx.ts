@@ -8,6 +8,7 @@ const execFileAsync = promisify(execFile);
 
 const SKILL_DIR = path.join(process.cwd(), 'skills', '3dmanager-cr-chantier');
 const SCRIPT = path.join(SKILL_DIR, 'scripts', 'generate_cr.py');
+const LOGO_FILE = path.join(SKILL_DIR, 'assets', 'logo_3dmanager.png');
 
 export async function generate3dmCrDocx(
   crData: Record<string, unknown>,
@@ -37,10 +38,20 @@ export async function generate3dmCrDocx(
   );
 
   try {
+    await fs.access(LOGO_FILE);
+  } catch {
+    console.warn(`Logo 3D MANAGER introuvable : ${LOGO_FILE}`);
+  }
+
+  try {
     await execFileAsync('python3', [SCRIPT, jsonPath, docxPath], {
       cwd: SKILL_DIR,
       timeout: 120_000,
       maxBuffer: 10 * 1024 * 1024,
+      env: {
+        ...process.env,
+        BEWORK_3DM_LOGO_PATH: LOGO_FILE,
+      },
     });
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);

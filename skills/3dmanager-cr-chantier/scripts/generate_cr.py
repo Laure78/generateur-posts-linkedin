@@ -14,6 +14,7 @@ il suffit de remplacer les valeurs par la charte réelle de 3D MANAGER.
 import json
 import os
 import sys
+import tempfile
 
 from docx import Document
 from docx.shared import Pt, RGBColor, Cm, Twips
@@ -46,7 +47,9 @@ STATUT_COULEUR = {
     "Nouveau":    BLEU_CHARTE,
 }
 
-LOGO_PATH = os.path.join(os.path.dirname(__file__), "..", "assets", "logo_3dmanager.png")
+_SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+_SKILL_DIR = os.path.abspath(os.path.join(_SCRIPT_DIR, ".."))
+_DEFAULT_LOGO = os.path.join(_SKILL_DIR, "assets", "logo_3dmanager.png")
 
 SOCIETE = "3D MANAGER"
 ACCROCHE = "Un facilitateur dans l'acte de construire"
@@ -61,6 +64,139 @@ CONTACT_PIED = "3dmanager@3dmanager.fr · www.3dmanager.fr"
 
 def C(hexstr):
     return RGBColor.from_string(hexstr)
+
+
+def resolve_logo_path():
+    """Cherche le logo sur disque (dev local, Docker Railway, cwd skill)."""
+    env = os.environ.get("BEWORK_3DM_LOGO_PATH", "").strip()
+    candidates = [
+        env,
+        _DEFAULT_LOGO,
+        os.path.join(os.getcwd(), "assets", "logo_3dmanager.png"),
+        os.path.join(os.getcwd(), "skills", "3dmanager-cr-chantier", "assets", "logo_3dmanager.png"),
+    ]
+    for path in candidates:
+        if path and os.path.isfile(path):
+            return os.path.abspath(path)
+    return None
+
+
+def prepare_logo_for_dark_banner(src_path):
+    """
+    Prépare une version lisible sur bandeau anthracite (#2A2A2A) :
+    fond blanc/noir → transparent, traits sombres → blanc, rouge de marque conservé.
+    """
+    try:
+        from PIL import Image
+    except ImportError:
+        return src_path
+
+    im = Image.open(src_path).convert("RGBA")
+    out_pixels = []
+    for r, g, b, a in im.getdata():
+        if a < 25:
+            out_pixels.append((0, 0, 0, 0))
+            continue
+        lum = (r + g + b) / 3
+        # Rouge « D » de marque
+        if r > 160 and g < 100 and b < 100 and lum < 200:
+            out_pixels.append((int(ROUGE[:2], 16), int(ROUGE[2:4], 16), int(ROUGE[4:6], 16), a))
+            continue
+        # Fond clair ou noir plein → transparent
+        if lum > 235 or (lum < 35 and a > 200):
+            out_pixels.append((0, 0, 0, 0))
+            continue
+        # Traits clairs (logo blanc)
+        if lum > 170:
+            out_pixels.append((255, 255, 255, a))
+            continue
+        # Traits sombres → blanc pour contraste sur anthracite
+        out_pixels.append((255, 255, 255, min(255, a + 40)))
+
+    out = Image.new("RGBA", im.size)
+    out.putdata(out_pixels)
+    tmp = tempfile.NamedTemporaryFile(suffix="_3dm_logo.png", delete=False)
+    out.save(tmp.name, "PNG")
+    tmp.close()
+    return tmp.name
+
+
+_logo_temp_path = None
+_prepared_logo_cache = None
+
+
+def logo_path_for_docx():
+    global _logo_temp_path, _prepared_logo_cache
+    if _prepared_logo_cache:
+        return _prepared_logo_cache
+    src = resolve_logo_path()
+    if not src:
+        return None
+    prepared = prepare_logo_for_dark_banner(src)
+    _prepared_logo_cache = prepared
+    if prepared != src:
+        _logo_temp_path = prepared
+    return prepared
+
+
+def add_logo_to_paragraph(paragraph, height_cm=2.0):
+    path = logo_path_for_docx()
+    if not path:
+        return False
+    run = paragraph.add_run()
+    run.add_picture(path, height=Cm(height_cm))
+    return True
+
+
+def add_logo_fallback_text(paragraph):
+    r = paragraph.add_run(SOCIETE + "\n")
+    style_run(r, 14, True, BLANC, POLICE_TITRE)
+    r2 = paragraph.add_run(ACCROCHE)
+    style_run(r2, 7, False, BLANC, POLICE_CORPS)
+
+
+def build_brand_banner_table(doc, data, logo_height_cm=2.0):
+    """Bandeau logoté visible dans le corps du document (1re page)."""
+    tbl = doc.add_table(rows=1, cols=2)
+    tbl.alignment = WD_TABLE_ALIGNMENT.LEFT
+    tbl.autofit = False
+    no_table_borders(tbl)
+    tblPr = tbl._tbl.tblPr
+    tblW = OxmlElement("w:tblW")
+    tblW.set(qn("w:w"), str(int(Cm(17).twips)))
+    tblW.set(qn("w:type"), "dxa")
+    tblPr.append(tblW)
+    layout = OxmlElement("w:tblLayout")
+    layout.set(qn("w:type"), "fixed")
+    tblPr.append(layout)
+
+    left, right = tbl.rows[0].cells
+    left.width = Cm(6.5)
+    right.width = Cm(10.5)
+    set_cell_bg(left, PRIMAIRE)
+    set_cell_bg(right, PRIMAIRE)
+    set_cell_margins(left, top=140, bottom=140, left=180, right=100)
+    set_cell_margins(right, top=140, bottom=140, left=100, right=200)
+
+    lp = left.paragraphs[0]
+    lp.alignment = WD_ALIGN_PARAGRAPH.LEFT
+    if not add_logo_to_paragraph(lp, logo_height_cm):
+        add_logo_fallback_text(lp)
+
+    rp = right.paragraphs[0]
+    rp.alignment = WD_ALIGN_PARAGRAPH.RIGHT
+    r1 = rp.add_run("COMPTE RENDU DE CHANTIER")
+    style_run(r1, 15, True, BLANC, POLICE_TITRE)
+    rp2 = right.add_paragraph()
+    rp2.alignment = WD_ALIGN_PARAGRAPH.RIGHT
+    r2 = rp2.add_run(f"N° {data.get('cr_numero', '')}")
+    style_run(r2, 11, True, ROUGE, POLICE_TITRE)
+    if data.get("date_visite"):
+        rp3 = right.add_paragraph()
+        rp3.alignment = WD_ALIGN_PARAGRAPH.RIGHT
+        style_run(rp3.add_run(str(data["date_visite"])[:48]), 8, False, BLANC, POLICE_CORPS)
+
+    add_para(doc, space_after=8)
 
 
 def set_cell_bg(cell, hex_color):
@@ -134,11 +270,10 @@ def add_page_number_field(paragraph):
 
 
 def build_header(doc, data):
-    """Bandeau d'en-tête : logo à gauche, titre CR à droite, sur fond charte."""
+    """Bandeau d'en-tête Word (pages suivantes) — même logo que le corps."""
     section = doc.sections[0]
     header = section.header
     header.is_linked_to_previous = False
-    # nettoyer le paragraphe par défaut
     for p in list(header.paragraphs):
         p._element.getparent().remove(p._element)
 
@@ -146,7 +281,6 @@ def build_header(doc, data):
     tbl.alignment = WD_TABLE_ALIGNMENT.LEFT
     tbl.autofit = False
     no_table_borders(tbl)
-    # largeur fixe = zone imprimable A4 portrait (17 cm)
     tblPr = tbl._tbl.tblPr
     tblW = OxmlElement("w:tblW")
     tblW.set(qn("w:w"), str(int(Cm(17).twips)))
@@ -156,38 +290,26 @@ def build_header(doc, data):
     layout.set(qn("w:type"), "fixed")
     tblPr.append(layout)
     left, right = tbl.rows[0].cells
-    left.width = Cm(6)
-    right.width = Cm(11)
+    left.width = Cm(6.5)
+    right.width = Cm(10.5)
     set_cell_bg(left, PRIMAIRE)
     set_cell_bg(right, PRIMAIRE)
-    set_cell_margins(left, top=120, bottom=120, left=160, right=80)
-    set_cell_margins(right, top=120, bottom=120, left=80, right=200)
+    set_cell_margins(left, top=100, bottom=100, left=140, right=80)
+    set_cell_margins(right, top=100, bottom=100, left=80, right=160)
 
-    # Logo (ou nom société en repli)
     lp = left.paragraphs[0]
     lp.alignment = WD_ALIGN_PARAGRAPH.LEFT
-    if os.path.exists(LOGO_PATH):
-        run = lp.add_run()
-        run.add_picture(LOGO_PATH, height=Cm(1.15))
-    else:
-        r = lp.add_run(SOCIETE + "\n")
-        style_run(r, 14, True, BLANC, POLICE_TITRE)
-        r2 = lp.add_run(ACCROCHE)
-        style_run(r2, 7, False, BLANC, POLICE_CORPS)
+    if not add_logo_to_paragraph(lp, 1.35):
+        add_logo_fallback_text(lp)
 
-    # Titre à droite
     rp = right.paragraphs[0]
     rp.alignment = WD_ALIGN_PARAGRAPH.RIGHT
     r1 = rp.add_run("COMPTE RENDU DE CHANTIER")
-    style_run(r1, 15, True, BLANC, POLICE_TITRE)
+    style_run(r1, 13, True, BLANC, POLICE_TITRE)
     rp2 = right.add_paragraph()
     rp2.alignment = WD_ALIGN_PARAGRAPH.RIGHT
     r2 = rp2.add_run(f"N° {data.get('cr_numero', '')}")
-    style_run(r2, 11, True, ROUGE, POLICE_TITRE)
-    if data.get("date_visite"):
-        rp3 = right.add_paragraph()
-        rp3.alignment = WD_ALIGN_PARAGRAPH.RIGHT
-        style_run(rp3.add_run(str(data["date_visite"])[:48]), 8, False, BLANC, POLICE_CORPS)
+    style_run(r2, 10, True, ROUGE, POLICE_TITRE)
 
 
 def build_footer(doc):
@@ -347,6 +469,8 @@ def build(data, out_path):
     build_header(doc, data)
     build_footer(doc)
 
+    build_brand_banner_table(doc, data, logo_height_cm=2.15)
+
     info_block(doc, data)
 
     if data.get("avancement"):
@@ -404,7 +528,15 @@ def main():
         out = f"CR_{op}_N{num}.docx"
 
     path = build(data, out)
-    print(f"✓ CR généré : {path}")
+    if resolve_logo_path():
+        print(f"✓ CR généré : {path} (logo 3D MANAGER intégré)")
+    else:
+        print(f"✓ CR généré : {path} (ATTENTION : logo introuvable — texte de repli)")
+    if _logo_temp_path and os.path.isfile(_logo_temp_path):
+        try:
+            os.unlink(_logo_temp_path)
+        except OSError:
+            pass
 
 
 if __name__ == "__main__":

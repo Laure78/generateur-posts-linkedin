@@ -38,7 +38,7 @@ Sur BeWork, le script est invoqué automatiquement après production du JSON ; c
 | Anthracite (bandeaux, texte fort) | `#2A2A2A` |
 | Rouge de marque (accents, filets, « D ») | `#CC2A2A` |
 | Fonds clairs (en-têtes tableau, blocs info) | `#F2F2F2` |
-| Logo | `assets/logo_3dmanager.png` — version détourée, affichée sur bandeau anthracite |
+| Logo | `assets/logo_3dmanager.png` — bandeau anthracite en **corps du document** (1re page) + en-tête Word ; version optimisée pour fond `#2A2A2A` |
 | Pied de page | BET TCE · MOEX · ISO 9001 — réseau : Siège · Atlantique · Aquitaine · Méditerranée · Île-de-France |
 | Coordonnées | Email / site en repli (à confirmer avec 3D MANAGER) |
 
