@@ -4,7 +4,7 @@ import { getMissionTypeLabel } from '@/lib/bework/moex-platform';
 import { DEV_BYPASS } from '@/lib/dev/config';
 import { listMissions } from '@/lib/dev/local-missions';
 import { createClient } from '@/lib/supabase/server';
-import { PlusCircle, Clock, CheckCircle2, ChevronRight } from 'lucide-react';
+import { PlusCircle, Clock, CheckCircle2, ChevronRight, BookOpen } from 'lucide-react';
 import { BEWORK } from '@/lib/bework/config';
 import { SkillActionGrid } from '@/components/platform/SkillActionGrid';
 import { MissionIcon } from '@/lib/bework/mission-icons';
@@ -74,6 +74,29 @@ export default async function PlateformeDashboardPage() {
       </header>
 
       <SkillActionGrid />
+
+      <section className="mt-8">
+        <Link
+          href="/plateforme/ressources"
+          className="bework-card flex flex-wrap items-center justify-between gap-4 p-5 transition-shadow hover:shadow-md"
+        >
+          <div className="flex items-start gap-4">
+            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[var(--bework-blue-soft)]">
+              <BookOpen className="text-[var(--bework-blue)]" size={22} aria-hidden />
+            </span>
+            <div>
+              <h2 className="font-display text-base font-semibold text-slate-900">
+                Ressources — guide d&apos;utilisation
+              </h2>
+              <p className="mt-1 max-w-xl text-sm text-slate-600">
+                Bonnes pratiques, précautions et obligation de vérification des livrables avant diffusion
+                (clients, MOA, entreprises).
+              </p>
+            </div>
+          </div>
+          <span className="text-sm font-semibold text-[var(--bework-blue)]">Lire le guide →</span>
+        </Link>
+      </section>
 
       <section className="mt-10">
         <div className="flex items-center justify-between gap-4">

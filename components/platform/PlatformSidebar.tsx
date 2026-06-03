@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { LayoutDashboard, PlusCircle, ExternalLink, LogOut } from 'lucide-react';
+import { BookOpen, LayoutDashboard, PlusCircle, ExternalLink, LogOut } from 'lucide-react';
 import { BEWORK } from '@/lib/bework/config';
 import { getMissionIcon } from '@/lib/bework/mission-icons';
 import { BeWorkLogo } from '@/components/brand/BeWorkLogo';
@@ -43,6 +43,7 @@ export function PlatformSidebar() {
   const typeParam = searchParams.get('type');
 
   const dashboardActive = pathname === '/plateforme';
+  const ressourcesActive = pathname.startsWith('/plateforme/ressources');
   const nouvellePath = '/plateforme/demandes/nouvelle';
 
   return (
@@ -82,6 +83,19 @@ export function PlatformSidebar() {
         >
           <LayoutDashboard size={18} strokeWidth={dashboardActive ? 2.25 : 2} />
           Tableau de bord
+        </Link>
+
+        <Link
+          href="/plateforme/ressources"
+          onClick={(e) => navigateClick(e, router, '/plateforme/ressources')}
+          className={`mb-2 flex shrink-0 items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
+            ressourcesActive
+              ? 'bg-[var(--bework-blue-soft)] text-[var(--bework-blue)]'
+              : 'text-slate-600 hover:bg-slate-50 hover:text-[var(--bework-navy)]'
+          }`}
+        >
+          <BookOpen size={18} strokeWidth={ressourcesActive ? 2.25 : 2} />
+          Ressources
         </Link>
 
         <div
