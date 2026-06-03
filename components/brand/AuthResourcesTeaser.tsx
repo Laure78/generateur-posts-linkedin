@@ -14,7 +14,7 @@ export function AuthResourcesTeaser() {
           <p className="mt-1 text-xs leading-relaxed text-slate-600">
             Bon usage de l&apos;IA, précautions et{' '}
             <strong className="font-semibold text-slate-800">obligation de vérification</strong> de chaque
-            livrable avant transmission au MOEX ou diffusion externe (MOA, entreprises, clients).
+            livrable avant transmission au MOEX.
           </p>
           <Link
             href="/guide"

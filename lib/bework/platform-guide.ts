@@ -17,8 +17,7 @@ export const PLATFORM_GUIDE_SECTIONS: GuideSection[] = [
     items: [
       "Réservé aux assistants travaux (Beworkers) — pas un accès direct pour les MOEX clients finaux.",
       "Les demandes traitées proviennent des MOEX externalisés (chantier, marchés, courriers, GPA).",
-      "Ne pas envoyer les livrables bruts aux clients, au MOA, aux entreprises ni à un tiers sans validation.",
-      "Chaque document doit être relu et validé par l'assistant travaux et/ou le MOEX avant diffusion.",
+      "Chaque document doit être relu et validé par l'assistant travaux et/ou le MOEX avant transmission.",
       "BeWork ne se substitue pas à un BET, un architecte, un bureau de contrôle ni à un conseil juridique.",
     ],
     emphasis: 'info',

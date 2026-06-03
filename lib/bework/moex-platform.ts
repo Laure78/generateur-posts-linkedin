@@ -13,11 +13,10 @@ export const MOEX_PLATFORM = {
     "Outil interne BeWork permettant aux assistants travaux de traiter les demandes des MOEX — maîtrises d'œuvre d'exécution externalisées.",
   scopeLine:
     "Outil interne pour les assistants travaux (Beworkers) : traitement des demandes administratives des MOEX externalisés (chantier, marchés, courriers MOA, GPA).",
-  /** Usage interne Beworker — ne pas diffuser les livrables bruts aux tiers. */
   internalUseShort:
-    "Outil interne BeWork — réservé aux assistants travaux (Beworkers). Traitement des demandes MOEX ; les livrables ne sont pas destinés aux clients, au MOA, aux entreprises ni à tout tiers sans validation.",
+    "Outil interne BeWork — réservé aux assistants travaux (Beworkers). Traitement des demandes MOEX externalisées.",
   internalUseLong:
-    "BeWork est l'outil interne de la plateforme BeWork, utilisé par les assistants travaux (Beworkers) pour traiter les demandes des maîtrises d'œuvre d'exécution externalisées (MOEX). Les documents générés par l'IA sont des brouillons de travail : ils doivent être relus, corrigés et validés par un professionnel (assistant travaux et/ou MOEX) avant toute diffusion. Ce service ne doit pas être communiqué tel quel aux clients, au maître d'ouvrage, aux entreprises ou à tout tiers.",
+    "BeWork est l'outil interne de la plateforme BeWork, utilisé par les assistants travaux (Beworkers) pour traiter les demandes des maîtrises d'œuvre d'exécution externalisées (MOEX). Les documents générés par l'IA sont des brouillons de travail : ils doivent être relus, corrigés et validés par un professionnel (assistant travaux et/ou MOEX) avant transmission.",
 } as const;
 
 /** Types de mission proposés dans l'outil (assistants MOEX). */
