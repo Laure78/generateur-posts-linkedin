@@ -46,8 +46,8 @@ export function PlatformSidebar() {
   const nouvellePath = '/plateforme/demandes/nouvelle';
 
   return (
-    <aside className="relative z-20 flex w-[17.5rem] shrink-0 flex-col border-r border-slate-200/80 bg-white">
-      <div className="border-b border-slate-100 px-4 py-4">
+    <aside className="relative z-20 flex h-full max-h-full w-[17.5rem] shrink-0 flex-col overflow-hidden border-r border-slate-200/80 bg-white">
+      <div className="shrink-0 border-b border-slate-100 px-4 py-4">
         <BeWorkLogo variant="sidebar" href="/plateforme" />
         <p className="mt-2 text-[0.65rem] font-semibold uppercase tracking-wide text-[var(--bework-blue)]">
           MOEX
@@ -55,7 +55,7 @@ export function PlatformSidebar() {
         <p className="text-[0.65rem] leading-snug text-slate-500">Maîtrise d&apos;œuvre d&apos;exécution</p>
       </div>
 
-      <div className="p-3">
+      <div className="shrink-0 p-3">
         <Link
           href={nouvellePath}
           onClick={(e) => navigateClick(e, router, nouvellePath)}
@@ -70,7 +70,7 @@ export function PlatformSidebar() {
         </Link>
       </div>
 
-      <nav className="flex min-h-0 flex-1 flex-col px-3">
+      <nav className="flex min-h-0 flex-1 flex-col overflow-hidden px-3">
         <Link
           href="/plateforme"
           onClick={(e) => navigateClick(e, router, '/plateforme')}
@@ -84,7 +84,10 @@ export function PlatformSidebar() {
           Tableau de bord
         </Link>
 
-        <div className="-mx-1 min-h-0 flex-1 overflow-y-auto overscroll-y-contain px-1 pb-2">
+        <div
+          className="-mx-1 min-h-0 flex-1 overflow-y-auto overscroll-y-contain px-1 pb-2 [scrollbar-gutter:stable]"
+          aria-label="Liste des assistants MOEX"
+        >
           <p className="px-3 py-2 text-[0.65rem] font-semibold uppercase tracking-wider text-slate-400">
             Assistants MOEX
           </p>
@@ -137,7 +140,7 @@ export function PlatformSidebar() {
         </div>
       </nav>
 
-      <div className="space-y-0.5 border-t border-slate-100 p-3">
+      <div className="shrink-0 space-y-0.5 border-t border-slate-100 bg-white p-3">
         <a
           href={BEWORK.url}
           target="_blank"
