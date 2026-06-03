@@ -195,7 +195,7 @@ function NouvelleDemandeForm() {
                 id="chantier"
                 value={chantier}
                 onChange={(e) => setChantier(e.target.value)}
-                placeholder="Réf. marché, adresse, MOE, lot…"
+                placeholder="Réf. marché, adresse, opération, lot…"
                 className="bework-input mt-1.5"
               />
             </div>

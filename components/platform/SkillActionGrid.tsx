@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { ArrowRight, Sparkles, Wrench } from 'lucide-react';
 import { MissionIcon } from '@/lib/bework/mission-icons';
+import { BEWORK } from '@/lib/bework/config';
 import { getDashboardActionGroups, newDemandeUrl } from '@/lib/skills/skill-actions';
 
 export function SkillActionGrid() {
@@ -8,9 +9,9 @@ export function SkillActionGrid() {
 
   return (
     <section className="mt-8">
-      <h2 className="font-display text-lg font-semibold text-slate-900">Assistants disponibles</h2>
+      <h2 className="font-display text-lg font-semibold text-slate-900">Assistants MOEX</h2>
       <p className="mt-1 text-sm text-slate-600">
-        Choisissez un assistant selon votre besoin — le formulaire s&apos;adapte automatiquement.
+        {BEWORK.scopeLine} Le formulaire s&apos;adapte à l&apos;assistant choisi.
       </p>
 
       <div className="mt-6 space-y-8">

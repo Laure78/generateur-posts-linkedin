@@ -1,6 +1,5 @@
 import type { LucideIcon } from 'lucide-react';
 import {
-  ClipboardCheck,
   ClipboardList,
   FileText,
   ListTodo,
@@ -10,18 +9,13 @@ import {
   Layers,
   Scale,
   ShieldCheck,
-  Landmark,
-  Target,
-  Search,
-  FolderOpen,
   Receipt,
   Home,
   MessageSquareMore,
 } from 'lucide-react';
-import type { MissionTypeId } from './config';
+import type { MoexMissionTypeId } from './moex-platform';
 
-const ICONS: Record<MissionTypeId, LucideIcon> = {
-  'verification-dtu': ClipboardCheck,
+const ICONS: Record<MoexMissionTypeId, LucideIcon> = {
   'cr-chantier-3dm': FileText,
   'cr-chantier-moex': ClipboardList,
   'suivi-observations': ListTodo,
@@ -31,17 +25,13 @@ const ICONS: Record<MissionTypeId, LucideIcon> = {
   'analyse-dce-moex': Layers,
   'comparatif-offres': Scale,
   'conformite-offre': ShieldCheck,
-  'analyse-dce-mh': Landmark,
-  'gonogo-mh': Target,
-  'controle-memoire': Search,
-  'dossier-intervention': FolderOpen,
   'situation-travaux': Receipt,
   'suivi-acquereurs': Home,
   autre: MessageSquareMore,
 };
 
 export function getMissionIcon(missionTypeId: string): LucideIcon {
-  return ICONS[missionTypeId as MissionTypeId] ?? MessageSquareMore;
+  return ICONS[missionTypeId as MoexMissionTypeId] ?? MessageSquareMore;
 }
 
 export type MissionIconProps = {
@@ -56,7 +46,7 @@ const SIZES = {
   lg: { box: 'h-12 w-12', icon: 24 },
 } as const;
 
-/** Icône assistant — style moderne, bleu BeWork. */
+/** Icône assistant MOEX — style moderne, bleu BeWork. */
 export function MissionIcon({ missionTypeId, size = 'md', className = '' }: MissionIconProps) {
   const IconComponent = getMissionIcon(missionTypeId);
   const s = SIZES[size];

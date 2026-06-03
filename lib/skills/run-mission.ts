@@ -12,14 +12,14 @@ import { exportMissionDeliverable } from './export-deliverable';
 import { missionDocxPath, missionDeliverablePath } from './mission-output';
 import { promises as fs } from 'fs';
 
-const SYSTEM_BASE = `Tu es un assistant travaux BeWork (bework.fr), relais administratif pour entreprises BTP et MOE en France.
-Tu rédiges en français professionnel, concret, sans jargon startup. Tu ne t'engages jamais au nom du client sans validation.
+const SYSTEM_BASE = `Tu es un assistant MOEX BeWork (bework.fr), relais administratif pour bureaux de maîtrise d'œuvre d'exécution en France (logements collectifs, marchés travaux, suivi chantier, MOA, entreprises).
+Tu rédiges en français professionnel, concret, sans jargon startup. Tu ne t'engages jamais au nom du MOEX sans validation.
 Supervision humaine depuis la France.
 
 RÈGLE PLATEFORME : tu dois LIVRER le résultat final complet dans ta réponse (document structuré, prêt à copier ou valider).
-N'inclus PAS de commandes shell, de chemins serveur (/mnt/…), ni de promesses (« je vais maintenant… ») : le client ne voit que ton texte.`;
+N'inclus PAS de commandes shell, de chemins serveur (/mnt/…), ni de promesses (« je vais maintenant… ») : le MOEX ne voit que ton texte.`;
 
-const FALLBACK_PROMPT = `Qualifie la demande administrative BTP et rédige le livrable demandé (tableaux, courrier, synthèse…) de façon complète et actionnable.`;
+const FALLBACK_PROMPT = `Qualifie la demande administrative MOEX et rédige le livrable demandé (CR, courrier, tableau, synthèse…) de façon complète et actionnable.`;
 
 const DOCX_SKILL_IDS = new Set(['3dmanager-cr-chantier']);
 

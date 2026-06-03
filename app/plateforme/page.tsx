@@ -1,12 +1,14 @@
 import Link from 'next/link';
 import { getAppUser } from '@/lib/auth/get-user';
-import { MISSION_TYPES } from '@/lib/bework/config';
+import { getMissionTypeLabel } from '@/lib/bework/moex-platform';
 import { DEV_BYPASS } from '@/lib/dev/config';
 import { listMissions } from '@/lib/dev/local-missions';
 import { createClient } from '@/lib/supabase/server';
 import { PlusCircle, Clock, CheckCircle2, ChevronRight } from 'lucide-react';
+import { BEWORK } from '@/lib/bework/config';
 import { SkillActionGrid } from '@/components/platform/SkillActionGrid';
 import { MissionIcon } from '@/lib/bework/mission-icons';
+import { isMoexPlatformMissionType } from '@/lib/bework/moex-platform';
 
 export default async function PlateformeDashboardPage() {
   const user = await getAppUser();
@@ -58,11 +60,12 @@ export default async function PlateformeDashboardPage() {
 
       <header className="bework-card-tech bework-card flex flex-wrap items-center justify-between gap-4 p-6">
         <div>
-          <p className="bework-kicker">Plateforme BeWork</p>
+          <p className="bework-kicker">Plateforme MOEX · BeWork</p>
           <h1 className="font-display mt-2 text-2xl font-bold text-[var(--bework-navy)]">
             Bonjour, {displayName}
           </h1>
           <p className="mt-1 text-sm text-slate-500">{user.email}</p>
+          <p className="mt-2 max-w-md text-xs text-slate-500">{BEWORK.scopeLine}</p>
         </div>
         <Link href="/plateforme/demandes/nouvelle" className="bework-btn-primary shrink-0">
           <PlusCircle size={18} />
@@ -99,7 +102,8 @@ export default async function PlateformeDashboardPage() {
         ) : (
           <ul className="mt-4 space-y-2">
             {missions.map((m) => {
-              const typeMeta = MISSION_TYPES.find((t) => t.id === m.type);
+              const typeLabel = getMissionTypeLabel(m.type);
+              const showIcon = isMoexPlatformMissionType(m.type);
               return (
                 <li key={m.id}>
                   <Link
@@ -109,12 +113,10 @@ export default async function PlateformeDashboardPage() {
                     <div className="min-w-0">
                       <p className="truncate font-medium text-slate-900">{m.title}</p>
                       <p className="mt-0.5 flex items-center gap-2 text-sm text-slate-500">
-                        {typeMeta && (
-                          <span className="inline-flex items-center gap-2">
-                            <MissionIcon missionTypeId={typeMeta.id} size="sm" />
-                            {typeMeta.label}
-                          </span>
-                        )}
+                        <span className="inline-flex items-center gap-2">
+                          {showIcon && <MissionIcon missionTypeId={m.type} size="sm" />}
+                          {typeLabel}
+                        </span>
                       </p>
                     </div>
                     <div className="flex shrink-0 items-center gap-3">

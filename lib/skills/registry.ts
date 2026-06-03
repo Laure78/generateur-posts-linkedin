@@ -43,8 +43,8 @@ export const BEWORK_SKILLS: SkillDefinition[] = [
   },
   {
     id: 'promotech-courrier-moe',
-    name: 'Courriers MOE / relances',
-    description: 'Relances, mises en demeure, courriers MOA, notes de diffusion, certificats administratifs.',
+    name: 'Courriers MOA / relances entreprises',
+    description: 'Relances, mises en demeure, courriers au MOA, notes de diffusion, certificats administratifs MOEX.',
     missionTypes: ['courrier-moe'],
   },
   {
@@ -117,8 +117,8 @@ export const BEWORK_SKILLS: SkillDefinition[] = [
   },
   {
     id: 'assistant-travaux',
-    name: 'Assistant travaux général',
-    description: 'Demandes administratives BTP non catégorisées.',
+    name: 'Assistant MOEX — demande diverse',
+    description: 'Demandes administratives MOEX non couvertes par un assistant dédié.',
     missionTypes: ['autre'],
   },
 ];

@@ -49,6 +49,10 @@ export function PlatformSidebar() {
     <aside className="relative z-20 flex w-[17.5rem] shrink-0 flex-col border-r border-slate-200/80 bg-white">
       <div className="border-b border-slate-100 px-4 py-4">
         <BeWorkLogo variant="sidebar" href="/plateforme" />
+        <p className="mt-2 text-[0.65rem] font-semibold uppercase tracking-wide text-[var(--bework-blue)]">
+          MOEX
+        </p>
+        <p className="text-[0.65rem] leading-snug text-slate-500">Maîtrise d&apos;œuvre d&apos;exécution</p>
       </div>
 
       <div className="p-3">
@@ -82,7 +86,7 @@ export function PlatformSidebar() {
 
         <div className="-mx-1 min-h-0 flex-1 overflow-y-auto overscroll-y-contain px-1 pb-2">
           <p className="px-3 py-2 text-[0.65rem] font-semibold uppercase tracking-wider text-slate-400">
-            Assistants
+            Assistants MOEX
           </p>
 
           {ASSISTANT_GROUPS.map(({ category, items }) => (

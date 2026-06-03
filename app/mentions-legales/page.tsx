@@ -60,9 +60,9 @@ export default function MentionsLegalesPage() {
       <section>
         <h2>3. Objet du service</h2>
         <p>
-          {BEWORK.name} est un <strong>relais administratif</strong> à destination des entreprises du BTP et des
-          bureaux de maîtrise d&apos;œuvre : préparation de documents, synthèses et assistants IA spécialisés,
-          avec <strong>validation humaine</strong> par le client avant toute utilisation opérationnelle ou diffusion.
+          {BEWORK.name} est un <strong>relais administratif</strong> à destination des bureaux de{' '}
+          <strong>maîtrise d&apos;œuvre d&apos;exécution (MOEX)</strong> : préparation de documents, synthèses et
+          assistants IA spécialisés, avec <strong>validation humaine</strong> par le MOEX avant toute diffusion.
         </p>
         <p>
           {BEWORK.name} ne se substitue pas à un bureau d&apos;études, à un architecte, à un MOE titulaire de

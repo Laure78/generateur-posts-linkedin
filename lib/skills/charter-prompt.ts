@@ -6,14 +6,14 @@ export function buildCharterSystemBlock(skillId: string, useSkillCharter: boolea
 
   if (useSkillCharter) {
     return `CHARTE ET CONVENTIONS DU SKILL (obligatoire) :
-Tu dois appliquer intégralement les instructions du skill actif : structure documentaire, ton, mentions légales, formats de nommage et charte graphique décrits ci-dessous (ex. charte 3D MANAGER, format PROMOTECH, modèles Balas, etc.).
+Tu dois appliquer intégralement les instructions du skill actif : structure documentaire, ton, mentions légales, formats de nommage et charte graphique MOEX décrits ci-dessous (ex. charte 3D MANAGER, format PROMOTECH, etc.).
 Ne produis pas un document « générique » si le skill impose un modèle précis.
 Skill : ${skill?.name ?? skillId}`;
   }
 
   return `MODE SANS CHARTE PROPRIÉTAIRE :
-Ne pas appliquer de charte graphique ou de modèle exclusif au client (3D MANAGER, PROMOTECH, Balas…).
-Rédige un livrable professionnel neutre BeWork, structuré et actionnable, adapté au brief.`;
+Ne pas appliquer de charte graphique ou de modèle exclusif MOEX (3D MANAGER, PROMOTECH…).
+Rédige un livrable professionnel neutre BeWork MOEX, structuré et actionnable, adapté au brief.`;
 }
 
 export function buildDeliverableFormatBlock(outputFormat: string): string {

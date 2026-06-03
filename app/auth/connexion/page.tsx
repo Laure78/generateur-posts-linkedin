@@ -112,8 +112,8 @@ function ConnexionForm() {
 export default function ConnexionPage() {
   return (
     <AuthShell
-      title="Connexion entreprise"
-      subtitle="Accédez à la plateforme et à vos assistants travaux."
+      title="Connexion MOEX"
+      subtitle="Accédez à la plateforme BeWork dédiée à la maîtrise d'œuvre d'exécution."
       footer={
         <p className="text-slate-600">
           Pas de compte ? <AuthFooterLink href="/auth/inscription">Créer un compte</AuthFooterLink>

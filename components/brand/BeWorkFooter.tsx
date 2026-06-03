@@ -63,7 +63,7 @@ export function BeWorkFooter({ className = '', compact = false }: BeWorkFooterPr
       </p>
 
       <p className={`text-xs text-slate-400 ${compact ? 'mt-2' : 'mt-3'}`}>
-        © {new Date().getFullYear()} {BEWORK.name} — Relais administratif marchés travaux BTP
+        © {new Date().getFullYear()} {BEWORK.name} — {BEWORK.tagline}
       </p>
     </footer>
   );

@@ -1,13 +1,8 @@
 import { MISSION_TYPES } from './config';
+import { isMoexPlatformMissionType } from './moex-platform';
 import { getSkillForMissionType } from '@/lib/skills/registry';
 
-export type MissionCategoryId =
-  | 'chantier'
-  | 'marches'
-  | 'courriers'
-  | 'technique'
-  | 'livraison'
-  | 'autre';
+export type MissionCategoryId = 'chantier' | 'marches' | 'courriers' | 'livraison' | 'autre';
 
 export type MissionCategory = {
   id: MissionCategoryId;
@@ -15,36 +10,32 @@ export type MissionCategory = {
   description: string;
 };
 
+/** Catégories affichées — périmètre MOEX uniquement (pas de lot « technique / DTU »). */
 export const MISSION_CATEGORIES: MissionCategory[] = [
   {
     id: 'chantier',
     label: 'Chantier & suivi',
-    description: 'Comptes rendus, observations, réception',
+    description: 'CR de chantier, observations, PV de réception',
   },
   {
     id: 'marches',
     label: 'Marchés & offres',
-    description: 'DCE, conformité, comparatifs, mémoires',
+    description: 'Analyse DCE, conformité CCTP, comparatif et RAO',
   },
   {
     id: 'courriers',
     label: 'Courriers & contractuel',
-    description: 'Relances, OS, situations, dossiers',
-  },
-  {
-    id: 'technique',
-    label: 'Conformité technique',
-    description: 'DTU, normes, devis',
+    description: 'Relances entreprises, OS, situations de travaux',
   },
   {
     id: 'livraison',
     label: 'Livraison & GPA',
-    description: 'Acquéreurs, garanties, réserves',
+    description: 'Acquéreurs VEFA, réserves, suivi GPA',
   },
   {
     id: 'autre',
-    label: 'Autre besoin',
-    description: 'Demande administrative libre',
+    label: 'Besoin MOEX',
+    description: 'Demande administrative non listée',
   },
 ];
 
@@ -57,7 +48,7 @@ type MissionMeta = {
 
 const META: Record<string, MissionMeta> = {
   'verification-dtu': {
-    category: 'technique',
+    category: 'autre',
     titlePlaceholder: 'Ex. : Devis menuiserie — Résidence Les Ormes',
     briefPlaceholder: 'Collez le devis et précisez les lots ou postes à vérifier face aux DTU…',
     briefHint: 'Joignez le texte du devis ou les postes concernés.',
@@ -84,7 +75,7 @@ const META: Record<string, MissionMeta> = {
     category: 'courriers',
     titlePlaceholder: 'Ex. : Relance Lot 02 GO — réserves non levées',
     briefPlaceholder: 'Destinataire, faits, dates des relances antérieures, action attendue et délai…',
-    briefHint: 'Relance, mise en demeure, courrier MOA ou note de diffusion.',
+    briefHint: 'Relance entreprise, mise en demeure, courrier au MOA ou note de diffusion MOEX.',
   },
   'pv-reserves': {
     category: 'chantier',
@@ -154,9 +145,10 @@ const META: Record<string, MissionMeta> = {
   },
   autre: {
     category: 'autre',
-    titlePlaceholder: 'Ex. : Demande administrative diverse',
-    briefPlaceholder: 'Décrivez précisément votre besoin et les pièces jointes disponibles…',
-    briefHint: 'Un Beworker qualifie et oriente vers le bon assistant.',
+    titlePlaceholder: 'Ex. : Demande administrative MOEX',
+    briefPlaceholder:
+      'Décrivez votre besoin MOEX (chantier, marché, MOA, entreprise) et les pièces disponibles…',
+    briefHint: 'Un Beworker qualifie et oriente vers le bon assistant MOEX.',
   },
 };
 
@@ -188,7 +180,7 @@ export type CatalogMission = {
 };
 
 export function getCatalogMissions(): CatalogMission[] {
-  return MISSION_TYPES.map((t) => {
+  return MISSION_TYPES.filter((t) => isMoexPlatformMissionType(t.id)).map((t) => {
     const skill = getSkillForMissionType(t.id);
     const meta = getMissionMeta(t.id);
     return {

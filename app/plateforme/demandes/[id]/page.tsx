@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ArrowLeft } from 'lucide-react';
 import { getAppUser } from '@/lib/auth/get-user';
-import { MISSION_TYPES } from '@/lib/bework/config';
+import { getMissionTypeLabel, isMoexPlatformMissionType } from '@/lib/bework/moex-platform';
 import { MissionIcon } from '@/lib/bework/mission-icons';
 import { getSkillById, getSkillForMissionType } from '@/lib/skills/registry';
 import { MissionDeliverableDownload } from '@/components/platform/MissionDeliverableDownload';
@@ -54,7 +54,8 @@ export default async function DemandeDetailPage({ params }: { params: Promise<{ 
   const displayBrief = stripMissionMetaFromBrief(mission.brief);
   const outputFormat = missionOptions.output_format;
   const hasDeliverable = await missionDeliverableExists(id, outputFormat);
-  const typeMeta = MISSION_TYPES.find((t) => t.id === mission.type);
+  const typeLabel = getMissionTypeLabel(mission.type);
+  const showTypeIcon = isMoexPlatformMissionType(mission.type);
   const skill = getSkillById(mission.skill_id) ?? getSkillForMissionType(mission.type);
 
   const statusLabel: Record<string, string> = {
@@ -79,12 +80,12 @@ export default async function DemandeDetailPage({ params }: { params: Promise<{ 
           <span className="rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-[var(--bework-blue)]">
             {statusLabel[mission.status] ?? mission.status}
           </span>
-          {typeMeta && (
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-3 py-1 text-xs text-[var(--bework-blue)]">
-              <MissionIcon missionTypeId={typeMeta.id} size="sm" className="!h-6 !w-6 rounded-lg" />
-              {typeMeta.label}
-            </span>
-          )}
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-3 py-1 text-xs text-[var(--bework-blue)]">
+            {showTypeIcon && (
+              <MissionIcon missionTypeId={mission.type} size="sm" className="!h-6 !w-6 rounded-lg" />
+            )}
+            {typeLabel}
+          </span>
         </div>
         <h1 className="font-display mt-3 text-2xl font-bold text-slate-900">{mission.title}</h1>
         {skill && <p className="mt-1 text-sm text-slate-500">Assistant : {skill.name}</p>}

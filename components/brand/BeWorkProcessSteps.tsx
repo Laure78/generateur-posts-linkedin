@@ -11,17 +11,17 @@ const STEPS: { title: string; description: string; icon: LucideIcon }[] = [
   {
     title: 'Vous nous envoyez votre demande',
     description:
-      'Via la plateforme : devis, dossier chantier, relance, fournisseur, document — un brief court suffit pour lancer le travail.',
+      'Via la plateforme MOEX : CR de chantier, analyse DCE, courrier MOA, PV de réception — un brief court suffit.',
     icon: Inbox,
   },
   {
     title: 'BeWork analyse et prépare le travail',
     description:
-      "Qualification, pièces attendues, priorisation et répartition vers l'assistant travaux le plus aligné avec votre contexte BTP.",
+      "Qualification MOEX, pièces attendues et orientation vers l'assistant adapté (chantier, marché, courrier, GPA).",
     icon: UserPlus,
   },
   {
-    title: "L'assistant travaux augmenté par l'IA exécute ou pré-remplit",
+    title: "L'assistant MOEX augmenté par l'IA exécute ou pré-remplit",
     description:
       "Rédaction, relances, classement, pré-remplissage et suivi : le relais humain reste piloté, l'IA accélère tout ce qui est reproductible.",
     icon: Briefcase,

@@ -1,3 +1,4 @@
+import { MOEX_DASHBOARD_MISSION_TYPES } from '@/lib/bework/moex-platform';
 import { MISSION_CATEGORIES, getCatalogMissions } from '@/lib/bework/mission-catalog';
 
 export function newDemandeUrl(missionType: string): string {
@@ -16,22 +17,9 @@ export type SkillActionGroup = {
   actions: SkillAction[];
 };
 
-/** Assistants mis en avant sur le tableau de bord, regroupés par catégorie. */
-const DASHBOARD_MISSION_TYPES = [
-  'cr-chantier-moex',
-  'suivi-observations',
-  'courrier-moe',
-  'analyse-dce-moex',
-  'conformite-offre',
-  'verification-dtu',
-  'pv-reserves',
-  'ordre-service',
-  'suivi-acquereurs',
-] as const;
-
 export function getDashboardActionGroups(): SkillActionGroup[] {
   const catalog = getCatalogMissions();
-  const featured = DASHBOARD_MISSION_TYPES.map((id) => catalog.find((m) => m.id === id)).filter(
+  const featured = MOEX_DASHBOARD_MISSION_TYPES.map((id) => catalog.find((m) => m.id === id)).filter(
     (m): m is NonNullable<typeof m> => Boolean(m)
   );
 
