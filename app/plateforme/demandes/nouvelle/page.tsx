@@ -2,6 +2,8 @@
 
 import { useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { useSyncMissionTypeFromUrl } from '@/components/platform/use-sync-mission-type-url';
+import { isValidMissionTypeId, missionTypeFromSearchParam } from '@/lib/bework/mission-type-url';
 import Link from 'next/link';
 import { ArrowLeft, ArrowRight, Send } from 'lucide-react';
 import { MISSION_TYPES } from '@/lib/bework/config';
@@ -15,22 +17,16 @@ import {
 } from '@/lib/bework/deliverable-formats';
 import { DeliverableOptionsFields } from '@/components/platform/DeliverableOptionsFields';
 
-function initialMissionType(typeParam: string | null): string {
-  if (typeParam && MISSION_TYPES.some((t) => t.id === typeParam)) {
-    return typeParam;
-  }
-  return 'cr-chantier-moex';
-}
-
 function NouvelleDemandeForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const hasPresetType = Boolean(
-    searchParams.get('type') && MISSION_TYPES.some((t) => t.id === searchParams.get('type'))
-  );
+  const typeParam = searchParams.get('type');
+  const hasPresetType = isValidMissionTypeId(typeParam);
 
   const [step, setStep] = useState<1 | 2>(hasPresetType ? 2 : 1);
-  const [type, setType] = useState<string>(() => initialMissionType(searchParams.get('type')));
+  const [type, setType] = useState<string>(() => missionTypeFromSearchParam(typeParam));
+
+  useSyncMissionTypeFromUrl(setType, setStep);
   const [title, setTitle] = useState('');
   const [brief, setBrief] = useState('');
   const [chantier, setChantier] = useState('');
@@ -123,10 +119,28 @@ function NouvelleDemandeForm() {
         <div className="mt-8 bework-card p-6">
           <h2 className="text-base font-semibold text-slate-900">Quel assistant utilisez-vous ?</h2>
           <div className="mt-4">
-            <MissionTypePicker value={type} onChange={setType} />
+            <MissionTypePicker
+              value={type}
+              onChange={(next) => {
+                setType(next);
+                router.replace(`/plateforme/demandes/nouvelle?type=${encodeURIComponent(next)}`, {
+                  scroll: false,
+                });
+              }}
+            />
           </div>
           <div className="mt-6 flex justify-end">
-            <button type="button" onClick={() => setStep(2)} className="bework-btn-primary">
+            <button
+              type="button"
+              onClick={() => {
+                setStep(2);
+                router.replace(
+                  `/plateforme/demandes/nouvelle?type=${encodeURIComponent(type)}`,
+                  { scroll: false }
+                );
+              }}
+              className="bework-btn-primary"
+            >
               Continuer
               <ArrowRight size={18} />
             </button>

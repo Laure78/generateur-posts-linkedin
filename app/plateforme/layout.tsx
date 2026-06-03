@@ -34,7 +34,7 @@ export default async function PlateformeLayout({ children }: { children: React.R
       <Suspense fallback={<SidebarFallback />}>
         <PlatformSidebar />
       </Suspense>
-      <main className="platform-main flex min-h-screen min-w-0 flex-1 flex-col">
+      <main className="platform-main relative z-0 flex min-h-screen min-w-0 flex-1 flex-col">
         <div className="flex-1">{children}</div>
         <BeWorkFooter compact />
       </main>
