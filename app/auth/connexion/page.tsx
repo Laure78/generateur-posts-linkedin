@@ -109,20 +109,36 @@ function ConnexionForm() {
   );
 }
 
-export default function ConnexionPage() {
+function ConnexionPageContent() {
+  const searchParams = useSearchParams();
+  const deconnected = searchParams.get('deconnecte') === '1';
+
   return (
     <AuthShell
-      title="Connexion MOEX"
-      subtitle="Accédez à la plateforme BeWork dédiée à la maîtrise d'œuvre d'exécution."
+      title="Connexion Beworker"
+      subtitle="Accès sécurisé à l'outil interne BeWork — assistants MOEX augmentés par l'IA (usage bureau uniquement)."
       footer={
-        <p className="text-slate-600">
-          Pas de compte ? <AuthFooterLink href="/auth/inscription">Créer un compte</AuthFooterLink>
-        </p>
+        <>
+          {deconnected && (
+            <p className="mb-4 rounded-lg bg-emerald-50 px-3 py-2 text-sm text-emerald-800" role="status">
+              Vous êtes déconnecté. Vous pouvez vous reconnecter.
+            </p>
+          )}
+          <p className="text-slate-600">
+            Pas de compte ? <AuthFooterLink href="/auth/inscription">Créer un compte</AuthFooterLink>
+          </p>
+        </>
       }
     >
-      <Suspense fallback={<p className="text-slate-500">Chargement…</p>}>
-        <ConnexionForm />
-      </Suspense>
+      <ConnexionForm />
     </AuthShell>
+  );
+}
+
+export default function ConnexionPage() {
+  return (
+    <Suspense fallback={<p className="text-center text-slate-500">Chargement…</p>}>
+      <ConnexionPageContent />
+    </Suspense>
   );
 }

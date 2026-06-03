@@ -72,8 +72,8 @@ export default function InscriptionPage() {
 
   return (
     <AuthShell
-      title="Créer un compte MOEX"
-      subtitle="Accédez aux assistants BeWork dédiés à la maîtrise d'œuvre d'exécution."
+      title="Créer un compte Beworker"
+      subtitle="Inscription à l'outil interne BeWork — réservée aux équipes de maîtrise d'œuvre d'exécution (MOEX)."
       footer={
         <p className="text-slate-600">
           Déjà inscrit ? <AuthFooterLink href="/auth/connexion">Se connecter</AuthFooterLink>

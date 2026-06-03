@@ -50,6 +50,15 @@ export function BeWorkFooter({ className = '', compact = false }: BeWorkFooterPr
         </p>
       </div>
 
+      <p className={compact ? 'mt-3' : 'mt-4'}>
+        <Link
+          href="/guide"
+          className="inline-flex items-center justify-center gap-1.5 font-semibold text-[var(--bework-blue)] hover:underline"
+        >
+          Guide d&apos;utilisation & tutoriel MOEX
+        </Link>
+      </p>
+
       <nav
         aria-label="Informations légales"
         className={`flex flex-wrap items-center justify-center gap-x-3 gap-y-2 ${compact ? 'mt-3 text-xs' : 'mt-4 text-xs sm:text-sm'}`}

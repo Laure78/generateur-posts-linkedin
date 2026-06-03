@@ -2,11 +2,12 @@
 
 import Link from 'next/link';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { BookOpen, LayoutDashboard, PlusCircle, ExternalLink, LogOut } from 'lucide-react';
+import { BookOpen, LayoutDashboard, PlusCircle, ExternalLink } from 'lucide-react';
 import { BEWORK } from '@/lib/bework/config';
 import { getMissionIcon } from '@/lib/bework/mission-icons';
 import { BeWorkLogo } from '@/components/brand/BeWorkLogo';
 import { getSidebarAssistantGroups } from '@/lib/skills/sidebar-nav';
+import { LogoutButton } from '@/components/platform/LogoutButton';
 
 const ASSISTANT_GROUPS = getSidebarAssistantGroups();
 
@@ -164,15 +165,7 @@ export function PlatformSidebar() {
           <ExternalLink size={17} />
           bework.fr
         </a>
-        <form action="/auth/deconnexion" method="post">
-          <button
-            type="submit"
-            className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm text-slate-500 hover:bg-slate-50 hover:text-slate-700"
-          >
-            <LogOut size={17} />
-            Déconnexion
-          </button>
-        </form>
+        <LogoutButton />
       </div>
     </aside>
   );

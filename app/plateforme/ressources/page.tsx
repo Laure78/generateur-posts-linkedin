@@ -20,6 +20,12 @@ export default function PlateformeRessourcesPage() {
         <ArrowLeft size={16} />
         Tableau de bord
       </Link>
+      <p className="mt-4 text-sm text-slate-500">
+        <a href="/guide" className="font-medium text-[var(--bework-blue)] hover:underline">
+          Lien public du guide
+        </a>{' '}
+        (partageable avant connexion).
+      </p>
       <div className="mt-6">
         <PlatformGuideContent />
       </div>
