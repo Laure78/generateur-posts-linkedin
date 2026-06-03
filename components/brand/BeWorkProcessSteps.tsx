@@ -9,27 +9,27 @@ import {
 
 const STEPS: { title: string; description: string; icon: LucideIcon }[] = [
   {
-    title: 'Vous nous envoyez votre demande',
+    title: 'Le MOEX transmet sa demande',
     description:
-      'Via la plateforme MOEX : CR de chantier, analyse DCE, courrier MOA, PV de réception — un brief court suffit.',
+      'CR de chantier, analyse DCE, courrier MOA, PV de réception… La demande est confiée à BeWork (MOEX externalisé).',
     icon: Inbox,
   },
   {
-    title: 'BeWork analyse et prépare le travail',
+    title: "L'assistant travaux qualifie la demande",
     description:
-      "Qualification MOEX, pièces attendues et orientation vers l'assistant adapté (chantier, marché, courrier, GPA).",
+      "Via l'outil interne BeWork : type de dossier, pièces attendues, choix de l'assistant adapté (chantier, marché, courrier, GPA).",
     icon: UserPlus,
   },
   {
-    title: "L'assistant MOEX augmenté par l'IA exécute ou pré-remplit",
+    title: "L'IA prépare, le Beworker vérifie",
     description:
-      "Rédaction, relances, classement, pré-remplissage et suivi : le relais humain reste piloté, l'IA accélère tout ce qui est reproductible.",
+      "Rédaction et mise en forme accélérées par l'IA. L'assistant travaux relit, corrige et valide avant transmission au MOEX.",
     icon: Briefcase,
   },
   {
-    title: "Vous validez uniquement l'essentiel",
+    title: 'Transmission au MOEX',
     description:
-      'Ce qui engage (prix, engagement, envoi sensible) passe par vous. Le reste est traité dans le cadre défini avec votre forfait.',
+      "Livrable validé renvoyé au MOEX. Ce qui engage juridiquement ou contractuellement reste sous sa responsabilité finale.",
     icon: CircleCheck,
   },
   {

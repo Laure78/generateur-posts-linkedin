@@ -4,15 +4,20 @@
  */
 
 export const MOEX_PLATFORM = {
+  /** Donneurs de demandes traitées par les Beworkers. */
   audience: 'MOEX',
-  audienceLong: "maîtrise d'œuvre d'exécution (MOEX)",
+  audienceLong: "maîtrise d'œuvre d'exécution (MOEX) externalisée",
+  /** Utilisateurs de l'outil (équipe BeWork). */
+  beworkerRole: 'Assistants travaux (Beworker)',
+  platformRoleLine:
+    "Outil interne BeWork permettant aux assistants travaux de traiter les demandes des MOEX — maîtrises d'œuvre d'exécution externalisées.",
   scopeLine:
-    "Plateforme réservée aux bureaux de maîtrise d'œuvre d'exécution — chantier, marchés, courriers MOA et GPA.",
-  /** Usage interne MOEX — ne pas diffuser les livrables bruts aux tiers. */
+    "Outil interne pour les assistants travaux (Beworkers) : traitement des demandes administratives des MOEX externalisés (chantier, marchés, courriers MOA, GPA).",
+  /** Usage interne Beworker — ne pas diffuser les livrables bruts aux tiers. */
   internalUseShort:
-    "Outil d'intelligence artificielle à usage interne du bureau MOEX — non destiné aux clients, au MOA, aux entreprises ni à tout tiers.",
+    "Outil interne BeWork — réservé aux assistants travaux (Beworkers). Traitement des demandes MOEX ; les livrables ne sont pas destinés aux clients, au MOA, aux entreprises ni à tout tiers sans validation.",
   internalUseLong:
-    "BeWork est un outil d'intelligence artificielle utilisé en interne par les équipes MOEX. Les livrables générés sont des brouillons : ils doivent être relus, corrigés et validés par un professionnel avant toute diffusion. Ce service ne doit pas être communiqué tel quel aux clients, au maître d'ouvrage, aux entreprises ou à tout tiers.",
+    "BeWork est l'outil interne de la plateforme BeWork, utilisé par les assistants travaux (Beworkers) pour traiter les demandes des maîtrises d'œuvre d'exécution externalisées (MOEX). Les documents générés par l'IA sont des brouillons de travail : ils doivent être relus, corrigés et validés par un professionnel (assistant travaux et/ou MOEX) avant toute diffusion. Ce service ne doit pas être communiqué tel quel aux clients, au maître d'ouvrage, aux entreprises ou à tout tiers.",
 } as const;
 
 /** Types de mission proposés dans l'outil (assistants MOEX). */

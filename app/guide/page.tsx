@@ -6,9 +6,9 @@ import { BeWorkLogo } from '@/components/brand/BeWorkLogo';
 import { PlatformGuideContent } from '@/components/platform/PlatformGuideContent';
 
 export const metadata: Metadata = {
-  title: "Guide d'utilisation BeWork — MOEX",
+  title: "Guide BeWork — assistants travaux & demandes MOEX",
   description:
-    "Tutoriel BeWork : bonnes pratiques, précautions et vérification obligatoire des livrables IA.",
+    "Tutoriel pour les Beworkers : traiter les demandes MOEX externalisées, précautions et vérification obligatoire.",
   robots: { index: true, follow: true },
 };
 

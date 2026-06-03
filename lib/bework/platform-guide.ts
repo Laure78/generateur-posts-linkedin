@@ -13,10 +13,12 @@ export const PLATFORM_GUIDE_SECTIONS: GuideSection[] = [
     id: 'objet',
     title: "Qu'est-ce que BeWork ?",
     intro:
-      "BeWork est un relais administratif augmenté par l'IA, réservé à l'usage interne de votre bureau MOEX. Il prépare des brouillons (CR, courriers, tableaux, synthèses) ; il ne remplace pas votre jugement professionnel.",
+      "BeWork est l'outil interne de la plateforme BeWork, utilisé par les assistants travaux (Beworkers) pour traiter les demandes des maîtrises d'œuvre d'exécution externalisées (MOEX). L'IA prépare des brouillons (CR, courriers, tableaux, synthèses) ; le jugement professionnel reste humain.",
     items: [
-      "Usage interne uniquement : ne pas envoyer les livrables bruts aux clients, au MOA, aux entreprises ni à un tiers.",
-      "Supervision humaine : chaque document doit être relu et validé par un MOEX avant diffusion ou signature.",
+      "Réservé aux assistants travaux (Beworkers) — pas un accès direct pour les MOEX clients finaux.",
+      "Les demandes traitées proviennent des MOEX externalisés (chantier, marchés, courriers, GPA).",
+      "Ne pas envoyer les livrables bruts aux clients, au MOA, aux entreprises ni à un tiers sans validation.",
+      "Chaque document doit être relu et validé par l'assistant travaux et/ou le MOEX avant diffusion.",
       "BeWork ne se substitue pas à un BET, un architecte, un bureau de contrôle ni à un conseil juridique.",
     ],
     emphasis: 'info',
@@ -75,8 +77,8 @@ export const PLATFORM_GUIDE_SECTIONS: GuideSection[] = [
 ];
 
 export const PLATFORM_GUIDE_INTRO = {
-  kicker: 'Ressources MOEX',
+  kicker: 'Ressources assistants travaux',
   title: "Guide d'utilisation BeWork",
   subtitle:
-    "Bonnes pratiques, précautions et rappel de l'obligation de vérification avant toute diffusion externe.",
+    "Bonnes pratiques pour les Beworkers : traiter les demandes MOEX, précautions et vérification obligatoire avant transmission.",
 };

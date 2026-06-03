@@ -4,9 +4,9 @@ import { ArrowLeft } from 'lucide-react';
 import { PlatformGuideContent } from '@/components/platform/PlatformGuideContent';
 
 export const metadata: Metadata = {
-  title: 'Ressources — Guide BeWork MOEX',
+  title: 'Ressources — Guide assistants travaux',
   description:
-    "Bon usage de BeWork, précautions et obligation de vérification des livrables IA avant diffusion.",
+    "Bon usage de l'outil interne BeWork pour traiter les demandes MOEX externalisées et vérifier les livrables IA.",
   robots: { index: false, follow: false },
 };
 

@@ -115,8 +115,8 @@ function ConnexionPageContent() {
 
   return (
     <AuthShell
-      title="Connexion Beworker"
-      subtitle="Accès sécurisé à l'outil interne BeWork — assistants MOEX augmentés par l'IA (usage bureau uniquement)."
+      title="Connexion assistant travaux"
+      subtitle="Outil interne BeWork pour traiter les demandes des MOEX — maîtrises d'œuvre d'exécution externalisées."
       footer={
         <>
           {deconnected && (

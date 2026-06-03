@@ -90,8 +90,8 @@ function NouvelleDemandeForm() {
       <header className="mt-6">
         <h1 className="font-display text-2xl font-bold text-slate-900">Nouvelle demande</h1>
         <p className="mt-2 max-w-xl text-slate-600">
-          En 2 étapes : choisissez l&apos;assistant adapté, puis décrivez votre besoin. Un Beworker supervise le
-          résultat.
+          En 2 étapes : choisissez l&apos;assistant adapté à la demande MOEX, puis décrivez le besoin. L&apos;assistant
+          travaux relit et valide le livrable avant envoi au MOEX.
         </p>
       </header>
 

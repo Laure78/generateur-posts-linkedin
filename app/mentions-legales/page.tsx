@@ -60,13 +60,16 @@ export default function MentionsLegalesPage() {
       <section>
         <h2>3. Objet du service</h2>
         <p>
-          {BEWORK.name} est un <strong>relais administratif</strong> à destination des bureaux de{' '}
-          <strong>maîtrise d&apos;œuvre d&apos;exécution (MOEX)</strong> : préparation de documents, synthèses et
-          assistants IA spécialisés, avec <strong>validation humaine</strong> par le MOEX avant toute diffusion.
+          {BEWORK.name} est un <strong>outil interne</strong> utilisé par les{' '}
+          <strong>assistants travaux (Beworkers)</strong> pour traiter les demandes des{' '}
+          <strong>maîtrises d&apos;œuvre d&apos;exécution externalisées (MOEX)</strong> : préparation de documents,
+          synthèses et assistants IA spécialisés, avec <strong>validation humaine</strong> avant transmission au MOEX
+          ou diffusion.
         </p>
         <p>
           {BEWORK.name} ne se substitue pas à un bureau d&apos;études, à un architecte, à un MOE titulaire de
-          marché, ni à un conseil juridique. Les livrables générés doivent être relus et validés par vos équipes.
+          marché, ni à un conseil juridique. Les livrables générés doivent être relus et validés par les assistants
+          travaux et le MOEX concerné.
         </p>
         <p>
           <strong>Usage interne :</strong> {BEWORK.internalUseLong}

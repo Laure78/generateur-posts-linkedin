@@ -60,7 +60,7 @@ export default async function PlateformeDashboardPage() {
 
       <header className="bework-card-tech bework-card flex flex-wrap items-center justify-between gap-4 p-6">
         <div>
-          <p className="bework-kicker">Plateforme MOEX · BeWork</p>
+          <p className="bework-kicker">Assistants travaux · BeWork</p>
           <h1 className="font-display mt-2 text-2xl font-bold text-[var(--bework-navy)]">
             Bonjour, {displayName}
           </h1>
@@ -89,8 +89,8 @@ export default async function PlateformeDashboardPage() {
                 Ressources — guide d&apos;utilisation
               </h2>
               <p className="mt-1 max-w-xl text-sm text-slate-600">
-                Bonnes pratiques, précautions et obligation de vérification des livrables avant diffusion
-                (clients, MOA, entreprises).
+                Bonnes pratiques pour les assistants travaux : traiter les demandes MOEX et vérifier chaque
+                livrable avant transmission.
               </p>
             </div>
           </div>

@@ -26,19 +26,19 @@ export default function HomePage() {
 
       <section className="mx-auto flex-1 max-w-6xl px-4 py-12 lg:grid lg:grid-cols-2 lg:items-center lg:gap-12 lg:px-6 lg:py-20">
         <div>
-          <p className="bework-kicker">Maîtrise d&apos;œuvre d&apos;exécution (MOEX)</p>
+          <p className="bework-kicker">Assistants travaux · BeWork</p>
           <h1 className="font-display mt-4 text-4xl font-bold leading-tight text-[var(--bework-navy)] md:text-5xl">
-            Le relais administratif{' '}
-            <span className="bework-heading-accent">de votre MOEX.</span>
+            Outil interne pour traiter les demandes{' '}
+            <span className="bework-heading-accent">MOEX externalisées.</span>
           </h1>
           <p className="mt-6 text-lg leading-relaxed text-slate-600">
-            Comptes rendus de chantier, analyses DCE, courriers MOA, PV de réception, conformité des offres…
-            Des assistants MOEX augmentés par l&apos;IA préparent le travail — vous validez avant diffusion.
+            {BEWORK.platformRoleLine} CR de chantier, analyses DCE, courriers MOA, PV de réception… Les assistants
+            travaux s&apos;appuient sur l&apos;IA, relisent et transmettent des livrables validés aux MOEX.
           </p>
           <InternalUseNotice variant="long" className="mt-6" />
           <div className="mt-8 flex flex-wrap gap-3">
             <Link href="/auth/inscription" className="bework-btn-primary px-6 py-3">
-              Créer un compte MOEX
+              Accès assistant travaux
               <ArrowRight size={18} />
             </Link>
             <Link href="/auth/connexion" className="bework-btn-secondary px-6 py-3">
@@ -69,7 +69,11 @@ export default function HomePage() {
           {[
             { icon: Zap, title: 'Déploiement rapide', desc: 'Une demande, un brief — le Beworker qualifie et traite.' },
             { icon: Shield, title: 'Supervisé depuis la France', desc: 'Relais humain + IA, pas un chatbot générique.' },
-            { icon: Users, title: '100 % MOEX', desc: 'Bureaux de maîtrise d\'œuvre d\'exécution — chantier, marchés, MOA, GPA.' },
+            {
+              icon: Users,
+              title: 'Demandes MOEX',
+              desc: "Maîtrises d'œuvre d'exécution externalisées — chantier, marchés, MOA, GPA.",
+            },
           ].map(({ icon: Icon, title, desc }) => (
             <div key={title} className="bework-card p-6">
               <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[var(--bework-blue-soft)]">

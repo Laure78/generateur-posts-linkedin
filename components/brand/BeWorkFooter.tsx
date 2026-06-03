@@ -38,7 +38,7 @@ export function BeWorkFooter({ className = '', compact = false }: BeWorkFooterPr
           Conditions de confidentialité
         </p>
         <p className="mt-1.5 leading-relaxed text-slate-600">
-          Vos demandes MOEX et documents sont traités de façon confidentielle : accès sécurisé par compte,
+          Demandes MOEX et documents traités de façon confidentielle par les assistants travaux : accès sécurisé par compte,
           isolation entre utilisateurs, pas de revente des données. Détails dans les{' '}
           <Link
             href={CONFIDENTIALITE_HREF}
@@ -55,7 +55,7 @@ export function BeWorkFooter({ className = '', compact = false }: BeWorkFooterPr
           href="/guide"
           className="inline-flex items-center justify-center gap-1.5 font-semibold text-[var(--bework-blue)] hover:underline"
         >
-          Guide d&apos;utilisation & tutoriel MOEX
+          Guide assistants travaux & demandes MOEX
         </Link>
       </p>
 

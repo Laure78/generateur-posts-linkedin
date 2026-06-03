@@ -52,9 +52,11 @@ export function PlatformSidebar() {
       <div className="shrink-0 border-b border-slate-100 px-4 py-4">
         <BeWorkLogo variant="sidebar" href="/plateforme" />
         <p className="mt-2 text-[0.65rem] font-semibold uppercase tracking-wide text-[var(--bework-blue)]">
-          MOEX
+          Assistants travaux
         </p>
-        <p className="text-[0.65rem] leading-snug text-slate-500">Maîtrise d&apos;œuvre d&apos;exécution</p>
+        <p className="text-[0.65rem] leading-snug text-slate-500">
+          Outil interne — demandes MOEX externalisées
+        </p>
       </div>
 
       <div className="shrink-0 p-3">
@@ -104,7 +106,7 @@ export function PlatformSidebar() {
           aria-label="Liste des assistants MOEX"
         >
           <p className="px-3 py-2 text-[0.65rem] font-semibold uppercase tracking-wider text-slate-400">
-            Assistants MOEX
+            Assistants — demandes MOEX
           </p>
 
           {ASSISTANT_GROUPS.map(({ category, items }) => (
