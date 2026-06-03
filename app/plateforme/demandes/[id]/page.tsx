@@ -7,6 +7,8 @@ import { MissionIcon } from '@/lib/bework/mission-icons';
 import { getSkillById, getSkillForMissionType } from '@/lib/skills/registry';
 import { MissionDeliverableDownload } from '@/components/platform/MissionDeliverableDownload';
 import { MissionSkillRunner } from '@/components/platform/MissionSkillRunner';
+import { InternalUseNotice } from '@/components/brand/InternalUseNotice';
+import { ANTHROPIC_MODEL_LABELS } from '@/lib/bework/anthropic-models';
 import {
   DELIVERABLE_FORMAT_LABELS,
   parseDeliverableFormat,
@@ -33,6 +35,7 @@ export default async function DemandeDetailPage({ params }: { params: Promise<{ 
     ai_result: string | null;
     output_format?: string | null;
     use_skill_charter?: boolean | null;
+    ai_model?: string | null;
   } | null = null;
 
   if (DEV_BYPASS) {
@@ -50,9 +53,11 @@ export default async function DemandeDetailPage({ params }: { params: Promise<{ 
     brief: mission.brief,
     output_format: mission.output_format,
     use_skill_charter: mission.use_skill_charter,
+    ai_model: mission.ai_model,
   });
   const displayBrief = stripMissionMetaFromBrief(mission.brief);
   const outputFormat = missionOptions.output_format;
+  const modelLabel = ANTHROPIC_MODEL_LABELS[missionOptions.ai_model].label;
   const hasDeliverable = await missionDeliverableExists(id, outputFormat);
   const typeLabel = getMissionTypeLabel(mission.type);
   const showTypeIcon = isMoexPlatformMissionType(mission.type);
@@ -93,9 +98,13 @@ export default async function DemandeDetailPage({ params }: { params: Promise<{ 
           <p className="mt-2 text-xs text-slate-500">
             Livrable : {DELIVERABLE_FORMAT_LABELS[outputFormat].label}
             {missionOptions.use_skill_charter ? ' · charte du skill appliquée' : ' · sans charte propriétaire'}
+            {' · '}
+            {modelLabel}
           </p>
         )}
       </header>
+
+      <InternalUseNotice variant="short" className="mt-6" />
 
       {mission.chantier && (
         <p className="mt-4 text-sm text-slate-600">

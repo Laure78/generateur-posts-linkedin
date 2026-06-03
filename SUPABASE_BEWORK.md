@@ -26,6 +26,7 @@ DATABASE_URL=postgresql://postgres.[ref]:[MOT_DE_PASSE]@...pooler.supabase.com:6
 2. Exécute dans l’ordre :
    - `supabase/migrations/001_bework_platform.sql`
    - `supabase/migrations/002_mission_deliverable_options.sql` *(format livrable + charte skill)*
+   - `supabase/migrations/003_mission_ai_model.sql` *(choix Haiku / Sonnet / Opus)*
 
 **Option B — CLI**
 

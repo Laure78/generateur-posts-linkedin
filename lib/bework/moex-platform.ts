@@ -8,6 +8,11 @@ export const MOEX_PLATFORM = {
   audienceLong: "maîtrise d'œuvre d'exécution (MOEX)",
   scopeLine:
     "Plateforme réservée aux bureaux de maîtrise d'œuvre d'exécution — chantier, marchés, courriers MOA et GPA.",
+  /** Usage interne MOEX — ne pas diffuser les livrables bruts aux tiers. */
+  internalUseShort:
+    "Outil d'intelligence artificielle à usage interne du bureau MOEX — non destiné aux clients, au MOA, aux entreprises ni à tout tiers.",
+  internalUseLong:
+    "BeWork est un outil d'intelligence artificielle utilisé en interne par les équipes MOEX. Les livrables générés sont des brouillons : ils doivent être relus, corrigés et validés par un professionnel avant toute diffusion. Ce service ne doit pas être communiqué tel quel aux clients, au maître d'ouvrage, aux entreprises ou à tout tiers.",
 } as const;
 
 /** Types de mission proposés dans l'outil (assistants MOEX). */

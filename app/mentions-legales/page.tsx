@@ -68,6 +68,9 @@ export default function MentionsLegalesPage() {
           {BEWORK.name} ne se substitue pas à un bureau d&apos;études, à un architecte, à un MOE titulaire de
           marché, ni à un conseil juridique. Les livrables générés doivent être relus et validés par vos équipes.
         </p>
+        <p>
+          <strong>Usage interne :</strong> {BEWORK.internalUseLong}
+        </p>
       </section>
 
       <section>

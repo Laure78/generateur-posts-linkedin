@@ -1,4 +1,5 @@
 import Anthropic from '@anthropic-ai/sdk';
+import { resolveAnthropicApiModel } from '@/lib/bework/anthropic-models';
 import { extractJsonFromText } from './extract-json';
 import { generate3dmCrDocx } from './generate-3dm-cr-docx';
 import type { MissionForSkill } from './run-mission';
@@ -6,7 +7,7 @@ import type { MissionForSkill } from './run-mission';
 const CR_JSON_SYSTEM = `Tu es l'assistant compte rendu de chantier 3D MANAGER (bureau d'études TCE, MOEX certifié ISO 9001, agence Île-de-France).
 Le CR fait foi : factuel, neutre, exhaustif, traçable. Le MOEX valide ; tu produis le JSON pour le .docx à la charte graphique officielle.
 
-À partir du brief, produis UN SEUL objet JSON valide pour scripts/generate_cr.py (charte : anthracite #2A2A2A, rouge #CC2A2A, logo 3D MANAGER, pied de page ISO 9001).
+À partir du brief, produis UN SEUL objet JSON valide pour scripts/generate_cr.py (charte officielle : anthracite #2A2A2A, rouge #CC2A2A, fonds #F2F2F2, logo blanc sur bandeau anthracite, liséré noir #000000 sous le bandeau, pied de page BET TCE · MOEX · ISO 9001 et réseau d'agences).
 
 Schéma obligatoire :
 operation, adresse, moex (défaut "3D MANAGER · Agence Île-de-France"), architecte, bureau_controle, csps,
@@ -54,7 +55,7 @@ export async function run3dmCrChantierSkill(mission: MissionForSkill): Promise<s
   const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
   const message = await anthropic.messages.create({
-    model: process.env.ANTHROPIC_MODEL || 'claude-sonnet-4-20250514',
+    model: resolveAnthropicApiModel(mission.ai_model),
     max_tokens: 8192,
     system: CR_JSON_SYSTEM,
     messages: [

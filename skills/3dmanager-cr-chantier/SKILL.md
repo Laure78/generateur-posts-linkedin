@@ -31,18 +31,7 @@ python3 scripts/generate_cr.py cr_data.json /chemin/sortie/CR.docx
 
 Sur BeWork, le script est invoqué automatiquement après production du JSON ; chemin skill : `skills/3dmanager-cr-chantier/`.
 
-### Charte graphique officielle (implémentée dans `scripts/generate_cr.py`)
-
-| Élément | Valeur |
-|--------|--------|
-| Anthracite (bandeaux, texte fort) | `#2A2A2A` |
-| Rouge de marque (accents, filets, « D ») | `#CC2A2A` |
-| Fonds clairs (en-têtes tableau, blocs info) | `#F2F2F2` |
-| Logo | `assets/logo_3dmanager.png` — bandeau anthracite en **corps du document** (1re page) + en-tête Word ; version optimisée pour fond `#2A2A2A` |
-| Pied de page | BET TCE · MOEX · ISO 9001 — réseau : Siège · Atlantique · Aquitaine · Méditerranée · Île-de-France |
-| Coordonnées | Email / site en repli (à confirmer avec 3D MANAGER) |
-
-Le rendu (couleurs, logo, polices, mentions légales) est centralisé dans le **bloc CHARTE** en tête de `scripts/generate_cr.py`. Ne pas déroger à ces codes couleur pour les bandeaux et accents.
+Le rendu (couleurs, logo, polices, mentions légales) est centralisé dans le **bloc CHARTE** en tête de `scripts/generate_cr.py`. La charte officielle 3D MANAGER y est intégrée : anthracite `#2A2A2A` (bandeaux foncés, texte fort), rouge de marque `#CC2A2A` (le « D », accents), fonds clairs `#F2F2F2`. Le logo officiel détouré (fond transparent) est dans `assets/logo_3dmanager.png` et s'affiche en blanc sur le bandeau anthracite. **Un bandeau noir `#000000` pleine largeur (≈ 0,25 cm) court sous le bandeau logo + titre** comme liséré d'accent (hauteur réglable via `LISERE_HEIGHT_CM` / `set_row_height` dans `add_charte_banner`). Le pied de page reprend la qualification (BET TCE · MOEX · ISO 9001) et le réseau d'agences (Siège · Atlantique · Aquitaine · Méditerranée · Île-de-France). Seules les coordonnées (email / site) sont en repli à confirmer avec la société.
 
 ## Schéma `cr_data.json`
 
@@ -83,7 +72,7 @@ Le rendu (couleurs, logo, polices, mentions légales) est centralisé dans le **
 Champs facultatifs : tout champ vide est ignoré. Le nom de sortie par défaut suit le format `CR_[Operation]_N[xx].docx`.
 
 ## Statuts et code couleur (gérés automatiquement par le script)
-- **Levé** — vert · **En cours** — orange · **En attente** — rouge charte · **Nouveau** — bleu charte.
+- **Levé** — vert · **En cours** — orange · **En attente** — rouge · **Nouveau** — bleu charte.
 
 ## Règles d'or
 - Ton **factuel et neutre** ; un constat reformulé ne doit jamais changer de sens.

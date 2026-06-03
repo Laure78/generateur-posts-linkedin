@@ -14,6 +14,7 @@ export type LocalMission = {
   ai_result: string | null;
   output_format: string;
   use_skill_charter: boolean;
+  ai_model: string;
   created_at: string;
   updated_at: string;
 };
@@ -51,6 +52,7 @@ function normalizeMission(m: LocalMission & Partial<LocalMission>): LocalMission
     ...m,
     output_format: m.output_format ?? 'docx',
     use_skill_charter: m.use_skill_charter ?? true,
+    ai_model: m.ai_model ?? 'sonnet',
   };
 }
 
@@ -70,6 +72,7 @@ export async function createMission(input: {
   status: string;
   output_format?: string;
   use_skill_charter?: boolean;
+  ai_model?: string;
 }): Promise<LocalMission> {
   const now = new Date().toISOString();
   const mission: LocalMission = {
@@ -77,6 +80,7 @@ export async function createMission(input: {
     ...input,
     output_format: input.output_format ?? 'docx',
     use_skill_charter: input.use_skill_charter ?? true,
+    ai_model: input.ai_model ?? 'sonnet',
     ai_result: null,
     created_at: now,
     updated_at: now,

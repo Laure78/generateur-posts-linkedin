@@ -1,4 +1,9 @@
 import {
+  DEFAULT_ANTHROPIC_MODEL_PRESET,
+  parseAnthropicModelPreset,
+  type AnthropicModelPreset,
+} from './anthropic-models';
+import {
   DEFAULT_DELIVERABLE_FORMAT,
   parseDeliverableFormat,
   type DeliverableFormat,
@@ -6,15 +11,16 @@ import {
 
 /** Ligne technique en fin de brief si les colonnes DB ne sont pas encore migrées. */
 const META_LINE =
-  /^[\s]*Metadonnées BeWork \(ne pas supprimer\) : format=([a-z]+) ; charte=(0|1)\s*$/im;
+  /^[\s]*Metadonnées BeWork \(ne pas supprimer\) : format=([a-z]+) ; charte=(0|1)(?: ; model=(haiku|sonnet|opus))?\s*$/im;
 
 export type MissionOptions = {
   output_format: DeliverableFormat;
   use_skill_charter: boolean;
+  ai_model: AnthropicModelPreset;
 };
 
 export function appendMissionMetaToBrief(brief: string, options: MissionOptions): string {
-  const line = `Metadonnées BeWork (ne pas supprimer) : format=${options.output_format} ; charte=${options.use_skill_charter ? 1 : 0}`;
+  const line = `Metadonnées BeWork (ne pas supprimer) : format=${options.output_format} ; charte=${options.use_skill_charter ? 1 : 0} ; model=${options.ai_model}`;
   if (META_LINE.test(brief)) {
     return brief.replace(META_LINE, line).trimEnd();
   }
@@ -38,17 +44,17 @@ export function parseMissionMetaFromBrief(brief: string): {
     options: {
       output_format: parseDeliverableFormat(match[1]),
       use_skill_charter: match[2] === '1',
+      ai_model: match[3] ? parseAnthropicModelPreset(match[3]) : undefined,
     },
   };
 }
 
-export function resolveMissionOptions(
-  row: {
-    brief: string;
-    output_format?: string | null;
-    use_skill_charter?: boolean | null;
-  }
-): MissionOptions & { brief: string } {
+export function resolveMissionOptions(row: {
+  brief: string;
+  output_format?: string | null;
+  use_skill_charter?: boolean | null;
+  ai_model?: string | null;
+}): MissionOptions & { brief: string } {
   const fromBrief = parseMissionMetaFromBrief(row.brief);
   const output_format = row.output_format
     ? parseDeliverableFormat(row.output_format)
@@ -57,11 +63,15 @@ export function resolveMissionOptions(
     row.use_skill_charter != null
       ? row.use_skill_charter !== false
       : fromBrief.options.use_skill_charter ?? true;
+  const ai_model = row.ai_model
+    ? parseAnthropicModelPreset(row.ai_model)
+    : fromBrief.options.ai_model ?? DEFAULT_ANTHROPIC_MODEL_PRESET;
 
   return {
     brief: fromBrief.brief,
     output_format,
     use_skill_charter,
+    ai_model,
   };
 }
 
@@ -69,6 +79,7 @@ export function isMissingMissionOptionsColumnError(message: string): boolean {
   return (
     message.includes('output_format') ||
     message.includes('use_skill_charter') ||
+    message.includes('ai_model') ||
     message.includes('schema cache')
   );
 }

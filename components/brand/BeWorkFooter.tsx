@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { ExternalLink, Shield } from 'lucide-react';
 import { BEWORK } from '@/lib/bework/config';
 import { LEGAL_NAV } from '@/lib/bework/legal-nav';
+import { InternalUseNotice } from './InternalUseNotice';
 
 const CONFIDENTIALITE_HREF = '/politique-confidentialite';
 
@@ -23,6 +24,11 @@ export function BeWorkFooter({ className = '', compact = false }: BeWorkFooterPr
           {BEWORK.name} — {BEWORK.brandTagline}
         </p>
       )}
+
+      <InternalUseNotice
+        variant={compact ? 'short' : 'long'}
+        className={`mx-auto max-w-lg text-left ${compact ? 'text-xs' : 'mt-4'}`}
+      />
 
       <div
         className={`mx-auto max-w-lg rounded-xl border border-blue-100 bg-blue-50/60 px-4 py-3 ${compact ? 'text-xs' : 'mt-4 text-sm'}`}

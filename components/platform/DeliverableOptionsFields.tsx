@@ -26,7 +26,7 @@ export function DeliverableOptionsFields({
   showCharterOption = true,
 }: DeliverableOptionsFieldsProps) {
   return (
-    <div className="space-y-5 border-t border-slate-100 pt-5">
+    <div className="space-y-5">
       <div>
         <p className="flex items-center gap-2 text-sm font-medium text-slate-700">
           <FileCheck2 size={16} className="text-[var(--bework-blue)]" aria-hidden />

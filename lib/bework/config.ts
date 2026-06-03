@@ -10,6 +10,8 @@ export const BEWORK = {
   audience: MOEX_PLATFORM.audience,
   audienceLong: MOEX_PLATFORM.audienceLong,
   scopeLine: MOEX_PLATFORM.scopeLine,
+  internalUseShort: MOEX_PLATFORM.internalUseShort,
+  internalUseLong: MOEX_PLATFORM.internalUseLong,
   url: 'https://www.bework.fr',
   appUrl: 'https://app.laureolivie.fr',
   email: 'contact@bework.fr',

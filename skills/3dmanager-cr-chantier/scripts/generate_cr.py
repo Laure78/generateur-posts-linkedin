@@ -29,6 +29,8 @@ from docx.oxml import OxmlElement
 # Logo : assets/logo_3dmanager.png (détouré, fond transparent, lisible sur bandeau #2A2A2A)
 # ───────────────────────────────────────────────────────────────────────────
 PRIMAIRE   = "2A2A2A"   # anthracite — bandeaux foncés, texte fort
+NOIR_LISERE = "000000"  # liséré pleine largeur sous bandeau logo + titre
+LISERE_HEIGHT_CM = 0.25
 ROUGE      = "CC2A2A"   # rouge de marque (le « D ») — accents, filets, statut En attente
 SECONDAIRE = "2A2A2A"   # texte corps
 CLAIR      = "F2F2F2"   # fonds clairs bandeaux d'info / en-têtes tableau
@@ -155,28 +157,37 @@ def add_logo_fallback_text(paragraph):
     style_run(r2, 7, False, BLANC, POLICE_CORPS)
 
 
-def build_brand_banner_table(doc, data, logo_height_cm=2.0):
-    """Bandeau logoté visible dans le corps du document (1re page)."""
-    tbl = doc.add_table(rows=1, cols=2)
+def set_row_height(row, height_cm, exact=True):
+    tr = row._tr
+    trPr = tr.get_or_add_trPr()
+    trHeight = OxmlElement("w:trHeight")
+    trHeight.set(qn("w:val"), str(int(Cm(height_cm).twips)))
+    trHeight.set(qn("w:hRule"), "exact" if exact else "atLeast")
+    trPr.append(trHeight)
+
+
+def _configure_banner_table(tbl, width_cm=17):
     tbl.alignment = WD_TABLE_ALIGNMENT.LEFT
     tbl.autofit = False
     no_table_borders(tbl)
     tblPr = tbl._tbl.tblPr
     tblW = OxmlElement("w:tblW")
-    tblW.set(qn("w:w"), str(int(Cm(17).twips)))
+    tblW.set(qn("w:w"), str(int(Cm(width_cm).twips)))
     tblW.set(qn("w:type"), "dxa")
     tblPr.append(tblW)
     layout = OxmlElement("w:tblLayout")
     layout.set(qn("w:type"), "fixed")
     tblPr.append(layout)
 
-    left, right = tbl.rows[0].cells
+
+def _fill_banner_main_row(left, right, data, logo_height_cm, *, show_date=True, compact=False):
     left.width = Cm(6.5)
     right.width = Cm(10.5)
     set_cell_bg(left, PRIMAIRE)
     set_cell_bg(right, PRIMAIRE)
-    set_cell_margins(left, top=140, bottom=140, left=180, right=100)
-    set_cell_margins(right, top=140, bottom=140, left=100, right=200)
+    pad = 100 if compact else 140
+    set_cell_margins(left, top=pad, bottom=pad, left=140 if compact else 180, right=80 if compact else 100)
+    set_cell_margins(right, top=pad, bottom=pad, left=80 if compact else 100, right=160 if compact else 200)
 
     lp = left.paragraphs[0]
     lp.alignment = WD_ALIGN_PARAGRAPH.LEFT
@@ -185,17 +196,53 @@ def build_brand_banner_table(doc, data, logo_height_cm=2.0):
 
     rp = right.paragraphs[0]
     rp.alignment = WD_ALIGN_PARAGRAPH.RIGHT
+    title_size = 13 if compact else 15
     r1 = rp.add_run("COMPTE RENDU DE CHANTIER")
-    style_run(r1, 15, True, BLANC, POLICE_TITRE)
+    style_run(r1, title_size, True, BLANC, POLICE_TITRE)
     rp2 = right.add_paragraph()
     rp2.alignment = WD_ALIGN_PARAGRAPH.RIGHT
     r2 = rp2.add_run(f"N° {data.get('cr_numero', '')}")
-    style_run(r2, 11, True, ROUGE, POLICE_TITRE)
-    if data.get("date_visite"):
+    style_run(r2, 10 if compact else 11, True, ROUGE, POLICE_TITRE)
+    if show_date and data.get("date_visite"):
         rp3 = right.add_paragraph()
         rp3.alignment = WD_ALIGN_PARAGRAPH.RIGHT
         style_run(rp3.add_run(str(data["date_visite"])[:48]), 8, False, BLANC, POLICE_CORPS)
 
+
+def _add_black_liseré_row(tbl):
+    """Liséré noir #000000 pleine largeur sous le bandeau logo + titre."""
+    lis = tbl.rows[1].cells[0]
+    lis.merge(tbl.rows[1].cells[1])
+    set_cell_bg(lis, NOIR_LISERE)
+    set_cell_margins(lis, top=0, bottom=0, left=0, right=0)
+    set_row_height(tbl.rows[1], LISERE_HEIGHT_CM)
+    p = lis.paragraphs[0]
+    p.paragraph_format.space_before = Pt(0)
+    p.paragraph_format.space_after = Pt(0)
+
+
+def add_charte_banner(parent, data, *, logo_height_cm=2.15, compact=False, show_date=True, width_cm=17):
+    """Bandeau charte 3D MANAGER (logo + titre + liséré noir). parent = doc ou en-tête Word."""
+    try:
+        tbl = parent.add_table(rows=2, cols=2, width=Cm(width_cm))
+    except TypeError:
+        tbl = parent.add_table(rows=2, cols=2)
+    _configure_banner_table(tbl, width_cm)
+    _fill_banner_main_row(
+        tbl.rows[0].cells[0],
+        tbl.rows[0].cells[1],
+        data,
+        logo_height_cm,
+        show_date=show_date,
+        compact=compact,
+    )
+    _add_black_liseré_row(tbl)
+    return tbl
+
+
+def build_brand_banner_table(doc, data, logo_height_cm=2.15):
+    """Bandeau logoté visible dans le corps du document (1re page)."""
+    add_charte_banner(doc, data, logo_height_cm=logo_height_cm, compact=False, show_date=True)
     add_para(doc, space_after=8)
 
 
@@ -270,46 +317,21 @@ def add_page_number_field(paragraph):
 
 
 def build_header(doc, data):
-    """Bandeau d'en-tête Word (pages suivantes) — même logo que le corps."""
+    """Bandeau d'en-tête Word (toutes pages) — charte logo + liséré noir."""
     section = doc.sections[0]
     header = section.header
     header.is_linked_to_previous = False
     for p in list(header.paragraphs):
         p._element.getparent().remove(p._element)
 
-    tbl = header.add_table(rows=1, cols=2, width=Cm(17))
-    tbl.alignment = WD_TABLE_ALIGNMENT.LEFT
-    tbl.autofit = False
-    no_table_borders(tbl)
-    tblPr = tbl._tbl.tblPr
-    tblW = OxmlElement("w:tblW")
-    tblW.set(qn("w:w"), str(int(Cm(17).twips)))
-    tblW.set(qn("w:type"), "dxa")
-    tblPr.append(tblW)
-    layout = OxmlElement("w:tblLayout")
-    layout.set(qn("w:type"), "fixed")
-    tblPr.append(layout)
-    left, right = tbl.rows[0].cells
-    left.width = Cm(6.5)
-    right.width = Cm(10.5)
-    set_cell_bg(left, PRIMAIRE)
-    set_cell_bg(right, PRIMAIRE)
-    set_cell_margins(left, top=100, bottom=100, left=140, right=80)
-    set_cell_margins(right, top=100, bottom=100, left=80, right=160)
-
-    lp = left.paragraphs[0]
-    lp.alignment = WD_ALIGN_PARAGRAPH.LEFT
-    if not add_logo_to_paragraph(lp, 1.35):
-        add_logo_fallback_text(lp)
-
-    rp = right.paragraphs[0]
-    rp.alignment = WD_ALIGN_PARAGRAPH.RIGHT
-    r1 = rp.add_run("COMPTE RENDU DE CHANTIER")
-    style_run(r1, 13, True, BLANC, POLICE_TITRE)
-    rp2 = right.add_paragraph()
-    rp2.alignment = WD_ALIGN_PARAGRAPH.RIGHT
-    r2 = rp2.add_run(f"N° {data.get('cr_numero', '')}")
-    style_run(r2, 10, True, ROUGE, POLICE_TITRE)
+    add_charte_banner(
+        header,
+        data,
+        logo_height_cm=1.35,
+        compact=True,
+        show_date=False,
+        width_cm=17,
+    )
 
 
 def build_footer(doc):

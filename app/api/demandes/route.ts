@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getAppUser } from '@/lib/auth/get-user';
+import { parseAnthropicModelPreset } from '@/lib/bework/anthropic-models';
 import { parseDeliverableFormat } from '@/lib/bework/deliverable-formats';
 import { getSkillForMissionType } from '@/lib/skills/registry';
 import { runMissionSkill } from '@/lib/skills/run-mission';
@@ -15,17 +16,19 @@ export async function POST(request: Request) {
   }
 
   const body = await request.json();
-  const { type, title, brief, chantier, output_format, use_skill_charter } = body as {
+  const { type, title, brief, chantier, output_format, use_skill_charter, ai_model } = body as {
     type?: string;
     title?: string;
     brief?: string;
     chantier?: string;
     output_format?: string;
     use_skill_charter?: boolean;
+    ai_model?: string;
   };
 
   const deliverableFormat = parseDeliverableFormat(output_format);
   const applySkillCharter = use_skill_charter !== false;
+  const modelPreset = parseAnthropicModelPreset(ai_model);
 
   if (!type || !title?.trim() || !brief?.trim()) {
     return NextResponse.json({ error: 'Type, titre et brief requis' }, { status: 400 });
@@ -47,6 +50,7 @@ export async function POST(request: Request) {
       status,
       output_format: deliverableFormat,
       use_skill_charter: applySkillCharter,
+      ai_model: modelPreset,
     });
     missionId = mission.id;
   } else {
@@ -62,6 +66,7 @@ export async function POST(request: Request) {
       options: {
         output_format: deliverableFormat,
         use_skill_charter: applySkillCharter,
+        ai_model: modelPreset,
       },
     });
 

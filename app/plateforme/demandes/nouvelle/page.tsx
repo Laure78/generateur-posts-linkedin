@@ -15,7 +15,12 @@ import {
   DEFAULT_DELIVERABLE_FORMAT,
   type DeliverableFormat,
 } from '@/lib/bework/deliverable-formats';
+import { AiModelFields } from '@/components/platform/AiModelFields';
 import { DeliverableOptionsFields } from '@/components/platform/DeliverableOptionsFields';
+import {
+  DEFAULT_ANTHROPIC_MODEL_PRESET,
+  type AnthropicModelPreset,
+} from '@/lib/bework/anthropic-models';
 
 function NouvelleDemandeForm() {
   const router = useRouter();
@@ -32,6 +37,7 @@ function NouvelleDemandeForm() {
   const [chantier, setChantier] = useState('');
   const [outputFormat, setOutputFormat] = useState<DeliverableFormat>(DEFAULT_DELIVERABLE_FORMAT);
   const [useSkillCharter, setUseSkillCharter] = useState(true);
+  const [aiModel, setAiModel] = useState<AnthropicModelPreset>(DEFAULT_ANTHROPIC_MODEL_PRESET);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -53,6 +59,7 @@ function NouvelleDemandeForm() {
           chantier,
           output_format: outputFormat,
           use_skill_charter: useSkillCharter,
+          ai_model: aiModel,
         }),
       });
       const data = await res.json();
@@ -219,13 +226,16 @@ function NouvelleDemandeForm() {
             </div>
 
             {!skill?.integrated && (
-              <DeliverableOptionsFields
-                outputFormat={outputFormat}
-                onOutputFormatChange={setOutputFormat}
-                useSkillCharter={useSkillCharter}
-                onUseSkillCharterChange={setUseSkillCharter}
-                skillName={catalogMission?.skillName}
-              />
+              <div className="space-y-5 border-t border-slate-100 pt-5">
+                <AiModelFields value={aiModel} onChange={setAiModel} />
+                <DeliverableOptionsFields
+                  outputFormat={outputFormat}
+                  onOutputFormatChange={setOutputFormat}
+                  useSkillCharter={useSkillCharter}
+                  onUseSkillCharterChange={setUseSkillCharter}
+                  skillName={catalogMission?.skillName}
+                />
+              </div>
             )}
           </div>
 

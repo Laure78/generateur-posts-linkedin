@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { BeWorkFooter } from './BeWorkFooter';
 import { BeWorkLogo } from './BeWorkLogo';
+import { InternalUseNotice } from './InternalUseNotice';
 
 type AuthShellProps = {
   title: string;
@@ -14,6 +15,8 @@ export function AuthShell({ title, subtitle, children, footer }: AuthShellProps)
     <div className="bework-blueprint-bg flex min-h-screen flex-col">
       <div className="mx-auto flex w-full max-w-md flex-1 flex-col justify-center px-4 py-10">
         <BeWorkLogo variant="auth" href="/" className="mx-auto w-full max-w-[300px] [&_img]:object-center" />
+
+        <InternalUseNotice variant="short" className="mt-6" />
 
         <div className="bework-card mt-8 p-6 shadow-md">
           <h1 className="font-display text-xl font-bold text-[var(--bework-navy)]">{title}</h1>

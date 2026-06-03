@@ -4,6 +4,7 @@ import { BEWORK } from '@/lib/bework/config';
 import { BeWorkLogo } from '@/components/brand/BeWorkLogo';
 import { BeWorkFooter } from '@/components/brand/BeWorkFooter';
 import { BeWorkProcessSteps } from '@/components/brand/BeWorkProcessSteps';
+import { InternalUseNotice } from '@/components/brand/InternalUseNotice';
 import { ArrowRight, Shield, Zap, Users } from 'lucide-react';
 
 export default function HomePage() {
@@ -34,6 +35,7 @@ export default function HomePage() {
             Comptes rendus de chantier, analyses DCE, courriers MOA, PV de réception, conformité des offres…
             Des assistants MOEX augmentés par l&apos;IA préparent le travail — vous validez avant diffusion.
           </p>
+          <InternalUseNotice variant="long" className="mt-6" />
           <div className="mt-8 flex flex-wrap gap-3">
             <Link href="/auth/inscription" className="bework-btn-primary px-6 py-3">
               Créer un compte MOEX

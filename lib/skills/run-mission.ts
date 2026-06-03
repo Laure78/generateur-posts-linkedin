@@ -5,6 +5,8 @@ import { createClient } from '@/lib/supabase/server';
 import { getSkillById } from '@/lib/skills/registry';
 import { loadSkillPrompt } from '@/lib/skills/load-skill';
 import { parseDeliverableFormat } from '@/lib/bework/deliverable-formats';
+import { resolveAnthropicApiModel } from '@/lib/bework/anthropic-models';
+import type { AnthropicModelPreset } from '@/lib/bework/anthropic-models';
 import { resolveMissionOptions } from '@/lib/bework/mission-meta';
 import { run3dmCrChantierSkill } from './run-3dm-cr-chantier';
 import { buildCharterSystemBlock, buildDeliverableFormatBlock } from './charter-prompt';
@@ -13,6 +15,7 @@ import { missionDocxPath, missionDeliverablePath } from './mission-output';
 import { promises as fs } from 'fs';
 
 const SYSTEM_BASE = `Tu es un assistant MOEX BeWork (bework.fr), relais administratif pour bureaux de maîtrise d'œuvre d'exécution en France (logements collectifs, marchés travaux, suivi chantier, MOA, entreprises).
+BeWork est un outil d'intelligence artificielle à usage INTERNE du bureau MOEX : les livrables ne sont pas destinés à être diffusés tels quels aux clients, au MOA, aux entreprises ni à tout tiers — le MOEX relit et valide avant toute communication externe.
 Tu rédiges en français professionnel, concret, sans jargon startup. Tu ne t'engages jamais au nom du MOEX sans validation.
 Supervision humaine depuis la France.
 
@@ -34,6 +37,7 @@ export type MissionForSkill = {
   ai_result: string | null;
   output_format?: string | null;
   use_skill_charter?: boolean | null;
+  ai_model?: AnthropicModelPreset | string | null;
 };
 
 export class SkillRunError extends Error {
@@ -56,7 +60,26 @@ function anthropicText(message: Anthropic.Message): string {
 async function loadMission(missionId: string, userId: string): Promise<MissionForSkill | null> {
   if (DEV_BYPASS) {
     const m = await getMission(missionId, userId);
-    return m;
+    if (!m) return null;
+    const resolved = resolveMissionOptions({
+      brief: m.brief,
+      output_format: m.output_format,
+      use_skill_charter: m.use_skill_charter,
+      ai_model: m.ai_model,
+    });
+    return {
+      id: m.id,
+      user_id: m.user_id,
+      skill_id: m.skill_id,
+      title: m.title,
+      brief: resolved.brief,
+      chantier: m.chantier,
+      status: m.status,
+      ai_result: m.ai_result,
+      output_format: resolved.output_format,
+      use_skill_charter: resolved.use_skill_charter,
+      ai_model: resolved.ai_model,
+    };
   }
   const supabase = await createClient();
   const { data, error } = await supabase
@@ -72,6 +95,7 @@ async function loadMission(missionId: string, userId: string): Promise<MissionFo
     brief: data.brief as string,
     output_format: data.output_format as string | null | undefined,
     use_skill_charter: data.use_skill_charter as boolean | null | undefined,
+    ai_model: data.ai_model as string | null | undefined,
   });
 
   return {
@@ -85,6 +109,7 @@ async function loadMission(missionId: string, userId: string): Promise<MissionFo
     ai_result: (data.ai_result as string | null) ?? null,
     output_format: resolved.output_format,
     use_skill_charter: resolved.use_skill_charter,
+    ai_model: resolved.ai_model,
   };
 }
 
@@ -170,7 +195,7 @@ async function runClaudeSkill(mission: MissionForSkill): Promise<string> {
 
   const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
   const message = await anthropic.messages.create({
-    model: process.env.ANTHROPIC_MODEL || 'claude-sonnet-4-20250514',
+    model: resolveAnthropicApiModel(mission.ai_model),
     max_tokens: 8192,
     system: `${SYSTEM_BASE}\n\n${charterBlock}\n\n${formatBlock}\n\n${skillMeta}\n\n--- Instructions du skill ---\n\n${skillPrompt}`,
     messages: [

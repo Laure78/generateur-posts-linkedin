@@ -34,6 +34,7 @@ export async function insertMissionRow(
     ...base,
     output_format: input.options.output_format,
     use_skill_charter: input.options.use_skill_charter,
+    ai_model: input.options.ai_model,
   };
 
   let { data, error } = await supabase.from('missions').insert(withOptions).select('id').single();
