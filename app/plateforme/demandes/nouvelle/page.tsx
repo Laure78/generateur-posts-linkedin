@@ -22,6 +22,8 @@ import {
   DEFAULT_ANTHROPIC_MODEL_PRESET,
   type AnthropicModelPreset,
 } from '@/lib/bework/anthropic-models';
+import { BriefFileUpload } from '@/components/platform/BriefFileUpload';
+import { MissionCrBriefFields, buildCrBriefPrefix } from '@/components/platform/MissionCrBriefFields';
 
 function NouvelleDemandeForm() {
   const router = useRouter();
@@ -39,8 +41,12 @@ function NouvelleDemandeForm() {
   const [outputFormat, setOutputFormat] = useState<DeliverableFormat>(DEFAULT_DELIVERABLE_FORMAT);
   const [useSkillCharter, setUseSkillCharter] = useState(true);
   const [aiModel, setAiModel] = useState<AnthropicModelPreset>(DEFAULT_ANTHROPIC_MODEL_PRESET);
+  const [crNumber, setCrNumber] = useState('');
+  const [previousCr, setPreviousCr] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const isCrType = type === 'cr-chantier-moex' || type === 'cr-chantier-3dm';
 
   const catalogMission = getCatalogMissions().find((m) => m.id === type);
   const skill = getSkillForMissionType(type);
@@ -50,13 +56,15 @@ function NouvelleDemandeForm() {
     setError(null);
     setLoading(true);
     try {
+      const fullBrief = `${buildCrBriefPrefix(crNumber, previousCr)}${brief}`.trim();
+
       const res = await fetch('/api/demandes', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           type,
           title,
-          brief,
+          brief: fullBrief,
           chantier,
           output_format: outputFormat,
           use_skill_charter: useSkillCharter,
@@ -207,6 +215,23 @@ function NouvelleDemandeForm() {
                 className="bework-input mt-1.5"
               />
             </div>
+
+            {isCrType && (
+              <MissionCrBriefFields
+                crNumber={crNumber}
+                onCrNumberChange={setCrNumber}
+                previousCr={previousCr}
+                onPreviousCrChange={setPreviousCr}
+              />
+            )}
+
+            <BriefFileUpload
+              disabled={loading}
+              onTextExtracted={(text, fileName) => {
+                const block = `--- Pièce importée : ${fileName} ---\n\n${text}\n\n`;
+                setBrief((b) => (b.trim() ? `${b.trim()}\n\n${block}` : block));
+              }}
+            />
 
             <div>
               <label htmlFor="brief" className="block text-sm font-medium text-slate-700">

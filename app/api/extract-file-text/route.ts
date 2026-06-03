@@ -1,9 +1,15 @@
 import { NextResponse } from 'next/server'
+import { getAppUser } from '@/lib/auth/get-user'
 
 const TEXT_EXTS = ['.txt', '.md', '.csv', '.json', '.xml', '.html', '.htm']
 const MAX_SIZE = 10 * 1024 * 1024 // 10 Mo
 
 export async function POST(req: Request) {
+  const user = await getAppUser()
+  if (!user) {
+    return NextResponse.json({ error: 'Non authentifié' }, { status: 401 })
+  }
+
   try {
     const formData = await req.formData()
     const file = formData.get('file') as File | null

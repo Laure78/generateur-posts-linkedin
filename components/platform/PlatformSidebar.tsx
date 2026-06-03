@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { BookOpen, LayoutDashboard, PlusCircle, ExternalLink } from 'lucide-react';
+import { BookOpen, LayoutDashboard, PlusCircle, ExternalLink, Shield } from 'lucide-react';
 import { BEWORK } from '@/lib/bework/config';
 import { getMissionIcon } from '@/lib/bework/mission-icons';
 import { BeWorkLogo } from '@/components/brand/BeWorkLogo';
@@ -37,13 +37,18 @@ function navigateClick(
   router.push(href);
 }
 
-export function PlatformSidebar() {
+type PlatformSidebarProps = {
+  showAdminLink?: boolean;
+};
+
+export function PlatformSidebar({ showAdminLink = false }: PlatformSidebarProps) {
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
   const typeParam = searchParams.get('type');
 
   const dashboardActive = pathname === '/plateforme';
+  const adminActive = pathname.startsWith('/plateforme/admin');
   const ressourcesActive = pathname.startsWith('/plateforme/ressources');
   const nouvellePath = '/plateforme/demandes/nouvelle';
 
@@ -100,6 +105,21 @@ export function PlatformSidebar() {
           <BookOpen size={18} strokeWidth={ressourcesActive ? 2.25 : 2} />
           Ressources
         </Link>
+
+        {showAdminLink && (
+          <Link
+            href="/plateforme/admin"
+            onClick={(e) => navigateClick(e, router, '/plateforme/admin')}
+            className={`mb-2 flex shrink-0 items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
+              adminActive
+                ? 'bg-red-50 text-red-800 ring-1 ring-red-200/80'
+                : 'text-slate-600 hover:bg-red-50/50 hover:text-red-900'
+            }`}
+          >
+            <Shield size={18} strokeWidth={adminActive ? 2.25 : 2} />
+            Administration
+          </Link>
+        )}
 
         <div
           className="-mx-1 min-h-0 flex-1 overflow-y-auto overscroll-y-contain px-1 pb-2 [scrollbar-gutter:stable]"

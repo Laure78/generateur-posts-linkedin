@@ -5,7 +5,11 @@ import { MissionDetailContent } from '@/components/platform/MissionDetailContent
 import { missionDeliverableExists } from '@/lib/skills/mission-output';
 import { resolveMissionOptions } from '@/lib/bework/mission-meta';
 
-export default async function DemandeDetailPage({ params }: { params: Promise<{ id: string }> }) {
+export default async function AdminDemandeDetailPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
   const { id } = await params;
   const profile = await getAppProfile();
   if (!profile) return null;
@@ -26,8 +30,9 @@ export default async function DemandeDetailPage({ params }: { params: Promise<{ 
       hasDeliverable={hasDeliverable}
       viewerRole={profile.role}
       viewerId={profile.id}
-      backHref="/plateforme"
-      backLabel="Tableau de bord"
+      backHref="/plateforme/admin"
+      backLabel="Administration"
+      adminMode
     />
   );
 }

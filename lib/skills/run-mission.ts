@@ -1,6 +1,9 @@
 import Anthropic from '@anthropic-ai/sdk';
 import { DEV_BYPASS } from '@/lib/dev/config';
-import { getMission, updateMission } from '@/lib/dev/local-missions';
+import { getMission, getMissionById, updateMission } from '@/lib/dev/local-missions';
+import { recordAiUsage } from '@/lib/missions/mutations';
+import { notifyMissionReady } from '@/lib/notifications/mission-ready';
+import { setMissionRunUsage, takeMissionRunUsage } from './run-usage';
 import { createClient } from '@/lib/supabase/server';
 import { getSkillById } from '@/lib/skills/registry';
 import { loadSkillPrompt } from '@/lib/skills/load-skill';
@@ -59,8 +62,8 @@ function anthropicText(message: Anthropic.Message): string {
 
 async function loadMission(missionId: string, userId: string): Promise<MissionForSkill | null> {
   if (DEV_BYPASS) {
-    const m = await getMission(missionId, userId);
-    if (!m) return null;
+    const m = (await getMission(missionId, userId)) ?? (await getMissionById(missionId));
+    if (!m || m.user_id !== userId) return null;
     const resolved = resolveMissionOptions({
       brief: m.brief,
       output_format: m.output_format,
@@ -206,6 +209,13 @@ async function runClaudeSkill(mission: MissionForSkill): Promise<string> {
     ],
   });
 
+  if (message.usage) {
+    setMissionRunUsage({
+      input: message.usage.input_tokens,
+      output: message.usage.output_tokens,
+    });
+  }
+
   if (message.stop_reason === 'max_tokens') {
     const partial = anthropicText(message);
     return `${partial}\n\n---\n⚠️ *Réponse tronquée (limite de longueur). Scindez la demande ou précisez un lot unique.*`;
@@ -248,6 +258,7 @@ export async function runMissionSkill(
     throw new SkillRunError('Traitement déjà en cours ou terminé', 409);
   }
 
+  setMissionRunUsage(null);
   const useCharter = mission.use_skill_charter !== false;
   let text: string;
   if (DOCX_SKILL_IDS.has(mission.skill_id) && useCharter) {
@@ -263,5 +274,25 @@ export async function runMissionSkill(
   }
 
   await persistResult(missionId, userId, text, 'en_attente_validation');
+
+  const usage = takeMissionRunUsage();
+  if (usage) {
+    await recordAiUsage(missionId, userId, usage.input, usage.output);
+  }
+
+  const ownerEmail = await resolveOwnerEmail(userId);
+  await notifyMissionReady({
+    missionId,
+    title: mission.title,
+    ownerEmail: ownerEmail ?? 'assistant@bework.fr',
+  });
+
   return { result: text };
+}
+
+async function resolveOwnerEmail(userId: string): Promise<string | null> {
+  if (DEV_BYPASS) return null;
+  const supabase = await createClient();
+  const { data } = await supabase.from('profiles').select('email').eq('id', userId).maybeSingle();
+  return (data?.email as string) ?? null;
 }

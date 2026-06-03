@@ -52,7 +52,7 @@ export async function POST(request: Request) {
       id: data.user.id,
       email,
       company_name: company_name || null,
-      role: 'client',
+      role: 'beworker',
     });
     if (profileErr) {
       console.error('profiles upsert:', profileErr.message);

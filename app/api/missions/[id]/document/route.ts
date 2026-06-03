@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
 import { promises as fs } from 'fs';
-import { getAppUser } from '@/lib/auth/get-user';
-import { DEV_BYPASS } from '@/lib/dev/config';
-import { getMission } from '@/lib/dev/local-missions';
+import { getAppProfile } from '@/lib/auth/profile';
+import { fetchMissionById } from '@/lib/missions/access';
+import { logMissionAudit } from '@/lib/missions/audit';
 import {
   deliverableMimeType,
   isDeliverableFormat,
@@ -10,42 +10,29 @@ import {
 } from '@/lib/bework/deliverable-formats';
 import { resolveMissionOptions } from '@/lib/bework/mission-meta';
 import { missionDeliverablePath, missionDocxPath } from '@/lib/skills/mission-output';
-import { createClient } from '@/lib/supabase/server';
 
 export async function GET(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
-  const user = await getAppUser();
-  if (!user) {
+  const profile = await getAppProfile();
+  if (!profile) {
     return NextResponse.json({ error: 'Non authentifié' }, { status: 401 });
   }
 
-  let missionFormat: string | null = null;
-  let missionTitle: string | null = null;
-
-  if (DEV_BYPASS) {
-    const m = await getMission(id, user.id);
-    if (!m) {
-      return NextResponse.json({ error: 'Mission introuvable' }, { status: 404 });
-    }
-    missionFormat = m.output_format;
-    missionTitle = m.title;
-  } else {
-    const supabase = await createClient();
-    const { data } = await supabase.from('missions').select('*').eq('id', id).eq('user_id', user.id).single();
-    if (!data) {
-      return NextResponse.json({ error: 'Mission introuvable' }, { status: 404 });
-    }
-    const resolved = resolveMissionOptions({
-      brief: data.brief as string,
-      output_format: data.output_format as string | null | undefined,
-      use_skill_charter: data.use_skill_charter as boolean | null | undefined,
-    });
-    missionFormat = resolved.output_format;
-    missionTitle = data.title as string;
+  const mission = await fetchMissionById(id, profile.id, profile.role);
+  if (!mission) {
+    return NextResponse.json({ error: 'Mission introuvable' }, { status: 404 });
   }
+
+  const resolved = resolveMissionOptions({
+    brief: mission.brief,
+    output_format: mission.output_format,
+    use_skill_charter: mission.use_skill_charter,
+  });
+  const missionFormat = resolved.output_format;
+  const missionTitle = mission.title;
 
   const url = new URL(request.url);
   const formatParam = url.searchParams.get('format');
@@ -76,6 +63,9 @@ export async function GET(
         .replace(/\s+/g, '_')
         .slice(0, 50) || 'Livrable_BeWork';
     const filename = `${safeTitle}.${format}`;
+
+    await logMissionAudit(id, profile.id, 'deliverable_download', { format });
+
     return new NextResponse(buffer, {
       headers: {
         'Content-Type': deliverableMimeType(format),

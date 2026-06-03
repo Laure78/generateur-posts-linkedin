@@ -3,6 +3,7 @@ import { resolveAnthropicApiModel } from '@/lib/bework/anthropic-models';
 import { extractJsonFromText } from './extract-json';
 import { generate3dmCrDocx } from './generate-3dm-cr-docx';
 import type { MissionForSkill } from './run-mission';
+import { setMissionRunUsage } from './run-usage';
 
 const CR_JSON_SYSTEM = `Tu es l'assistant compte rendu de chantier 3D MANAGER (bureau d'études TCE, MOEX certifié ISO 9001, agence Île-de-France).
 Le CR fait foi : factuel, neutre, exhaustif, traçable. Le MOEX valide ; tu produis le JSON pour le .docx à la charte graphique officielle.
@@ -69,6 +70,13 @@ ${mission.brief}`,
       },
     ],
   });
+
+  if (message.usage) {
+    setMissionRunUsage({
+      input: message.usage.input_tokens,
+      output: message.usage.output_tokens,
+    });
+  }
 
   const rawText = message.content
     .filter((b): b is Anthropic.TextBlock => b.type === 'text')

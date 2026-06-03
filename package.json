@@ -8,6 +8,7 @@
     "postbuild": "cp -r public .next/standalone/ && cp -r .next/static .next/standalone/.next/ && cp -r skills .next/standalone/skills",
     "start": "HOSTNAME=0.0.0.0 node .next/standalone/server.js",
     "lint": "eslint",
+    "test": "node --experimental-strip-types --test lib/bework/roles.test.mjs",
     "db:migrate": "node scripts/run-migrations.js",
     "db:bework": "node scripts/run-bework-migration.js",
     "check:supabase": "node scripts/check-supabase.js",

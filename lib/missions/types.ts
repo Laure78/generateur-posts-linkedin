@@ -1,0 +1,24 @@
+export type MissionRow = {
+  id: string;
+  user_id: string;
+  type: string;
+  skill_id: string;
+  title: string;
+  brief: string;
+  chantier: string | null;
+  status: string;
+  ai_result: string | null;
+  output_format?: string | null;
+  use_skill_charter?: boolean | null;
+  ai_model?: string | null;
+  created_at?: string;
+  updated_at?: string;
+  chef_validated_at?: string | null;
+  chef_validated_by?: string | null;
+  chef_validation_note?: string | null;
+  internal_comment?: string | null;
+  duplicate_of?: string | null;
+  ai_tokens_input?: number | null;
+  ai_tokens_output?: number | null;
+  deliverable_version?: number | null;
+};
