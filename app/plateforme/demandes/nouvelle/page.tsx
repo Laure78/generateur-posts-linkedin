@@ -15,6 +15,7 @@ import {
   DEFAULT_DELIVERABLE_FORMAT,
   type DeliverableFormat,
 } from '@/lib/bework/deliverable-formats';
+import { TeamLeaderValidationAlert } from '@/components/brand/TeamLeaderValidationAlert';
 import { AiModelFields } from '@/components/platform/AiModelFields';
 import { DeliverableOptionsFields } from '@/components/platform/DeliverableOptionsFields';
 import {
@@ -224,6 +225,8 @@ function NouvelleDemandeForm() {
                 <p className="mt-2 text-xs text-slate-500">{catalogMission.briefHint}</p>
               )}
             </div>
+
+            <TeamLeaderValidationAlert className="border-t border-slate-100 pt-5" />
 
             {!skill?.integrated && (
               <div className="space-y-5 border-t border-slate-100 pt-5">

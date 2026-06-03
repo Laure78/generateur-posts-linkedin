@@ -6,6 +6,7 @@ import {
 } from '@/lib/bework/platform-guide';
 import { BEWORK } from '@/lib/bework/config';
 import { InternalUseNotice } from '@/components/brand/InternalUseNotice';
+import { TeamLeaderValidationAlert } from '@/components/brand/TeamLeaderValidationAlert';
 
 function SectionIcon({ emphasis }: { emphasis?: GuideSection['emphasis'] }) {
   if (emphasis === 'warning') {
@@ -36,8 +37,9 @@ export function PlatformGuideContent() {
           {PLATFORM_GUIDE_INTRO.title}
         </h1>
         <p className="mt-3 text-base leading-relaxed text-slate-600">{PLATFORM_GUIDE_INTRO.subtitle}</p>
-        <div className="mt-6">
+        <div className="mt-6 space-y-3">
           <InternalUseNotice variant="long" />
+          <TeamLeaderValidationAlert />
         </div>
       </header>
 

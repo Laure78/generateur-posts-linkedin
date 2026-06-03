@@ -14,6 +14,7 @@ export const BEWORK = {
   scopeLine: MOEX_PLATFORM.scopeLine,
   internalUseShort: MOEX_PLATFORM.internalUseShort,
   internalUseLong: MOEX_PLATFORM.internalUseLong,
+  teamLeaderValidationAlert: MOEX_PLATFORM.teamLeaderValidationAlert,
   url: 'https://www.bework.fr',
   appUrl: 'https://app.laureolivie.fr',
   email: 'contact@bework.fr',

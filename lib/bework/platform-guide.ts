@@ -35,6 +35,18 @@ export const PLATFORM_GUIDE_SECTIONS: GuideSection[] = [
     ],
   },
   {
+    id: 'validation-chef',
+    title: 'Validation chef d\'équipe avant envoi client',
+    intro:
+      "Aucun livrable ne part au client sans feu vert du chef d'équipe, après relecture par l'assistant travaux.",
+    items: [
+      "L'assistant travaux prépare et relit le brouillon IA.",
+      "Le chef d'équipe valide le fond, la forme et le niveau d'engagement du document.",
+      "Seulement ensuite : transmission au MOEX ou envoi au client, selon le circuit défini par votre bureau.",
+    ],
+    emphasis: 'warning',
+  },
+  {
     id: 'verification',
     title: 'Obligation de vérification',
     intro:
@@ -68,7 +80,8 @@ export const PLATFORM_GUIDE_SECTIONS: GuideSection[] = [
       "Les présents, absents et le rédacteur sont exacts.",
       "Chaque observation est factuelle, numérotée et classée par lot.",
       "Les points du CR précédent ont été repris ou explicitement soldés.",
-      "Le document a été relu par un professionnel habilité au nom du bureau.",
+      "Le document a été relu par l'assistant travaux.",
+      "Validation du chef d'équipe obtenue avant envoi au client.",
       "La version envoyée est celle validée — pas le brouillon IA tel quel.",
     ],
     emphasis: 'warning',

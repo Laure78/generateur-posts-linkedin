@@ -4,6 +4,7 @@ import { BeWorkLogo } from './BeWorkLogo';
 import { AuthBeworkerBadge } from './AuthBeworkerBadge';
 import { AuthResourcesTeaser } from './AuthResourcesTeaser';
 import { InternalUseNotice } from './InternalUseNotice';
+import { TeamLeaderValidationAlert } from './TeamLeaderValidationAlert';
 
 type AuthShellProps = {
   title: string;
@@ -29,6 +30,7 @@ export function AuthShell({
         <AuthBeworkerBadge />
 
         <InternalUseNotice variant="short" className="mt-4" />
+        <TeamLeaderValidationAlert compact className="mt-3" />
 
         <div className="bework-card mt-6 p-6 shadow-md">
           <h1 className="font-display text-xl font-bold text-[var(--bework-navy)]">{title}</h1>

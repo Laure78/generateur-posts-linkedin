@@ -8,6 +8,7 @@ import { getSkillById, getSkillForMissionType } from '@/lib/skills/registry';
 import { MissionDeliverableDownload } from '@/components/platform/MissionDeliverableDownload';
 import { MissionSkillRunner } from '@/components/platform/MissionSkillRunner';
 import { InternalUseNotice } from '@/components/brand/InternalUseNotice';
+import { TeamLeaderValidationAlert } from '@/components/brand/TeamLeaderValidationAlert';
 import { ANTHROPIC_MODEL_LABELS } from '@/lib/bework/anthropic-models';
 import {
   DELIVERABLE_FORMAT_LABELS,
@@ -105,6 +106,7 @@ export default async function DemandeDetailPage({ params }: { params: Promise<{ 
       </header>
 
       <InternalUseNotice variant="short" className="mt-6" />
+      <TeamLeaderValidationAlert className="mt-4" />
 
       {mission.chantier && (
         <p className="mt-4 text-sm text-slate-600">

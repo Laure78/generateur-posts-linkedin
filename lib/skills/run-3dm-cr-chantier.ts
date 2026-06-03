@@ -44,7 +44,7 @@ function buildCrSummary(
 Le document à la charte **3D MANAGER** a été généré : **${filename}**.
 ${outputFormat && outputFormat !== 'docx' ? `\nUn export **.${outputFormat}** est également disponible au téléchargement.` : ''}
 
-Téléchargez le fichier ci-dessous, relisez-le et validez avant diffusion (délai d’approbation mentionné dans le CR).
+Téléchargez le fichier ci-dessous, relisez-le, faites valider par le **chef d'équipe**, puis transmettez au MOEX ou au client selon votre circuit (délai d’approbation mentionné dans le CR).
 
 ### Avancement (extrait)
 ${String(crData.avancement ?? '—')}

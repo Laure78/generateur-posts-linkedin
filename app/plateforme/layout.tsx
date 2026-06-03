@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import { redirect } from 'next/navigation';
 import { BeWorkFooter } from '@/components/brand/BeWorkFooter';
 import { InternalUseNotice } from '@/components/brand/InternalUseNotice';
+import { TeamLeaderValidationAlert } from '@/components/brand/TeamLeaderValidationAlert';
 import { PlatformSidebar } from '@/components/platform/PlatformSidebar';
 import { getAppUser } from '@/lib/auth/get-user';
 
@@ -39,8 +40,9 @@ export default async function PlateformeLayout({ children }: { children: React.R
         <PlatformSidebar />
       </Suspense>
       <main className="platform-main relative z-0 flex min-h-0 min-w-0 flex-1 flex-col overflow-y-auto overscroll-y-contain">
-        <div className="border-b border-amber-100/80 bg-amber-50/50 px-4 py-2 lg:px-6">
+        <div className="space-y-2 border-b border-amber-100/80 bg-amber-50/50 px-4 py-2 lg:px-6">
           <InternalUseNotice variant="short" className="mx-auto max-w-5xl border-0 bg-transparent px-0 py-0" />
+          <TeamLeaderValidationAlert compact className="mx-auto max-w-5xl" />
         </div>
         <div className="flex-1">{children}</div>
         <BeWorkFooter compact />

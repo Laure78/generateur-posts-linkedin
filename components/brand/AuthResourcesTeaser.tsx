@@ -13,8 +13,8 @@ export function AuthResourcesTeaser() {
           <h2 className="text-sm font-semibold text-slate-900">Ressources & tutoriel</h2>
           <p className="mt-1 text-xs leading-relaxed text-slate-600">
             Bon usage de l&apos;IA, précautions et{' '}
-            <strong className="font-semibold text-slate-800">obligation de vérification</strong> de chaque
-            livrable avant transmission au MOEX.
+            <strong className="font-semibold text-slate-800">validation par le chef d&apos;équipe</strong> avant
+            envoi au client, après relecture de chaque livrable.
           </p>
           <Link
             href="/guide"

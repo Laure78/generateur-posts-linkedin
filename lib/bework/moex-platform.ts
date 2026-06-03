@@ -17,6 +17,9 @@ export const MOEX_PLATFORM = {
     "Outil interne BeWork — réservé aux assistants travaux (Beworkers). Traitement des demandes MOEX externalisées.",
   internalUseLong:
     "BeWork est l'outil interne de la plateforme BeWork, utilisé par les assistants travaux (Beworkers) pour traiter les demandes des maîtrises d'œuvre d'exécution externalisées (MOEX). Les documents générés par l'IA sont des brouillons de travail : ils doivent être relus, corrigés et validés par un professionnel (assistant travaux et/ou MOEX) avant transmission.",
+  /** Alerte affichée sur la plateforme et dans le guide. */
+  teamLeaderValidationAlert:
+    "Validation par le chef d'équipe obligatoire avant tout envoi au client.",
 } as const;
 
 /** Types de mission proposés dans l'outil (assistants MOEX). */
