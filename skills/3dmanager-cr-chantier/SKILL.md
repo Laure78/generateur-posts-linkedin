@@ -26,10 +26,23 @@ Construire un fichier `cr_data.json` (schéma plus bas), puis :
 ```bash
 cd <dossier-du-skill>
 pip install python-docx Pillow --break-system-packages -q   # si nécessaire
-python3 scripts/generate_cr.py cr_data.json /mnt/user-data/outputs/CR.docx
+python3 scripts/generate_cr.py cr_data.json /chemin/sortie/CR.docx
 ```
 
-Le rendu (couleurs, logo, polices, mentions légales) est centralisé dans le **bloc CHARTE** en haut de `scripts/generate_cr.py`. Y reporter les vraies valeurs 3D MANAGER, et déposer le vrai logo dans `assets/logo_3dmanager.png` (PNG, fond transparent de préférence). En l'absence de logo, le bandeau affiche le nom de la société en repli.
+Sur BeWork, le script est invoqué automatiquement après production du JSON ; chemin skill : `skills/3dmanager-cr-chantier/`.
+
+### Charte graphique officielle (implémentée dans `scripts/generate_cr.py`)
+
+| Élément | Valeur |
+|--------|--------|
+| Anthracite (bandeaux, texte fort) | `#2A2A2A` |
+| Rouge de marque (accents, filets, « D ») | `#CC2A2A` |
+| Fonds clairs (en-têtes tableau, blocs info) | `#F2F2F2` |
+| Logo | `assets/logo_3dmanager.png` — version détourée, affichée sur bandeau anthracite |
+| Pied de page | BET TCE · MOEX · ISO 9001 — réseau : Siège · Atlantique · Aquitaine · Méditerranée · Île-de-France |
+| Coordonnées | Email / site en repli (à confirmer avec 3D MANAGER) |
+
+Le rendu (couleurs, logo, polices, mentions légales) est centralisé dans le **bloc CHARTE** en tête de `scripts/generate_cr.py`. Ne pas déroger à ces codes couleur pour les bandeaux et accents.
 
 ## Schéma `cr_data.json`
 
@@ -70,7 +83,7 @@ Le rendu (couleurs, logo, polices, mentions légales) est centralisé dans le **
 Champs facultatifs : tout champ vide est ignoré. Le nom de sortie par défaut suit le format `CR_[Operation]_N[xx].docx`.
 
 ## Statuts et code couleur (gérés automatiquement par le script)
-- **Levé** — vert · **En cours** — orange · **En attente** — rouge · **Nouveau** — bleu charte.
+- **Levé** — vert · **En cours** — orange · **En attente** — rouge charte · **Nouveau** — bleu charte.
 
 ## Règles d'or
 - Ton **factuel et neutre** ; un constat reformulé ne doit jamais changer de sens.

@@ -25,7 +25,8 @@ export const BEWORK_SKILLS: SkillDefinition[] = [
   {
     id: '3dmanager-cr-chantier',
     name: 'CR chantier — charte 3D MANAGER',
-    description: 'Compte rendu MOEX TCE à la charte 3D MANAGER (.docx), observations par lot, reprise des points ouverts.',
+    description:
+      'Compte rendu MOEX TCE à la charte officielle 3D MANAGER (anthracite/rouge, logo, ISO 9001), observations par lot, reprise des points ouverts.',
     missionTypes: ['cr-chantier-3dm'],
   },
   {

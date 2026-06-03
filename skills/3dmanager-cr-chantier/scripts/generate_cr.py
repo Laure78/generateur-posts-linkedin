@@ -24,34 +24,38 @@ from docx.oxml.ns import qn
 from docx.oxml import OxmlElement
 
 # ───────────────────────────────────────────────────────────────────────────
-# CHARTE GRAPHIQUE 3D MANAGER  (d'après le logo officiel : noir · blanc · rouge)
+# CHARTE GRAPHIQUE 3D MANAGER — officielle (anthracite · rouge · fonds clairs)
+# Logo : assets/logo_3dmanager.png (détouré, fond transparent, lisible sur bandeau #2A2A2A)
 # ───────────────────────────────────────────────────────────────────────────
-PRIMAIRE   = "161616"   # noir / anthracite — bandeaux, texte fort
-ROUGE      = "C61F2B"   # rouge de marque (le « D ») — accents
-SECONDAIRE = "161616"   # texte fort (= noir charte)
-CLAIR      = "F2F2F2"   # fond clair des bandeaux d'info / en-têtes de tableau
+PRIMAIRE   = "2A2A2A"   # anthracite — bandeaux foncés, texte fort
+ROUGE      = "CC2A2A"   # rouge de marque (le « D ») — accents, filets, statut En attente
+SECONDAIRE = "2A2A2A"   # texte corps
+CLAIR      = "F2F2F2"   # fonds clairs bandeaux d'info / en-têtes tableau
 GRIS_LIGNE = "D9D9D9"   # filets de tableau
-GRIS_TXT   = "7A7A7A"   # mentions légales / secondaire
+GRIS_TXT   = "6B6B6B"   # mentions légales / secondaire
+BLANC      = "FFFFFF"
+BLEU_CHARTE = "2B5C8A"  # statut Nouveau
 
-POLICE_TITRE = "Calibri"   # remplacer par la police de la charte si différente
+POLICE_TITRE = "Calibri"
 POLICE_CORPS = "Calibri"
 
-# Couleurs de statut (sémantique chantier)
 STATUT_COULEUR = {
-    "Levé":       "2E7D32",  # vert
-    "En cours":   "B26A00",  # orange
-    "En attente": ROUGE,     # rouge de marque
-    "Nouveau":    PRIMAIRE,  # noir charte
+    "Levé":       "2E7D32",
+    "En cours":   "B26A00",
+    "En attente": ROUGE,
+    "Nouveau":    BLEU_CHARTE,
 }
 
-# Logo : déposer le vrai logo 3D MANAGER ici (PNG fond transparent de préférence)
 LOGO_PATH = os.path.join(os.path.dirname(__file__), "..", "assets", "logo_3dmanager.png")
 
-# Mentions de pied de page (À COMPLÉTER avec les vraies infos société)
-SOCIETE        = "3D MANAGER"
-ACCROCHE       = "Un facilitateur dans l'acte de construire"
-MENTIONS_PIED  = "3D MANAGER · Bureau d'études pluridisciplinaire TCE · MOEX · Certifié ISO 9001"
-CONTACT_PIED   = "Agence Île-de-France · 3dmanager@3dmanager.fr · www.3dmanager.fr"
+SOCIETE = "3D MANAGER"
+ACCROCHE = "Un facilitateur dans l'acte de construire"
+MENTIONS_PIED = (
+    "3D MANAGER · Bureau d'études TCE · Maîtrise d'œuvre d'exécution (MOEX) · Certifié ISO 9001"
+)
+RESEAU_AGENCES = "Siège · Atlantique · Aquitaine · Méditerranée · Île-de-France"
+# Coordonnées en repli — à confirmer avec la société
+CONTACT_PIED = "3dmanager@3dmanager.fr · www.3dmanager.fr"
 # ───────────────────────────────────────────────────────────────────────────
 
 
@@ -164,20 +168,26 @@ def build_header(doc, data):
     lp.alignment = WD_ALIGN_PARAGRAPH.LEFT
     if os.path.exists(LOGO_PATH):
         run = lp.add_run()
-        run.add_picture(LOGO_PATH, height=Cm(1.0))
+        run.add_picture(LOGO_PATH, height=Cm(1.15))
     else:
-        r = lp.add_run(SOCIETE)
-        style_run(r, 16, True, "FFFFFF", POLICE_TITRE)
+        r = lp.add_run(SOCIETE + "\n")
+        style_run(r, 14, True, BLANC, POLICE_TITRE)
+        r2 = lp.add_run(ACCROCHE)
+        style_run(r2, 7, False, BLANC, POLICE_CORPS)
 
     # Titre à droite
     rp = right.paragraphs[0]
     rp.alignment = WD_ALIGN_PARAGRAPH.RIGHT
     r1 = rp.add_run("COMPTE RENDU DE CHANTIER")
-    style_run(r1, 15, True, "FFFFFF", POLICE_TITRE)
+    style_run(r1, 15, True, BLANC, POLICE_TITRE)
     rp2 = right.add_paragraph()
     rp2.alignment = WD_ALIGN_PARAGRAPH.RIGHT
     r2 = rp2.add_run(f"N° {data.get('cr_numero', '')}")
     style_run(r2, 11, True, ROUGE, POLICE_TITRE)
+    if data.get("date_visite"):
+        rp3 = right.add_paragraph()
+        rp3.alignment = WD_ALIGN_PARAGRAPH.RIGHT
+        style_run(rp3.add_run(str(data["date_visite"])[:48]), 8, False, BLANC, POLICE_CORPS)
 
 
 def build_footer(doc):
@@ -198,16 +208,17 @@ def build_footer(doc):
     pf.paragraph_format.space_after = Pt(2)
 
     p1 = footer.add_paragraph()
-    p1.alignment = WD_ALIGN_PARAGRAPH.LEFT
-    style_run(p1.add_run(MENTIONS_PIED), 7, False, GRIS_TXT)
+    p1.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    style_run(p1.add_run(MENTIONS_PIED), 7, True, PRIMAIRE)
     p2 = footer.add_paragraph()
-    p2.alignment = WD_ALIGN_PARAGRAPH.LEFT
-    style_run(p2.add_run(CONTACT_PIED), 7, False, GRIS_TXT)
-    # numéro de page
-    style_run(p2.add_run("        "), 7, False, GRIS_TXT)
+    p2.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    style_run(p2.add_run(RESEAU_AGENCES), 7, False, GRIS_TXT)
+    p3 = footer.add_paragraph()
+    p3.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    style_run(p3.add_run(CONTACT_PIED), 7, False, GRIS_TXT)
     pg = footer.add_paragraph()
     pg.alignment = WD_ALIGN_PARAGRAPH.RIGHT
-    pg.paragraph_format.space_before = Pt(0)
+    pg.paragraph_format.space_before = Pt(2)
     rr = pg.add_run("Page ")
     style_run(rr, 8, False, GRIS_TXT)
     add_page_number_field(pg)
