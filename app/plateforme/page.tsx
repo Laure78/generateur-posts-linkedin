@@ -9,6 +9,7 @@ import { BEWORK } from '@/lib/bework/config';
 import { SkillActionGrid } from '@/components/platform/SkillActionGrid';
 import { MissionIcon } from '@/lib/bework/mission-icons';
 import { MissionDashboardFilters } from '@/components/platform/MissionDashboardFilters';
+import { MobileAppBanner } from '@/components/platform/MobileAppBanner';
 
 export default async function PlateformeDashboardPage({
   searchParams,
@@ -91,6 +92,8 @@ export default async function PlateformeDashboardPage({
       </header>
 
       <SkillActionGrid />
+
+      <MobileAppBanner />
 
       <section className="mt-8">
         <Link

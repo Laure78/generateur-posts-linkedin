@@ -10,7 +10,7 @@ import { insertMissionRow } from '@/lib/supabase/missions-db';
 import { createClient } from '@/lib/supabase/server';
 
 export async function POST(request: Request) {
-  const user = await getAppUser();
+  const user = await getAppUser(request);
   if (!user) {
     return NextResponse.json({ error: 'Non authentifié' }, { status: 401 });
   }

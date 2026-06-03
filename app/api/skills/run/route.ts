@@ -3,7 +3,7 @@ import { getAppUser } from '@/lib/auth/get-user';
 import { runMissionSkill, SkillRunError } from '@/lib/skills/run-mission';
 
 export async function POST(request: Request) {
-  const user = await getAppUser();
+  const user = await getAppUser(request);
   if (!user) {
     return NextResponse.json({ error: 'Non authentifié' }, { status: 401 });
   }

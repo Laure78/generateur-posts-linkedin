@@ -5,7 +5,7 @@ const TEXT_EXTS = ['.txt', '.md', '.csv', '.json', '.xml', '.html', '.htm']
 const MAX_SIZE = 10 * 1024 * 1024 // 10 Mo
 
 export async function POST(req: Request) {
-  const user = await getAppUser()
+  const user = await getAppUser(req)
   if (!user) {
     return NextResponse.json({ error: 'Non authentifié' }, { status: 401 })
   }

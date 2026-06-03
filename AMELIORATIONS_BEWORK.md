@@ -32,9 +32,21 @@ update public.profiles set role = 'admin' where email = 'admin@votredomaine.fr';
 - Chef : `chef@bework.fr` ou `user+chef@…`
 - Admin : `admin@bework.fr`
 
+## Application mobile (Expo)
+
+Dossier `mobile/` — iOS/Android avec connexion Supabase, API Bearer, onglets Demandes / Nouvelle / Admin / Compte.
+
+```bash
+npm run mobile:install
+cd mobile && cp .env.example .env
+npm run mobile
+```
+
 ## Pistes ultérieures
 
+- Téléchargement livrable natif (expo-file-system + partage)
 - Versioning fichiers .docx sur disque (v2, v3)
 - Dictée vocale → brief
 - Rappel automatique demandes non validées > 7 jours
 - Export RGPD par utilisateur
+- Publication App Store / Play Store (EAS Build)

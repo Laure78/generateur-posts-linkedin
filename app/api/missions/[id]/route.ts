@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
 import { getAppProfile } from '@/lib/auth/profile';
-import { duplicateMission } from '@/lib/missions/mutations';
+import { fetchMissionById } from '@/lib/missions/access';
 
-export async function POST(
+export async function GET(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
@@ -12,11 +12,10 @@ export async function POST(
   }
 
   const { id } = await params;
-  const result = await duplicateMission(id, profile.id, profile.role);
-
-  if (!result.ok) {
-    return NextResponse.json({ error: result.error }, { status: 400 });
+  const mission = await fetchMissionById(id, profile.id, profile.role);
+  if (!mission) {
+    return NextResponse.json({ error: 'Mission introuvable' }, { status: 404 });
   }
 
-  return NextResponse.json({ id: result.id });
+  return NextResponse.json({ mission });
 }

@@ -23,6 +23,24 @@
   font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
 }
 
+/* Plateforme — usage mobile (navigateur + PWA) */
+@media (max-width: 768px) {
+  .platform-main {
+    padding-bottom: env(safe-area-inset-bottom, 0);
+  }
+
+  .bework-input,
+  .bework-btn-primary,
+  .bework-btn-secondary {
+    min-height: 44px;
+    font-size: 16px;
+  }
+
+  .bework-card {
+    border-radius: 14px;
+  }
+}
+
 /* Fond plan / blueprint */
 .bework-blueprint-bg {
   background-color: var(--bework-surface);
