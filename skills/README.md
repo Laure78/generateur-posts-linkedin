@@ -17,6 +17,10 @@ Chaque skill = un dossier `<id>/SKILL.md` (consignes métier pour Claude).
 | `controle-memoire-technique-btp` | `controle-memoire` | Claude |
 | `dossier-intervention` | `dossier-intervention` | Claude |
 | `situation-travaux` | `situation-travaux` | Claude |
-| `assistant-travaux` | `autre` | Claude |
+| `moex-pieces-dce` | `pieces-ecrites-dce`, `tableau-dpgf` | Claude |
+| `moex-dc4-sous-traitance` | DC4, agrément, registre sous-traitants… | Claude |
+| `moex-doe-livraison` | `constitution-doe` | Claude |
+| `moex-suivi-levees-reserves` | `suivi-levees-reserves` | Claude |
+| `assistant-travaux` | tâches admin sans skill dédié, `autre` | Claude |
 
 Catalogue : `lib/skills/registry.ts` — exécution API : `POST /api/skills/run` avec `missionId`.

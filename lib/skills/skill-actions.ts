@@ -1,5 +1,4 @@
-import { MOEX_DASHBOARD_MISSION_TYPES } from '@/lib/bework/moex-platform';
-import { MISSION_CATEGORIES, getCatalogMissions } from '@/lib/bework/mission-catalog';
+import { MISSION_CATEGORIES, getOrderedCatalogMissions } from '@/lib/bework/mission-catalog';
 
 export function newDemandeUrl(missionType: string): string {
   return `/plateforme/demandes/nouvelle?type=${encodeURIComponent(missionType)}`;
@@ -18,14 +17,11 @@ export type SkillActionGroup = {
 };
 
 export function getDashboardActionGroups(): SkillActionGroup[] {
-  const catalog = getCatalogMissions();
-  const featured = MOEX_DASHBOARD_MISSION_TYPES.map((id) => catalog.find((m) => m.id === id)).filter(
-    (m): m is NonNullable<typeof m> => Boolean(m)
-  );
+  const catalog = getOrderedCatalogMissions();
 
   return MISSION_CATEGORIES.map((category) => ({
     category,
-    actions: featured
+    actions: catalog
       .filter((m) => m.category === category.id)
       .map((m) => ({
         missionType: m.id,

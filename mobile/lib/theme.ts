@@ -6,6 +6,7 @@ export const colors = {
   white: '#FFFFFF',
   slate600: '#475569',
   slate500: '#64748B',
+  slate400: '#94A3B8',
   red50: '#FEF2F2',
   red800: '#991B1B',
   emerald50: '#ECFDF5',

@@ -1,8 +1,14 @@
 import { MISSION_TYPES } from './config';
 import { isMoexPlatformMissionType } from './moex-platform';
+import {
+  MOEX_CHECKLIST_THEMES,
+  MOEX_CHECKLIST_TASKS,
+  getChecklistTask,
+  type MoexChecklistThemeId,
+} from './moex-checklist-3dm';
 import { getSkillForMissionType } from '@/lib/skills/registry';
 
-export type MissionCategoryId = 'chantier' | 'marches' | 'courriers' | 'livraison' | 'autre';
+export type MissionCategoryId = MoexChecklistThemeId;
 
 export type MissionCategory = {
   id: MissionCategoryId;
@@ -10,34 +16,12 @@ export type MissionCategory = {
   description: string;
 };
 
-/** Catégories affichées — périmètre MOEX uniquement (pas de lot « technique / DTU »). */
-export const MISSION_CATEGORIES: MissionCategory[] = [
-  {
-    id: 'chantier',
-    label: 'Chantier & suivi',
-    description: 'CR de chantier, observations, PV de réception',
-  },
-  {
-    id: 'marches',
-    label: 'Marchés & offres',
-    description: 'Analyse DCE, conformité CCTP, comparatif et RAO',
-  },
-  {
-    id: 'courriers',
-    label: 'Courriers & contractuel',
-    description: 'Relances entreprises, OS, situations de travaux',
-  },
-  {
-    id: 'livraison',
-    label: 'Livraison & GPA',
-    description: 'Acquéreurs VEFA, réserves, suivi GPA',
-  },
-  {
-    id: 'autre',
-    label: 'Besoin MOEX',
-    description: 'Demande administrative non listée',
-  },
-];
+/** Thèmes checklist 3D MANAGER (A → H + besoin libre). */
+export const MISSION_CATEGORIES: MissionCategory[] = MOEX_CHECKLIST_THEMES.map((t) => ({
+  id: t.id,
+  label: t.letter ? `${t.letter} — ${t.label}` : t.label,
+  description: t.description,
+}));
 
 type MissionMeta = {
   category: MissionCategoryId;
@@ -46,7 +30,16 @@ type MissionMeta = {
   briefHint: string;
 };
 
-const META: Record<string, MissionMeta> = {
+function checklistMeta(theme: MissionCategoryId, taskLabel: string): MissionMeta {
+  return {
+    category: theme,
+    titlePlaceholder: `Ex. : ${taskLabel.slice(0, 48)}…`,
+    briefPlaceholder: `Contexte chantier / affaire, pièces jointes, délai et format attendu pour : ${taskLabel}…`,
+    briefHint: 'Checklist externalisation 3D MANAGER — précisez lots, entreprises et références contractuelles.',
+  };
+}
+
+const SPECIFIC_META: Record<string, Partial<MissionMeta>> = {
   'verification-dtu': {
     category: 'autre',
     titlePlaceholder: 'Ex. : Devis menuiserie — Résidence Les Ormes',
@@ -54,91 +47,66 @@ const META: Record<string, MissionMeta> = {
     briefHint: 'Joignez le texte du devis ou les postes concernés.',
   },
   'cr-chantier-3dm': {
-    category: 'chantier',
     titlePlaceholder: 'Ex. : CR n°24 — 38 logements Villejuif',
-    briefPlaceholder: 'Notes de visite, dictée ou vocal transcrit. Indiquez le n° de CR et le CR précédent si disponible…',
+    briefPlaceholder:
+      'Notes de visite, dictée ou vocal transcrit. Indiquez le n° de CR et le CR précédent si disponible…',
     briefHint: 'Charte 3D MANAGER — observations par lot, reprise des points ouverts.',
   },
   'cr-chantier-moex': {
-    category: 'chantier',
     titlePlaceholder: 'Ex. : CR hebdo — Opération Les Tilleuls',
     briefPlaceholder: 'Collez vos constats de visite. Mentionnez le CR précédent pour reprendre les points non soldés…',
     briefHint: 'Format PROMOTECH — factuel, par corps d’état.',
   },
   'suivi-observations': {
-    category: 'chantier',
     titlePlaceholder: 'Ex. : Suivi observations — Mars 2026',
     briefPlaceholder: 'Collez les derniers CR ou listez les points ouverts à suivre entre deux réunions…',
     briefHint: 'Tableau de suivi, retards, relances et ordre du jour.',
   },
   'courrier-moe': {
-    category: 'courriers',
+    category: 'pilotage-entreprises',
     titlePlaceholder: 'Ex. : Relance Lot 02 GO — réserves non levées',
     briefPlaceholder: 'Destinataire, faits, dates des relances antérieures, action attendue et délai…',
     briefHint: 'Relance entreprise, mise en demeure, courrier au MOA ou note de diffusion MOEX.',
   },
   'pv-reserves': {
-    category: 'chantier',
     titlePlaceholder: 'Ex. : PV réception — Phase 2',
     briefPlaceholder: 'Listez les réserves par lot, entreprises concernées et échéances de levée…',
-    briefHint: 'PV de réception et suivi des réserves entreprises.',
+    briefHint: 'PV de réception et listes de réserves (OPR).',
   },
   'ordre-service': {
-    category: 'courriers',
+    category: 'pilotage-entreprises',
     titlePlaceholder: 'Ex. : OS prolongation délai — Lot 14 CVC',
     briefPlaceholder: 'Type d’OS (prolongation, arrêt, reprise, prescription), motif, délai, entreprise…',
     briefHint: 'Mentions obligatoires MOEX et traçabilité contractuelle.',
   },
   'analyse-dce-moex': {
-    category: 'marches',
     titlePlaceholder: 'Ex. : Analyse DCE — Résidence Bel Air',
     briefPlaceholder: 'Collez ou décrivez les pièces : RC, CCAP, CCTP, DPGF. Indiquez l’opération et le lot…',
     briefHint: 'Fiche d’analyse MOEX — clauses à risque et questions au MOA.',
   },
   'comparatif-offres': {
-    category: 'marches',
     titlePlaceholder: 'Ex. : Comparatif Lot 05 menuiserie',
     briefPlaceholder: 'Collez les offres reçues et les critères d’attribution du RC…',
-    briefHint: 'Tableau multi-critères et recommandation d’attribution.',
+    briefHint: 'Tableau multi-critères, RAO et recommandation d’attribution.',
   },
   'conformite-offre': {
-    category: 'marches',
     titlePlaceholder: 'Ex. : Conformité offre Entreprise X — Lot GO',
     briefPlaceholder: 'Collez l’offre / mémoire technique et les exigences CCTP du lot…',
     briefHint: 'Non-conformités, variantes et postes manquants.',
   },
-  'analyse-dce-mh': {
-    category: 'marches',
-    titlePlaceholder: 'Ex. : AO patrimoine — Hôtel particulier',
-    briefPlaceholder: 'Pièces du DCE patrimoine, contraintes ABF, références exigées…',
-    briefHint: 'Monument historique — Qualibat MH, sujétions cachées.',
-  },
-  'gonogo-mh': {
-    category: 'marches',
-    titlePlaceholder: 'Ex. : Go / No Go — Restauration façade',
-    briefPlaceholder: 'Synthèse du DCE, risques identifiés, capacité de l’entreprise…',
-    briefHint: 'Grille pondérée et recommandation Go / No Go.',
-  },
-  'controle-memoire': {
-    category: 'marches',
-    titlePlaceholder: 'Ex. : MT Lot étanchéité — AO Ville X',
-    briefPlaceholder: 'Collez le mémoire technique et les exigences du RC / CCTP…',
-    briefHint: 'Scoring regard évaluateur avant remise.',
-  },
-  'dossier-intervention': {
-    category: 'courriers',
-    titlePlaceholder: 'Ex. : Dossier intervention réseaux',
-    briefPlaceholder: 'Nature de l’intervention, planning, pièces déjà disponibles et manquantes…',
-    briefHint: 'DT/DICT, autorisations et checklist.',
-  },
   'situation-travaux': {
-    category: 'courriers',
+    category: 'suivi-financier',
     titlePlaceholder: 'Ex. : Situation n°3 — Lot 08',
     briefPlaceholder: 'Postes réalisés, quantités, pièces justificatives, BPU/DPGF…',
-    briefHint: 'Structuration situation et attachements.',
+    briefHint: 'Vérification et structuration des situations mensuelles.',
+  },
+  'dossier-intervention': {
+    category: 'autres-besoins',
+    titlePlaceholder: 'Ex. : Dossier intervention réseaux',
+    briefPlaceholder: 'Nature de l’intervention, planning, pièces déjà disponibles et manquantes…',
+    briefHint: 'DT/DICT, autorisations et pièces réglementaires.',
   },
   'suivi-acquereurs': {
-    category: 'livraison',
     titlePlaceholder: 'Ex. : Réclamation logement B12',
     briefPlaceholder: 'Nature (réserve livraison, GPA, réclamation), faits, historique des échanges…',
     briefHint: 'Réponse acquéreur, suivi GPA ou synthèse des réserves.',
@@ -160,7 +128,11 @@ const DEFAULT_META: MissionMeta = {
 };
 
 export function getMissionMeta(missionTypeId: string): MissionMeta {
-  return META[missionTypeId] ?? DEFAULT_META;
+  const task = getChecklistTask(missionTypeId);
+  const base = task ? checklistMeta(task.theme, task.label) : DEFAULT_META;
+  const specific = SPECIFIC_META[missionTypeId];
+  if (!specific) return base;
+  return { ...base, ...specific, category: specific.category ?? base.category };
 }
 
 export function getMissionCategory(missionTypeId: string): MissionCategoryId {
@@ -199,4 +171,11 @@ export function getCatalogMissions(): CatalogMission[] {
 
 export function getMissionsByCategory(categoryId: MissionCategoryId): CatalogMission[] {
   return getCatalogMissions().filter((m) => m.category === categoryId);
+}
+
+/** Ordre d’affichage = ordre checklist PDF (évite doublons visuels). */
+export function getOrderedCatalogMissions(): CatalogMission[] {
+  const catalog = getCatalogMissions();
+  const byId = new Map(catalog.map((m) => [m.id, m]));
+  return MOEX_CHECKLIST_TASKS.map((t) => byId.get(t.id)).filter((m): m is CatalogMission => Boolean(m));
 }

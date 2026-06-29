@@ -1,12 +1,11 @@
 'use client';
 
-import { useState, Suspense } from 'react';
+import { useState, Suspense, useEffect, useCallback, useRef } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useSyncMissionTypeFromUrl } from '@/components/platform/use-sync-mission-type-url';
 import { isValidMissionTypeId, missionTypeFromSearchParam } from '@/lib/bework/mission-type-url';
 import Link from 'next/link';
-import { ArrowLeft, ArrowRight, Send } from 'lucide-react';
-import { MISSION_TYPES } from '@/lib/bework/config';
+import { ArrowLeft, ArrowRight, Send, ChevronDown } from 'lucide-react';
 import { getCatalogMissions } from '@/lib/bework/mission-catalog';
 import { getSkillForMissionType } from '@/lib/skills/registry';
 import { MissionTypePicker } from '@/components/platform/MissionTypePicker';
@@ -24,6 +23,21 @@ import {
 } from '@/lib/bework/anthropic-models';
 import { BriefFileUpload } from '@/components/platform/BriefFileUpload';
 import { MissionCrBriefFields, buildCrBriefPrefix } from '@/components/platform/MissionCrBriefFields';
+import { MissionGuidedBriefFields } from '@/components/platform/MissionGuidedBriefFields';
+import { BriefVoiceDictation } from '@/components/platform/BriefVoiceDictation';
+import { DemandDraftBanner } from '@/components/platform/DemandDraftBanner';
+import {
+  buildGuidedBriefPrefix,
+  getBriefSchema,
+  crValuesFromGuided,
+} from '@/lib/bework/mission-brief-schema';
+import { recordRecentMissionType } from '@/lib/bework/mission-type-prefs';
+import {
+  loadDemandDraft,
+  saveDemandDraft,
+  clearDemandDraft,
+  type DemandDraft,
+} from '@/lib/bework/demand-draft';
 
 function NouvelleDemandeForm() {
   const router = useRouter();
@@ -43,20 +57,78 @@ function NouvelleDemandeForm() {
   const [aiModel, setAiModel] = useState<AnthropicModelPreset>(DEFAULT_ANTHROPIC_MODEL_PRESET);
   const [crNumber, setCrNumber] = useState('');
   const [previousCr, setPreviousCr] = useState('');
+  const [guidedValues, setGuidedValues] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [pendingDraft, setPendingDraft] = useState<DemandDraft | null>(null);
+  const [draftDismissed, setDraftDismissed] = useState(false);
+  const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const isCrType = type === 'cr-chantier-moex' || type === 'cr-chantier-3dm';
+  const briefSchema = getBriefSchema(type);
+  const useLegacyCrFields = isCrType && !briefSchema;
 
   const catalogMission = getCatalogMissions().find((m) => m.id === type);
   const skill = getSkillForMissionType(type);
+
+  useEffect(() => {
+    setGuidedValues({});
+  }, [type]);
+
+  useEffect(() => {
+    if (hasPresetType || draftDismissed) return;
+    const draft = loadDemandDraft();
+    if (draft && (draft.title || draft.brief || draft.chantier || Object.keys(draft.guidedValues).length)) {
+      setPendingDraft(draft);
+    }
+  }, [hasPresetType, draftDismissed]);
+
+  const persistDraft = useCallback(() => {
+    if (step !== 2) return;
+    saveDemandDraft({ type, title, brief, chantier, guidedValues, step });
+  }, [type, title, brief, chantier, guidedValues, step]);
+
+  useEffect(() => {
+    if (step !== 2) return;
+    if (saveTimer.current) clearTimeout(saveTimer.current);
+    saveTimer.current = setTimeout(persistDraft, 600);
+    return () => {
+      if (saveTimer.current) clearTimeout(saveTimer.current);
+    };
+  }, [persistDraft, step]);
+
+  const goStep2 = useCallback(() => {
+    setStep(2);
+    router.replace(`/plateforme/demandes/nouvelle?type=${encodeURIComponent(type)}`, { scroll: false });
+  }, [router, type]);
+
+  const restoreDraft = () => {
+    if (!pendingDraft) return;
+    setType(pendingDraft.type);
+    setTitle(pendingDraft.title);
+    setBrief(pendingDraft.brief);
+    setChantier(pendingDraft.chantier);
+    setGuidedValues(pendingDraft.guidedValues);
+    setStep(pendingDraft.step);
+    setPendingDraft(null);
+    router.replace(
+      `/plateforme/demandes/nouvelle?type=${encodeURIComponent(pendingDraft.type)}`,
+      { scroll: false }
+    );
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
     setLoading(true);
     try {
-      const fullBrief = `${buildCrBriefPrefix(crNumber, previousCr)}${brief}`.trim();
+      recordRecentMissionType(type);
+      const crFromGuided = crValuesFromGuided(guidedValues);
+      const guidedPrefix = buildGuidedBriefPrefix(type, guidedValues);
+      const crPrefix = useLegacyCrFields
+        ? buildCrBriefPrefix(crNumber, previousCr)
+        : buildCrBriefPrefix(crFromGuided.crNumber, crFromGuided.previousCr);
+      const fullBrief = `${guidedPrefix || crPrefix}${brief}`.trim();
 
       const res = await fetch('/api/demandes', {
         method: 'POST',
@@ -74,6 +146,8 @@ function NouvelleDemandeForm() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Erreur');
 
+      clearDemandDraft();
+
       if (data.integrated && skill?.toolPath) {
         router.push(`${skill.toolPath}?mission=${data.id}`);
       } else {
@@ -87,7 +161,7 @@ function NouvelleDemandeForm() {
   };
 
   return (
-    <div className="mx-auto max-w-3xl px-6 py-8 lg:px-10">
+    <div className="mx-auto max-w-3xl px-6 py-8 pb-28 lg:px-10">
       <Link
         href="/plateforme"
         className="inline-flex items-center gap-1 text-sm font-medium text-[var(--bework-blue)] hover:underline"
@@ -99,34 +173,50 @@ function NouvelleDemandeForm() {
       <header className="mt-6">
         <h1 className="font-display text-2xl font-bold text-slate-900">Nouvelle demande</h1>
         <p className="mt-2 max-w-xl text-slate-600">
-          En 2 étapes : choisissez l&apos;assistant adapté à la demande MOEX, puis décrivez le besoin. L&apos;assistant
-          travaux relit et valide le livrable avant envoi au MOEX.
+          {step === 1
+            ? 'Choisissez l’assistant — recherche, favoris ou double-clic pour passer à l’étape suivante.'
+            : 'Décrivez le besoin. Le brouillon est sauvegardé automatiquement.'}
         </p>
       </header>
 
-      <ol className="mt-8 flex gap-2">
+      {pendingDraft && !draftDismissed && (
+        <DemandDraftBanner
+          draft={pendingDraft}
+          onRestore={restoreDraft}
+          onDismiss={() => {
+            setDraftDismissed(true);
+            setPendingDraft(null);
+            clearDemandDraft();
+          }}
+        />
+      )}
+
+      <ol className="mt-8 flex w-full gap-2">
         {[
-          { n: 1, label: 'Assistant' },
-          { n: 2, label: 'Votre besoin' },
+          { n: 1 as const, label: 'Assistant' },
+          { n: 2 as const, label: 'Votre besoin' },
         ].map(({ n, label }) => (
-          <li
-            key={n}
-            className={`flex flex-1 items-center gap-2 rounded-lg px-4 py-3 text-sm font-medium ${
-              step === n
-                ? 'bg-[var(--bework-blue)] text-white'
-                : step > n
-                  ? 'bg-blue-50 text-[var(--bework-blue)]'
-                  : 'bg-white text-slate-400 ring-1 ring-slate-200'
-            }`}
-          >
-            <span
-              className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs ${
-                step === n ? 'bg-white/20' : step > n ? 'bg-[var(--bework-blue)] text-white' : 'bg-slate-100'
+          <li key={n} className="flex-1">
+            <button
+              type="button"
+              onClick={() => (n === 1 ? setStep(1) : type && goStep2())}
+              className={`flex flex-1 items-center gap-2 rounded-lg px-4 py-3 text-sm font-medium transition-colors ${
+                step === n
+                  ? 'bg-[var(--bework-blue)] text-white'
+                  : step > n
+                    ? 'bg-blue-50 text-[var(--bework-blue)] hover:bg-blue-100'
+                    : 'bg-white text-slate-400 ring-1 ring-slate-200'
               }`}
             >
-              {n}
-            </span>
-            {label}
+              <span
+                className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs ${
+                  step === n ? 'bg-white/20' : step > n ? 'bg-[var(--bework-blue)] text-white' : 'bg-slate-100'
+                }`}
+              >
+                {n}
+              </span>
+              {label}
+            </button>
           </li>
         ))}
       </ol>
@@ -137,8 +227,10 @@ function NouvelleDemandeForm() {
           <div className="mt-4">
             <MissionTypePicker
               value={type}
+              onContinue={goStep2}
               onChange={(next) => {
                 setType(next);
+                recordRecentMissionType(next);
                 router.replace(`/plateforme/demandes/nouvelle?type=${encodeURIComponent(next)}`, {
                   scroll: false,
                 });
@@ -146,17 +238,7 @@ function NouvelleDemandeForm() {
             />
           </div>
           <div className="mt-6 flex justify-end">
-            <button
-              type="button"
-              onClick={() => {
-                setStep(2);
-                router.replace(
-                  `/plateforme/demandes/nouvelle?type=${encodeURIComponent(type)}`,
-                  { scroll: false }
-                );
-              }}
-              className="bework-btn-primary"
-            >
+            <button type="button" onClick={goStep2} className="bework-btn-primary">
               Continuer
               <ArrowRight size={18} />
             </button>
@@ -171,9 +253,7 @@ function NouvelleDemandeForm() {
               <div>
                 <p className="text-xs font-medium uppercase tracking-wide text-slate-500">Assistant sélectionné</p>
                 <p className="mt-2 flex items-center gap-3 font-semibold text-slate-900">
-                  {catalogMission && (
-                    <MissionIcon missionTypeId={catalogMission.id} size="md" />
-                  )}
+                  {catalogMission && <MissionIcon missionTypeId={catalogMission.id} size="md" />}
                   {catalogMission?.label}
                 </p>
                 <p className="mt-1 text-sm text-slate-500">{catalogMission?.skillName}</p>
@@ -200,6 +280,7 @@ function NouvelleDemandeForm() {
                 required
                 placeholder={catalogMission?.titlePlaceholder}
                 className="bework-input mt-1.5"
+                autoFocus
               />
             </div>
 
@@ -216,7 +297,7 @@ function NouvelleDemandeForm() {
               />
             </div>
 
-            {isCrType && (
+            {useLegacyCrFields && (
               <MissionCrBriefFields
                 crNumber={crNumber}
                 onCrNumberChange={setCrNumber}
@@ -225,13 +306,32 @@ function NouvelleDemandeForm() {
               />
             )}
 
-            <BriefFileUpload
-              disabled={loading}
-              onTextExtracted={(text, fileName) => {
-                const block = `--- Pièce importée : ${fileName} ---\n\n${text}\n\n`;
-                setBrief((b) => (b.trim() ? `${b.trim()}\n\n${block}` : block));
-              }}
-            />
+            {briefSchema && (
+              <MissionGuidedBriefFields
+                missionTypeId={type}
+                values={guidedValues}
+                onChange={(fieldId, value) =>
+                  setGuidedValues((v) => ({ ...v, [fieldId]: value }))
+                }
+              />
+            )}
+
+            <div className="flex flex-wrap items-center gap-3 border-t border-slate-100 pt-4">
+              <BriefVoiceDictation
+                disabled={loading}
+                onTranscript={(text) => {
+                  const block = `--- Dictée vocale ---\n${text}\n\n`;
+                  setBrief((b) => (b.trim() ? `${b.trim()}\n\n${block}` : block));
+                }}
+              />
+              <BriefFileUpload
+                disabled={loading}
+                onTextExtracted={(text, fileName) => {
+                  const block = `--- Pièce importée : ${fileName} ---\n\n${text}\n\n`;
+                  setBrief((b) => (b.trim() ? `${b.trim()}\n\n${block}` : block));
+                }}
+              />
+            </div>
 
             <div>
               <label htmlFor="brief" className="block text-sm font-medium text-slate-700">
@@ -242,9 +342,9 @@ function NouvelleDemandeForm() {
                 value={brief}
                 onChange={(e) => setBrief(e.target.value)}
                 required
-                rows={10}
+                rows={8}
                 placeholder={catalogMission?.briefPlaceholder}
-                className="bework-input mt-1.5 resize-y font-mono text-sm leading-relaxed"
+                className="bework-input mt-1.5 resize-y text-sm leading-relaxed"
               />
               {catalogMission?.briefHint && (
                 <p className="mt-2 text-xs text-slate-500">{catalogMission.briefHint}</p>
@@ -254,16 +354,25 @@ function NouvelleDemandeForm() {
             <TeamLeaderValidationAlert className="border-t border-slate-100 pt-5" />
 
             {!skill?.integrated && (
-              <div className="space-y-5 border-t border-slate-100 pt-5">
-                <AiModelFields value={aiModel} onChange={setAiModel} />
-                <DeliverableOptionsFields
-                  outputFormat={outputFormat}
-                  onOutputFormatChange={setOutputFormat}
-                  useSkillCharter={useSkillCharter}
-                  onUseSkillCharterChange={setUseSkillCharter}
-                  skillName={catalogMission?.skillName}
-                />
-              </div>
+              <details className="group border-t border-slate-100 pt-4">
+                <summary className="flex cursor-pointer list-none items-center gap-2 text-sm font-medium text-slate-700">
+                  <ChevronDown
+                    size={16}
+                    className="text-slate-400 transition-transform group-open:rotate-180"
+                  />
+                  Options avancées (modèle IA, format livrable)
+                </summary>
+                <div className="mt-4 space-y-5 pl-1">
+                  <AiModelFields value={aiModel} onChange={setAiModel} />
+                  <DeliverableOptionsFields
+                    outputFormat={outputFormat}
+                    onOutputFormatChange={setOutputFormat}
+                    useSkillCharter={useSkillCharter}
+                    onUseSkillCharterChange={setUseSkillCharter}
+                    skillName={catalogMission?.skillName}
+                  />
+                </div>
+              </details>
             )}
           </div>
 
@@ -273,7 +382,7 @@ function NouvelleDemandeForm() {
             </p>
           )}
 
-          <div className="flex flex-wrap gap-3">
+          <div className="bework-sticky-form-actions">
             <button type="button" onClick={() => setStep(1)} className="bework-btn-secondary">
               <ArrowLeft size={18} />
               Retour
@@ -281,10 +390,10 @@ function NouvelleDemandeForm() {
             <button type="submit" disabled={loading} className="bework-btn-primary flex-1 sm:flex-none">
               <Send size={18} />
               {loading
-            ? skill?.integrated
-              ? 'Envoi…'
-              : 'Envoi et traitement par l\'assistant…'
-            : 'Envoyer la demande'}
+                ? skill?.integrated
+                  ? 'Envoi…'
+                  : "Envoi et traitement par l'assistant…"
+                : 'Envoyer la demande'}
             </button>
           </div>
         </form>

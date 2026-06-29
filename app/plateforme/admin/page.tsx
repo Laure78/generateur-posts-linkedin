@@ -4,6 +4,8 @@ import { fetchMissionsList } from '@/lib/missions/access';
 import { getMissionTypeLabel } from '@/lib/bework/moex-platform';
 import { ROLE_LABELS } from '@/lib/bework/roles';
 import { MissionDashboardFilters } from '@/components/platform/MissionDashboardFilters';
+import { ChefValidationQueue } from '@/components/platform/ChefValidationQueue';
+import { fetchPendingValidationQueue } from '@/lib/missions/pending-validation';
 import { ChevronRight, Shield } from 'lucide-react';
 
 export default async function AdminDashboardPage({
@@ -32,9 +34,7 @@ export default async function AdminDashboardPage({
   const hasMore = missions.length > limit;
   const rows = hasMore ? missions.slice(0, limit) : missions;
 
-  const pending = rows.filter(
-    (m) => m.status === 'en_attente_validation' && !m.chef_validated_at
-  );
+  const validationQueue = await fetchPendingValidationQueue(profile.id, profile.role);
 
   return (
     <div className="mx-auto max-w-5xl px-6 py-8 lg:px-10">
@@ -52,29 +52,7 @@ export default async function AdminDashboardPage({
         </p>
       </header>
 
-      {pending.length > 0 && (
-        <section className="mt-8">
-          <h2 className="text-sm font-semibold uppercase tracking-wide text-red-800">
-            À valider ({pending.length} sur cette page)
-          </h2>
-          <ul className="mt-3 space-y-2">
-            {pending.map((m) => (
-              <li key={m.id}>
-                <Link
-                  href={`/plateforme/admin/demandes/${m.id}`}
-                  className="bework-card flex items-center justify-between gap-3 p-4 transition-shadow hover:shadow-md"
-                >
-                  <div>
-                    <p className="font-medium text-slate-900">{m.title}</p>
-                    <p className="text-xs text-slate-500">{getMissionTypeLabel(m.type)}</p>
-                  </div>
-                  <ChevronRight size={18} className="text-slate-400" />
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </section>
-      )}
+      <ChefValidationQueue pending={validationQueue} />
 
       <section className="mt-8">
         <h2 className="text-lg font-semibold text-slate-900">Toutes les demandes</h2>

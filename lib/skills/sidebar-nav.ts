@@ -1,6 +1,6 @@
 import {
   MISSION_CATEGORIES,
-  getCatalogMissions,
+  getOrderedCatalogMissions,
   type MissionCategory,
 } from '@/lib/bework/mission-catalog';
 import { getSkillForMissionType } from '@/lib/skills/registry';
@@ -28,7 +28,7 @@ export function getAssistantHref(missionType: string, integrated: boolean): stri
 
 /** Tous les assistants du catalogue, regroupés par catégorie (menu latéral). */
 export function getSidebarAssistantGroups(): SidebarAssistantGroup[] {
-  const catalog = getCatalogMissions();
+  const catalog = getOrderedCatalogMissions();
 
   return MISSION_CATEGORIES.map((category) => ({
     category,

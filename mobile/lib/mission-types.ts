@@ -1,17 +1,16 @@
-/** Types de mission MOEX (alignés sur lib/bework/moex-platform.ts). */
-export const MISSION_TYPES = [
-  { id: 'cr-chantier-moex', label: 'CR chantier MOEX' },
-  { id: 'cr-chantier-3dm', label: 'CR chantier 3D Manager' },
-  { id: 'suivi-observations', label: 'Suivi observations' },
-  { id: 'courrier-moe', label: 'Courrier MOE' },
-  { id: 'pv-reserves', label: 'PV de réserves' },
-  { id: 'ordre-service', label: 'Ordre de service' },
-  { id: 'analyse-dce-moex', label: 'Analyse DCE MOEX' },
-  { id: 'comparatif-offres', label: 'Comparatif offres' },
-  { id: 'conformite-offre', label: 'Conformité offre' },
-  { id: 'situation-travaux', label: 'Situation travaux' },
-  { id: 'autre', label: 'Demande MOEX diverse' },
-] as const;
+/** Types de mission MOEX — alignés sur lib/bework/moex-checklist-3dm.ts */
+import { MOEX_CHECKLIST_TASKS } from '../../lib/bework/moex-checklist-3dm';
+
+export const MISSION_TYPES = MOEX_CHECKLIST_TASKS.map((t) => ({
+  id: t.id,
+  label: t.label,
+}));
+
+const LABELS = Object.fromEntries(MISSION_TYPES.map((t) => [t.id, t.label]));
+
+export function getMissionTypeLabel(id: string): string {
+  return LABELS[id] ?? id;
+}
 
 export const STATUS_LABELS: Record<string, string> = {
   recue: 'Reçue',
@@ -19,7 +18,3 @@ export const STATUS_LABELS: Record<string, string> = {
   en_attente_validation: 'À valider',
   terminee: 'Terminée',
 };
-
-export function getMissionTypeLabel(id: string): string {
-  return MISSION_TYPES.find((t) => t.id === id)?.label ?? id;
-}

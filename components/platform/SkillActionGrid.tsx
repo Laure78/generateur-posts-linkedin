@@ -21,7 +21,7 @@ export function SkillActionGrid() {
               {category.label}
             </h3>
             <p className="mt-0.5 text-xs text-slate-400">{category.description}</p>
-            <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {actions.map((action) => (
                 <Link
                   key={action.missionType}

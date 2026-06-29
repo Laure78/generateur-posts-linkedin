@@ -13,28 +13,26 @@ import { router } from 'expo-router';
 import * as DocumentPicker from 'expo-document-picker';
 import { useAuth } from '@/lib/auth-context';
 import { createDemande, uploadFileText } from '@/lib/api';
-import { MISSION_TYPES } from '@/lib/mission-types';
+import { buildGuidedBriefPrefix, getBriefSchema } from '../../../lib/bework/mission-brief-schema';
 import { ValidationBanner } from '@/components/ValidationBanner';
+import { MissionTypePickerMobile } from '@/components/MissionTypePickerMobile';
+import { MissionGuidedBriefMobile } from '@/components/MissionGuidedBriefMobile';
 import { colors, spacing } from '@/lib/theme';
 
 export default function NewMissionTab() {
   const { accessToken } = useAuth();
-  const [type, setType] = useState('cr-chantier-moex');
+  const [type, setType] = useState('cr-chantier-3dm');
   const [title, setTitle] = useState('');
   const [chantier, setChantier] = useState('');
   const [brief, setBrief] = useState('');
-  const [crNumber, setCrNumber] = useState('');
-  const [previousCr, setPreviousCr] = useState('');
+  const [guidedValues, setGuidedValues] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
   const [importing, setImporting] = useState(false);
 
-  const isCr = type === 'cr-chantier-moex' || type === 'cr-chantier-3dm';
+  const briefSchema = getBriefSchema(type);
 
   const buildBrief = () => {
-    const parts: string[] = [];
-    if (crNumber.trim()) parts.push(`N° CR : ${crNumber.trim()}`);
-    if (previousCr.trim()) parts.push(`CR précédent / points ouverts :\n${previousCr.trim()}`);
-    const prefix = parts.length ? `${parts.join('\n\n')}\n\n---\n\n` : '';
+    const prefix = buildGuidedBriefPrefix(type, guidedValues);
     return `${prefix}${brief}`.trim();
   };
 
@@ -42,7 +40,12 @@ export default function NewMissionTab() {
     if (!accessToken) return;
     const result = await DocumentPicker.getDocumentAsync({
       copyToCacheDirectory: true,
-      type: ['application/pdf', 'application/msword', 'text/plain', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'],
+      type: [
+        'application/pdf',
+        'application/msword',
+        'text/plain',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      ],
     });
     if (result.canceled || !result.assets?.[0]) return;
 
@@ -68,19 +71,7 @@ export default function NewMissionTab() {
       <ValidationBanner compact />
 
       <Text style={styles.label}>Type de demande</Text>
-      <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.typeScroll}>
-        {MISSION_TYPES.map((t) => (
-          <Pressable
-            key={t.id}
-            style={[styles.typeChip, type === t.id && styles.typeChipActive]}
-            onPress={() => setType(t.id)}
-          >
-            <Text style={[styles.typeChipText, type === t.id && styles.typeChipTextActive]}>
-              {t.label}
-            </Text>
-          </Pressable>
-        ))}
-      </ScrollView>
+      <MissionTypePickerMobile value={type} onChange={setType} />
 
       <Text style={styles.label}>Titre / référence</Text>
       <TextInput style={styles.input} value={title} onChangeText={setTitle} placeholder="Ex. CR n°12 — Résidence…" />
@@ -88,20 +79,13 @@ export default function NewMissionTab() {
       <Text style={styles.label}>Chantier (optionnel)</Text>
       <TextInput style={styles.input} value={chantier} onChangeText={setChantier} placeholder="Opération, lot…" />
 
-      {isCr && (
-        <>
-          <Text style={styles.label}>N° du CR</Text>
-          <TextInput style={styles.input} value={crNumber} onChangeText={setCrNumber} keyboardType="numeric" />
-          <Text style={styles.label}>CR précédent / points ouverts</Text>
-          <TextInput
-            style={[styles.input, styles.area]}
-            value={previousCr}
-            onChangeText={setPreviousCr}
-            multiline
-            numberOfLines={4}
-          />
-        </>
-      )}
+      {briefSchema ? (
+        <MissionGuidedBriefMobile
+          missionTypeId={type}
+          values={guidedValues}
+          onChange={(fieldId, value) => setGuidedValues((v) => ({ ...v, [fieldId]: value }))}
+        />
+      ) : null}
 
       <Pressable style={styles.secondaryBtn} onPress={() => void pickFile()} disabled={importing}>
         {importing ? (
@@ -110,6 +94,10 @@ export default function NewMissionTab() {
           <Text style={styles.secondaryBtnText}>Importer PDF ou Word</Text>
         )}
       </Pressable>
+
+      <Text style={styles.hint}>
+        Dictée vocale : disponible sur la version web BeWork (navigateur Chrome).
+      </Text>
 
       <Text style={styles.label}>Contenu de la demande</Text>
       <TextInput
@@ -123,7 +111,7 @@ export default function NewMissionTab() {
 
       <Pressable
         style={[styles.btn, loading && styles.btnDisabled]}
-        disabled={loading || !title.trim() || !brief.trim()}
+        disabled={loading || !title.trim() || !buildBrief()}
         onPress={async () => {
           if (!accessToken) return;
           setLoading(true);
@@ -151,6 +139,7 @@ const styles = StyleSheet.create({
   container: { flex: 1 },
   content: { padding: spacing.md, paddingBottom: 40 },
   label: { fontSize: 13, fontWeight: '600', color: colors.slate600, marginTop: spacing.md, marginBottom: 6 },
+  hint: { fontSize: 12, color: colors.slate500, marginTop: spacing.sm, fontStyle: 'italic' },
   input: {
     backgroundColor: colors.white,
     borderWidth: 1,
@@ -160,19 +149,6 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   area: { minHeight: 120, textAlignVertical: 'top' },
-  typeScroll: { marginBottom: 4 },
-  typeChip: {
-    marginRight: 8,
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-    borderRadius: 20,
-    backgroundColor: colors.white,
-    borderWidth: 1,
-    borderColor: '#E2E8F0',
-  },
-  typeChipActive: { backgroundColor: colors.blueSoft, borderColor: colors.blue },
-  typeChipText: { fontSize: 12, color: colors.slate600 },
-  typeChipTextActive: { color: colors.blue, fontWeight: '600' },
   secondaryBtn: {
     marginTop: spacing.md,
     padding: 14,

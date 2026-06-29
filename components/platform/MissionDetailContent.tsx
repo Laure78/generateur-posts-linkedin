@@ -182,7 +182,7 @@ export function MissionDetailContent({
         canEdit={isChef || isOwner}
       />
 
-      <MissionValidationChecklist />
+      <MissionValidationChecklist missionTypeId={mission.type} />
 
       {skill?.integrated && skill.toolPath && (
         <Link href={skill.toolPath} className="bework-btn-primary mt-6 inline-flex">

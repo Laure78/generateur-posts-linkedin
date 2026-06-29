@@ -1,15 +1,18 @@
 'use client';
 
+import { useMemo, useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { BookOpen, LayoutDashboard, PlusCircle, ExternalLink, Shield } from 'lucide-react';
+import { BookOpen, LayoutDashboard, PlusCircle, ExternalLink, Shield, Search } from 'lucide-react';
 import { BEWORK } from '@/lib/bework/config';
 import { getMissionIcon } from '@/lib/bework/mission-icons';
 import { BeWorkLogo } from '@/components/brand/BeWorkLogo';
 import { getSidebarAssistantGroups } from '@/lib/skills/sidebar-nav';
 import { LogoutButton } from '@/components/platform/LogoutButton';
 
-const ASSISTANT_GROUPS = getSidebarAssistantGroups();
+function normalizeSidebarQuery(q: string): string {
+  return q.toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu, '');
+}
 
 function isAssistantActive(
   pathname: string,
@@ -46,6 +49,23 @@ export function PlatformSidebar({ showAdminLink = false }: PlatformSidebarProps)
   const router = useRouter();
   const searchParams = useSearchParams();
   const typeParam = searchParams.get('type');
+  const [sidebarQuery, setSidebarQuery] = useState('');
+
+  const assistantGroups = useMemo(() => {
+    const groups = getSidebarAssistantGroups();
+    const q = normalizeSidebarQuery(sidebarQuery.trim());
+    if (!q) return groups;
+    return groups
+      .map((g) => ({
+        ...g,
+        items: g.items.filter(
+          (item) =>
+            normalizeSidebarQuery(item.label).includes(q) ||
+            normalizeSidebarQuery(item.missionType).includes(q)
+        ),
+      }))
+      .filter((g) => g.items.length > 0);
+  }, [sidebarQuery]);
 
   const dashboardActive = pathname === '/plateforme';
   const adminActive = pathname.startsWith('/plateforme/admin');
@@ -129,7 +149,27 @@ export function PlatformSidebar({ showAdminLink = false }: PlatformSidebarProps)
             Assistants — demandes MOEX
           </p>
 
-          {ASSISTANT_GROUPS.map(({ category, items }) => (
+          <div className="relative mb-2 px-2">
+            <Search
+              size={14}
+              className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
+              aria-hidden
+            />
+            <input
+              type="search"
+              value={sidebarQuery}
+              onChange={(e) => setSidebarQuery(e.target.value)}
+              placeholder="Filtrer…"
+              className="w-full rounded-lg border border-slate-200 py-2 pl-8 pr-2 text-xs text-slate-700 placeholder:text-slate-400 focus:border-[var(--bework-blue)] focus:outline-none focus:ring-1 focus:ring-[var(--bework-blue)]/30"
+              aria-label="Filtrer les assistants"
+            />
+          </div>
+
+          {assistantGroups.length === 0 && sidebarQuery.trim() && (
+            <p className="px-3 py-2 text-xs text-slate-500">Aucun assistant pour cette recherche.</p>
+          )}
+
+          {assistantGroups.map(({ category, items }) => (
             <div key={category.id} className="mb-3">
               <p className="px-3 py-1 text-[0.65rem] font-medium uppercase tracking-wide text-slate-400">
                 {category.label}

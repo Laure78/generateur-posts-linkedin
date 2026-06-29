@@ -6,10 +6,13 @@ import { canAccessAdminPlatform } from '@/lib/bework/roles';
 import { DEV_BYPASS } from '@/lib/dev/config';
 import { PlusCircle, Clock, CheckCircle2, ChevronRight, BookOpen, Shield } from 'lucide-react';
 import { BEWORK } from '@/lib/bework/config';
-import { SkillActionGrid } from '@/components/platform/SkillActionGrid';
+import { SkillActionAccordion } from '@/components/platform/SkillActionAccordion';
 import { MissionIcon } from '@/lib/bework/mission-icons';
 import { MissionDashboardFilters } from '@/components/platform/MissionDashboardFilters';
 import { MobileAppBanner } from '@/components/platform/MobileAppBanner';
+import { QuickMissionLauncher } from '@/components/platform/QuickMissionLauncher';
+import { DashboardStatusBar } from '@/components/platform/DashboardStatusBar';
+import { QuickMissionShortcuts } from '@/components/platform/QuickMissionShortcuts';
 
 export default async function PlateformeDashboardPage({
   searchParams,
@@ -24,18 +27,31 @@ export default async function PlateformeDashboardPage({
   const limit = 20;
   const offset = (page - 1) * limit;
 
-  const missions = await fetchMissionsList({
-    viewerId: profile.id,
-    role: profile.role,
-    status: params.status,
-    type: params.type,
-    q: params.q,
-    limit: limit + 1,
-    offset,
-  });
+  const [missions, statsSource] = await Promise.all([
+    fetchMissionsList({
+      viewerId: profile.id,
+      role: profile.role,
+      status: params.status,
+      type: params.type,
+      q: params.q,
+      limit: limit + 1,
+      offset,
+    }),
+    fetchMissionsList({
+      viewerId: profile.id,
+      role: profile.role,
+      limit: 200,
+      offset: 0,
+    }),
+  ]);
 
   const hasMore = missions.length > limit;
   const rows = hasMore ? missions.slice(0, limit) : missions;
+
+  const enCours = statsSource.filter((m) => m.status === 'en_cours').length;
+  const aValider = statsSource.filter(
+    (m) => m.status === 'en_attente_validation' && !m.chef_validated_at
+  ).length;
 
   const statusLabel: Record<string, string> = {
     recue: 'Reçue',
@@ -91,34 +107,19 @@ export default async function PlateformeDashboardPage({
         </div>
       </header>
 
-      <SkillActionGrid />
+      <DashboardStatusBar
+        enCours={enCours}
+        aValider={aValider}
+        showAdmin={showAdmin}
+      />
 
-      <MobileAppBanner />
+      <div className="mt-6">
+        <QuickMissionLauncher />
+      </div>
+
+      <QuickMissionShortcuts className="mt-4" maxItems={5} />
 
       <section className="mt-8">
-        <Link
-          href="/plateforme/ressources"
-          className="bework-card flex flex-wrap items-center justify-between gap-4 p-5 transition-shadow hover:shadow-md"
-        >
-          <div className="flex items-start gap-4">
-            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[var(--bework-blue-soft)]">
-              <BookOpen className="text-[var(--bework-blue)]" size={22} aria-hidden />
-            </span>
-            <div>
-              <h2 className="font-display text-base font-semibold text-slate-900">
-                Ressources — guide d&apos;utilisation
-              </h2>
-              <p className="mt-1 max-w-xl text-sm text-slate-600">
-                Bonnes pratiques pour les assistants travaux : traiter les demandes MOEX et faire valider chaque
-                livrable par le chef d&apos;équipe.
-              </p>
-            </div>
-          </div>
-          <span className="text-sm font-semibold text-[var(--bework-blue)]">Lire le guide →</span>
-        </Link>
-      </section>
-
-      <section className="mt-10">
         <h2 className="font-display text-lg font-semibold text-slate-900">Demandes récentes</h2>
         <MissionDashboardFilters
           basePath="/plateforme"
@@ -130,6 +131,9 @@ export default async function PlateformeDashboardPage({
         {!rows.length ? (
           <div className="bework-card mt-4 p-12 text-center">
             <p className="text-slate-600">Aucune demande pour le moment.</p>
+            <p className="mt-2 text-sm text-slate-500">
+              Utilisez la recherche ci-dessus ou créez une demande en 2 clics.
+            </p>
             <Link href="/plateforme/demandes/nouvelle" className="bework-btn-primary mt-6 inline-flex">
               <PlusCircle size={18} />
               Déposer une demande
@@ -189,6 +193,34 @@ export default async function PlateformeDashboardPage({
           </>
         )}
       </section>
+
+      <SkillActionAccordion />
+
+      <MobileAppBanner />
+
+      <section className="mt-8">
+        <Link
+          href="/plateforme/ressources"
+          className="bework-card flex flex-wrap items-center justify-between gap-4 p-5 transition-shadow hover:shadow-md"
+        >
+          <div className="flex items-start gap-4">
+            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[var(--bework-blue-soft)]">
+              <BookOpen className="text-[var(--bework-blue)]" size={22} aria-hidden />
+            </span>
+            <div>
+              <h2 className="font-display text-base font-semibold text-slate-900">
+                Ressources — guide d&apos;utilisation
+              </h2>
+              <p className="mt-1 max-w-xl text-sm text-slate-600">
+                Bonnes pratiques pour les assistants travaux : traiter les demandes MOEX et faire valider chaque
+                livrable par le chef d&apos;équipe.
+              </p>
+            </div>
+          </div>
+          <span className="text-sm font-semibold text-[var(--bework-blue)]">Lire le guide →</span>
+        </Link>
+      </section>
+
     </div>
   );
 }

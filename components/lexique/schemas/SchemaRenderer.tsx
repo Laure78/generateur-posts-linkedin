@@ -1,0 +1,29 @@
+import type { ComponentType } from 'react';
+import type { SchemaId } from '@/data/parcours-btp';
+import { SchemaActeursChantier } from './SchemaActeursChantier';
+import { SchemaCompositionDce } from './SchemaCompositionDce';
+import { SchemaMarchePublic } from './SchemaMarchePublic';
+import { SchemaOrdresService } from './SchemaOrdresService';
+import { SchemaPrixMarche } from './SchemaPrixMarche';
+import { SchemaSecuriteChantier } from './SchemaSecuriteChantier';
+
+const SCHEMAS: Record<SchemaId, ComponentType> = {
+  'marche-public': SchemaMarchePublic,
+  'composition-dce': SchemaCompositionDce,
+  'acteurs-chantier': SchemaActeursChantier,
+  'prix-marche': SchemaPrixMarche,
+  'ordres-service': SchemaOrdresService,
+  'securite-chantier': SchemaSecuriteChantier,
+};
+
+export function SchemaRenderer({ id, titre }: { id: SchemaId; titre?: string }) {
+  const Component = SCHEMAS[id];
+  return (
+    <figure className="bework-card overflow-hidden p-4 sm:p-5" aria-label={titre ?? 'Schéma explicatif'}>
+      <Component />
+      {titre && (
+        <figcaption className="mt-3 text-center text-xs font-medium text-slate-500">{titre}</figcaption>
+      )}
+    </figure>
+  );
+}

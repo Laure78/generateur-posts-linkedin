@@ -23,6 +23,7 @@ import {
 } from '@/lib/api';
 import { STATUS_LABELS, getMissionTypeLabel } from '@/lib/mission-types';
 import { ValidationBanner } from '@/components/ValidationBanner';
+import { MissionValidationChecklistMobile } from '@/components/MissionValidationChecklistMobile';
 import { colors, spacing } from '@/lib/theme';
 
 export default function MissionDetailScreen() {
@@ -159,6 +160,10 @@ export default function MissionDetailScreen() {
           <Text style={styles.validatedText}>Livrable validé — prêt pour envoi client</Text>
         </View>
       )}
+
+      {mission.ai_result ? (
+        <MissionValidationChecklistMobile missionTypeId={mission.type} />
+      ) : null}
     </ScrollView>
   );
 }
