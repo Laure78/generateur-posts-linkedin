@@ -2,11 +2,12 @@ import type { Metadata } from 'next';
 import { LegalPageShell } from '@/components/legal/LegalPageShell';
 import { LEGAL, formatSiretDisplay } from '@/lib/bework/legal';
 import { BEWORK } from '@/lib/bework/config';
+import { NOINDEX_FOLLOW } from '@/lib/bework/seo';
 
 export const metadata: Metadata = {
   title: 'Mentions légales',
   description: 'Mentions légales du site et de la plateforme BeWork.',
-  robots: { index: true, follow: true },
+  ...NOINDEX_FOLLOW,
 };
 
 export default function MentionsLegalesPage() {

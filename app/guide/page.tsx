@@ -4,13 +4,15 @@ import { ArrowLeft } from 'lucide-react';
 import { BeWorkFooter } from '@/components/brand/BeWorkFooter';
 import { BeWorkLogo } from '@/components/brand/BeWorkLogo';
 import { PlatformGuideContent } from '@/components/platform/PlatformGuideContent';
+import { createAppPageMetadata } from '@/lib/bework/seo';
 
-export const metadata: Metadata = {
-  title: "Guide BeWork — assistants travaux & demandes MOEX",
+export const metadata: Metadata = createAppPageMetadata({
+  title: 'Guide BeWork — assistants travaux & demandes MOEX',
   description:
-    "Tutoriel pour les Beworkers : traiter les demandes MOEX externalisées, précautions et vérification obligatoire.",
-  robots: { index: true, follow: true },
-};
+    'Tutoriel pour les Beworkers : traiter les demandes MOEX externalisées, précautions et vérification obligatoire.',
+  path: '/guide',
+  index: false,
+});
 
 export default function GuidePublicPage() {
   return (

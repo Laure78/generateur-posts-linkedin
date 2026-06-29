@@ -2,13 +2,15 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowLeft, GraduationCap } from 'lucide-react';
 import { PlatformGuideContent } from '@/components/platform/PlatformGuideContent';
+import { createAppPageMetadata } from '@/lib/bework/seo';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createAppPageMetadata({
   title: 'Ressources — Guide assistants travaux',
   description:
     "Bon usage de l'outil interne BeWork pour traiter les demandes MOEX externalisées et vérifier les livrables IA.",
-  robots: { index: false, follow: false },
-};
+  path: '/plateforme/ressources',
+  index: false,
+});
 
 export default function PlateformeRessourcesPage() {
   return (

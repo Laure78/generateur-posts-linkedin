@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import { Suspense } from 'react';
 import { redirect } from 'next/navigation';
 import { BeWorkFooter } from '@/components/brand/BeWorkFooter';
@@ -5,6 +6,9 @@ import { InternalUseNotice } from '@/components/brand/InternalUseNotice';
 import { TeamLeaderValidationAlert } from '@/components/brand/TeamLeaderValidationAlert';
 import { PlatformSidebarGate } from '@/components/platform/PlatformSidebarGate';
 import { getAppUser } from '@/lib/auth/get-user';
+import { NOINDEX_FOLLOW } from '@/lib/bework/seo';
+
+export const metadata: Metadata = NOINDEX_FOLLOW;
 
 function SidebarFallback() {
   return (

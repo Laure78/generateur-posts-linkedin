@@ -6,7 +6,7 @@ Application d'apprentissage autonome : dictionnaire, flashcards et quiz sur le v
 
 | Fichier | Rôle |
 |---------|------|
-| `data/lexique-btp.ts` | Données typées (~130 termes, 21 familles) + helpers `normalize`, `filtrerTermes`, `melanger` |
+| `data/lexique-btp.ts` | Données typées (~110 termes, 22 familles) + helpers `normalize`, `filtrerTermes`, `melanger` |
 | `lib/lexique-favoris.ts` | Persistance des favoris (`localStorage`) |
 | `components/lexique/LexiqueApp.tsx` | Conteneur avec onglets et en-tête OFC |
 | `components/lexique/Dictionnaire.tsx` | Recherche, filtres, accordéon, favoris |

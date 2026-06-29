@@ -155,4 +155,191 @@ export const PARCOURS_BTP: ParcoursBtp[] = [
       },
     ],
   },
+  {
+    id: 're2020-batiment-neuf',
+    titre: 'Comprendre la RE2020',
+    description:
+      'La réglementation environnementale pour tous les bâtiments neufs — publics comme privés.',
+    duree: '5 min',
+    etapes: [
+      {
+        id: 're2020-quoi',
+        titre: '1. Qu\'est-ce que la RE2020 ?',
+        explication:
+          'Réglementation d\'État obligatoire pour concevoir et construire tout bâtiment neuf en France. Elle vise à diviser par trois l\'impact carbone du secteur : moins d\'énergie, confort d\'été sans clim, pollution des matériaux maîtrisée (ACV).',
+        astuce: 'Aucun permis de construire sans preuve de conformité RE2020.',
+        termesLies: ['re2020', 'fdes'],
+      },
+      {
+        id: 're2020-bbio-ic',
+        titre: '2. Bbio et Ic Construction',
+        explication:
+          'Le Bbio mesure l\'efficacité de l\'isolation (plus il est bas, mieux c\'est). L\'Ic Construction comptabilise le CO₂ des matériaux posés — chaque produit doit être justifié par sa FDES.',
+        termesLies: ['bbio', 'ic-construction', 'fdes'],
+      },
+      {
+        id: 're2020-dh-icenergie',
+        titre: '3. DH et Ic énergie',
+        explication:
+          'Le DH (Degrés-Heures) simule une canicule : trop d\'heures au-dessus de 26-28 °C = projet bloqué sans protections solaires. L\'Ic énergie compte le carbone des consommations sur 50 ans (chauffage, VMC, eau chaude…).',
+        termesLies: ['dh-re2020', 'ic-energie'],
+      },
+      {
+        id: 're2020-terrain',
+        titre: '4. Sur le chantier',
+        explication:
+          'Les entreprises doivent fournir les FDES des produits posés. Les essais VMC en fin de chantier (protocoles COPREC) sont directement liés aux exigences RE2020 de ventilation.',
+        termesLies: ['coprec', 'etudes-thermiques'],
+      },
+    ],
+  },
+  {
+    id: 'suivi-execution-chantier',
+    titre: 'Suivi & exécution de chantier',
+    description:
+      'De l\'installation du chantier à la facturation mensuelle et aux essais de fin.',
+    duree: '6 min',
+    etapes: [
+      {
+        id: 'suivi-install',
+        titre: '1. Installation du chantier',
+        explication:
+          'Avant la première pose : clôtures, affichage réglementaire, base-vie, raccordements provisoires, grue et bennes.',
+        termesLies: ['installation-chantier'],
+      },
+      {
+        id: 'suivi-cr',
+        titre: '2. Réunion de chantier hebdomadaire',
+        explication:
+          'Chaque semaine sur le terrain : on compare l\'avancement au Programme d\'Exécution et aux Plans EXE. L\'architecte rédige le CR (tâches, corrections, retards).',
+        termesLies: ['reunion-chantier', 'programme-execution', 'plans-exe'],
+      },
+      {
+        id: 'suivi-os-avenant',
+        titre: '3. OS modificatif et avenant',
+        explication:
+          'Un imprévu ou une modification en cours de chantier passe par un OS écrit, puis souvent un avenant si le prix change. Jamais sur simple accord oral.',
+        termesLies: ['os-modificatif', 'avenant'],
+      },
+      {
+        id: 'suivi-situation',
+        titre: '4. Situation de travaux mensuelle',
+        explication:
+          'Chaque fin de mois : vous facturez l\'avancement réel (% par poste). Le MOE valide avant paiement par le MOA.',
+        termesLies: ['situation-travaux', 'revision-prix'],
+      },
+      {
+        id: 'suivi-coprec',
+        titre: '5. Essais COPREC et bureau de contrôle',
+        explication:
+          'En fin de chantier, chaque lot technique remplit ses grilles d\'essais (plomberie, électricité, VMC…). Le bureau de contrôle les analyse et délivre le RFCT une fois tout levé.',
+        termesLies: ['coprec', 'bureau-controle', 'rfct'],
+      },
+    ],
+  },
+  {
+    id: 'marche-prive-promoteur',
+    titre: 'Marché privé promoteur',
+    description:
+      'VEFA, contrôle technique, prix fermes et livraison aux acquéreurs.',
+    duree: '5 min',
+    etapes: [
+      {
+        id: 'promo-demarrage',
+        titre: '1. Démarrer le chantier',
+        explication:
+          'Souvent une lettre de commande ou la signature du marché fixe la date de départ — parfois un simple e-mail du directeur de programmes, selon le contrat.',
+        termesLies: ['lettre-commande', 'os-demarrage'],
+      },
+      {
+        id: 'promo-controle',
+        titre: '2. Visa du bureau de contrôle',
+        explication:
+          'En VEFA, le promoteur craint les sinistres futurs. Vos plans EXE et notes de calcul doivent obtenir un avis favorable du contrôleur technique avant pose.',
+        termesLies: ['vefa', 'visa-bureau-controle', 'rict', 'robot'],
+      },
+      {
+        id: 'promo-prix',
+        titre: '3. Prix ferme et avenants',
+        explication:
+          '≈ 80 % des marchés promotion imposent un forfait non révisable. Tout imprévu payant exige un avenant signé par le Directeur de Programmes — pas un accord de chantier.',
+        termesLies: ['forfait-non-revisable', 'avenant'],
+      },
+      {
+        id: 'promo-paiement',
+        titre: '4. Garantie de paiement',
+        explication:
+          'Avant le premier coup de pioche : exigez la caution bancaire ou le crédit direct (art. 1799-1 du Code civil) qui vous protège si le promoteur fait faillite.',
+        termesLies: ['garantie-paiement'],
+      },
+      {
+        id: 'promo-livraison',
+        titre: '5. Pré-réception et livraison',
+        explication:
+          'Le promoteur chasse les réserves (pastilles) avant que les acquéreurs VEFA visitent leur logement. Objectif : livrer sans mauvaise surprise.',
+        termesLies: ['pre-reception', 'reserves', 'gpa'],
+      },
+    ],
+  },
+  {
+    id: 'sous-traitance-chantier',
+    titre: 'Gérer la sous-traitance',
+    description:
+      'Agrément, contrat, vigilance et sécurité avant d\'amener un sous-traitant.',
+    duree: '4 min',
+    etapes: [
+      {
+        id: 'st-agrement',
+        titre: '1. Agrément avant arrivée',
+        explication:
+          'Vous ne pouvez pas amener un sous-traitant sans autorisation écrite du promoteur ou de l\'acheteur (DC4 ou équivalent).',
+        termesLies: ['agrement-st', 'dc4'],
+      },
+      {
+        id: 'st-contrat',
+        titre: '2. Contrat et garantie de paiement',
+        explication:
+          'Signez un contrat de sous-traitance (prix, délais, assurances) et sécurisez son paiement : caution bancaire ou délégation de paiement.',
+        termesLies: ['contrat-soustraitance', 'garantie-paiement-st'],
+      },
+      {
+        id: 'st-vigilance',
+        titre: '3. Obligation de vigilance',
+        explication:
+          'Dès 5 000 € HT de contrat : tous les 6 mois, réclamez Kbis, URSSAF, fiscalité et liste des salariés étrangers si besoin.',
+        termesLies: ['vigilance-soustraitance'],
+      },
+      {
+        id: 'st-securite',
+        titre: '4. Sécurité sur le terrain',
+        explication:
+          'Avant le premier jour : PPSPS du sous-traitant transmis au SPS, et carte BTP contrôlée pour chaque ouvrier.',
+        termesLies: ['ppsps-soustraitant', 'carte-btp', 'csps'],
+      },
+    ],
+  },
+  {
+    id: 'plateforme-terrassement',
+    titre: 'Plateforme et compactage',
+    description:
+      'Comprendre les essais EV2 et les classes PF avant de bâtir.',
+    duree: '3 min',
+    etapes: [
+      {
+        id: 'terra-essais',
+        titre: '1. Essais à la plaque',
+        explication:
+          'Le laboratoire mesure EV1 et EV2 : leur ratio doit rester inférieur à 2,0 pour prouver un bon compactage.',
+        termesLies: ['essai-plaque', 'ev1-ev2'],
+      },
+      {
+        id: 'terra-pf',
+        titre: '2. Classes PF1 à PF4',
+        explication:
+          'PF1 (20-50 MPa) = sol trop mou pour dallage direct. PF2 = standard. PF3/PF4 = sols très résistants. Un PF1 impose traitement ou surépaisseur.',
+        astuce: 'Un sol dur mais mal compacté (ratio > 2) sera refusé même avec une bonne valeur EV2.',
+        termesLies: ['portance-pf', 'purge', 'gnt'],
+      },
+    ],
+  },
 ];

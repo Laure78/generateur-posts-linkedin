@@ -2,11 +2,12 @@ import type { Metadata } from 'next';
 import { LegalPageShell } from '@/components/legal/LegalPageShell';
 import { LEGAL } from '@/lib/bework/legal';
 import { BEWORK } from '@/lib/bework/config';
+import { NOINDEX_FOLLOW } from '@/lib/bework/seo';
 
 export const metadata: Metadata = {
   title: 'Conditions générales de vente',
   description: 'CGV BeWork — prestations, tarifs, paiement, rétractation, garanties.',
-  robots: { index: true, follow: true },
+  ...NOINDEX_FOLLOW,
 };
 
 export default function CgvPage() {

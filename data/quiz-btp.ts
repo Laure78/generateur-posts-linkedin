@@ -49,6 +49,35 @@ export const QUIZ_PRESETS_DEBUTANT: {
       'Environnement & déchets',
     ],
   },
+  {
+    id: 'moex-promoteur',
+    label: 'MOEX & promoteur',
+    description:
+      'RE2020, suivi chantier, marché privé, sous-traitance et plateforme (PF).',
+    familles: [
+      'Études & conception',
+      'Certifications',
+      'Environnement & déchets',
+      'Suivi de chantier',
+      'Marché privé (promoteur)',
+      'Sous-traitance',
+      'Terrassement & géotechnique',
+      'Réception & garanties',
+      'Acteurs & organisation',
+    ],
+  },
+  {
+    id: 're2020',
+    label: 'RE2020 & environnement',
+    description: 'Bbio, Ic Construction, DH, FDES et Ic énergie.',
+    familles: ['Certifications', 'Études & conception', 'Environnement & déchets'],
+  },
+  {
+    id: 'sous-traitance',
+    label: 'Sous-traitance',
+    description: 'Agrément, contrat, vigilance et sécurité sous-traitants.',
+    familles: ['Sous-traitance', 'Procédures & notation', 'Sécurité & prévention'],
+  },
 ];
 
 /** Aide contextuelle affichée avant le quiz, par famille */
@@ -125,8 +154,8 @@ export const QUIZ_FAMILLE_AIDE: Record<
     astuce: 'GPA = 1 an pour réparer les défauts après réception.',
   },
   'Études & conception': {
-    resume: 'BIM, calculs et indicateurs RE2020.',
-    astuce: 'BIM = maquette 3D partagée entre les logiciels.',
+    resume: 'BIM, calculs et indicateurs RE2020 (Bbio, Ic, DH).',
+    astuce: 'BIM = maquette 3D partagée · FDES = preuve carbone des matériaux.',
   },
   'Suivi de chantier': {
     resume: 'Réunions, avenants, essais et installation de chantier.',
@@ -135,6 +164,10 @@ export const QUIZ_FAMILLE_AIDE: Record<
   'Marché privé (promoteur)': {
     resume: 'Spécificités des chantiers promoteurs (VEFA, garanties…).',
     astuce: 'Exigez la garantie de paiement avant de démarrer.',
+  },
+  'Sous-traitance': {
+    resume: 'Agrément, contrat, vigilance URSSAF et sécurité des sous-traitants.',
+    astuce: 'DC4 + contrat écrit + garantie de paiement ST avant le premier jour.',
   },
   'Divers techniques': {
     resume: 'PMR, contraintes locales et validations MOE.',

@@ -21,6 +21,7 @@ export type Famille =
   | "Études & conception"
   | "Suivi de chantier"
   | "Marché privé (promoteur)"
+  | "Sous-traitance"
   | "Divers techniques";
 
 export interface TermeLexique {
@@ -55,6 +56,7 @@ export const FAMILLES: Famille[] = [
   "Études & conception",
   "Suivi de chantier",
   "Marché privé (promoteur)",
+  "Sous-traitance",
   "Divers techniques",
 ];
 
@@ -507,7 +509,20 @@ export const LEXIQUE: TermeLexique[] = [
     terme: "Bureau de contrôle",
     famille: "Acteurs & organisation",
     definition:
-      "Organisme indépendant qui contrôle certains points techniques : solidité, sécurité incendie, accessibilité, acoustique, thermique…",
+      "Organisme indépendant (Socotec, Apave, Veritas…) qui contrôle certains points techniques : solidité, sécurité incendie, accessibilité, acoustique, thermique…",
+    aQuoiCaSert:
+      "En marché privé promoteur, ses avis conditionnent souvent la pose des matériaux : un « avis suspendu » bloque le chantier tant que les remarques ne sont pas levées.",
+  },
+  {
+    id: "visa-bureau-controle",
+    terme: "Visa du bureau de contrôle",
+    famille: "Acteurs & organisation",
+    definition:
+      "Avis formel du contrôleur technique sur vos plans d'exécution, notes de calcul ou documents de synthèse.",
+    aQuoiCaSert:
+      "Sur un chantier promoteur (VEFA), les plans EXE et calculs (ex. Robot) doivent obtenir un avis « Favorable » avant pose. Tant qu'une remarque subsiste, le promoteur peut refuser le démarrage du lot concerné.",
+    vigilance:
+      "Ne commandez pas de matériaux ni ne lancez la pose sans visa favorable sur les pièces exigées au RICT.",
   },
   {
     id: "rict",
@@ -745,7 +760,11 @@ export const LEXIQUE: TermeLexique[] = [
     sigle: "Fiche de Déclaration Environnementale et Sanitaire",
     famille: "Environnement & déchets",
     definition:
-      "La carte d'identité écologique d'un matériau : son impact sur tout son cycle de vie (fabrication, transport, pose, usage, recyclage). Utile pour la RE2020.",
+      "Document officiel standardisé (généralement édité par le fabricant) qui détaille l'impact environnemental et sanitaire exact d'un matériau sur tout son cycle de vie.",
+    aQuoiCaSert:
+      "Preuve de la faible empreinte carbone d'un produit : le bureau d'études thermiques collecte les FDES pour alimenter le logiciel de calcul et valider l'indicateur Ic Construction de la RE2020.",
+    exemple:
+      "Béton bas-carbone, laine de bois, chanvre : chaque produit posé doit pouvoir être justifié par sa FDES.",
   },
   {
     id: "rfar",
@@ -819,7 +838,11 @@ export const LEXIQUE: TermeLexique[] = [
     sigle: "Réglementation Environnementale 2020",
     famille: "Certifications",
     definition:
-      "Réglementation obligatoire pour tous les bâtiments neufs (remplace la RT2012). Vise 3 objectifs : consommer peu d'énergie, garantir le confort d'été, réduire l'empreinte carbone (Analyse du Cycle de Vie).",
+      "Réglementation d'État obligatoire pour la conception et la construction de tous les bâtiments neufs en France (hors petites extensions). Elle s'applique sans distinction aux marchés publics et aux marchés privés.",
+    aQuoiCaSert:
+      "Fixer les standards pour diviser par trois l'impact carbone du bâtiment : limiter la consommation d'énergie, garantir le confort d'été sans climatisation, et réduire la pollution liée aux matériaux (Analyse du Cycle de Vie — ACV).",
+    vigilance:
+      "Aucun permis de construire ne peut être accordé sans preuve du respect de la RE2020.",
   },
 
   // ── Sols & revêtements ──
@@ -939,8 +962,11 @@ export const LEXIQUE: TermeLexique[] = [
     terme: "Classes de Portance (PF1 à PF4)",
     famille: "Terrassement & géotechnique",
     definition:
-      "Solidité de la plateforme selon la valeur EV2 (NF P 11-300) : PF1 médiocre (20-50 MPa, interdit pour dallage), PF2 correct (50-80, standard), PF3 bon (80-120), PF4 excellent (>120, autoroutes/TGV).",
-    vigilance: "Un PF1 oblige à traiter le sol (chaux/ciment) avant de bâtir.",
+      "Classification de la solidité de la plateforme selon la valeur EV2 (norme NF P 11-300 / GTR) : PF1 médiocre (20-50 MPa), PF2 correct (50-80 MPa, standard parkings et dallages), PF3 bon (80-120 MPa, trafic lourd), PF4 excellent (>120 MPa, autoroutes ou TGV).",
+    aQuoiCaSert:
+      "Le laboratoire terrassement qualifie le sol avant coulage : un PF1 interdit le dallage direct — il faut traiter le sol (chaux, ciment) ou surépaissir.",
+    vigilance:
+      "Quelle que soit la classe PF, le ratio EV2/EV1 doit rester < 2,0. Un sol dur mais mal compacté sera refusé.",
   },
 
   // ── Eurocodes & structure ──
@@ -1102,6 +1128,18 @@ export const LEXIQUE: TermeLexique[] = [
     definition:
       "Obligation légale de réparer gratuitement tous les défauts qui apparaissent pendant 1 an après la fin des travaux. Implique un SAV réactif (organisation, délais d'intervention).",
   },
+  {
+    id: "rfct",
+    terme: "RFCT",
+    sigle: "Rapport Final de Contrôle Technique",
+    famille: "Réception & garanties",
+    definition:
+      "Document final délivré par le bureau de contrôle une fois toutes les réserves techniques levées.",
+    aQuoiCaSert:
+      "Sans RFCT (et sans essais COPREC conformes), la réception et la livraison du bâtiment peuvent être bloquées.",
+    vigilance:
+      "Anticipez les demandes du contrôleur dès le RICT : les essais par lot doivent être fournis signés.",
+  },
 
   // ── Études & conception ──
   {
@@ -1120,18 +1158,48 @@ export const LEXIQUE: TermeLexique[] = [
       "Méthode de travail basée sur une maquette 3D intelligente partagée. Permet aux logiciels (ex : Revit → Robot) de communiquer sans tout redessiner. Gain de temps et moins d'erreurs.",
   },
   {
-    id: "indicateurs-re2020",
-    terme: "Bbio / Ic Construction / DH",
+    id: "bbio",
+    terme: "Bbio (Besoin Bioclimatique)",
     famille: "Études & conception",
     definition:
-      "Les 3 indicateurs RE2020 : Bbio (efficacité de l'isolation), Ic Construction (poids CO₂ des matériaux, validé via les FDES), DH/Degrés-Heures (confort d'été, simulation de canicule).",
+      "Indicateur RE2020 qui mesure l'efficacité de l'isolation et du bâtiment face aux besoins de chauffage et d'éclairage.",
+    aQuoiCaSert:
+      "Plus le Bbio est bas, moins le bâtiment consommera d'énergie. Il impose des isolants performants et une orientation intelligente par rapport au soleil.",
+    vigilance:
+      "Le bureau d'études thermiques doit valider la note de calcul Bbio avant dépôt du permis.",
+  },
+  {
+    id: "ic-construction",
+    terme: "Ic Construction (Indice Carbone construction)",
+    famille: "Études & conception",
+    definition:
+      "Indicateur RE2020 du poids CO₂ du chantier : chaque matériau posé est comptabilisé dans l'empreinte carbone de la construction.",
+    aQuoiCaSert:
+      "Pousse l'industrie vers béton bas-carbone et matériaux biosourcés (bois, chanvre). Validé grâce aux FDES fournies par les entreprises et fabricants.",
+    vigilance:
+      "Sans FDES à jour pour les produits posés, le calcul Ic Construction peut être rejeté.",
+  },
+  {
+    id: "dh-re2020",
+    terme: "DH (Degrés-Heures)",
+    famille: "Études & conception",
+    definition:
+      "Compteur d'inconfort d'été de la RE2020 : le logiciel simule une canicule et compte les heures où le logement dépasse une température acceptable (souvent 26 à 28 °C).",
+    aQuoiCaSert:
+      "Garantir le confort estival sans climatisation généralisée.",
+    vigilance:
+      "Si le score DH est trop élevé, le projet est bloqué tant qu'on n'ajoute pas de protections solaires (volets, brise-soleil, casquettes).",
   },
   {
     id: "ic-energie",
-    terme: "Indicateur Ic énergie",
+    terme: "Ic énergie",
     famille: "Études & conception",
     definition:
-      "Indicateur RE2020 de l'empreinte carbone liée aux consommations d'énergie sur 50 ans (chauffage, refroidissement, éclairage, ventilation, eau chaude).",
+      "Indicateur RE2020 de l'empreinte carbone liée aux consommations d'énergie du bâtiment sur 50 ans (chauffage, refroidissement, éclairage, ventilation, eau chaude sanitaire).",
+    aQuoiCaSert:
+      "Éliminer progressivement les énergies les plus polluantes (ex. chauffage exclusif au gaz) au profit des énergies renouvelables et décarbonées.",
+    vigilance:
+      "Comme l'Ic Construction, la RE2020 impose un seuil maximal à ne pas dépasser.",
   },
 
   // ── Suivi de chantier ──
@@ -1140,14 +1208,20 @@ export const LEXIQUE: TermeLexique[] = [
     terme: "Installation de chantier",
     famille: "Suivi de chantier",
     definition:
-      "Le démarrage physique : sécurisation (clôtures, signalisation, affichage du permis) et logistique (base-vie, raccordements provisoires, arrivée de la grue et du matériel).",
+      "Phase de démarrage physique avant la première pose : sécurisation du terrain et mise en place de la logistique.",
+    aQuoiCaSert:
+      "Clôtures, panneaux réglementaires (permis, consignes sécurité), base-vie (vestiaires, réfectoire, sanitaires), raccordements provisoires eau/électricité, arrivée grue, bennes et échafaudages.",
   },
   {
     id: "reunion-chantier",
     terme: "Réunion de chantier (CR)",
     famille: "Suivi de chantier",
     definition:
-      "Rendez-vous hebdomadaire entre entreprise, architecte et parfois client. L'architecte rédige le Compte-Rendu (CR) : tâches de la semaine, corrections, retards.",
+      "Rendez-vous hebdomadaire sur le terrain entre l'entreprise, l'architecte (MOE) et parfois le client.",
+    aQuoiCaSert:
+      "Comparer la réalité du terrain au Programme d'Exécution et aux Plans EXE validés. L'architecte rédige le Compte-Rendu (CR) : tâches de la semaine suivante, corrections, retards.",
+    vigilance:
+      "Le CR fait foi chaque semaine — conservez vos copies et traitez les points ouverts avant la réunion suivante.",
   },
   {
     id: "avenant",
@@ -1155,15 +1229,24 @@ export const LEXIQUE: TermeLexique[] = [
     famille: "Suivi de chantier",
     definition:
       "Modification écrite du contrat (souvent un ajout d'argent) suite à un imprévu ou une demande du client en cours de chantier.",
+    aQuoiCaSert:
+      "Régularise un OS de travaux modificatifs quand le prix ou le périmètre change.",
+    vigilance:
+      "En marché privé promoteur : un accord verbal du conducteur de travaux ne vaut rien — l'avenant doit être signé par le Directeur de Programmes avant exécution.",
   },
   {
     id: "coprec",
     terme: "Essais COPREC",
+    sigle: "COmmission pour la PRévention des Effets de la Corrosion",
     famille: "Suivi de chantier",
     definition:
-      "Fiches d'essais et vérifications réalisées par les entreprises en fin de chantier (ventilation, chauffage, plomberie, électricité…) pour prouver que tout fonctionne.",
+      "Protocoles d'essais, vérifications et mesures réalisés par chaque entreprise de lot technique en fin de chantier (ventilation, chauffage, plomberie, électricité, désenfumage, acoustique…).",
+    aQuoiCaSert:
+      "Prouver que les équipements fonctionnent avant l'arrivée des utilisateurs. Chaque lot fait ses propres essais : pression réseaux plomberie, mise à la terre électricité, débits VMC (lié aux exigences RE2020), etc.",
     vigilance:
-      "À fournir signées au bureau de contrôle, sinon il ne lèvera pas ses réserves et bloquera la livraison (RFCT).",
+      "À fournir signés au bureau de contrôle. Sans ces rapports, il ne lèvera pas ses réserves et ne délivrera pas le RFCT — réception bloquée.",
+    exemple:
+      "Le contrôleur analyse vos grilles COPREC et vérifie par sondage sur site ; il ne refait pas tous les tests à votre place.",
   },
 
   // ── Marché privé (promoteur) ──
@@ -1208,17 +1291,57 @@ export const LEXIQUE: TermeLexique[] = [
   {
     id: "vigilance-soustraitance",
     terme: "Obligation de vigilance",
-    famille: "Marché privé (promoteur)",
+    famille: "Sous-traitance",
     definition:
-      "Dès qu'un contrat de sous-traitance dépasse 5 000 € HT, vous devez réclamer tous les 6 mois : Kbis, attestation de vigilance URSSAF, régularité fiscale et liste nominative des salariés étrangers.",
+      "Contrôle administratif obligatoire dès qu'un contrat de sous-traitance dépasse 5 000 € HT.",
+    aQuoiCaSert:
+      "Lutter contre le travail dissimulé : réclamer tous les 6 mois le Kbis, l'attestation de vigilance URSSAF, l'attestation de régularité fiscale et, le cas échéant, la liste nominative des salariés étrangers avec autorisations de travail.",
+    vigilance:
+      "En tant qu'entrepreneur principal, vous êtes responsable de la légalité de votre sous-traitant.",
   },
   {
     id: "agrement-st",
     terme: "Agrément du sous-traitant",
-    famille: "Marché privé (promoteur)",
+    famille: "Sous-traitance",
     definition:
-      "Autorisation écrite obligatoire avant d'amener un sous-traitant (DC4 ou équivalent privé).",
-    vigilance: "Faire travailler un sous-traitant non accepté est un délit (amende de 7 500 €).",
+      "Autorisation écrite du maître d'ouvrage (promoteur ou acheteur public) avant d'amener une autre entreprise sur le chantier.",
+    aQuoiCaSert:
+      "Formalise la demande via DC4 ou formulaire équivalent privé : identité du sous-traitant, nature des travaux, montant payé.",
+    vigilance:
+      "Faire travailler un sous-traitant non agréé est un délit passible d'une amende de 7 500 €.",
+  },
+  {
+    id: "contrat-soustraitance",
+    terme: "Contrat de sous-traitance",
+    famille: "Sous-traitance",
+    definition:
+      "Contrat de droit privé signé entre l'entreprise principale et le sous-traitant.",
+    aQuoiCaSert:
+      "Fixe le prix (souvent forfaitaire), les délais sous peine de pénalités, les assurances et les obligations de sécurité.",
+    vigilance:
+      "Sans contrat écrit, vous êtes exposé en cas de litige sur le paiement ou la qualité.",
+  },
+  {
+    id: "garantie-paiement-st",
+    terme: "Garantie de paiement sous-traitant",
+    famille: "Sous-traitance",
+    definition:
+      "Obligation légale (loi de 1975) de sécuriser le paiement de votre sous-traitant en marché privé.",
+    aQuoiCaSert:
+      "Vous devez lui fournir soit une caution bancaire (la banque garantit le paiement si vous faites faillite), soit une délégation de paiement (le promoteur le paie directement en déduisant votre facture).",
+    vigilance:
+      "À mettre en place avant le démarrage des travaux du sous-traitant.",
+  },
+  {
+    id: "ppsps-soustraitant",
+    terme: "PPSPS du sous-traitant",
+    famille: "Sous-traitance",
+    definition:
+      "Plan Particulier de Sécurité rédigé par le sous-traitant pour ses propres ouvriers.",
+    aQuoiCaSert:
+      "Détaille comment il protège ses équipes des risques du chantier. Doit être transmis au coordonnateur SPS avant l'arrivée sur site.",
+    vigilance:
+      "Contrôlez aussi la carte BTP de chaque salarié du sous-traitant à l'entrée du chantier.",
   },
 
   // ── Divers techniques ──

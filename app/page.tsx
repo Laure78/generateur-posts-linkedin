@@ -1,15 +1,30 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import { BEWORK } from '@/lib/bework/config';
+import { createAppPageMetadata, buildLandingSoftwareApplicationJsonLd, VITRINE_BEWORK_URL } from '@/lib/bework/seo';
 import { BeWorkLogo } from '@/components/brand/BeWorkLogo';
 import { BeWorkFooter } from '@/components/brand/BeWorkFooter';
 import { BeWorkProcessSteps } from '@/components/brand/BeWorkProcessSteps';
 import { InternalUseNotice } from '@/components/brand/InternalUseNotice';
-import { ArrowRight, GraduationCap, Shield, Zap, Users } from 'lucide-react';
+import { JsonLd } from '@/components/JsonLd';
+import { ArrowRight, ExternalLink, GraduationCap, Shield, Zap, Users } from 'lucide-react';
+
+const LANDING_TITLE = 'BeWork — Connexion plateforme assistants MOEX';
+const LANDING_DESCRIPTION =
+  "Accédez à l'espace BeWork : déposez vos demandes MOEX, suivez vos livrables et travaillez avec des assistants chantier augmentés par l'IA, supervisés depuis la France.";
+
+export const metadata: Metadata = createAppPageMetadata({
+  title: LANDING_TITLE,
+  description: LANDING_DESCRIPTION,
+  path: '/',
+  index: true,
+});
 
 export default function HomePage() {
   return (
     <div className="bework-blueprint-bg flex min-h-screen flex-col">
+      <JsonLd id="ld-software-application" schema={buildLandingSoftwareApplicationJsonLd()} />
       <header className="border-b border-slate-200/80 bg-white/90 backdrop-blur-sm">
         <div className="mx-auto flex h-[4.5rem] max-w-6xl items-center justify-between px-4 lg:px-6">
           <BeWorkLogo variant="header" href="/" showTagline={false} />
@@ -32,12 +47,13 @@ export default function HomePage() {
         <div>
           <p className="bework-kicker">Assistants travaux · BeWork</p>
           <h1 className="font-display mt-4 text-4xl font-bold leading-tight text-[var(--bework-navy)] md:text-5xl">
-            Outil interne pour traiter les demandes{' '}
-            <span className="bework-heading-accent">MOEX externalisées.</span>
+            Plateforme BeWork —{' '}
+            <span className="bework-heading-accent">accès assistants MOEX</span>
           </h1>
           <p className="mt-6 text-lg leading-relaxed text-slate-600">
-            {BEWORK.platformRoleLine} CR de chantier, analyses DCE, courriers MOA, PV de réception… Les assistants
-            travaux s&apos;appuient sur l&apos;IA, relisent et transmettent des livrables validés aux MOEX.
+            {BEWORK.platformRoleLine} CR de chantier, analyses DCE, courriers MOA, PV de réception… Connectez-vous
+            pour déposer une demande, suivre vos livrables et collaborer avec des assistants travaux augmentés par
+            l&apos;IA.
           </p>
           <InternalUseNotice variant="long" className="mt-6" />
           <div className="mt-8 flex flex-wrap gap-3">
@@ -49,7 +65,17 @@ export default function HomePage() {
               Se connecter
             </Link>
           </div>
-          <p className="mt-6 text-sm text-slate-500">{BEWORK.brandTagline}</p>
+          <p className="mt-6 text-sm text-slate-500">
+            {BEWORK.brandTagline} —{' '}
+            <a
+              href={VITRINE_BEWORK_URL}
+              className="inline-flex items-center gap-1 text-[var(--bework-blue)] underline-offset-2 hover:underline"
+              rel="noopener noreferrer"
+            >
+              Découvrir BeWork sur laureolivie.fr
+              <ExternalLink size={14} aria-hidden />
+            </a>
+          </p>
         </div>
 
         <div className="relative mt-10 lg:mt-0">

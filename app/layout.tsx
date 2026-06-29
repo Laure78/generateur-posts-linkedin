@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     template: '%s | BeWork MOEX',
   },
   description:
-    "Relais administratif pour la maîtrise d'œuvre d'exécution (MOEX). Assistants chantier, marchés et courriers augmentés par l'IA, supervisés depuis la France.",
+    "Connexion à la plateforme BeWork pour les assistants MOEX : dépôt de demandes, suivi des livrables et assistants chantier augmentés par l'IA, supervisés depuis la France.",
   metadataBase: new URL(getSiteUrl()),
   manifest: '/manifest.webmanifest',
   themeColor: '#2563EB',

@@ -1,11 +1,12 @@
 import type { Metadata } from 'next';
 import { LegalPageShell } from '@/components/legal/LegalPageShell';
 import { LEGAL } from '@/lib/bework/legal';
+import { NOINDEX_FOLLOW } from '@/lib/bework/seo';
 
 export const metadata: Metadata = {
   title: 'Politique cookies',
   description: 'Utilisation des cookies et traceurs sur BeWork.',
-  robots: { index: true, follow: true },
+  ...NOINDEX_FOLLOW,
 };
 
 export default function CookiesPage() {

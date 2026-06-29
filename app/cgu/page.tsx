@@ -2,11 +2,12 @@ import type { Metadata } from 'next';
 import { LegalPageShell } from '@/components/legal/LegalPageShell';
 import { LEGAL } from '@/lib/bework/legal';
 import { BEWORK } from '@/lib/bework/config';
+import { NOINDEX_FOLLOW } from '@/lib/bework/seo';
 
 export const metadata: Metadata = {
   title: "Conditions générales d'utilisation",
   description: "CGU de la plateforme BeWork — accès, compte, assistants IA, responsabilités.",
-  robots: { index: true, follow: true },
+  ...NOINDEX_FOLLOW,
 };
 
 export default function CguPage() {
