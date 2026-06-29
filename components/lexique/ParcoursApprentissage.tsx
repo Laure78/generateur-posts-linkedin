@@ -10,7 +10,7 @@ function TermeLien({ id }: { id: string }) {
   const terme = LEXIQUE.find((t) => t.id === id);
   if (!terme) return null;
   return (
-    <span className="inline-flex items-center rounded-md bg-[var(--bework-blue-soft)] px-2 py-0.5 text-xs font-medium text-[var(--bework-blue)]">
+    <span className="inline-flex items-center rounded-md bg-bework-blue-soft px-2 py-0.5 text-xs font-medium text-bework-blue">
       {terme.terme}
     </span>
   );
@@ -32,19 +32,19 @@ function ParcoursDetail({
       <button
         type="button"
         onClick={onRetour}
-        className="bework-btn-ghost -ml-2 text-sm text-[var(--bework-blue)]"
+        className="bework-btn-ghost -ml-2 text-sm text-bework-blue"
       >
         ← Tous les parcours
       </button>
 
       <div>
         <p className="bework-kicker">{parcours.duree} · {parcours.etapes.length} étapes</p>
-        <h2 className="font-display mt-1 text-xl font-bold text-[var(--bework-navy)]">{parcours.titre}</h2>
+        <h2 className="font-display mt-1 text-xl font-bold text-bework-navy">{parcours.titre}</h2>
       </div>
 
       <div className="h-1.5 overflow-hidden rounded-full bg-slate-200">
         <div
-          className="h-full rounded-full bg-[var(--bework-blue)] transition-all"
+          className="h-full rounded-full bg-bework-blue transition-all"
           style={{ width: `${((etapeIndex + 1) / parcours.etapes.length) * 100}%` }}
         />
       </div>
@@ -53,7 +53,7 @@ function ParcoursDetail({
       </p>
 
       <article className="bework-card-tech bework-card p-5 sm:p-6">
-        <h3 className="font-display text-lg font-bold text-[var(--bework-navy)]">{etape.titre}</h3>
+        <h3 className="font-display text-lg font-bold text-bework-navy">{etape.titre}</h3>
         <p className="mt-3 text-base leading-relaxed text-slate-600">{etape.explication}</p>
 
         {etape.astuce && (
@@ -125,8 +125,8 @@ export function ParcoursApprentissage() {
 
   return (
     <div className="space-y-5">
-      <div className="bework-card border-[var(--bework-blue-soft)] bg-[var(--bework-blue-soft)]/40 p-5">
-        <p className="font-display text-base font-semibold text-[var(--bework-navy)]">
+      <div className="bework-card border-bework-blue-soft bg-bework-blue-soft/40 p-5">
+        <p className="font-display text-base font-semibold text-bework-navy">
           Par où commencer ?
         </p>
         <p className="mt-2 text-sm leading-relaxed text-slate-600">
@@ -141,18 +141,18 @@ export function ParcoursApprentissage() {
             <button
               type="button"
               onClick={() => setSelection(parcours)}
-              className="bework-card-tech bework-card group w-full p-5 text-left transition-shadow hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--bework-blue)]"
+              className="bework-card-tech bework-card group w-full p-5 text-left transition-shadow hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bework-blue"
             >
               <div className="flex items-start justify-between gap-3">
                 <div>
                   <p className="bework-kicker">{parcours.duree}</p>
-                  <h3 className="font-display mt-1 text-base font-bold text-[var(--bework-navy)] group-hover:text-[var(--bework-blue)]">
+                  <h3 className="font-display mt-1 text-base font-bold text-bework-navy group-hover:text-bework-blue">
                     {parcours.titre}
                   </h3>
                   <p className="mt-1.5 text-sm text-slate-500">{parcours.description}</p>
                 </div>
                 <ChevronRight
-                  className="mt-1 h-5 w-5 shrink-0 text-slate-400 group-hover:text-[var(--bework-blue)]"
+                  className="mt-1 h-5 w-5 shrink-0 text-slate-400 group-hover:text-bework-blue"
                   aria-hidden
                 />
               </div>

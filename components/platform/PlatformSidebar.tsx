@@ -3,7 +3,7 @@
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { BookOpen, LayoutDashboard, PlusCircle, ExternalLink, Shield, Search } from 'lucide-react';
+import { BookOpen, GraduationCap, LayoutDashboard, PlusCircle, ExternalLink, Shield, Search } from 'lucide-react';
 import { BEWORK } from '@/lib/bework/config';
 import { getMissionIcon } from '@/lib/bework/mission-icons';
 import { BeWorkLogo } from '@/components/brand/BeWorkLogo';
@@ -70,6 +70,7 @@ export function PlatformSidebar({ showAdminLink = false }: PlatformSidebarProps)
   const dashboardActive = pathname === '/plateforme';
   const adminActive = pathname.startsWith('/plateforme/admin');
   const ressourcesActive = pathname.startsWith('/plateforme/ressources');
+  const lexiqueActive = pathname.startsWith('/lexique');
   const nouvellePath = '/plateforme/demandes/nouvelle';
 
   return (
@@ -124,6 +125,19 @@ export function PlatformSidebar({ showAdminLink = false }: PlatformSidebarProps)
         >
           <BookOpen size={18} strokeWidth={ressourcesActive ? 2.25 : 2} />
           Ressources
+        </Link>
+
+        <Link
+          href="/lexique"
+          onClick={(e) => navigateClick(e, router, '/lexique')}
+          className={`mb-2 flex shrink-0 items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
+            lexiqueActive
+              ? 'bg-[var(--bework-blue-soft)] text-[var(--bework-blue)]'
+              : 'text-slate-600 hover:bg-slate-50 hover:text-[var(--bework-navy)]'
+          }`}
+        >
+          <GraduationCap size={18} strokeWidth={lexiqueActive ? 2.25 : 2} />
+          Lexique BTP
         </Link>
 
         {showAdminLink && (

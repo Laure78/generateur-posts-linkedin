@@ -5,6 +5,7 @@ export type SchemaId =
   | 'acteurs-chantier'
   | 'prix-marche'
   | 'ordres-service'
+  | 'ordres-service-guide'
   | 'securite-chantier';
 
 export interface EtapeParcours {
@@ -117,10 +118,10 @@ export const PARCOURS_BTP: ParcoursBtp[] = [
         id: 'os',
         titre: 'L\'ordre de service, c\'est la loi',
         explication:
-          'Sans OS écrit, pas de travaux officiels. L\'OS n°1 lance le délai. Un OS modificatif autorise des travaux en plus, en attendant l\'avenant.',
+          'Sans OS écrit, pas de travaux officiels. Le schéma ci-dessous détaille les 3 types principaux : démarrage, suspension/reprise et travaux modificatifs.',
         astuce: 'Jamais de travaux supplémentaires sur simple demande orale — exigez un OS.',
-        termesLies: ['os', 'os-demarrage', 'os-modificatif', 'avenant'],
-        schema: 'ordres-service',
+        termesLies: ['os', 'os-demarrage', 'os-suspension', 'os-modificatif', 'droit-reserve', 'avenant'],
+        schema: 'ordres-service-guide',
       },
       {
         id: 'facturation',

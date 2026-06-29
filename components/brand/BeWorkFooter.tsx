@@ -52,6 +52,15 @@ export function BeWorkFooter({ className = '', compact = false }: BeWorkFooterPr
 
       <p className={compact ? 'mt-3' : 'mt-4'}>
         <Link
+          href="/lexique"
+          className="inline-flex items-center justify-center gap-1.5 font-semibold text-[var(--bework-blue)] hover:underline"
+        >
+          Lexique &amp; apprentissage BTP
+        </Link>
+        <span className="mx-2 text-slate-300" aria-hidden>
+          ·
+        </span>
+        <Link
           href="/guide"
           className="inline-flex items-center justify-center gap-1.5 font-semibold text-[var(--bework-blue)] hover:underline"
         >

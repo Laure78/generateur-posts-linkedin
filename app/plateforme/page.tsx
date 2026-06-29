@@ -4,7 +4,7 @@ import { fetchMissionsList } from '@/lib/missions/access';
 import { getMissionTypeLabel, isMoexPlatformMissionType } from '@/lib/bework/moex-platform';
 import { canAccessAdminPlatform } from '@/lib/bework/roles';
 import { DEV_BYPASS } from '@/lib/dev/config';
-import { PlusCircle, Clock, CheckCircle2, ChevronRight, BookOpen, Shield } from 'lucide-react';
+import { PlusCircle, Clock, CheckCircle2, ChevronRight, BookOpen, GraduationCap, Shield } from 'lucide-react';
 import { BEWORK } from '@/lib/bework/config';
 import { SkillActionAccordion } from '@/components/platform/SkillActionAccordion';
 import { MissionIcon } from '@/lib/bework/mission-icons';
@@ -198,10 +198,30 @@ export default async function PlateformeDashboardPage({
 
       <MobileAppBanner />
 
-      <section className="mt-8">
+      <section className="mt-8 grid gap-4 sm:grid-cols-2">
+        <Link
+          href="/lexique"
+          className="bework-card-tech bework-card flex flex-col justify-between gap-4 p-5 transition-shadow hover:shadow-md"
+        >
+          <div className="flex items-start gap-4">
+            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[var(--bework-blue-soft)]">
+              <GraduationCap className="text-[var(--bework-blue)]" size={22} aria-hidden />
+            </span>
+            <div>
+              <h2 className="font-display text-base font-semibold text-slate-900">
+                Lexique &amp; apprentissage BTP
+              </h2>
+              <p className="mt-1 text-sm text-slate-600">
+                Parcours guidés, schémas (OS, DCE…), dictionnaire, flashcards et quiz.
+              </p>
+            </div>
+          </div>
+          <span className="text-sm font-semibold text-[var(--bework-blue)]">Ouvrir l&apos;outil →</span>
+        </Link>
+
         <Link
           href="/plateforme/ressources"
-          className="bework-card flex flex-wrap items-center justify-between gap-4 p-5 transition-shadow hover:shadow-md"
+          className="bework-card flex flex-col justify-between gap-4 p-5 transition-shadow hover:shadow-md"
         >
           <div className="flex items-start gap-4">
             <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[var(--bework-blue-soft)]">
@@ -211,9 +231,8 @@ export default async function PlateformeDashboardPage({
               <h2 className="font-display text-base font-semibold text-slate-900">
                 Ressources — guide d&apos;utilisation
               </h2>
-              <p className="mt-1 max-w-xl text-sm text-slate-600">
-                Bonnes pratiques pour les assistants travaux : traiter les demandes MOEX et faire valider chaque
-                livrable par le chef d&apos;équipe.
+              <p className="mt-1 text-sm text-slate-600">
+                Bonnes pratiques MOEX : traiter les demandes et faire valider chaque livrable.
               </p>
             </div>
           </div>

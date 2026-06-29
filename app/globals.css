@@ -3,6 +3,13 @@
 @theme {
   --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Outfit", ui-sans-serif, system-ui, sans-serif;
+  --color-bework-blue: #2563eb;
+  --color-bework-blue-bright: #377cf3;
+  --color-bework-blue-dark: #1d4ed8;
+  --color-bework-blue-soft: #dbeafe;
+  --color-bework-navy: #0f172a;
+  --color-bework-charcoal: #1e293b;
+  --color-bework-surface: #f8fafc;
 }
 
 :root {

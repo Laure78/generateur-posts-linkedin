@@ -1,55 +1,173 @@
 'use client';
 
 import { useCallback, useMemo, useState } from 'react';
-import { LEXIQUE, melanger, type TermeLexique } from '@/data/lexique-btp';
-
-const NB_QUESTIONS = 10;
-
-type Question = {
-  terme: TermeLexique;
-  options: TermeLexique[];
-  bonneReponse: string;
-};
-
-function genererQuestions(): Question[] {
-  const pool = melanger([...LEXIQUE]);
-  const selection = pool.slice(0, Math.min(NB_QUESTIONS, pool.length));
-
-  return selection.map((terme) => {
-    const memeFamille = LEXIQUE.filter((t) => t.famille === terme.famille && t.id !== terme.id);
-    const autres =
-      memeFamille.length >= 3
-        ? melanger(memeFamille).slice(0, 3)
-        : melanger(LEXIQUE.filter((t) => t.id !== terme.id)).slice(0, 3);
-    return { terme, options: melanger([terme, ...autres]), bonneReponse: terme.id };
-  });
-}
+import { Lightbulb, RotateCcw } from 'lucide-react';
+import type { Famille } from '@/data/lexique-btp';
+import {
+  FAMILLES,
+  QUIZ_FAMILLE_AIDE,
+  QUIZ_PRESETS_DEBUTANT,
+  QUIZ_NB_QUESTIONS_CIBLE,
+  genererQuestionsQuiz,
+  libelleSelectionQuiz,
+  poolQuiz,
+  poolRestantQuiz,
+  type QuestionQuiz,
+} from '@/data/quiz-btp';
 
 function messageEncouragement(score: number, total: number): string {
   const ratio = score / total;
-  if (ratio >= 0.9) return 'Excellent, vous maîtrisez le vocabulaire !';
-  if (ratio >= 0.7) return 'Très bien, encore un petit effort.';
-  if (ratio >= 0.5) return 'Bon début — refaites une série ou passez par les parcours.';
-  return 'Pas de panique : les parcours guidés et les flashcards sont là pour ça.';
+  if (ratio >= 0.9) return 'Excellent, vous maîtrisez cette catégorie !';
+  if (ratio >= 0.7) return 'Très bien — refaites une série pour ancrer les derniers termes.';
+  if (ratio >= 0.5) return 'Bon début : relisez les explications puis retentez la même catégorie.';
+  return 'Pas de panique : ouvrez le parcours guidé ou les flashcards sur cette thématique.';
 }
 
+function ExplicationBonneReponse({
+  terme,
+  correct,
+}: {
+  terme: QuestionQuiz['terme'];
+  correct: boolean;
+}) {
+  return (
+    <div
+      className={`rounded-xl border px-4 py-4 sm:px-5 ${
+        correct
+          ? 'border-emerald-200 bg-emerald-50'
+          : 'border-bework-blue/30 bg-bework-blue-soft/50'
+      }`}
+    >
+      <p
+        className={`text-sm font-semibold ${correct ? 'text-emerald-800' : 'text-bework-blue'}`}
+      >
+        {correct ? '✓ Bonne réponse — pour mémoire :' : 'Explication de la bonne réponse :'}
+      </p>
+      <p className="font-display mt-2 text-base font-bold text-bework-navy">
+        {terme.terme}
+        {terme.sigle ? (
+          <span className="ml-2 text-sm font-normal text-slate-500">({terme.sigle})</span>
+        ) : null}
+      </p>
+      <span className="mt-2 inline-block rounded-full bg-white/80 px-2.5 py-0.5 text-xs font-medium text-slate-500">
+        {terme.famille}
+      </span>
+      <p className="mt-3 text-sm leading-relaxed text-slate-700">{terme.definition}</p>
+      {terme.aQuoiCaSert && (
+        <p className="mt-2 text-sm text-slate-600">
+          <span className="font-medium text-bework-navy">À quoi ça sert : </span>
+          {terme.aQuoiCaSert}
+        </p>
+      )}
+      {terme.exemple && (
+        <p className="mt-2 text-sm text-slate-600">
+          <span className="font-medium text-bework-navy">Exemple : </span>
+          {terme.exemple}
+        </p>
+      )}
+      {terme.vigilance && (
+        <p className="mt-2 rounded-lg bg-white/80 px-3 py-2 text-sm text-amber-900">
+          <span className="font-semibold">Vigilance : </span>
+          {terme.vigilance}
+        </p>
+      )}
+    </div>
+  );
+}
+
+function chipClass(actif: boolean) {
+  return actif
+    ? 'bg-bework-blue text-white'
+    : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50';
+}
+
+type Phase = 'config' | 'jeu' | 'resultat';
+
 export function Quiz() {
-  const [questions, setQuestions] = useState<Question[]>(() => genererQuestions());
+  const [phase, setPhase] = useState<Phase>('config');
+  const [famillesSelection, setFamillesSelection] = useState<Famille[]>([]);
+  const [presetActif, setPresetActif] = useState<string | null>(null);
+  const [questions, setQuestions] = useState<QuestionQuiz[]>([]);
   const [index, setIndex] = useState(0);
   const [choix, setChoix] = useState<string | null>(null);
   const [score, setScore] = useState(0);
-  const [termine, setTermine] = useState(false);
+  const [indiceVisible, setIndiceVisible] = useState(false);
+  const [termesVusSession, setTermesVusSession] = useState<Set<string>>(() => new Set());
 
-  const question = questions[index];
-  const total = questions.length;
+  const famillesActives = famillesSelection.length > 0 ? famillesSelection : null;
+  const pool = useMemo(() => poolQuiz(famillesActives), [famillesActives]);
+  const poolRestant = useMemo(
+    () => poolRestantQuiz(pool, termesVusSession),
+    [pool, termesVusSession],
+  );
+  const poolInsuffisant = poolRestant.length < 4;
+  const sessionEpuisee = pool.length >= 4 && poolRestant.length < 4;
+  const nbQuestionsSerie = Math.min(QUIZ_NB_QUESTIONS_CIBLE, poolRestant.length);
 
-  const recommencer = useCallback(() => {
-    setQuestions(genererQuestions());
+  const aidesFamilles = useMemo(() => {
+    if (famillesActives?.length === 1) {
+      return [QUIZ_FAMILLE_AIDE[famillesActives[0]]];
+    }
+    if (presetActif) {
+      const preset = QUIZ_PRESETS_DEBUTANT.find((p) => p.id === presetActif);
+      return preset?.familles.map((f) => QUIZ_FAMILLE_AIDE[f]) ?? [];
+    }
+    return [];
+  }, [famillesActives, presetActif]);
+
+  const demarrer = useCallback(() => {
+    const serie = genererQuestionsQuiz(pool, QUIZ_NB_QUESTIONS_CIBLE, termesVusSession);
+    if (serie.length === 0) return;
+    setTermesVusSession((prev) => {
+      const next = new Set(prev);
+      for (const q of serie) next.add(q.terme.id);
+      return next;
+    });
+    setQuestions(serie);
     setIndex(0);
     setChoix(null);
     setScore(0);
-    setTermine(false);
+    setIndiceVisible(false);
+    setPhase('jeu');
+  }, [pool, termesVusSession]);
+
+  const nouvelleSession = useCallback(() => {
+    setTermesVusSession(new Set());
   }, []);
+
+  const retourConfig = useCallback(() => {
+    setPhase('config');
+    setQuestions([]);
+    setIndex(0);
+    setChoix(null);
+    setScore(0);
+    setIndiceVisible(false);
+  }, []);
+
+  const recommencer = useCallback(() => {
+    demarrer();
+  }, [demarrer]);
+
+  const toggleFamille = (famille: Famille | 'toutes') => {
+    setPresetActif(null);
+    if (famille === 'toutes') {
+      setFamillesSelection([]);
+      return;
+    }
+    setFamillesSelection((prev) =>
+      prev.includes(famille) ? prev.filter((f) => f !== famille) : [...prev, famille],
+    );
+  };
+
+  const appliquerPreset = (id: string) => {
+    const preset = QUIZ_PRESETS_DEBUTANT.find((p) => p.id === id);
+    if (!preset) return;
+    setPresetActif(id);
+    setFamillesSelection(preset.familles);
+  };
+
+  const question = questions[index];
+  const total = questions.length;
 
   const valider = (optionId: string) => {
     if (choix !== null || !question) return;
@@ -59,11 +177,12 @@ export function Quiz() {
 
   const suivant = () => {
     if (index + 1 >= total) {
-      setTermine(true);
+      setPhase('resultat');
       return;
     }
     setIndex((i) => i + 1);
     setChoix(null);
+    setIndiceVisible(false);
   };
 
   const progression = useMemo(
@@ -71,17 +190,152 @@ export function Quiz() {
     [index, choix, total],
   );
 
-  if (termine) {
+  // ── Configuration ──
+  if (phase === 'config') {
+    return (
+      <div className="space-y-5">
+        <div className="bework-card border-bework-blue-soft bg-bework-blue-soft/40 p-5">
+          <p className="font-display text-base font-semibold text-bework-navy">
+            Quiz par catégorie — mode débutant
+          </p>
+          <p className="mt-2 text-sm leading-relaxed text-slate-600">
+            Choisissez une ou plusieurs thématiques. Les mauvaises réponses viennent surtout de la
+            même catégorie (plus réaliste). Un indice est disponible sur chaque question. Aucun
+            terme ne se répète pendant votre session.
+          </p>
+        </div>
+
+        <div>
+          <p className="mb-2 text-sm font-medium text-slate-500">Parcours recommandés</p>
+          <div className="grid gap-2 sm:grid-cols-2">
+            {QUIZ_PRESETS_DEBUTANT.map((preset) => (
+              <button
+                key={preset.id}
+                type="button"
+                onClick={() => appliquerPreset(preset.id)}
+                className={`rounded-xl border p-4 text-left transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-bework-blue ${
+                  presetActif === preset.id
+                    ? 'border-bework-blue bg-bework-blue-soft/50'
+                    : 'border-slate-200 bg-white hover:border-bework-blue/40'
+                }`}
+              >
+                <p className="font-semibold text-bework-navy">{preset.label}</p>
+                <p className="mt-1 text-xs text-slate-500">{preset.description}</p>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <p className="mb-2 text-sm font-medium text-slate-500">Ou choisissez une catégorie</p>
+          <div className="flex flex-wrap gap-2">
+            <button
+              type="button"
+              onClick={() => toggleFamille('toutes')}
+              className={`rounded-full px-3 py-1.5 text-xs font-semibold ${chipClass(famillesSelection.length === 0 && !presetActif)}`}
+            >
+              Toutes
+            </button>
+            {FAMILLES.map((famille) => (
+              <button
+                key={famille}
+                type="button"
+                onClick={() => toggleFamille(famille)}
+                className={`rounded-full px-3 py-1.5 text-xs font-semibold ${chipClass(famillesSelection.includes(famille))}`}
+              >
+                {famille}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {aidesFamilles.length > 0 && (
+          <div className="space-y-2">
+            {aidesFamilles.slice(0, 2).map((aide, i) => (
+              <div
+                key={i}
+                className="flex gap-2 rounded-xl border border-slate-200 bg-white p-3 text-sm text-slate-600"
+              >
+                <Lightbulb className="mt-0.5 h-4 w-4 shrink-0 text-bework-blue" aria-hidden />
+                <div>
+                  <p>{aide.resume}</p>
+                  <p className="mt-1 text-xs text-bework-blue">{aide.astuce}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        <p className="text-sm text-slate-500">
+          {poolRestant.length} terme{poolRestant.length !== 1 ? 's' : ''} restant
+          {poolRestant.length !== 1 ? 's' : ''} sur {pool.length} · série de {nbQuestionsSerie}{' '}
+          question{nbQuestionsSerie !== 1 ? 's' : ''}
+          {termesVusSession.size > 0 && (
+            <span className="text-bework-blue"> · {termesVusSession.size} déjà vu{termesVusSession.size !== 1 ? 's' : ''}</span>
+          )}
+        </p>
+
+        {sessionEpuisee ? (
+          <div className="space-y-3">
+            <p className="rounded-xl bg-amber-50 px-4 py-3 text-sm text-amber-900">
+              Vous avez vu tous les termes de cette sélection pendant cette session. Changez de
+              catégorie ou recommencez une nouvelle session.
+            </p>
+            <button type="button" onClick={nouvelleSession} className="bework-btn-secondary w-full">
+              Nouvelle session (tout réinitialiser)
+            </button>
+          </div>
+        ) : poolInsuffisant ? (
+          <p className="rounded-xl bg-amber-50 px-4 py-3 text-sm text-amber-900">
+            Il faut au moins 4 termes restants pour lancer un quiz. Élargissez la catégorie,
+            choisissez « Toutes », ou réinitialisez la session.
+          </p>
+        ) : (
+          <button type="button" onClick={demarrer} className="bework-btn-primary w-full">
+            Lancer le quiz — {libelleSelectionQuiz(famillesActives)}
+          </button>
+        )}
+
+        {termesVusSession.size > 0 && !sessionEpuisee && (
+          <button type="button" onClick={nouvelleSession} className="text-sm text-slate-500 hover:text-bework-blue">
+            Réinitialiser la session ({termesVusSession.size} terme{termesVusSession.size !== 1 ? 's' : ''} vu{termesVusSession.size !== 1 ? 's' : ''})
+          </button>
+        )}
+      </div>
+    );
+  }
+
+  // ── Résultat ──
+  if (phase === 'resultat') {
     return (
       <div className="bework-card px-6 py-10 text-center">
-        <p className="bework-kicker">Résultat</p>
-        <p className="font-display mt-2 text-4xl font-bold text-[var(--bework-navy)]">
+        <p className="bework-kicker">{libelleSelectionQuiz(famillesActives)}</p>
+        <p className="font-display mt-2 text-4xl font-bold text-bework-navy">
           {score} / {total}
         </p>
         <p className="mt-3 text-slate-500">{messageEncouragement(score, total)}</p>
-        <button type="button" onClick={recommencer} className="bework-btn-primary mt-8">
-          Recommencer
-        </button>
+        {poolRestant.length >= 4 ? (
+          <p className="mt-2 text-xs text-slate-400">
+            {poolRestant.length} nouveau{poolRestant.length !== 1 ? 'x' : ''} terme
+            {poolRestant.length !== 1 ? 's' : ''} disponible{poolRestant.length !== 1 ? 's' : ''} pour la
+            suite
+          </p>
+        ) : (
+          <p className="mt-2 text-xs text-amber-700">
+            Tous les termes de cette sélection ont été vus pendant cette session.
+          </p>
+        )}
+        <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
+          {poolRestant.length >= 4 && (
+            <button type="button" onClick={recommencer} className="bework-btn-primary">
+              <RotateCcw className="h-4 w-4" aria-hidden />
+              Série suivante
+            </button>
+          )}
+          <button type="button" onClick={retourConfig} className="bework-btn-secondary">
+            Changer de catégorie
+          </button>
+        </div>
       </div>
     );
   }
@@ -94,14 +348,19 @@ export function Quiz() {
 
   return (
     <div className="space-y-5">
-      <div className="flex items-center justify-between text-sm text-slate-500">
-        <span>Question {index + 1} / {total}</span>
+      <div className="flex flex-wrap items-center justify-between gap-2 text-sm text-slate-500">
+        <span>
+          Question {index + 1} / {total}
+        </span>
+        <span className="rounded-full bg-bework-blue-soft px-2.5 py-0.5 text-xs font-medium text-bework-blue">
+          {question.terme.famille}
+        </span>
         <span>Score : {score}</span>
       </div>
 
       <div className="h-1.5 overflow-hidden rounded-full bg-slate-200">
         <div
-          className="h-full rounded-full bg-[var(--bework-blue)] transition-all"
+          className="h-full rounded-full bg-bework-blue transition-all"
           style={{ width: `${progression}%` }}
         />
       </div>
@@ -111,6 +370,17 @@ export function Quiz() {
         <p className="mt-3 text-base leading-relaxed text-slate-700 sm:text-lg">
           {question.terme.definition}
         </p>
+        {!afficherFeedback && (
+          <button
+            type="button"
+            onClick={() => setIndiceVisible(true)}
+            disabled={indiceVisible}
+            className="mt-4 flex items-center gap-1.5 text-sm font-medium text-bework-blue hover:underline disabled:cursor-default disabled:no-underline disabled:opacity-70"
+          >
+            <Lightbulb className="h-4 w-4" aria-hidden />
+            {indiceVisible ? question.indice : 'Besoin d\'un indice ?'}
+          </button>
+        )}
       </div>
 
       <div className="grid gap-3" role="radiogroup" aria-label="Choix de réponse">
@@ -118,14 +388,14 @@ export function Quiz() {
           const estChoix = choix === opt.id;
           const estBonne = opt.id === question.bonneReponse;
           let classes =
-            'w-full rounded-xl border-2 px-4 py-3.5 text-left text-sm font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--bework-blue)] sm:text-base ';
+            'w-full rounded-xl border-2 px-4 py-3.5 text-left text-sm font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bework-blue sm:text-base ';
 
           if (!afficherFeedback) {
-            classes += 'bework-card border-slate-200 hover:border-[var(--bework-blue)]';
+            classes += 'bework-card border-slate-200 hover:border-bework-blue';
           } else if (estBonne) {
-            classes += 'border-emerald-500 bg-emerald-50 text-[var(--bework-navy)]';
+            classes += 'border-emerald-500 bg-emerald-50 text-bework-navy';
           } else if (estChoix && !estBonne) {
-            classes += 'border-amber-500 bg-amber-50 text-[var(--bework-navy)]';
+            classes += 'border-amber-500 bg-amber-50 text-bework-navy';
           } else {
             classes += 'border-transparent bg-slate-50 text-slate-400 opacity-70';
           }
@@ -140,9 +410,14 @@ export function Quiz() {
               onClick={() => valider(opt.id)}
               className={classes}
             >
-              {opt.terme}
+              <span>{opt.terme}</span>
+              {afficherFeedback && opt.sigle && (
+                <span className="mt-0.5 block text-xs font-normal text-slate-500">{opt.sigle}</span>
+              )}
               {afficherFeedback && estBonne && <span className="ml-2 text-emerald-600">✓</span>}
-              {afficherFeedback && estChoix && !estBonne && <span className="ml-2 text-amber-600">✗</span>}
+              {afficherFeedback && estChoix && !estBonne && (
+                <span className="ml-2 text-amber-600">✗</span>
+              )}
             </button>
           );
         })}
@@ -150,9 +425,15 @@ export function Quiz() {
 
       {afficherFeedback && choix !== question.bonneReponse && (
         <p className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900">
-          Bonne réponse : <strong>{question.terme.terme}</strong>
-          {question.terme.sigle ? ` (${question.terme.sigle})` : ''}
+          Ce n&apos;était pas le bon terme. Retenez celui-ci ↓
         </p>
+      )}
+
+      {afficherFeedback && (
+        <ExplicationBonneReponse
+          terme={question.terme}
+          correct={choix === question.bonneReponse}
+        />
       )}
 
       {afficherFeedback && (

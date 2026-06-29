@@ -13,7 +13,7 @@ import { basculerFavori, lireFavoris } from '@/lib/lexique-favoris';
 
 function chipClass(actif: boolean) {
   return actif
-    ? 'bg-[var(--bework-blue)] text-white'
+    ? 'bg-bework-blue text-white'
     : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50';
 }
 
@@ -40,14 +40,14 @@ function FicheTerme({
           onClick={onToggle}
           aria-expanded={ouvert}
           aria-controls={panelId}
-          className="flex min-h-[52px] flex-1 items-center gap-3 px-4 py-3 text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--bework-blue)]"
+          className="flex min-h-[52px] flex-1 items-center gap-3 px-4 py-3 text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bework-blue"
         >
           <ChevronDown
-            className={`h-5 w-5 shrink-0 text-[var(--bework-blue)] transition-transform ${ouvert ? 'rotate-180' : ''}`}
+            className={`h-5 w-5 shrink-0 text-bework-blue transition-transform ${ouvert ? 'rotate-180' : ''}`}
             aria-hidden
           />
           <div className="min-w-0 flex-1">
-            <p className="font-semibold text-[var(--bework-navy)]">{terme.terme}</p>
+            <p className="font-semibold text-bework-navy">{terme.terme}</p>
             {terme.sigle && <p className="truncate text-sm text-slate-500">{terme.sigle}</p>}
           </div>
           <span className="hidden shrink-0 rounded-full bg-slate-100 px-2.5 py-1 text-xs text-slate-500 sm:inline">
@@ -61,7 +61,7 @@ function FicheTerme({
             onFavori();
           }}
           aria-label={favori ? 'Retirer des favoris' : 'Ajouter aux favoris'}
-          className="flex w-12 shrink-0 items-center justify-center border-l border-slate-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--bework-blue)]"
+          className="flex w-12 shrink-0 items-center justify-center border-l border-slate-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-bework-blue"
         >
           <Star
             className={`h-5 w-5 ${favori ? 'fill-amber-400 text-amber-400' : 'text-slate-400'}`}
@@ -78,13 +78,13 @@ function FicheTerme({
           <p className="leading-relaxed text-slate-700">{terme.definition}</p>
           {terme.aQuoiCaSert && (
             <p className="mt-3 text-sm text-slate-600">
-              <span className="font-medium text-[var(--bework-navy)]">À quoi ça sert : </span>
+              <span className="font-medium text-bework-navy">À quoi ça sert : </span>
               {terme.aQuoiCaSert}
             </p>
           )}
           {terme.exemple && (
             <p className="mt-2 text-sm text-slate-600">
-              <span className="font-medium text-[var(--bework-navy)]">Exemple : </span>
+              <span className="font-medium text-bework-navy">Exemple : </span>
               {terme.exemple}
             </p>
           )}
@@ -150,7 +150,7 @@ export function Dictionnaire() {
           <button
             type="button"
             onClick={() => toggleFamille('toutes')}
-            className={`rounded-full px-3 py-1.5 text-xs font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--bework-blue)] ${chipClass(famillesSelection.length === 0)}`}
+            className={`rounded-full px-3 py-1.5 text-xs font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-bework-blue ${chipClass(famillesSelection.length === 0)}`}
           >
             Toutes
           </button>
@@ -159,7 +159,7 @@ export function Dictionnaire() {
               key={famille}
               type="button"
               onClick={() => toggleFamille(famille)}
-              className={`rounded-full px-3 py-1.5 text-xs font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--bework-blue)] ${chipClass(famillesSelection.includes(famille))}`}
+              className={`rounded-full px-3 py-1.5 text-xs font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-bework-blue ${chipClass(famillesSelection.includes(famille))}`}
             >
               {famille}
             </button>

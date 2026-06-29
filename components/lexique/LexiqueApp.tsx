@@ -34,7 +34,7 @@ export function LexiqueApp() {
           </div>
           <div className="mt-6 text-center sm:text-left">
             <p className="bework-kicker">Ressources pédagogiques</p>
-            <h1 className="font-display mt-1 text-2xl font-bold text-[var(--bework-navy)] sm:text-3xl">
+            <h1 className="font-display mt-1 text-2xl font-bold text-bework-navy sm:text-3xl">
               Lexique &amp; apprentissage BTP
             </h1>
             <p className="mt-2 max-w-xl text-base text-slate-500">
@@ -58,7 +58,7 @@ export function LexiqueApp() {
                 type="button"
                 onClick={() => setMode(id)}
                 aria-current={actif ? 'page' : undefined}
-                className={`flex shrink-0 items-center justify-center gap-1.5 rounded-xl px-3 py-2.5 text-sm font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--bework-blue)] sm:flex-1 sm:gap-2 ${
+                className={`flex shrink-0 items-center justify-center gap-1.5 rounded-xl px-3 py-2.5 text-sm font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bework-blue sm:flex-1 sm:gap-2 ${
                   actif ? 'bework-btn-primary shadow-none' : 'bework-btn-ghost bg-slate-100/80'
                 }`}
               >
@@ -81,7 +81,7 @@ export function LexiqueApp() {
         {BEWORK.name} · Assistants travaux augmentés par l&apos;IA ·{' '}
         <a
           href={BEWORK.url}
-          className="font-medium text-[var(--bework-blue)] hover:underline"
+          className="font-medium text-bework-blue hover:underline"
           target="_blank"
           rel="noopener noreferrer"
         >

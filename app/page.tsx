@@ -5,7 +5,7 @@ import { BeWorkLogo } from '@/components/brand/BeWorkLogo';
 import { BeWorkFooter } from '@/components/brand/BeWorkFooter';
 import { BeWorkProcessSteps } from '@/components/brand/BeWorkProcessSteps';
 import { InternalUseNotice } from '@/components/brand/InternalUseNotice';
-import { ArrowRight, Shield, Zap, Users } from 'lucide-react';
+import { ArrowRight, GraduationCap, Shield, Zap, Users } from 'lucide-react';
 
 export default function HomePage() {
   return (
@@ -14,6 +14,10 @@ export default function HomePage() {
         <div className="mx-auto flex h-[4.5rem] max-w-6xl items-center justify-between px-4 lg:px-6">
           <BeWorkLogo variant="header" href="/" showTagline={false} />
           <div className="flex items-center gap-3">
+            <Link href="/lexique" className="bework-btn-ghost hidden sm:inline-flex">
+              <GraduationCap size={18} aria-hidden />
+              Lexique BTP
+            </Link>
             <Link href="/auth/connexion" className="bework-btn-ghost hidden sm:inline-flex">
               Connexion
             </Link>
@@ -63,6 +67,35 @@ export default function HomePage() {
       </section>
 
       <BeWorkProcessSteps />
+
+      <section className="border-t border-slate-200/80 bg-[var(--bework-blue-soft)]/30 py-12 lg:py-16">
+        <div className="mx-auto max-w-6xl px-4 lg:px-6">
+          <Link
+            href="/lexique"
+            className="bework-card-tech bework-card group flex flex-col gap-6 p-6 transition-shadow hover:shadow-lg sm:flex-row sm:items-center sm:justify-between sm:p-8"
+          >
+            <div className="flex items-start gap-4 sm:items-center">
+              <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-[var(--bework-blue-soft)] ring-1 ring-[var(--bework-blue)]/15">
+                <GraduationCap className="text-[var(--bework-blue)]" size={28} aria-hidden />
+              </span>
+              <div>
+                <p className="bework-kicker">Ressource gratuite</p>
+                <h2 className="font-display mt-1 text-xl font-bold text-[var(--bework-navy)] sm:text-2xl">
+                  Lexique &amp; apprentissage BTP
+                </h2>
+                <p className="mt-2 max-w-2xl text-sm leading-relaxed text-slate-600 sm:text-base">
+                  Comprendre le vocabulaire des marchés publics et du chantier : parcours guidés avec schémas
+                  (OS, DCE, acteurs…), dictionnaire de 146 termes, flashcards et quiz.
+                </p>
+              </div>
+            </div>
+            <span className="bework-btn-primary shrink-0 self-start sm:self-center">
+              Ouvrir l&apos;outil
+              <ArrowRight size={18} className="transition-transform group-hover:translate-x-0.5" />
+            </span>
+          </Link>
+        </div>
+      </section>
 
       <section className="border-t border-slate-200/80 bg-white/60 py-16">
         <div className="mx-auto grid max-w-6xl gap-8 px-4 md:grid-cols-3 lg:px-6">

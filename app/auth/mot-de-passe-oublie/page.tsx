@@ -3,6 +3,11 @@
 import { useState } from 'react';
 import { useSupabaseReady } from '@/components/auth/use-supabase-ready';
 import { AuthShell, AuthFooterLink } from '@/components/brand/AuthShell';
+import { formatAuthFetchError, getAuthCallbackUrl } from '@/lib/auth/redirect';
+import { createClient, isSupabaseBrowserConfigured } from '@/lib/supabase/client';
+
+const SUCCESS_MESSAGE =
+  'Si un compte existe avec cet email, vous recevrez un lien pour réinitialiser votre mot de passe.';
 
 export default function MotDePasseOubliePage() {
   const supabaseReady = useSupabaseReady();
@@ -11,7 +16,7 @@ export default function MotDePasseOubliePage() {
   const [success, setSuccess] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const canSubmit = supabaseReady === true;
+  const canSubmit = supabaseReady === true && isSupabaseBrowserConfigured();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -19,24 +24,27 @@ export default function MotDePasseOubliePage() {
     setSuccess(null);
     setLoading(true);
 
-    try {
-      const res = await fetch('/api/auth/forgot-password', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
-      });
-      const data = (await res.json()) as { error?: string; message?: string };
+    const normalized = email.trim().toLowerCase();
+    if (!normalized) {
+      setError('Email requis');
+      setLoading(false);
+      return;
+    }
 
-      if (!res.ok) {
-        throw new Error(data.error || 'Envoi impossible');
+    try {
+      // Appel direct Supabase depuis le navigateur (évite les erreurs réseau serveur → Supabase)
+      const supabase = createClient();
+      const { error: resetError } = await supabase.auth.resetPasswordForEmail(normalized, {
+        redirectTo: getAuthCallbackUrl('/auth/nouveau-mot-de-passe'),
+      });
+
+      if (resetError) {
+        throw new Error(resetError.message);
       }
 
-      setSuccess(
-        data.message ||
-          'Si un compte existe avec cet email, vous recevrez un lien pour réinitialiser votre mot de passe.'
-      );
+      setSuccess(SUCCESS_MESSAGE);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Erreur');
+      setError(formatAuthFetchError(err));
     } finally {
       setLoading(false);
     }

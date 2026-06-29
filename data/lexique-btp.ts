@@ -394,7 +394,13 @@ export const LEXIQUE: TermeLexique[] = [
     terme: "Situation de travaux",
     famille: "Prix & facturation",
     definition:
-      "Facture provisoire envoyée chaque mois, basée sur le pourcentage d'avancement (« j'ai posé 40 %, je demande 40 % »). L'architecte valide avant paiement.",
+      "Facture provisoire mensuelle qui traduit l'avancement réel du chantier en euros : vous indiquez ce qui est fait (ex. 40 % du lot peinture) et vous demandez le paiement correspondant, avant la facture définitive de fin de travaux.",
+    aQuoiCaSert:
+      "Permet d'être payé au fil de l'eau pendant le chantier, sans attendre la réception. C'est le document que le MOE (souvent l'architecte) contrôle avant que le MOA déclenche le virement.",
+    exemple:
+      "En mars, vous avez posé 60 % des cloisons et 30 % de la peinture : la situation de mars détaille ces % par poste du BPU/DPGF, le MOE la valide, puis vous la déposez sur Chorus Pro (marché public).",
+    vigilance:
+      "Ne facturez que ce qui est réellement réalisé et vérifiable : une situation gonflée bloque la confiance et peut retarder le paiement. Conservez les justificatifs (photos, bons d'intervention, quantités).",
   },
   {
     id: "revision-prix",

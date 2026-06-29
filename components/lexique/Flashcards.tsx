@@ -19,7 +19,7 @@ function preparerPaquet(source: Source, favoris: string[]): TermeLexique[] {
 
 function chipClass(actif: boolean) {
   return actif
-    ? 'bg-[var(--bework-blue)] text-white'
+    ? 'bg-bework-blue text-white'
     : 'bg-white text-slate-600 border border-slate-200';
 }
 
@@ -127,7 +127,7 @@ export function Flashcards() {
 
       {termine ? (
         <div className="bework-card px-6 py-10 text-center">
-          <p className="font-display text-lg font-bold text-[var(--bework-navy)]">Paquet terminé !</p>
+          <p className="font-display text-lg font-bold text-bework-navy">Paquet terminé !</p>
           <p className="mt-2 text-slate-500">
             {stats.total} carte{stats.total !== 1 ? 's' : ''} révisée{stats.total !== 1 ? 's' : ''}
             {stats.revoir > 0 ? `, ${stats.revoir} à revoir` : ''}.
@@ -155,7 +155,7 @@ export function Flashcards() {
 
           <div className="h-1.5 overflow-hidden rounded-full bg-slate-200">
             <div
-              className="h-full rounded-full bg-[var(--bework-blue)] transition-all duration-300"
+              className="h-full rounded-full bg-bework-blue transition-all duration-300"
               style={{ width: `${(progression / total) * 100}%` }}
             />
           </div>
@@ -164,14 +164,14 @@ export function Flashcards() {
             type="button"
             onClick={() => setRetourne((r) => !r)}
             aria-label={retourne ? 'Voir le terme' : 'Voir la définition'}
-            className="relative mx-auto block min-h-[220px] w-full max-w-md perspective-[1000px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--bework-blue)]"
+            className="relative mx-auto block min-h-[220px] w-full max-w-md perspective-[1000px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-bework-blue"
           >
             <div
               className={`relative min-h-[220px] w-full transition-transform duration-500 [transform-style:preserve-3d] motion-reduce:transition-none ${
                 retourne ? '[transform:rotateY(180deg)]' : ''
               }`}
             >
-              <div className="absolute inset-0 flex flex-col items-center justify-center rounded-2xl bg-gradient-to-b from-[var(--bework-blue-bright)] to-[var(--bework-blue)] p-6 text-center text-white shadow-lg [backface-visibility:hidden]">
+              <div className="absolute inset-0 flex flex-col items-center justify-center rounded-2xl bg-gradient-to-b from-bework-blue-bright to-bework-blue p-6 text-center text-white shadow-lg [backface-visibility:hidden]">
                 <p className="bework-kicker text-white/80">Terme</p>
                 <p className="font-display mt-2 text-2xl font-bold">{carte?.terme}</p>
                 {carte?.sigle && <p className="mt-2 text-sm opacity-90">{carte.sigle}</p>}
