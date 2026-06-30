@@ -4,11 +4,17 @@ import { FAMILLES, LEXIQUE, melanger, type Famille, type TermeLexique } from './
 export const QUIZ_NB_QUESTIONS_CIBLE = 8;
 
 /** Presets thématiques pour débutants */
+export const QUIZ_PRESET_NON_SOUMIS_TOUTES_ID = 'non-soumis-toutes' as const;
+
 export const QUIZ_PRESETS_DEBUTANT: {
   id: string;
   label: string;
   description: string;
   familles: Famille[];
+  /** Sélectionne implicitement toutes les rubriques (familles vide). */
+  toutesRubriques?: boolean;
+  /** Exclut les termes déjà soumis (localStorage). */
+  nonSoumisSeulement?: boolean;
 }[] = [
   {
     id: 'essentiels',
@@ -77,6 +83,15 @@ export const QUIZ_PRESETS_DEBUTANT: {
     label: 'Sous-traitance',
     description: 'Agrément, contrat, vigilance et sécurité sous-traitants.',
     familles: ['Sous-traitance', 'Procédures & notation', 'Sécurité & prévention'],
+  },
+  {
+    id: 'non-soumis-toutes',
+    label: 'Termes non vus — toutes rubriques',
+    description:
+      'Questions jamais soumises, mélangées sur l\'ensemble du lexique (toutes les catégories).',
+    familles: [],
+    toutesRubriques: true,
+    nonSoumisSeulement: true,
   },
 ];
 
@@ -150,8 +165,8 @@ export const QUIZ_FAMILLE_AIDE: Record<
     astuce: 'CFO = fort · CFA = faible (télécoms, alarme…).',
   },
   'Réception & garanties': {
-    resume: 'Fin officielle des travaux et garanties légales.',
-    astuce: 'GPA = 1 an pour réparer les défauts après réception.',
+    resume: 'Fin officielle des travaux, garanties légales et dossiers de livraison (DOE, DIUO).',
+    astuce: 'DOE = ouvrage exécuté (CCAG) · DIUO = prévention des futurs intervenants (Code du travail).',
   },
   'Études & conception': {
     resume: 'BIM, calculs et indicateurs RE2020 (Bbio, Ic, DH).',
@@ -187,6 +202,14 @@ export type QuestionQuiz = {
 export function poolQuiz(familles: Famille[] | null): TermeLexique[] {
   if (!familles || familles.length === 0) return [...LEXIQUE];
   return LEXIQUE.filter((t) => familles.includes(t.famille));
+}
+
+/** Pool hors termes déjà soumis (réponses validées). */
+export function poolQuizNonSoumis(
+  familles: Famille[] | null,
+  soumis: ReadonlySet<string>,
+): TermeLexique[] {
+  return poolQuiz(familles).filter((t) => !soumis.has(t.id));
 }
 
 function indiceDebutant(terme: TermeLexique): string {

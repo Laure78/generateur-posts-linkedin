@@ -271,9 +271,15 @@ export const LEXIQUE: TermeLexique[] = [
     id: "diuo",
     terme: "DIUO",
     sigle: "Dossier d'Intervention Ultérieure sur l'Ouvrage",
-    famille: "Documents du marché",
+    famille: "Réception & garanties",
     definition:
-      "Document remis à la livraison : plans et fiches pour permettre aux futurs artisans d'intervenir en sécurité (entretien, réparation, maintenance).",
+      "Document de prévention défini par le Code du travail. Il facilite la sécurité des professionnels lors de leurs futures interventions sur l'ouvrage (entretien de façade, maintenance de toiture, etc.).",
+    aQuoiCaSert:
+      "Identifier les risques liés aux futures interventions sur le bâtiment ; fournir des solutions et des consignes pour protéger la santé des travailleurs.",
+    exemple:
+      "Plans et fiches remis à la livraison pour qu'une équipe de ravalement ou de maintenance CVC intervienne sans ignorer un risque (amiante, électricité, chutes…).",
+    vigilance:
+      "Public : futurs ouvriers et entreprises intervenant sur le site. Ne pas confondre avec le DOE : le DIUO vise la prévention des risques professionnels (Code du travail) ; le DOE sert à la maintenance, l'exploitation et l'assurance de l'ouvrage (CCAG Travaux en public). Les deux dossiers sont souvent transmis ensemble à la réception.",
   },
 
   // ── Préparation & exécution ──
@@ -530,9 +536,13 @@ export const LEXIQUE: TermeLexique[] = [
     sigle: "Rapport Initial de Contrôle Technique",
     famille: "Acteurs & organisation",
     definition:
-      "Rapport du bureau de contrôle (Socotec, Apave, Veritas…) listant les points à surveiller et les documents à fournir, rédigé avant les travaux.",
+      "Document établi par le bureau de contrôle agréé à la fin de la phase de conception, avant la signature des marchés de travaux. Il évalue si l'ouvrage pourra répondre aux exigences de solidité et de sécurité des personnes une fois achevé.",
+    aQuoiCaSert:
+      "Adressé au maître d'ouvrage (transmis à la MOE, et sur demande à l'assureur ou au pouvoir adjudicateur en public). Il synthétise les avis du contrôleur sur la qualité des documents de conception, la maîtrise des risques et l'assurabilité de l'ouvrage.",
+    exemple:
+      "Cinq avis possibles : Favorable (F) — risque maîtrisé ; Favorable sous réserve (FS) — réserves à lever ; Défavorable (D) — risque non maîtrisé, modifications exigées ; Suspendu (S) — description insuffisante, informations manquantes ; Sans objet (SO) — mission non concernée à ce stade.",
     vigilance:
-      "À lire avant de chiffrer : ses exigences techniques peuvent augmenter votre prix.",
+      "Désignez le bureau de contrôle en même temps que le MOE pour qu'il intervienne dès le début — une désignation tardive entraîne des réserves. À lire avant de chiffrer : ses exigences peuvent alourdir votre prix. Ne lancez pas la pose sans visa favorable sur les pièces exigées au RICT.",
   },
   {
     id: "csps",
@@ -1139,6 +1149,29 @@ export const LEXIQUE: TermeLexique[] = [
       "Sans RFCT (et sans essais COPREC conformes), la réception et la livraison du bâtiment peuvent être bloquées.",
     vigilance:
       "Anticipez les demandes du contrôleur dès le RICT : les essais par lot doivent être fournis signés.",
+  },
+  {
+    id: "doe",
+    terme: "DOE",
+    sigle: "Dossier des Ouvrages Exécutés",
+    famille: "Réception & garanties",
+    definition:
+      "Dossier remis à la réception ou à la livraison : il décrit les ouvrages tels qu'exécutés (plans, notices, fiches techniques) pour la suite de vie du bâtiment.",
+    aQuoiCaSert:
+      "Maintenance, exploitation, assurance et travaux modificatifs — public : maître d'ouvrage, techniciens de maintenance, assureurs.",
+    vigilance:
+      "Cadre principal : CCAG Travaux (marchés publics). Ne pas confondre avec le DIUO : le DOE documente l'ouvrage réalisé ; le DIUO prévient les risques pour les futurs intervenants (Code du travail).",
+  },
+  {
+    id: "plan-recollement",
+    terme: "Plan de recollement",
+    famille: "Réception & garanties",
+    definition:
+      "Document technique qui représente l'état exact des travaux réalisés à la fin du chantier. Contrairement au plan de projet initial (ce qui était prévu), il intègre toutes les modifications et ajustements effectués sur le terrain.",
+    aQuoiCaSert:
+      "Référence officielle pour l'exploitation et la maintenance du bâtiment ou de l'infrastructure — souvent intégré au DOE.",
+    vigilance:
+      "Ne pas confondre avec les Plans d'Exécution (EXE) : ceux-ci décrivent l'ouvrage avant pose ; le plan de recollement reflète l'ouvrage tel qu'il existe réellement après travaux.",
   },
 
   // ── Études & conception ──

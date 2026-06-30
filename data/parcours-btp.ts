@@ -198,7 +198,7 @@ export const PARCOURS_BTP: ParcoursBtp[] = [
     titre: 'Suivi & exécution de chantier',
     description:
       'De l\'installation du chantier à la facturation mensuelle et aux essais de fin.',
-    duree: '6 min',
+    duree: '7 min',
     etapes: [
       {
         id: 'suivi-install',
@@ -234,6 +234,13 @@ export const PARCOURS_BTP: ParcoursBtp[] = [
         explication:
           'En fin de chantier, chaque lot technique remplit ses grilles d\'essais (plomberie, électricité, VMC…). Le bureau de contrôle les analyse et délivre le RFCT une fois tout levé.',
         termesLies: ['coprec', 'bureau-controle', 'rfct'],
+      },
+      {
+        id: 'suivi-doe-diou',
+        titre: '6. DOE et DIUO à la réception',
+        explication:
+          'À la livraison, deux dossiers complémentaires : le DOE décrit l\'ouvrage exécuté (maintenance, assurance — CCAG en public) ; le DIUO prévient les risques pour les futurs intervenants (Code du travail).',
+        termesLies: ['doe', 'diuo', 'plan-recollement', 'reception'],
       },
     ],
   },

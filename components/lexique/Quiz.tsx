@@ -1,19 +1,26 @@
 'use client';
 
-import { useCallback, useMemo, useState } from 'react';
-import { Lightbulb, RotateCcw } from 'lucide-react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { Lightbulb, RotateCcw, Shuffle } from 'lucide-react';
 import type { Famille } from '@/data/lexique-btp';
 import {
   FAMILLES,
   QUIZ_FAMILLE_AIDE,
   QUIZ_PRESETS_DEBUTANT,
+  QUIZ_PRESET_NON_SOUMIS_TOUTES_ID,
   QUIZ_NB_QUESTIONS_CIBLE,
   genererQuestionsQuiz,
   libelleSelectionQuiz,
   poolQuiz,
+  poolQuizNonSoumis,
   poolRestantQuiz,
   type QuestionQuiz,
 } from '@/data/quiz-btp';
+import {
+  lireTermesSoumisQuiz,
+  marquerTermeSoumisQuiz,
+  reinitialiserTermesSoumisQuiz,
+} from '@/lib/lexique-quiz-progress';
 
 function messageEncouragement(score: number, total: number): string {
   const ratio = score / total;
@@ -93,12 +100,25 @@ export function Quiz() {
   const [score, setScore] = useState(0);
   const [indiceVisible, setIndiceVisible] = useState(false);
   const [termesVusSession, setTermesVusSession] = useState<Set<string>>(() => new Set());
+  const [termesSoumis, setTermesSoumis] = useState<Set<string>>(() => new Set());
+
+  useEffect(() => {
+    setTermesSoumis(lireTermesSoumisQuiz());
+  }, []);
 
   const famillesActives = famillesSelection.length > 0 ? famillesSelection : null;
   const pool = useMemo(() => poolQuiz(famillesActives), [famillesActives]);
+  const poolNonSoumisToutes = useMemo(
+    () => poolQuizNonSoumis(null, termesSoumis),
+    [termesSoumis],
+  );
+  const exclusEffectifs = useMemo(
+    () => new Set([...termesSoumis, ...termesVusSession]),
+    [termesSoumis, termesVusSession],
+  );
   const poolRestant = useMemo(
-    () => poolRestantQuiz(pool, termesVusSession),
-    [pool, termesVusSession],
+    () => poolRestantQuiz(pool, exclusEffectifs),
+    [pool, exclusEffectifs],
   );
   const poolInsuffisant = poolRestant.length < 4;
   const sessionEpuisee = pool.length >= 4 && poolRestant.length < 4;
@@ -115,23 +135,42 @@ export function Quiz() {
     return [];
   }, [famillesActives, presetActif]);
 
+  const demarrerSerie = useCallback(
+    (serie: QuestionQuiz[]) => {
+      if (serie.length === 0) return;
+      setQuestions(serie);
+      setIndex(0);
+      setChoix(null);
+      setScore(0);
+      setIndiceVisible(false);
+      setPhase('jeu');
+    },
+    [],
+  );
+
   const demarrer = useCallback(() => {
-    const serie = genererQuestionsQuiz(pool, QUIZ_NB_QUESTIONS_CIBLE, termesVusSession);
-    if (serie.length === 0) return;
-    setTermesVusSession((prev) => {
-      const next = new Set(prev);
-      for (const q of serie) next.add(q.terme.id);
-      return next;
-    });
-    setQuestions(serie);
-    setIndex(0);
-    setChoix(null);
-    setScore(0);
-    setIndiceVisible(false);
-    setPhase('jeu');
-  }, [pool, termesVusSession]);
+    const serie = genererQuestionsQuiz(pool, QUIZ_NB_QUESTIONS_CIBLE, exclusEffectifs);
+    demarrerSerie(serie);
+  }, [pool, exclusEffectifs, demarrerSerie]);
+
+  const demarrerNonSoumisToutesRubriques = useCallback(() => {
+    setPresetActif(QUIZ_PRESET_NON_SOUMIS_TOUTES_ID);
+    setFamillesSelection([]);
+    const serie = genererQuestionsQuiz(
+      poolQuizNonSoumis(null, termesSoumis),
+      QUIZ_NB_QUESTIONS_CIBLE,
+      termesVusSession,
+    );
+    demarrerSerie(serie);
+  }, [termesSoumis, termesVusSession, demarrerSerie]);
 
   const nouvelleSession = useCallback(() => {
+    setTermesVusSession(new Set());
+  }, []);
+
+  const reinitialiserProgression = useCallback(() => {
+    reinitialiserTermesSoumisQuiz();
+    setTermesSoumis(new Set());
     setTermesVusSession(new Set());
   }, []);
 
@@ -163,7 +202,7 @@ export function Quiz() {
     const preset = QUIZ_PRESETS_DEBUTANT.find((p) => p.id === id);
     if (!preset) return;
     setPresetActif(id);
-    setFamillesSelection(preset.familles);
+    setFamillesSelection(preset.toutesRubriques ? [] : preset.familles);
   };
 
   const question = questions[index];
@@ -173,6 +212,8 @@ export function Quiz() {
     if (choix !== null || !question) return;
     setChoix(optionId);
     if (optionId === question.bonneReponse) setScore((s) => s + 1);
+    setTermesSoumis(marquerTermeSoumisQuiz(question.terme.id));
+    setTermesVusSession((prev) => new Set(prev).add(question.terme.id));
   };
 
   const suivant = () => {
@@ -194,6 +235,31 @@ export function Quiz() {
   if (phase === 'config') {
     return (
       <div className="space-y-5">
+        <div className="bework-card border-emerald-200 bg-emerald-50/80 p-5">
+          <p className="font-display text-base font-semibold text-bework-navy">
+            Révision — termes non soumis
+          </p>
+          <p className="mt-2 text-sm leading-relaxed text-slate-600">
+            {poolNonSoumisToutes.length} question{poolNonSoumisToutes.length !== 1 ? 's' : ''}{' '}
+            jamais soumise{poolNonSoumisToutes.length !== 1 ? 's' : ''} sur {poolQuiz(null).length}{' '}
+            — toutes rubriques mélangées.
+          </p>
+          {poolNonSoumisToutes.length >= 4 ? (
+            <button
+              type="button"
+              onClick={demarrerNonSoumisToutesRubriques}
+              className="bework-btn-primary mt-4 w-full"
+            >
+              <Shuffle className="h-4 w-4" aria-hidden />
+              Lancer le quiz non vus (toutes rubriques)
+            </button>
+          ) : (
+            <p className="mt-3 text-sm text-amber-800">
+              Plus assez de termes non soumis. Réinitialisez la progression ou changez de catégorie.
+            </p>
+          )}
+        </div>
+
         <div className="bework-card border-bework-blue-soft bg-bework-blue-soft/40 p-5">
           <p className="font-display text-base font-semibold text-bework-navy">
             Quiz par catégorie — mode débutant
@@ -270,8 +336,17 @@ export function Quiz() {
           {poolRestant.length} terme{poolRestant.length !== 1 ? 's' : ''} restant
           {poolRestant.length !== 1 ? 's' : ''} sur {pool.length} · série de {nbQuestionsSerie}{' '}
           question{nbQuestionsSerie !== 1 ? 's' : ''}
+          {termesSoumis.size > 0 && (
+            <span className="text-bework-blue">
+              {' '}
+              · {termesSoumis.size} déjà soumis{termesSoumis.size !== 1 ? 's' : ''}
+            </span>
+          )}
           {termesVusSession.size > 0 && (
-            <span className="text-bework-blue"> · {termesVusSession.size} déjà vu{termesVusSession.size !== 1 ? 's' : ''}</span>
+            <span className="text-slate-400">
+              {' '}
+              · {termesVusSession.size} cette session
+            </span>
           )}
         </p>
 
@@ -296,9 +371,14 @@ export function Quiz() {
           </button>
         )}
 
-        {termesVusSession.size > 0 && !sessionEpuisee && (
-          <button type="button" onClick={nouvelleSession} className="text-sm text-slate-500 hover:text-bework-blue">
-            Réinitialiser la session ({termesVusSession.size} terme{termesVusSession.size !== 1 ? 's' : ''} vu{termesVusSession.size !== 1 ? 's' : ''})
+        {termesSoumis.size > 0 && (
+          <button
+            type="button"
+            onClick={reinitialiserProgression}
+            className="text-sm text-slate-500 hover:text-amber-700"
+          >
+            Réinitialiser toute la progression quiz ({termesSoumis.size} terme
+            {termesSoumis.size !== 1 ? 's' : ''} soumis)
           </button>
         )}
       </div>
@@ -326,6 +406,16 @@ export function Quiz() {
           </p>
         )}
         <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
+          {poolNonSoumisToutes.length >= 4 && (
+            <button
+              type="button"
+              onClick={demarrerNonSoumisToutesRubriques}
+              className="bework-btn-primary"
+            >
+              <Shuffle className="h-4 w-4" aria-hidden />
+              Suite — non vus (toutes rubriques)
+            </button>
+          )}
           {poolRestant.length >= 4 && (
             <button type="button" onClick={recommencer} className="bework-btn-primary">
               <RotateCcw className="h-4 w-4" aria-hidden />
