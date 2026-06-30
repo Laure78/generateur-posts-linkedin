@@ -100,6 +100,7 @@ export function Quiz() {
   const [score, setScore] = useState(0);
   const [indiceVisible, setIndiceVisible] = useState(false);
   const [termesVusSession, setTermesVusSession] = useState<Set<string>>(() => new Set());
+  const [famillesVuesSession, setFamillesVuesSession] = useState<Set<Famille>>(() => new Set());
   const [termesSoumis, setTermesSoumis] = useState<Set<string>>(() => new Set());
 
   useEffect(() => {
@@ -135,9 +136,27 @@ export function Quiz() {
     return [];
   }, [famillesActives, presetActif]);
 
+  const optionsGeneration = useMemo(
+    () => ({
+      exclus: exclusEffectifs,
+      famillesCouvertes: famillesVuesSession,
+    }),
+    [exclusEffectifs, famillesVuesSession],
+  );
+
   const demarrerSerie = useCallback(
     (serie: QuestionQuiz[]) => {
       if (serie.length === 0) return;
+      setTermesVusSession((prev) => {
+        const next = new Set(prev);
+        for (const q of serie) next.add(q.terme.id);
+        return next;
+      });
+      setFamillesVuesSession((prev) => {
+        const next = new Set(prev);
+        for (const q of serie) next.add(q.terme.famille);
+        return next;
+      });
       setQuestions(serie);
       setIndex(0);
       setChoix(null);
@@ -149,9 +168,9 @@ export function Quiz() {
   );
 
   const demarrer = useCallback(() => {
-    const serie = genererQuestionsQuiz(pool, QUIZ_NB_QUESTIONS_CIBLE, exclusEffectifs);
+    const serie = genererQuestionsQuiz(pool, QUIZ_NB_QUESTIONS_CIBLE, optionsGeneration);
     demarrerSerie(serie);
-  }, [pool, exclusEffectifs, demarrerSerie]);
+  }, [pool, optionsGeneration, demarrerSerie]);
 
   const demarrerNonSoumisToutesRubriques = useCallback(() => {
     setPresetActif(QUIZ_PRESET_NON_SOUMIS_TOUTES_ID);
@@ -159,19 +178,24 @@ export function Quiz() {
     const serie = genererQuestionsQuiz(
       poolQuizNonSoumis(null, termesSoumis),
       QUIZ_NB_QUESTIONS_CIBLE,
-      termesVusSession,
+      {
+        exclus: termesVusSession,
+        famillesCouvertes: famillesVuesSession,
+      },
     );
     demarrerSerie(serie);
-  }, [termesSoumis, termesVusSession, demarrerSerie]);
+  }, [termesSoumis, termesVusSession, famillesVuesSession, demarrerSerie]);
 
   const nouvelleSession = useCallback(() => {
     setTermesVusSession(new Set());
+    setFamillesVuesSession(new Set());
   }, []);
 
   const reinitialiserProgression = useCallback(() => {
     reinitialiserTermesSoumisQuiz();
     setTermesSoumis(new Set());
     setTermesVusSession(new Set());
+    setFamillesVuesSession(new Set());
   }, []);
 
   const retourConfig = useCallback(() => {
@@ -267,7 +291,8 @@ export function Quiz() {
           <p className="mt-2 text-sm leading-relaxed text-slate-600">
             Choisissez une ou plusieurs thématiques. Les mauvaises réponses viennent surtout de la
             même catégorie (plus réaliste). Un indice est disponible sur chaque question. Aucun
-            terme ne se répète pendant votre session.
+            terme ne se répète pendant votre session ; les thèmes sont répartis équitablement
+            (priorité aux rubriques pas encore vues).
           </p>
         </div>
 
@@ -346,6 +371,9 @@ export function Quiz() {
             <span className="text-slate-400">
               {' '}
               · {termesVusSession.size} cette session
+              {famillesVuesSession.size > 0 && (
+                <> · {famillesVuesSession.size} thème{famillesVuesSession.size !== 1 ? 's' : ''}</>
+              )}
             </span>
           )}
         </p>

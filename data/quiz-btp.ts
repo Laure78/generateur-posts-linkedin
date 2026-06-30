@@ -237,17 +237,94 @@ function choisirDistracteurs(terme: TermeLexique, pool: TermeLexique[]): TermeLe
   return melanger([...memeFamille.slice(0, 3), ...extra]).slice(0, 3);
 }
 
-/** Génère une série de questions adaptée au pool (min. 4 termes), sans répéter les exclus */
+function famillesDansPool(pool: TermeLexique[]): Famille[] {
+  return [...new Set(pool.map((t) => t.famille))];
+}
+
+/**
+ * Sélection équilibrée : une question par famille en priorité (thèmes non encore vus
+ * dans la session d'abord), puis complément aléatoire.
+ */
+function selectionEquilibreeThemes(
+  disponibles: TermeLexique[],
+  nb: number,
+  famillesCouvertes: ReadonlySet<Famille> = new Set(),
+): TermeLexique[] {
+  if (disponibles.length <= nb) return melanger([...disponibles]);
+
+  const parFamille = new Map<Famille, TermeLexique[]>();
+  for (const t of disponibles) {
+    const liste = parFamille.get(t.famille) ?? [];
+    liste.push(t);
+    parFamille.set(t.famille, liste);
+  }
+  for (const [famille, liste] of parFamille) {
+    parFamille.set(famille, melanger(liste));
+  }
+
+  const famillesNonCouvertes = melanger(
+    [...parFamille.keys()].filter((f) => !famillesCouvertes.has(f)),
+  );
+  const famillesDejaCouvertes = melanger(
+    [...parFamille.keys()].filter((f) => famillesCouvertes.has(f)),
+  );
+  const ordreFamilles = [...famillesNonCouvertes, ...famillesDejaCouvertes];
+
+  const selection: TermeLexique[] = [];
+  const pris = new Set<string>();
+  let idx = 0;
+
+  while (selection.length < nb && ordreFamilles.length > 0) {
+    const famille = ordreFamilles[idx % ordreFamilles.length];
+    const pile = parFamille.get(famille) ?? [];
+    while (pile.length > 0 && pris.has(pile[pile.length - 1]!.id)) {
+      pile.pop();
+    }
+    if (pile.length === 0) {
+      ordreFamilles.splice(idx % ordreFamilles.length, 1);
+      if (ordreFamilles.length === 0) break;
+      continue;
+    }
+    const terme = pile.pop()!;
+    pris.add(terme.id);
+    selection.push(terme);
+    idx++;
+  }
+
+  if (selection.length < nb) {
+    const reste = melanger(disponibles.filter((t) => !pris.has(t.id)));
+    selection.push(...reste.slice(0, nb - selection.length));
+  }
+
+  return melanger(selection);
+}
+
+export type OptionsGenererQuiz = {
+  exclus?: ReadonlySet<string>;
+  /** Familles déjà posées dans la session — on privilégie les autres thèmes. */
+  famillesCouvertes?: ReadonlySet<Famille>;
+};
+
+/** Génère une série sans répéter les exclus ; répartition équilibrée si plusieurs thèmes. */
 export function genererQuestionsQuiz(
   pool: TermeLexique[],
   nbCible = QUIZ_NB_QUESTIONS_CIBLE,
-  exclus: ReadonlySet<string> = new Set(),
+  exclusOrOptions: ReadonlySet<string> | OptionsGenererQuiz = new Set(),
 ): QuestionQuiz[] {
+  const options: OptionsGenererQuiz =
+    exclusOrOptions instanceof Set ? { exclus: exclusOrOptions } : exclusOrOptions;
+  const exclus = options.exclus ?? new Set();
+  const famillesCouvertes = options.famillesCouvertes ?? new Set();
+
   const disponibles = pool.filter((t) => !exclus.has(t.id));
   if (disponibles.length < 4) return [];
 
   const nb = Math.min(nbCible, disponibles.length);
-  const selection = melanger([...disponibles]).slice(0, nb);
+  const nbFamilles = famillesDansPool(disponibles).length;
+  const selection =
+    nbFamilles >= 2
+      ? selectionEquilibreeThemes(disponibles, nb, famillesCouvertes)
+      : melanger([...disponibles]).slice(0, nb);
 
   return selection.map((terme) => {
     const distracteurs = choisirDistracteurs(terme, pool);
@@ -258,6 +335,11 @@ export function genererQuestionsQuiz(
       indice: indiceDebutant(terme),
     };
   });
+}
+
+/** Nombre de familles distinctes dans une série de questions. */
+export function compterFamillesSerie(questions: QuestionQuiz[]): number {
+  return new Set(questions.map((q) => q.terme.famille)).size;
 }
 
 /** Termes encore disponibles dans la session (hors déjà posés) */
