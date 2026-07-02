@@ -1,8 +1,9 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { Lightbulb, RotateCcw, Shuffle } from 'lucide-react';
+import { HardHat, Lightbulb, RotateCcw, Shuffle } from 'lucide-react';
 import type { Famille } from '@/data/lexique-btp';
+import { QuizGrosOeuvreSpecial } from '@/components/lexique/QuizGrosOeuvreSpecial';
 import {
   FAMILLES,
   QUIZ_FAMILLE_AIDE,
@@ -91,6 +92,7 @@ function chipClass(actif: boolean) {
 type Phase = 'config' | 'jeu' | 'resultat';
 
 export function Quiz() {
+  const [modeSpecialGo, setModeSpecialGo] = useState(false);
   const [phase, setPhase] = useState<Phase>('config');
   const [famillesSelection, setFamillesSelection] = useState<Famille[]>([]);
   const [presetActif, setPresetActif] = useState<string | null>(null);
@@ -255,10 +257,40 @@ export function Quiz() {
     [index, choix, total],
   );
 
+  // ── Quiz spécial Gros œuvre ──
+  if (modeSpecialGo) {
+    return <QuizGrosOeuvreSpecial onRetour={() => setModeSpecialGo(false)} />;
+  }
+
   // ── Configuration ──
   if (phase === 'config') {
     return (
       <div className="space-y-5">
+        <div className="bework-card overflow-hidden border-2 border-amber-300/50 p-0">
+          <div className="flex flex-col gap-4 bg-gradient-to-r from-amber-50 to-orange-50 p-5 sm:flex-row sm:items-center sm:justify-between">
+            <div className="min-w-0">
+              <p className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-amber-800">
+                <HardHat className="h-4 w-4" aria-hidden />
+                Nouveau
+              </p>
+              <p className="font-display mt-1 text-lg font-bold text-bework-navy">
+                Quiz spécial Gros œuvre
+              </p>
+              <p className="mt-1 text-sm text-slate-600">
+                15 questions terrain (fondations, béton, réseaux, marché) — pas seulement du vocabulaire.
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => setModeSpecialGo(true)}
+              className="bework-btn-primary shrink-0 bg-amber-600 hover:bg-amber-700"
+            >
+              <HardHat className="h-4 w-4" aria-hidden />
+              Lancer
+            </button>
+          </div>
+        </div>
+
         <div className="bework-card border-emerald-200 bg-emerald-50/80 p-5">
           <p className="font-display text-base font-semibold text-bework-navy">
             Révision — termes non soumis
