@@ -7,7 +7,7 @@ import { createAppPageMetadata } from '@/lib/bework/seo';
 export const metadata: Metadata = createAppPageMetadata({
   title: 'Ressources — Guide assistants travaux',
   description:
-    "Bon usage de l'outil interne BeWork pour traiter les demandes MOEX externalisées et vérifier les livrables IA.",
+    "Bon usage de BeWork pour les entreprises BTP : marchés publics et privés, vérification des livrables IA avant diffusion.",
   path: '/plateforme/ressources',
   index: false,
 });

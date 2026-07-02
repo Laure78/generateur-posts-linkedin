@@ -83,7 +83,7 @@ export default async function PlateformeDashboardPage({
 
       <header className="bework-card-tech bework-card flex flex-wrap items-center justify-between gap-4 p-6">
         <div>
-          <p className="bework-kicker">Assistants travaux · BeWork</p>
+          <p className="bework-kicker">Entreprises BTP · BeWork</p>
           <h1 className="font-display mt-2 text-2xl font-bold text-[var(--bework-navy)]">
             Bonjour, {displayName}
           </h1>
@@ -232,7 +232,7 @@ export default async function PlateformeDashboardPage({
                 Ressources — guide d&apos;utilisation
               </h2>
               <p className="mt-1 text-sm text-slate-600">
-                Bonnes pratiques MOEX : traiter les demandes et faire valider chaque livrable.
+                Bonnes pratiques : traiter les demandes (marchés publics et privés) et faire valider chaque livrable.
               </p>
             </div>
           </div>

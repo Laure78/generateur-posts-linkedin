@@ -47,7 +47,7 @@ export function createAppPageMetadata({
       url,
       title,
       description,
-      siteName: 'BeWork — Plateforme assistants MOEX',
+      siteName: 'BeWork — Plateforme entreprises BTP',
       images: [{ url: ogImage, width: 1200, height: 630, alt: title }],
     },
     twitter: {
@@ -65,13 +65,13 @@ export function buildLandingSoftwareApplicationJsonLd(): Record<string, unknown>
   return {
     '@context': 'https://schema.org',
     '@type': 'SoftwareApplication',
-    name: 'BeWork — Plateforme assistants MOEX',
+    name: 'BeWork — Plateforme entreprises BTP',
     applicationCategory: 'BusinessApplication',
     operatingSystem: 'Web',
     url: appUrl,
     inLanguage: 'fr-FR',
     description:
-      'Espace de connexion BeWork pour les assistants MOEX : dépôt de demandes, suivi des livrables et assistants chantier augmentés par l\'IA.',
+      'Espace BeWork pour les entreprises du BTP : marchés publics et privés, dépôt de demandes, suivi des livrables et assistants chantier augmentés par l\'IA.',
     provider: {
       '@type': 'Organization',
       name: BEWORK.name,

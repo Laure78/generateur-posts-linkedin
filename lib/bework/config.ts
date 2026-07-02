@@ -1,4 +1,4 @@
-/** Identité et URLs BeWork — outil interne assistants travaux (demandes MOEX) */
+/** Identité et URLs BeWork — plateforme entreprises BTP (marchés publics et privés) */
 import { MOEX_MISSION_TYPES, MOEX_PLATFORM } from './moex-platform';
 
 export const BEWORK = {

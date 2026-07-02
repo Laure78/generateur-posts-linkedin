@@ -6,36 +6,37 @@ import {
   TrendingUp,
   type LucideIcon,
 } from 'lucide-react';
+import { MOEX_PLATFORM } from '@/lib/bework/moex-platform';
 
 const STEPS: { title: string; description: string; icon: LucideIcon }[] = [
   {
-    title: 'Le MOEX transmet sa demande',
+    title: 'Votre entreprise dépose la demande',
     description:
-      'CR de chantier, analyse DCE, courrier MOA, PV de réception… La demande est confiée à BeWork (MOEX externalisé).',
+      'Marché public (DCE, mémoire, conformité d\'offre) ou marché privé (courrier promoteur, réserves, DOE) : CR, relances, tableaux de suivi — vous briefez BeWork en une demande.',
     icon: Inbox,
   },
   {
-    title: "L'assistant travaux qualifie la demande",
+    title: "L'assistant travaux qualifie le dossier",
     description:
-      "Via l'outil interne BeWork : type de dossier, pièces attendues, choix de l'assistant adapté (chantier, marché, courrier, GPA).",
+      "Via la plateforme : type de marché, pièces attendues, choix de l'assistant adapté (chantier, consultation, courrier, réception).",
     icon: UserPlus,
   },
   {
     title: "L'IA prépare, le Beworker vérifie",
     description:
-      "Rédaction et mise en forme accélérées par l'IA. L'assistant travaux relit, corrige et valide avant transmission au MOEX.",
+      "Rédaction et mise en forme accélérées par l'IA. L'assistant travaux relit, corrige et valide avant transmission à votre équipe.",
     icon: Briefcase,
   },
   {
-    title: 'Transmission au MOEX',
+    title: 'Livrable validé pour votre marché',
     description:
-      "Livrable validé renvoyé au MOEX. Ce qui engage juridiquement ou contractuellement reste sous sa responsabilité finale.",
+      "Document relu renvoyé à l'entreprise. Ce qui engage juridiquement ou contractuellement reste sous votre responsabilité finale (MOA, promoteur, donneur d'ordre).",
     icon: CircleCheck,
   },
   {
-    title: 'Votre activité devient plus fluide',
+    title: 'Plus de réactivité sur vos dossiers',
     description:
-      'Moins de friction entre bureau et chantier : statuts visibles, pièces classées, relances qui avancent sans sacrifier le terrain.',
+      'Moins de friction entre bureau et chantier : statuts visibles, pièces classées, AO publics et marchés privés qui avancent sans sacrifier le terrain.',
     icon: TrendingUp,
   },
 ];
@@ -48,6 +49,9 @@ export function BeWorkProcessSteps() {
         <h2 className="font-display mt-2 text-center text-2xl font-bold text-[var(--bework-navy)] md:text-3xl">
           Du brief à la livraison, en 5 étapes
         </h2>
+        <p className="mx-auto mt-3 max-w-2xl text-center text-sm text-slate-600">
+          {MOEX_PLATFORM.audienceLong}.
+        </p>
 
         <ol className="mt-12 space-y-10">
           {STEPS.map((step, index) => {

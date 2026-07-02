@@ -113,10 +113,10 @@ const SPECIFIC_META: Record<string, Partial<MissionMeta>> = {
   },
   autre: {
     category: 'autre',
-    titlePlaceholder: 'Ex. : Demande administrative MOEX',
+    titlePlaceholder: 'Ex. : Demande administrative chantier ou marché',
     briefPlaceholder:
-      'Décrivez votre besoin MOEX (chantier, marché, MOA, entreprise) et les pièces disponibles…',
-    briefHint: 'Un Beworker qualifie et oriente vers le bon assistant MOEX.',
+      'Décrivez votre besoin (chantier, marché public ou privé, MOA, promoteur, entreprise) et les pièces disponibles…',
+    briefHint: 'Un assistant travaux qualifie et oriente vers le bon assistant métier.',
   },
 };
 

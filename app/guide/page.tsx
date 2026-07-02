@@ -7,9 +7,9 @@ import { PlatformGuideContent } from '@/components/platform/PlatformGuideContent
 import { createAppPageMetadata } from '@/lib/bework/seo';
 
 export const metadata: Metadata = createAppPageMetadata({
-  title: 'Guide BeWork — assistants travaux & demandes MOEX',
+  title: 'Guide BeWork — entreprises BTP',
   description:
-    'Tutoriel pour les Beworkers : traiter les demandes MOEX externalisées, précautions et vérification obligatoire.',
+    'Tutoriel BeWork : marchés publics et privés, précautions et vérification obligatoire des livrables IA.',
   path: '/guide',
   index: false,
 });
@@ -33,7 +33,7 @@ export default function GuidePublicPage() {
             className="inline-flex items-center gap-1 text-sm font-medium text-[var(--bework-blue)] hover:underline"
           >
             <ArrowLeft size={16} />
-            Retour à la connexion Beworker
+            Retour à la connexion
           </Link>
           <div className="mt-6">
             <PlatformGuideContent />

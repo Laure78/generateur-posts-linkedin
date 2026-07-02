@@ -61,16 +61,17 @@ export default function MentionsLegalesPage() {
       <section>
         <h2>3. Objet du service</h2>
         <p>
-          {BEWORK.name} est un <strong>outil interne</strong> utilisé par les{' '}
-          <strong>assistants travaux (Beworkers)</strong> pour traiter les demandes des{' '}
-          <strong>maîtrises d&apos;œuvre d&apos;exécution externalisées (MOEX)</strong> : préparation de documents,
-          synthèses et assistants IA spécialisés, avec <strong>validation humaine</strong> avant transmission au MOEX
-          ou diffusion.
+          {BEWORK.name} est une <strong>plateforme</strong> destinée aux{' '}
+          <strong>entreprises du bâtiment et des travaux publics</strong> qui répondent aux{' '}
+          <strong>marchés publics</strong> (appels d&apos;offres, DCE, mémoires) et aux{' '}
+          <strong>marchés privés</strong> (promoteur, lots, contrats) : préparation de documents,
+          synthèses et assistants IA spécialisés, avec <strong>validation humaine</strong> avant transmission
+          au maître d&apos;ouvrage, au promoteur ou au client.
         </p>
         <p>
           {BEWORK.name} ne se substitue pas à un bureau d&apos;études, à un architecte, à un MOE titulaire de
-          marché, ni à un conseil juridique. Les livrables générés doivent être relus et validés par les assistants
-          travaux et le MOEX concerné.
+          marché, ni à un conseil juridique. Les livrables générés doivent être relus et validés par l&apos;entreprise
+          avant toute diffusion.
         </p>
         <p>
           <strong>Usage interne :</strong> {BEWORK.internalUseLong}

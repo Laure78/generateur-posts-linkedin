@@ -72,8 +72,8 @@ export default function InscriptionPage() {
 
   return (
     <AuthShell
-      title="Compte assistant travaux"
-      subtitle="Inscription à l'outil interne BeWork — réservée aux assistants travaux (Beworkers) qui traitent les demandes MOEX externalisées."
+      title="Compte entreprise BTP"
+      subtitle="Inscription BeWork pour les entreprises du bâtiment et des travaux publics qui répondent aux marchés publics et aux marchés privés."
       footer={
         <p className="text-slate-600">
           Déjà inscrit ? <AuthFooterLink href="/auth/connexion">Se connecter</AuthFooterLink>

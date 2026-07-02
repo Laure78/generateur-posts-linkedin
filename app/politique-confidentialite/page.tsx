@@ -6,7 +6,7 @@ import { NOINDEX_FOLLOW } from '@/lib/bework/seo';
 
 export const metadata: Metadata = {
   title: 'Confidentialité BeWork',
-  description: 'Conditions de confidentialité et protection des données (RGPD) — plateforme MOEX BeWork.',
+  description: 'Conditions de confidentialité et protection des données (RGPD) — plateforme BeWork entreprises BTP.',
   ...NOINDEX_FOLLOW,
 };
 

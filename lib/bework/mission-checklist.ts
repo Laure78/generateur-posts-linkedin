@@ -43,7 +43,7 @@ export const CHECKLIST_BY_FAMILY: Record<ValidationChecklistFamily, readonly str
     'N° de situation ou période et entreprise identifiés.',
     'Montants et postes BPU/DPGF recoupés avec les pièces justificatives.',
     'Avenants et TS éventuels mentionnés.',
-    'Aucun engagement de paiement sans validation MOEX.',
+    'Aucun engagement de paiement sans validation interne (chef d\'équipe ou dirigeant).',
     ...COMMON_TAIL,
   ],
   reception: [
@@ -68,8 +68,8 @@ export const CHECKLIST_BY_FAMILY: Record<ValidationChecklistFamily, readonly str
     ...COMMON_TAIL,
   ],
   generic: [
-    'Le besoin du MOEX est couvert (faits, dates, références).',
-    'Ton professionnel, sans engagement non validé par le MOEX.',
+    'Le besoin est couvert (faits, dates, références chantier ou marché).',
+    'Ton professionnel, sans engagement non validé par l\'entreprise.',
     'Pièces sources citées ou jointes.',
     ...COMMON_TAIL,
   ],

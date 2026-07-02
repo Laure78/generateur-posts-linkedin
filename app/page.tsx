@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import { BEWORK } from '@/lib/bework/config';
+import { MOEX_PLATFORM } from '@/lib/bework/moex-platform';
 import { createAppPageMetadata, buildLandingSoftwareApplicationJsonLd, VITRINE_BEWORK_URL } from '@/lib/bework/seo';
 import { BeWorkLogo } from '@/components/brand/BeWorkLogo';
 import { BeWorkFooter } from '@/components/brand/BeWorkFooter';
@@ -10,9 +11,9 @@ import { InternalUseNotice } from '@/components/brand/InternalUseNotice';
 import { JsonLd } from '@/components/JsonLd';
 import { ArrowRight, ExternalLink, GraduationCap, Shield, Zap, Users } from 'lucide-react';
 
-const LANDING_TITLE = 'BeWork — Connexion plateforme assistants MOEX';
+const LANDING_TITLE = 'BeWork — Plateforme entreprises BTP';
 const LANDING_DESCRIPTION =
-  "Accédez à l'espace BeWork : déposez vos demandes MOEX, suivez vos livrables et travaillez avec des assistants chantier augmentés par l'IA, supervisés depuis la France.";
+  "Espace BeWork pour les entreprises du BTP : déposez vos demandes (marchés publics et privés), suivez vos livrables et travaillez avec des assistants chantier augmentés par l'IA.";
 
 export const metadata: Metadata = createAppPageMetadata({
   title: LANDING_TITLE,
@@ -45,20 +46,29 @@ export default function HomePage() {
 
       <section className="mx-auto flex-1 max-w-6xl px-4 py-12 lg:grid lg:grid-cols-2 lg:items-center lg:gap-12 lg:px-6 lg:py-20">
         <div>
-          <p className="bework-kicker">Assistants travaux · BeWork</p>
+          <p className="bework-kicker">Entreprises BTP · BeWork</p>
           <h1 className="font-display mt-4 text-4xl font-bold leading-tight text-[var(--bework-navy)] md:text-5xl">
             Plateforme BeWork —{' '}
-            <span className="bework-heading-accent">accès assistants MOEX</span>
+            <span className="bework-heading-accent">marchés publics &amp; privés</span>
           </h1>
           <p className="mt-6 text-lg leading-relaxed text-slate-600">
-            {BEWORK.platformRoleLine} CR de chantier, analyses DCE, courriers MOA, PV de réception… Connectez-vous
-            pour déposer une demande, suivre vos livrables et collaborer avec des assistants travaux augmentés par
-            l&apos;IA.
+            {BEWORK.platformRoleLine} Connectez-vous pour déposer une demande, suivre vos livrables et
+            collaborer avec des assistants travaux augmentés par l&apos;IA.
           </p>
+          <div className="mt-5 grid gap-3 sm:grid-cols-2">
+            <div className="rounded-xl border border-slate-200 bg-white/80 px-4 py-3 text-sm">
+              <p className="font-semibold text-[var(--bework-navy)]">{MOEX_PLATFORM.marketsPublicLabel}</p>
+              <p className="mt-1 text-slate-600">{MOEX_PLATFORM.marketsPublicHint}</p>
+            </div>
+            <div className="rounded-xl border border-slate-200 bg-white/80 px-4 py-3 text-sm">
+              <p className="font-semibold text-[var(--bework-navy)]">{MOEX_PLATFORM.marketsPrivateLabel}</p>
+              <p className="mt-1 text-slate-600">{MOEX_PLATFORM.marketsPrivateHint}</p>
+            </div>
+          </div>
           <InternalUseNotice variant="long" className="mt-6" />
           <div className="mt-8 flex flex-wrap gap-3">
             <Link href="/auth/inscription" className="bework-btn-primary px-6 py-3">
-              Accès assistant travaux
+              Créer un compte entreprise
               <ArrowRight size={18} />
             </Link>
             <Link href="/auth/connexion" className="bework-btn-secondary px-6 py-3">
@@ -82,7 +92,7 @@ export default function HomePage() {
           <div className="bework-card-tech bework-card overflow-hidden p-2 shadow-lg">
             <Image
               src="/images/bework-hero.png"
-              alt="Plateforme BeWork — assistants MOEX"
+              alt="Plateforme BeWork — entreprises BTP, marchés publics et privés"
               width={640}
               height={480}
               className="w-full rounded-lg object-cover"
@@ -126,12 +136,12 @@ export default function HomePage() {
       <section className="border-t border-slate-200/80 bg-white/60 py-16">
         <div className="mx-auto grid max-w-6xl gap-8 px-4 md:grid-cols-3 lg:px-6">
           {[
-            { icon: Zap, title: 'Déploiement rapide', desc: 'Une demande, un brief — le Beworker qualifie et traite.' },
+            { icon: Zap, title: 'Déploiement rapide', desc: 'Une demande, un brief — qualification et traitement par votre équipe BeWork.' },
             { icon: Shield, title: 'Supervisé depuis la France', desc: 'Relais humain + IA, pas un chatbot générique.' },
             {
               icon: Users,
-              title: 'Demandes MOEX',
-              desc: "Maîtrises d'œuvre d'exécution externalisées — chantier, marchés, MOA, GPA.",
+              title: 'Entreprises BTP',
+              desc: 'PME, artisans et équipes qui répondent aux AO publics et aux marchés privés (promoteur, lots, contrats).',
             },
           ].map(({ icon: Icon, title, desc }) => (
             <div key={title} className="bework-card p-6">

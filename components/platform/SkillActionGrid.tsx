@@ -9,7 +9,7 @@ export function SkillActionGrid() {
 
   return (
     <section className="mt-8">
-      <h2 className="font-display text-lg font-semibold text-slate-900">Assistants MOEX</h2>
+      <h2 className="font-display text-lg font-semibold text-slate-900">Assistants métier BTP</h2>
       <p className="mt-1 text-sm text-slate-600">
         {BEWORK.scopeLine} Le formulaire s&apos;adapte à l&apos;assistant choisi.
       </p>

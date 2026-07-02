@@ -81,7 +81,7 @@ export function PlatformSidebar({ showAdminLink = false }: PlatformSidebarProps)
           Assistants travaux
         </p>
         <p className="text-[0.65rem] leading-snug text-slate-500">
-          Outil interne — demandes MOEX externalisées
+          {BEWORK.scopeLine}
         </p>
       </div>
 
@@ -157,10 +157,10 @@ export function PlatformSidebar({ showAdminLink = false }: PlatformSidebarProps)
 
         <div
           className="-mx-1 min-h-0 flex-1 overflow-y-auto overscroll-y-contain px-1 pb-2 [scrollbar-gutter:stable]"
-          aria-label="Liste des assistants MOEX"
+          aria-label="Liste des assistants métier BTP"
         >
           <p className="px-3 py-2 text-[0.65rem] font-semibold uppercase tracking-wider text-slate-400">
-            Assistants — demandes MOEX
+            Assistants — marchés publics &amp; privés
           </p>
 
           <div className="relative mb-2 px-2">

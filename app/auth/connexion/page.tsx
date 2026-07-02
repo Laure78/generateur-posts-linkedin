@@ -115,8 +115,8 @@ function ConnexionPageContent() {
 
   return (
     <AuthShell
-      title="Connexion assistant travaux"
-      subtitle="Outil interne BeWork pour traiter les demandes des MOEX — maîtrises d'œuvre d'exécution externalisées."
+      title="Connexion BeWork"
+      subtitle="Entreprises du BTP — marchés publics (appels d'offres, DCE) et marchés privés : déposez et suivez vos demandes administratives."
       footer={
         <>
           {deconnected && (

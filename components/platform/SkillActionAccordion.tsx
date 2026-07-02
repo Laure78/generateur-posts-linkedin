@@ -27,7 +27,7 @@ export function SkillActionAccordion() {
     <section className="mt-10">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h2 className="font-display text-lg font-semibold text-slate-900">Catalogue assistants MOEX</h2>
+          <h2 className="font-display text-lg font-semibold text-slate-900">Catalogue assistants métier</h2>
           <p className="mt-1 text-sm text-slate-600">
             Checklist 3D MANAGER — thèmes A à H. Utilisez la recherche ou vos favoris pour aller plus vite.
           </p>

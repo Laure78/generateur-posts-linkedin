@@ -312,7 +312,9 @@ export function genererQuestionsQuiz(
   exclusOrOptions: ReadonlySet<string> | OptionsGenererQuiz = new Set(),
 ): QuestionQuiz[] {
   const options: OptionsGenererQuiz =
-    exclusOrOptions instanceof Set ? { exclus: exclusOrOptions } : exclusOrOptions;
+    'exclus' in exclusOrOptions || 'famillesCouvertes' in exclusOrOptions
+      ? exclusOrOptions
+      : { exclus: exclusOrOptions as ReadonlySet<string> };
   const exclus = options.exclus ?? new Set();
   const famillesCouvertes = options.famillesCouvertes ?? new Set();
 

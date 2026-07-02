@@ -1,6 +1,7 @@
 /**
- * Périmètre produit : plateforme dédiée à la maîtrise d'œuvre d'exécution (MOEX).
- * Les types hors MOEX restent en base pour d'anciennes demandes mais ne sont plus proposés.
+ * Périmètre produit : plateforme BeWork pour les entreprises du BTP
+ * (marchés publics — AO, DCE — et marchés privés — promoteur, lots, contrats).
+ * Les assistants métier (skills MOEX, promoteur, etc.) restent inchangés côté technique.
  */
 
 import {
@@ -10,22 +11,27 @@ import {
 } from './moex-checklist-3dm';
 
 export const MOEX_PLATFORM = {
-  /** Donneurs de demandes traitées par les Beworkers. */
-  audience: 'MOEX',
-  audienceLong: "maîtrise d'œuvre d'exécution (MOEX) externalisée",
-  /** Utilisateurs de l'outil (équipe BeWork). */
+  /** Public cible de la plateforme. */
+  audience: 'Entreprises BTP',
+  audienceLong:
+    'entreprises du bâtiment et des travaux publics — marchés publics (appels d\'offres, DCE, mémoires) et marchés privés (promoteur, maîtrise d\'œuvre, lots)',
+  /** Utilisateurs opérationnels (équipe BeWork + clients entreprise). */
   beworkerRole: 'Assistants travaux (Beworker)',
   platformRoleLine:
-    "Outil interne BeWork permettant aux assistants travaux de traiter les demandes des MOEX — maîtrises d'œuvre d'exécution externalisées.",
+    'Plateforme BeWork pour les entreprises du BTP : externalisez l\'administratif chantier et les dossiers de marché — réponses aux appels d\'offres publics (DCE, RC, mémoire technique) et suivi des marchés privés (courriers, réserves, DOE, relances).',
   scopeLine:
-    "Outil interne pour les assistants travaux (Beworkers) : traitement des demandes administratives des MOEX externalisés (chantier, marchés, courriers MOA, GPA).",
+    'Marchés publics et privés : CR, analyses DCE, mémoires, courriers MOA, PV de réception, situations de travaux — dépôt, suivi et livrables relus avant diffusion.',
   internalUseShort:
-    "Outil interne BeWork — réservé aux assistants travaux (Beworkers). Traitement des demandes MOEX externalisées.",
+    'BeWork — assistants travaux et équipes BTP. Les livrables IA sont des brouillons à valider avant envoi au maître d\'ouvrage ou au client.',
   internalUseLong:
-    "BeWork est l'outil interne de la plateforme BeWork, utilisé par les assistants travaux (Beworkers) pour traiter les demandes des maîtrises d'œuvre d'exécution externalisées (MOEX). Les documents générés par l'IA sont des brouillons de travail : ils doivent être relus, corrigés et validés par un professionnel (assistant travaux et/ou MOEX) avant transmission.",
-  /** Alerte affichée sur la plateforme et dans le guide. */
+    'BeWork accompagne les entreprises du BTP qui répondent aux marchés publics et aux marchés privés. L\'IA prépare CR, courriers, synthèses DCE et tableaux de suivi ; chaque document doit être relu et validé par un professionnel (assistant travaux, conducteur de travaux ou dirigeant) avant transmission.',
   teamLeaderValidationAlert:
-    "Validation par le chef d'équipe obligatoire avant tout envoi au client.",
+    'Validation par le chef d\'équipe ou le responsable entreprise obligatoire avant tout envoi au client ou au maître d\'ouvrage.',
+  /** Libellés courts pour cartes landing / dashboard. */
+  marketsPublicLabel: 'Marchés publics',
+  marketsPublicHint: 'AO, DCE, RC, mémoire technique, conformité des offres',
+  marketsPrivateLabel: 'Marchés privés',
+  marketsPrivateHint: 'Promoteur, lots, réserves, DOE, courriers et relances',
 } as const;
 
 /** Types de mission proposés dans l'outil (checklist 3D MANAGER + besoin libre). */

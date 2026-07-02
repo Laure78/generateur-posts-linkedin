@@ -39,7 +39,7 @@ export default function LoginScreen() {
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
       <Text style={styles.brand}>BeWork</Text>
-      <Text style={styles.subtitle}>Assistants travaux · MOEX</Text>
+      <Text style={styles.subtitle}>Entreprises BTP · marchés publics &amp; privés</Text>
 
       <ValidationBanner compact />
 

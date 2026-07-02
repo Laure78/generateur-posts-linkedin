@@ -33,7 +33,7 @@ export function TeamLeaderValidationAlert({
           {!compact && (
             <span className="mt-1 block font-normal text-red-900/90">
               Après relecture par l&apos;assistant travaux, le livrable doit être approuvé par le chef
-              d&apos;équipe avant transmission au MOEX ou envoi au client.
+              d&apos;équipe avant transmission au maître d&apos;ouvrage, au promoteur ou au client.
             </span>
           )}
         </span>

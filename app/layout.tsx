@@ -8,11 +8,11 @@ const outfit = Outfit({ variable: '--font-display', subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: {
-    default: 'BeWork — Plateforme assistants MOEX',
-    template: '%s | BeWork MOEX',
+    default: 'BeWork — Plateforme entreprises BTP',
+    template: '%s | BeWork',
   },
   description:
-    "Connexion à la plateforme BeWork pour les assistants MOEX : dépôt de demandes, suivi des livrables et assistants chantier augmentés par l'IA, supervisés depuis la France.",
+    "Plateforme BeWork pour les entreprises du BTP : marchés publics (AO, DCE) et marchés privés — dépôt de demandes, suivi des livrables et assistants chantier augmentés par l'IA.",
   metadataBase: new URL(getSiteUrl()),
   manifest: '/manifest.webmanifest',
   themeColor: '#2563EB',

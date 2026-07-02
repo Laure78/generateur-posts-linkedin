@@ -48,7 +48,7 @@ export function AdminValidatePanel({
         Validation chef d&apos;équipe
       </p>
       <p className="mt-2 text-sm text-slate-600">
-        Après relecture du livrable, validez pour autoriser la transmission au MOEX ou au client.
+        Après relecture du livrable, validez pour autoriser la transmission au maître d&apos;ouvrage, au promoteur ou au client.
       </p>
       <label htmlFor="validation-note" className="mt-4 block text-sm font-medium text-slate-700">
         Note (optionnel)
