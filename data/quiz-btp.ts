@@ -46,6 +46,13 @@ export const QUIZ_PRESETS_DEBUTANT: {
     ],
   },
   {
+    id: 'enduits-facade',
+    label: 'Enduits de façade',
+    description:
+      'Monocouche, supports RT/OC, finitions, points singuliers, modénatures et échafaudages — vocabulaire Lot 02.',
+    familles: ['Enduits & façades'],
+  },
+  {
     id: 'fondations-gros-oeuvre',
     label: 'Fondations & Gros œuvre',
     description:
@@ -205,6 +212,10 @@ export const QUIZ_FAMILLE_AIDE: Record<
   'Divers techniques': {
     resume: 'PMR, contraintes locales et validations MOE.',
     astuce: 'PMR = accessibilité personnes à mobilité réduite.',
+  },
+  'Enduits & façades': {
+    resume: 'Monocouches, supports, finitions et coordination façade.',
+    astuce: 'RT/OC : jamais d\'enduit plus dur que son support · DTU 26.1 = référence enduits.',
   },
 };
 

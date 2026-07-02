@@ -3,6 +3,8 @@
  * Questions scénarisées (CCTP Lot 01, logements collectifs).
  */
 
+import type { QuizLotTheme } from './quiz-lot-special-shared';
+
 export type ChapitreQuizGo =
   | 'Fondations'
   | 'Terrassement'
@@ -1203,3 +1205,22 @@ export const QUIZ_GO_MODULES: QuizGoModule[] = [
 export const QUIZ_GO_SPECIAL_META = QUIZ_GO_MODULES[QUIZ_GO_MODULES.length - 1]!;
 /** @deprecated Utiliser getQuizGoModule('go-complet') */
 export const QUESTIONS_QUIZ_GO_SPECIALE = QUIZ_GO_MODULES[QUIZ_GO_MODULES.length - 1]!.questions;
+
+export const QUIZ_GO_THEME: QuizLotTheme = {
+  lotLabel: 'Lot 01 — Gros œuvre',
+  hubTitle: '7 quiz thématiques',
+  hubDescription: 'situations chantier CCTP logements collectifs',
+  accentClass: 'text-amber-800',
+  hubCardClass: 'bg-gradient-to-br from-amber-50 to-orange-50',
+  introHeaderClass: 'bg-gradient-to-br from-amber-500 to-orange-600',
+  buttonClass: 'bg-amber-600 hover:bg-amber-700',
+  progressClass: 'bg-amber-500',
+  borderClass: 'border-amber-200/80',
+  icon: 'hard-hat',
+  scoreMessages: {
+    excellent: 'Solide sur le gros œuvre — vous avez les réflexes terrain.',
+    good: 'Bon niveau — refaites le quiz pour ancrer les pièges restants.',
+    ok: 'Des bases — parcourez le parcours « Fondations & Gros œuvre » puis réessayez.',
+    low: 'Normal pour un premier passage : le lexique et le parcours guidé vous aideront.',
+  },
+};

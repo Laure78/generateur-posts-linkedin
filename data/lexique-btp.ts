@@ -1,6 +1,7 @@
 // data/lexique-btp.ts
 
 import { LEXIQUE_FONDATIONS_GROS_OEUVRE } from './lexique-btp-fondations-gros-oeuvre';
+import { LEXIQUE_ENDUITS_FACADE } from './lexique-btp-enduits-facade';
 
 export type Famille =
   | "Procédures & notation"
@@ -24,7 +25,8 @@ export type Famille =
   | "Suivi de chantier"
   | "Marché privé (promoteur)"
   | "Sous-traitance"
-  | "Divers techniques";
+  | "Divers techniques"
+  | "Enduits & façades";
 
 export interface TermeLexique {
   id: string;
@@ -60,6 +62,7 @@ export const FAMILLES: Famille[] = [
   "Marché privé (promoteur)",
   "Sous-traitance",
   "Divers techniques",
+  "Enduits & façades",
 ];
 
 export const LEXIQUE: TermeLexique[] = [
@@ -1404,6 +1407,9 @@ export const LEXIQUE: TermeLexique[] = [
 
   // ── Fondations & Gros œuvre (CCTP Lot 01) ──
   ...LEXIQUE_FONDATIONS_GROS_OEUVRE,
+
+  // ── Enduits de façade (CCTP Lot 02) ──
+  ...LEXIQUE_ENDUITS_FACADE,
 ];
 
 // Helper : normalise (minuscule + sans accents) pour la recherche et le quiz
