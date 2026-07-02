@@ -274,10 +274,10 @@ export function Quiz() {
                 Nouveau
               </p>
               <p className="font-display mt-1 text-lg font-bold text-bework-navy">
-                Quiz spécial Gros œuvre
+                Quiz Lot Gros œuvre — 7 thèmes
               </p>
               <p className="mt-1 text-sm text-slate-600">
-                15 questions terrain (fondations, béton, réseaux, marché) — pas seulement du vocabulaire.
+                75 questions terrain : fondations, terrassement, béton, structure, réseaux, marché + parcours complet.
               </p>
             </div>
             <button
