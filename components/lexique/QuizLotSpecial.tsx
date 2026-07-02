@@ -242,7 +242,10 @@ export function QuizLotSpecial({
           <button type="button" onClick={retourHub} className="bework-btn-secondary">
             Autres quiz
           </button>
-          <Link href="/lexique" className="bework-btn-secondary">
+          <Link
+            href={theme.parcoursId ? `/lexique?parcours=${theme.parcoursId}` : '/lexique'}
+            className="bework-btn-secondary"
+          >
             {theme.parcoursLabel ?? 'Parcours guidé'}
           </Link>
         </div>

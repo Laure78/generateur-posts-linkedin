@@ -34,6 +34,8 @@ export type QuizLotTheme = {
   borderClass: string;
   icon: 'hard-hat' | 'paintbrush';
   parcoursLabel?: string;
+  /** Lien vers /lexique?parcours=… depuis l'écran résultat */
+  parcoursId?: string;
   scoreMessages: {
     excellent: string;
     good: string;

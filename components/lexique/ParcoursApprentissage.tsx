@@ -116,8 +116,11 @@ function ParcoursDetail({
   );
 }
 
-export function ParcoursApprentissage() {
-  const [selection, setSelection] = useState<ParcoursBtp | null>(null);
+export function ParcoursApprentissage({ initialParcoursId }: { initialParcoursId?: string | null }) {
+  const [selection, setSelection] = useState<ParcoursBtp | null>(() => {
+    if (!initialParcoursId) return null;
+    return PARCOURS_BTP.find((p) => p.id === initialParcoursId) ?? null;
+  });
 
   if (selection) {
     return <ParcoursDetail parcours={selection} onRetour={() => setSelection(null)} />;

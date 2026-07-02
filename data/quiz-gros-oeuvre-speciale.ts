@@ -1217,6 +1217,7 @@ export const QUIZ_GO_THEME: QuizLotTheme = {
   progressClass: 'bg-amber-500',
   borderClass: 'border-amber-200/80',
   icon: 'hard-hat',
+  parcoursId: 'fondations-gros-oeuvre',
   scoreMessages: {
     excellent: 'Solide sur le gros œuvre — vous avez les réflexes terrain.',
     good: 'Bon niveau — refaites le quiz pour ancrer les pièges restants.',

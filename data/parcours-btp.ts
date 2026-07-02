@@ -422,6 +422,113 @@ export const PARCOURS_BTP: ParcoursBtp[] = [
     ],
   },
   {
+    id: 'enduits-facade',
+    titre: 'Enduits de façade',
+    description:
+      'Monocouches, supports RT/OC, application, points singuliers, modénatures et coordination chantier (vocabulaire CCTP Lot 02).',
+    duree: '7 min',
+    etapes: [
+      {
+        id: 'ef-metier',
+        titre: '1. Le métier et l\'ouvrage',
+        explication:
+          'L\'enduit de façade protège le mur de la pluie tout en le laissant respirer. Le façadier applique un monocouche (accrochage + imperméabilisation + finition en 2 passes) ou un enduit traditionnel en 3 couches. La teinte est dans la masse. Référence : DTU 26.1 et certification CSTB du produit.',
+        astuce: '« Weber Pral F ou équivalent » = autre marque possible si performances égales, validées MOE/MOA.',
+        termesLies: [
+          'enduit-facade',
+          'facadier-enduiseur',
+          'enduit-monocouche',
+          'teinte-masse',
+          'impermeabilisation-facade',
+          'ou-equivalent',
+          'dtu-26-1',
+          'certification-enduit-cstb',
+        ],
+      },
+      {
+        id: 'ef-supports',
+        titre: '2. Supports et préparation',
+        explication:
+          'Le support (subjectile) doit être propre et conforme. L\'enduiseur réceptionne formellement les murs GO — sans PV, les défauts lui incombent. Classement RT (DTU 20.1) et catégorie OC : jamais d\'enduit plus dur que son support. Humidification à refus, élimination du salpêtre.',
+        astuce: 'Parpaing courant = RT3 · Brique creuse = RT2. Support faible RT1 → enduit OC1.',
+        termesLies: [
+          'support-subjectile',
+          'reception-supports-facade',
+          'classement-rt',
+          'categorie-oc',
+          'humidification-refus',
+          'salpetre',
+          'adherence-enduit',
+          'piquer-boucharder',
+        ],
+      },
+      {
+        id: 'ef-application',
+        titre: '3. Application et finitions',
+        explication:
+          'Gâchage au fur et à mesure — mortier rebattu interdit. Application en passes frais sur frais, souvent par projection. Finition grattée (courante) ou talochée (soubassements). Surface témoin validée avant généralisation. Conditions météo : +5°C à +30°C, pas de pluie ni support gelé.',
+        astuce: 'Faïençage = micro-fissures révélatrices d\'un mauvais gâchage ou séchage trop rapide.',
+        termesLies: [
+          'passe-enduit',
+          'frais-sur-frais',
+          'projection-enduit',
+          'dressage-enduit',
+          'finition-gratte',
+          'finition-talochee',
+          'surface-temoin-facade',
+          'conditions-climatiques-enduit',
+          'faiencage-enduit',
+          'reprise-enduit',
+        ],
+      },
+      {
+        id: 'ef-singuliers',
+        titre: '4. Points singuliers et renforts',
+        explication:
+          'Aux jonctions de matériaux, angles de baies et planelles : armature en trame de fibre de verre. Soubassements à enduire avant remblai GO. Arêtes supérieures protégées avant enduisage. Lattis métallique sur support bois. Retours en tableaux et sous-face de linteaux.',
+        termesLies: [
+          'point-singulier-facade',
+          'armature-trame-facade',
+          'tableau-facade',
+          'soubassement-facade',
+          'arete-profil-facade',
+          'lattis-metallique',
+        ],
+      },
+      {
+        id: 'ef-modenatures',
+        titre: '5. Modénatures et échafaudages',
+        explication:
+          'Bandeaux, chaînages décoratifs, faux colombages : modénatures en surépaisseur ou PSE collé (fixations mécaniques si > 7 cm). Vérifier les Euroclasses feu. Échafaudage de pied : réception obligatoire (arrêté 2004), bracons, garde-corps, double transport.',
+        termesLies: [
+          'modenature',
+          'bandeau-facade',
+          'chainage-decoratif',
+          'surepaisseur-enduit',
+          'pse-modenature',
+          'reaction-feu-euroclasses',
+          'ton-pierre',
+          'echafaudage-pied',
+          'reception-echafaudage',
+          'bracon-tirant',
+        ],
+      },
+      {
+        id: 'ef-contrat',
+        titre: '6. Contrat et coordination',
+        explication:
+          'Lot 00 = dispositions communes (bennes, nettoyage). Interfaces : enduire soubassements avant remblai, protéger menuiseries avant projection. Compte prorata, phasage entre corps d\'état. Certificateur (ex. Prestaterre) pour labels environnementaux.',
+        astuce: 'Projections sur menuiserie neuve = nettoyage ou remplacement aux frais de l\'enduiseur.',
+        termesLies: [
+          'lot-00-dispositions',
+          'interface-corps-etat',
+          'protection-ouvrages-facade',
+          'certificateur-prestaterre',
+        ],
+      },
+    ],
+  },
+  {
     id: 'plateforme-terrassement',
     titre: 'Plateforme et compactage',
     description:

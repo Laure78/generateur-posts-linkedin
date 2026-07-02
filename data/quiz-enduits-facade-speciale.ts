@@ -15,7 +15,8 @@ export const QUIZ_ENDUITS_THEME: QuizLotTheme = {
   progressClass: 'bg-sky-500',
   borderClass: 'border-sky-200/80',
   icon: 'paintbrush',
-  parcoursLabel: 'Lexique enduits',
+  parcoursLabel: 'Parcours enduits',
+  parcoursId: 'enduits-facade',
   scoreMessages: {
     excellent: 'Solide sur les enduits de façade — vous avez les réflexes terrain.',
     good: 'Bon niveau — refaites le quiz pour ancrer les pièges restants.',

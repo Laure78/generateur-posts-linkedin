@@ -1,7 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { BookOpen, Brain, GraduationCap, RotateCcw } from 'lucide-react';
 import { BeWorkLogo } from '@/components/brand/BeWorkLogo';
 import { BEWORK } from '@/lib/bework/config';
@@ -19,8 +20,20 @@ const ONGLETS: { id: Mode; label: string; icon: typeof BookOpen }[] = [
   { id: 'quiz', label: 'Quiz', icon: Brain },
 ];
 
-export function LexiqueApp() {
-  const [mode, setMode] = useState<Mode>('parcours');
+function parseMode(value: string | null): Mode {
+  if (value && ONGLETS.some((o) => o.id === value)) return value as Mode;
+  return 'parcours';
+}
+
+function LexiqueAppInner() {
+  const searchParams = useSearchParams();
+  const parcoursInitial = searchParams.get('parcours');
+  const [mode, setMode] = useState<Mode>(() => parseMode(searchParams.get('mode')));
+
+  useEffect(() => {
+    const modeParam = searchParams.get('mode');
+    if (modeParam) setMode(parseMode(modeParam));
+  }, [searchParams]);
 
   return (
     <div className="bework-blueprint-bg min-h-screen text-slate-800">
@@ -39,7 +52,10 @@ export function LexiqueApp() {
             </h1>
             <p className="mt-2 max-w-xl text-base text-slate-500">
               Comprendre le vocabulaire des marchés publics et du chantier — explications simples,
-              schémas, parcours <strong className="font-medium text-slate-700">Fondations &amp; Gros œuvre</strong> et quiz thématiques.
+              schémas, parcours{' '}
+              <strong className="font-medium text-slate-700">Gros œuvre</strong> et{' '}
+              <strong className="font-medium text-slate-700">Enduits de façade</strong>, quiz
+              thématiques.
             </p>
           </div>
         </div>
@@ -71,7 +87,9 @@ export function LexiqueApp() {
       </nav>
 
       <main className="mx-auto max-w-3xl px-4 py-6 sm:px-6 sm:py-8">
-        {mode === 'parcours' && <ParcoursApprentissage />}
+        {mode === 'parcours' && (
+          <ParcoursApprentissage initialParcoursId={parcoursInitial} />
+        )}
         {mode === 'dictionnaire' && <Dictionnaire />}
         {mode === 'flashcards' && <Flashcards />}
         {mode === 'quiz' && <Quiz />}
@@ -89,5 +107,19 @@ export function LexiqueApp() {
         </a>
       </footer>
     </div>
+  );
+}
+
+export function LexiqueApp() {
+  return (
+    <Suspense
+      fallback={
+        <div className="bework-blueprint-bg flex min-h-screen items-center justify-center text-slate-500">
+          Chargement…
+        </div>
+      }
+    >
+      <LexiqueAppInner />
+    </Suspense>
   );
 }
