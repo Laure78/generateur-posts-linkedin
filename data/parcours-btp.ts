@@ -326,6 +326,102 @@ export const PARCOURS_BTP: ParcoursBtp[] = [
     ],
   },
   {
+    id: 'fondations-gros-oeuvre',
+    titre: 'Fondations & Gros œuvre',
+    description:
+      'Du sol aux planchers : fondations, terrassement, béton armé et vie de chantier GO (vocabulaire CCTP Lot 01).',
+    duree: '8 min',
+    etapes: [
+      {
+        id: 'go-acteurs-docs',
+        titre: '1. Acteurs et documents du lot GO',
+        explication:
+          'Le MOA commande, la MOE conçoit, le bureau de contrôle vérifie. Le CCTP Lot 01 décrit fondations, structure et réseaux enterrés. Les plans guides ne remplacent pas vos plans EXE.',
+        termesLies: ['moa', 'moe', 'bureau-controle', 'cctp', 'lot-marche', 'plans-guides', 'plans-exe'],
+      },
+      {
+        id: 'go-sol-fondations',
+        titre: '2. Sol et fondations',
+        explication:
+          'L\'étude géotechnique (G1 à G4) définit le type de fondations : semelles, radier ou pieux. Attention au tassement différentiel — risque n°1. Béton de propreté, puis ouvrages structurels.',
+        astuce: 'Assise des fondations à la profondeur hors gel minimum.',
+        termesLies: [
+          'etude-geotechnique',
+          'portance-sol',
+          'semelle-filante',
+          'semelle-isolee',
+          'radier',
+          'pieux',
+          'beton-proprete',
+          'tassement-differentiel',
+          'profondeur-hors-gel',
+        ],
+      },
+      {
+        id: 'go-terrassement',
+        titre: '3. Terrassement et plateforme',
+        explication:
+          'Fouilles blindées, épuisement ou rabattement de nappe si besoin. Remblais compactés (essai Proctor, EV2, classes PF). Implantation et cotes NGF par le géomètre.',
+        termesLies: [
+          'terrassement',
+          'blindage',
+          'epuisement-fouille',
+          'remblai',
+          'essai-proctor',
+          'ev1-ev2',
+          'portance-pf',
+          'ngf',
+          'implantation',
+        ],
+      },
+      {
+        id: 'go-reseaux',
+        titre: '4. Réseaux enterrés',
+        explication:
+          'Assainissement EU/EV/EP séparé, fourreaux, prise de terre. DICT obligatoire avant de creuser. Passage caméra et hydrocurage avant de couler le plancher.',
+        termesLies: [
+          'assainissement',
+          'eaux-vannes-ev',
+          'fourreau',
+          'prise-de-terre',
+          'dict',
+          'passage-camera-itv',
+        ],
+      },
+      {
+        id: 'go-beton-structure',
+        titre: '5. Béton armé et superstructure',
+        explication:
+          'BPS de centrale, classes C25/30 et d\'exposition. Voiles banchés, prédalles, chaînages. Enrobage, coffrage, décoffrage. Le gros œuvre porte tout le bâtiment.',
+        termesLies: [
+          'bps-beton',
+          'beton-arme',
+          'beton-classe',
+          'voile-beton-banche',
+          'predalle',
+          'chainage',
+          'enrobage',
+          'gros-oeuvre',
+        ],
+      },
+      {
+        id: 'go-chantier',
+        titre: '6. Installation et fin de chantier',
+        explication:
+          'PIC, base vie, grue, bennes tri sélectif. Réunions de chantier hebdomadaires (CR). À la livraison : DOE, plan de recollement, levée des réserves et garanties (GPA, biennale, décennale).',
+        termesLies: [
+          'pic',
+          'base-vie',
+          'reunion-chantier',
+          'doe',
+          'plan-recollement',
+          'garantie-decennale',
+          'gpa',
+        ],
+      },
+    ],
+  },
+  {
     id: 'plateforme-terrassement',
     titre: 'Plateforme et compactage',
     description:

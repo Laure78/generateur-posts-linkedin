@@ -1,5 +1,7 @@
 // data/lexique-btp.ts
 
+import { LEXIQUE_FONDATIONS_GROS_OEUVRE } from './lexique-btp-fondations-gros-oeuvre';
+
 export type Famille =
   | "Procédures & notation"
   | "Documents du marché"
@@ -1399,6 +1401,9 @@ export const LEXIQUE: TermeLexique[] = [
     definition:
       "Matériaux dont la provenance ou la fiche technique doit être validée par le maître d'œuvre avant la mise en œuvre.",
   },
+
+  // ── Fondations & Gros œuvre (CCTP Lot 01) ──
+  ...LEXIQUE_FONDATIONS_GROS_OEUVRE,
 ];
 
 // Helper : normalise (minuscule + sans accents) pour la recherche et le quiz

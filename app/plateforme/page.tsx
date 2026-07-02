@@ -212,7 +212,9 @@ export default async function PlateformeDashboardPage({
                 Lexique &amp; apprentissage BTP
               </h2>
               <p className="mt-1 text-sm text-slate-600">
-                Parcours guidés, schémas (OS, DCE…), dictionnaire, flashcards et quiz.
+                Parcours guidés, dictionnaire, flashcards et quiz — dont le thème{' '}
+                <strong className="font-medium text-slate-800">Fondations &amp; Gros œuvre</strong>{' '}
+                (100+ termes issus d&apos;un CCTP Lot 01).
               </p>
             </div>
           </div>

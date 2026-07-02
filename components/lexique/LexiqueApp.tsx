@@ -39,7 +39,7 @@ export function LexiqueApp() {
             </h1>
             <p className="mt-2 max-w-xl text-base text-slate-500">
               Comprendre le vocabulaire des marchés publics et du chantier — explications simples,
-              schémas et révision active.
+              schémas, parcours <strong className="font-medium text-slate-700">Fondations &amp; Gros œuvre</strong> et quiz thématiques.
             </p>
           </div>
         </div>

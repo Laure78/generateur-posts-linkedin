@@ -46,6 +46,24 @@ export const QUIZ_PRESETS_DEBUTANT: {
     ],
   },
   {
+    id: 'fondations-gros-oeuvre',
+    label: 'Fondations & Gros œuvre',
+    description:
+      'Sol, fondations, béton armé, terrassement, réseaux enterrés et structure GO — vocabulaire Lot 01.',
+    familles: [
+      'Terrassement & géotechnique',
+      'Béton & aciers',
+      'Eurocodes & structure',
+      'Réseaux & lots techniques',
+      'Suivi de chantier',
+      'Sécurité & prévention',
+      'Acteurs & organisation',
+      'Documents du marché',
+      'Réception & garanties',
+      'Études & conception',
+    ],
+  },
+  {
     id: 'admin-outils',
     label: 'Admin & outils',
     description: 'Plateformes, certifications et environnement.',
