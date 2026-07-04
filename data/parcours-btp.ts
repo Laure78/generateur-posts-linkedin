@@ -6,7 +6,8 @@ export type SchemaId =
   | 'prix-marche'
   | 'ordres-service'
   | 'ordres-service-guide'
-  | 'securite-chantier';
+  | 'securite-chantier'
+  | 'couverture-coupe';
 
 export interface EtapeParcours {
   id: string;
@@ -593,37 +594,76 @@ export const PARCOURS_BTP: ParcoursBtp[] = [
     id: 'charpente-couverture',
     titre: 'Charpente & couverture',
     description:
-      'Fermettes, tuiles, zinguerie et évacuation EP — vocabulaire Lot 03 CCTP Millas Nord.',
-    duree: '7 min',
+      'Fermettes, tuiles Canal S, zinguerie, EP et sécurité toiture — vocabulaire Lot 03 CCTP Millas Nord (38 logements).',
+    duree: '10 min',
     etapes: [
       {
-        id: 'cc-charpente',
-        titre: '1. Charpente bois',
+        id: 'cc-lot',
+        titre: '1. Le lot charpente-couverture',
         explication:
-          'Fermettes industrielles MITEK (entraxe 60 cm max) pour combles perdus — notes de calcul validées bureau de contrôle. Le charpentier assure la stabilité horizontale ; le GO reprend les efforts verticaux uniquement. Chevêtres pour trappes, fumées, VMC et désenfumage.',
-        astuce: 'Aucune fermette au-dessus d\'une trappe d\'accès combles.',
-        termesLies: ['fermette-industrielle', 'chevetre-charpente', 'stabilite-charpente-go', 'dtu-31-1'],
+          'Le lot 03 regroupe charpente bois, couverture tuile, zinguerie et évacuation des eaux pluviales. Référence normative : DTU 31.1 (charpentes et escaliers bois). Le charpentier pose aussi les sorties de toiture VMC (matériel fourni par la plomberie) et les châssis de désenfumage.',
+        astuce: 'Point de coordination clé : le charpentier assure la stabilité horizontale de la charpente ; le gros œuvre reprend les efforts verticaux — pas les efforts horizontaux.',
+        termesLies: ['dtu-31-1', 'stabilite-charpente-go'],
+      },
+      {
+        id: 'cc-charpente',
+        titre: '2. Charpente bois',
+        explication:
+          'Fermettes industrielles préfabriquées (MITEK ou équivalent, entraxe max 60 cm) pour combles perdus — notes de calcul validées par le bureau de contrôle. Chevêtres en bois pour trappes, conduits de fumée, VMC et châssis de désenfumage. Platelage léger en combles (3 m²/bloc) pour accès VMC avec garde-corps. Charpente traditionnelle (chevrons C24) pour carports et ouvrages annexes.',
+        astuce: 'Aucune fermette ne doit être posée au-dessus d\'une trappe d\'accès combles.',
+        termesLies: [
+          'fermette-industrielle',
+          'chevetre-charpente',
+          'platelage-combles',
+          'charpente-traditionnelle',
+        ],
+      },
+      {
+        id: 'cc-sous-toiture',
+        titre: '3. Sous-toiture et ventilation',
+        explication:
+          'Membrane pare-pluie (ex. DELTA-VENT S) posée sur la charpente avant les liteaux — protège le bois avant la pose des tuiles. Liteaux et contre-liteaux 27×32 mm cloués sur charpente : support des tuiles et lame d\'air ventilée. Chatières spéciales avec grillage moustiquaire pour aérer les combles (obligations réglementaires).',
+        astuce: 'Variante marché possible : suppression du film pare-pluie sur la plupart des toitures, sauf maison avec tuiles photovoltaïques intégrées.',
+        schema: 'couverture-coupe',
+        termesLies: [
+          'pare-pluie-sous-toiture',
+          'liteaux-contre-liteaux',
+          'chatieres-ventilation-combles',
+        ],
       },
       {
         id: 'cc-couverture',
-        titre: '2. Couverture tuile',
+        titre: '4. Couverture tuile',
         explication:
-          'Tuiles romane Canal S sur liteaux 27×32 mm, pare-pluie DELTA-VENT S (sauf variante sans film). Chatières pour ventiler les combles. Faîtières et arêtiers scellés. 1 tuile sur 5 fixée mécaniquement.',
-        termesLies: ['tuile-canal-s', 'liteaux-contre-liteaux', 'pare-pluie-sous-toiture', 'chatieres-ventilation-combles', 'faitiere-aretiers'],
+          'Tuiles romane à emboîtement type EDILIANS Canal S ou équivalent. Faîtières (crête) et arêtiers (angles) posés à sec avec closoir alu, scellement mortier bâtard. Règle courante : 1 tuile sur 5 fixée mécaniquement contre le vent.',
+        astuce: 'Vérifier la compatibilité des tuiles PV intégrées avec le système Canal S — AT CSTB obligatoire.',
+        termesLies: ['tuile-canal-s', 'faitiere-aretiers', 'tuiles-photovoltaiques-integrees'],
       },
       {
         id: 'cc-zinguerie',
-        titre: '3. Zinguerie & eaux pluviales',
+        titre: '5. Zinguerie & eaux pluviales',
         explication:
-          'Noues zinc/PREFAL sur fond bois, solins de rive, gouttières et descentes alu. Dauphins en pied si chemin piéton. Sorties toiture VMC posées par le lot charpente (fournies plomberie).',
-        termesLies: ['zinguerie-noue', 'solin-rive', 'gouttiere-descente-ep', 'dauphin-ep'],
+          'Noues en zinc ou PREFAL sur fond bois (fond de noue au creux de deux pans). Solins de rive alu teinté tuile avec joint de dilatation. Gouttières alu demi-rond et descentes EP. Dauphins en pied de descente si chemin piéton (hauteur ~2 m) — éloigne l\'eau du mur et du passage.',
+        termesLies: [
+          'fond-de-noue',
+          'zinguerie-noue',
+          'solin-rive',
+          'gouttiere-descente-ep',
+          'dauphin-ep',
+        ],
       },
       {
         id: 'cc-securite',
-        titre: '4. Accès, sécurité & interfaces',
+        titre: '6. Accès, sécurité & interfaces',
         explication:
-          'Châssis désenfumage Velux cages escalier collectifs. Châssis accès toiture GVT. Crochets sécurité double longe (2 000 daN). Tuiles PV intégrées maison 36 — coordination électricité.',
-        termesLies: ['chassis-desenfumage', 'chassis-acces-toiture', 'crochets-securite-toiture', 'tuiles-photovoltaiques-integrees'],
+          'Châssis de désenfumage Velux GGL (ouverture ≥ 110°) en cages d\'escalier collectifs — commande gaz RDC. Châssis d\'accès toiture GVT (trappe 49×76 cm). Crochets de sécurité pour double longe : tous les 1,50 m, 2 lignes (faîtage + milieu de pan), résistance 2 000 daN. Tuiles photovoltaïques intégrées (8 modules maison 36) — raccordement lot électricité.',
+        astuce: 'Le lot charpente pose les sorties toiture VMC ; la plomberie fournit le matériel.',
+        termesLies: [
+          'chassis-desenfumage',
+          'chassis-acces-toiture',
+          'crochets-securite-toiture',
+          'tuiles-photovoltaiques-integrees',
+        ],
       },
     ],
   },

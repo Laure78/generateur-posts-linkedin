@@ -155,6 +155,26 @@ export function ParcoursApprentissage({ initialParcoursId }: { initialParcoursId
           Chaque parcours explique un sujet en langage simple, avec un schéma pour visualiser.
           Pas besoin de tout savoir d&apos;un coup — avancez étape par étape.
         </p>
+        <div className="mt-4 flex flex-wrap gap-2">
+          <Link
+            href="/lexique?parcours=charpente-couverture"
+            className="inline-flex items-center rounded-full bg-orange-100 px-3 py-1.5 text-xs font-semibold text-orange-900 transition hover:bg-orange-200"
+          >
+            Lot 03 — Charpente & couverture
+          </Link>
+          <Link
+            href="/lexique?parcours=menuiseries-exterieures"
+            className="inline-flex items-center rounded-full bg-green-100 px-3 py-1.5 text-xs font-semibold text-green-900 transition hover:bg-green-200"
+          >
+            Lot 04 — Menuiseries
+          </Link>
+          <Link
+            href="/lexique?parcours=enduits-facade"
+            className="inline-flex items-center rounded-full bg-sky-100 px-3 py-1.5 text-xs font-semibold text-sky-900 transition hover:bg-sky-200"
+          >
+            Lot 02 — Enduits
+          </Link>
+        </div>
       </div>
 
       <ul className="space-y-3" role="list">

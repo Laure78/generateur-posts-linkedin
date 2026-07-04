@@ -7,6 +7,7 @@ import { SchemaOrdresService } from './SchemaOrdresService';
 import { SchemaOrdresServiceGuide } from './SchemaOrdresServiceGuide';
 import { SchemaPrixMarche } from './SchemaPrixMarche';
 import { SchemaSecuriteChantier } from './SchemaSecuriteChantier';
+import { SchemaCouvertureCoupe } from './SchemaCouvertureCoupe';
 
 const SCHEMAS: Record<SchemaId, ComponentType> = {
   'marche-public': SchemaMarchePublic,
@@ -16,6 +17,7 @@ const SCHEMAS: Record<SchemaId, ComponentType> = {
   'ordres-service': SchemaOrdresService,
   'ordres-service-guide': SchemaOrdresServiceGuide,
   'securite-chantier': SchemaSecuriteChantier,
+  'couverture-coupe': SchemaCouvertureCoupe,
 };
 
 export function SchemaRenderer({ id, titre }: { id: SchemaId; titre?: string }) {
