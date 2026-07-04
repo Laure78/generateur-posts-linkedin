@@ -9,6 +9,7 @@ import {
   type QuizLotModule,
   type QuizLotTheme,
 } from '@/data/quiz-lot-special-shared';
+import { LexiqueTermeLink } from './LexiqueTermeLink';
 
 type Phase = 'hub' | 'intro' | 'jeu' | 'resultat';
 
@@ -364,10 +365,15 @@ export function QuizLotSpecial({
           </p>
           <p className="mt-2 text-sm leading-relaxed text-slate-700">{question.explication}</p>
           {question.termesLies && question.termesLies.length > 0 && (
-            <p className="mt-3 text-xs text-slate-500">
-              Lexique : {question.termesLies.slice(0, 3).join(', ')}
-              {question.termesLies.length > 3 ? '…' : ''}
-            </p>
+            <div className="mt-3 flex flex-wrap items-center gap-2">
+              <span className="text-xs font-medium text-slate-500">Lexique :</span>
+              {question.termesLies.slice(0, 4).map((id) => (
+                <LexiqueTermeLink key={id} id={id} />
+              ))}
+              {question.termesLies.length > 4 ? (
+                <span className="text-xs text-slate-400">+{question.termesLies.length - 4}</span>
+              ) : null}
+            </div>
           )}
         </div>
       )}

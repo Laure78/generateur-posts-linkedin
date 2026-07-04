@@ -4,8 +4,8 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { Brain, ChevronRight, Lightbulb, BookMarked } from 'lucide-react';
 import { PARCOURS_BTP, type ParcoursBtp } from '@/data/parcours-btp';
-import { LEXIQUE } from '@/data/lexique-btp';
 import { SchemaRenderer } from './schemas/SchemaRenderer';
+import { LexiqueTermeLink } from './LexiqueTermeLink';
 import type { QuizLotInitial } from './Quiz';
 
 const PARCOURS_QUIZ: Partial<Record<string, { lot: QuizLotInitial; label: string }>> = {
@@ -15,16 +15,6 @@ const PARCOURS_QUIZ: Partial<Record<string, { lot: QuizLotInitial; label: string
   'menuiseries-exterieures': { lot: 'menuiseries', label: 'Quiz Menuiseries extérieures' },
   'perf-energetique-f22': { lot: 'perf', label: 'Quiz Performance énergétique' },
 };
-
-function TermeLien({ id }: { id: string }) {
-  const terme = LEXIQUE.find((t) => t.id === id);
-  if (!terme) return null;
-  return (
-    <span className="inline-flex items-center rounded-md bg-bework-blue-soft px-2 py-0.5 text-xs font-medium text-bework-blue">
-      {terme.terme}
-    </span>
-  );
-}
 
 function ParcoursDetail({
   parcours,
@@ -91,7 +81,7 @@ function ParcoursDetail({
             </p>
             <div className="flex flex-wrap gap-2">
               {etape.termesLies.map((id) => (
-                <TermeLien key={id} id={id} />
+                <LexiqueTermeLink key={id} id={id} />
               ))}
             </div>
           </div>
