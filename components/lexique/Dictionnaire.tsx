@@ -100,7 +100,7 @@ function FicheTerme({
   );
 }
 
-export function Dictionnaire() {
+export function Dictionnaire({ termeInitial }: { termeInitial?: string | null }) {
   const [recherche, setRecherche] = useState('');
   const [famillesSelection, setFamillesSelection] = useState<Famille[]>([]);
   const [ouvertId, setOuvertId] = useState<string | null>(null);
@@ -109,6 +109,22 @@ export function Dictionnaire() {
   useEffect(() => {
     setFavoris(lireFavoris());
   }, []);
+
+  useEffect(() => {
+    if (!termeInitial) return;
+    const existe = LEXIQUE.some((t) => t.id === termeInitial);
+    if (!existe) return;
+    setRecherche('');
+    setFamillesSelection([]);
+    setOuvertId(termeInitial);
+    const timer = window.setTimeout(() => {
+      document.getElementById(`lexique-${termeInitial}`)?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      });
+    }, 80);
+    return () => window.clearTimeout(timer);
+  }, [termeInitial]);
 
   const famillesActives = famillesSelection.length > 0 ? famillesSelection : null;
 
@@ -179,7 +195,7 @@ export function Dictionnaire() {
       ) : (
         <ul className="space-y-3" role="list">
           {termesFiltres.map((terme) => (
-            <li key={terme.id}>
+            <li key={terme.id} id={`lexique-${terme.id}`} className="scroll-mt-28">
               <FicheTerme
                 terme={terme}
                 ouvert={ouvertId === terme.id}

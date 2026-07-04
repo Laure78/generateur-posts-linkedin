@@ -31,15 +31,27 @@ function parseLot(value: string | null): QuizLotInitial | null {
   return null;
 }
 
+function resolveInitialMode(modeParam: string | null, termeParam: string | null): Mode {
+  if (modeParam && ONGLETS.some((o) => o.id === modeParam)) return modeParam as Mode;
+  if (termeParam) return 'dictionnaire';
+  return 'parcours';
+}
+
 function LexiqueAppInner() {
   const searchParams = useSearchParams();
   const parcoursInitial = searchParams.get('parcours');
+  const termeInitial = searchParams.get('terme');
   const lotInitial = parseLot(searchParams.get('lot'));
-  const [mode, setMode] = useState<Mode>(() => parseMode(searchParams.get('mode')));
+  const [mode, setMode] = useState<Mode>(() =>
+    resolveInitialMode(searchParams.get('mode'), searchParams.get('terme')),
+  );
 
   useEffect(() => {
     const modeParam = searchParams.get('mode');
-    if (modeParam) setMode(parseMode(modeParam));
+    const termeParam = searchParams.get('terme');
+    if (modeParam || termeParam) {
+      setMode(resolveInitialMode(modeParam, termeParam));
+    }
   }, [searchParams]);
 
   return (
@@ -100,7 +112,7 @@ function LexiqueAppInner() {
         {mode === 'parcours' && (
           <ParcoursApprentissage initialParcoursId={parcoursInitial} />
         )}
-        {mode === 'dictionnaire' && <Dictionnaire />}
+        {mode === 'dictionnaire' && <Dictionnaire termeInitial={termeInitial} />}
         {mode === 'flashcards' && <Flashcards />}
         {mode === 'quiz' && <Quiz lotInitial={lotInitial} />}
       </main>
