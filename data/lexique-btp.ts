@@ -3,6 +3,8 @@
 import { LEXIQUE_FONDATIONS_GROS_OEUVRE } from './lexique-btp-fondations-gros-oeuvre';
 import { LEXIQUE_ENDUITS_FACADE } from './lexique-btp-enduits-facade';
 import { LEXIQUE_PERF_ENERGETIQUE } from './lexique-btp-perf-energetique';
+import { LEXIQUE_MENUISERIES_EXTERIEURES } from './lexique-btp-menuiseries-exterieures';
+import { LEXIQUE_CHARPENTE_COUVERTURE } from './lexique-btp-charpente-couverture';
 
 export type Famille =
   | "Procédures & notation"
@@ -28,7 +30,9 @@ export type Famille =
   | "Sous-traitance"
   | "Divers techniques"
   | "Enduits & façades"
-  | "Performance énergétique & contrôles";
+  | "Performance énergétique & contrôles"
+  | "Menuiseries extérieures"
+  | "Charpente & couverture";
 
 export interface TermeLexique {
   id: string;
@@ -66,6 +70,8 @@ export const FAMILLES: Famille[] = [
   "Divers techniques",
   "Enduits & façades",
   "Performance énergétique & contrôles",
+  "Menuiseries extérieures",
+  "Charpente & couverture",
 ];
 
 export const LEXIQUE: TermeLexique[] = [
@@ -1416,6 +1422,12 @@ export const LEXIQUE: TermeLexique[] = [
 
   // ── Famille 22 — Performance énergétique & contrôles ──
   ...LEXIQUE_PERF_ENERGETIQUE,
+
+  // ── Lot 04 — Menuiseries extérieures (Millas Nord) ──
+  ...LEXIQUE_MENUISERIES_EXTERIEURES,
+
+  // ── Lot 03 — Charpente & couverture (Millas Nord) ──
+  ...LEXIQUE_CHARPENTE_COUVERTURE,
 ];
 
 // Helper : normalise (minuscule + sans accents) pour la recherche et le quiz

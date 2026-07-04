@@ -54,7 +54,9 @@ function LexiqueAppInner() {
               Comprendre le vocabulaire des marchés publics et du chantier — explications simples,
               schémas, parcours{' '}
               <strong className="font-medium text-slate-700">Gros œuvre</strong>,{' '}
-              <strong className="font-medium text-slate-700">Enduits</strong> et{' '}
+              <strong className="font-medium text-slate-700">Enduits</strong>,{' '}
+              <strong className="font-medium text-slate-700">Charpente</strong>,{' '}
+              <strong className="font-medium text-slate-700">Menuiseries</strong> et{' '}
               <strong className="font-medium text-slate-700">Performance énergétique</strong>, quiz
               thématiques.
             </p>

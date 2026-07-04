@@ -46,6 +46,20 @@ export const QUIZ_PRESETS_DEBUTANT: {
     ],
   },
   {
+    id: 'menuiseries-exterieures',
+    label: 'Menuiseries extérieures',
+    description:
+      'Fenêtres PVC, portes alu, volets, calfeutrement et performance thermique — Lot 04.',
+    familles: ['Menuiseries extérieures'],
+  },
+  {
+    id: 'charpente-couverture',
+    label: 'Charpente & couverture',
+    description:
+      'Fermettes, tuiles, zinguerie, EP et interfaces VMC — Lot 03.',
+    familles: ['Charpente & couverture'],
+  },
+  {
     id: 'perf-energetique-f22',
     label: 'Performance énergétique (Famille 22)',
     description:
@@ -227,6 +241,14 @@ export const QUIZ_FAMILLE_AIDE: Record<
   'Performance énergétique & contrôles': {
     resume: 'Q4Pa-surf, tests d\'infiltrométrie, schémas fluides et lot MEP.',
     astuce: '2 tests obligatoires (clos-couvert + achèvement) · échec = réparation sous 5 jours ouvrés.',
+  },
+  'Menuiseries extérieures': {
+    resume: 'Fenêtres, portes, volets — pose, étanchéité et performance thermique.',
+    astuce: 'Relevé de cotes sur place avant fabrication · calfeutrement = lot menuiseries.',
+  },
+  'Charpente & couverture': {
+    resume: 'Charpente bois, tuiles, zinguerie et évacuation des eaux pluviales.',
+    astuce: 'Charpentier = stabilité horizontale · GO = efforts verticaux seulement.',
   },
 };
 

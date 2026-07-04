@@ -1,11 +1,13 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { HardHat, Lightbulb, Paintbrush, Gauge, RotateCcw, Shuffle } from 'lucide-react';
+import { HardHat, Home, DoorOpen, Lightbulb, Paintbrush, Gauge, RotateCcw, Shuffle } from 'lucide-react';
 import type { Famille } from '@/data/lexique-btp';
 import { QuizGrosOeuvreSpecial } from '@/components/lexique/QuizGrosOeuvreSpecial';
 import { QuizEnduitsFacadeSpecial } from '@/components/lexique/QuizEnduitsFacadeSpecial';
 import { QuizPerfEnergetiqueSpecial } from '@/components/lexique/QuizPerfEnergetiqueSpecial';
+import { QuizMenuiseriesSpecial } from '@/components/lexique/QuizMenuiseriesSpecial';
+import { QuizCharpenteCouvertureSpecial } from '@/components/lexique/QuizCharpenteCouvertureSpecial';
 import {
   FAMILLES,
   QUIZ_FAMILLE_AIDE,
@@ -97,6 +99,8 @@ export function Quiz() {
   const [modeSpecialGo, setModeSpecialGo] = useState(false);
   const [modeSpecialEnduits, setModeSpecialEnduits] = useState(false);
   const [modeSpecialPerf, setModeSpecialPerf] = useState(false);
+  const [modeSpecialMenuiseries, setModeSpecialMenuiseries] = useState(false);
+  const [modeSpecialCharpente, setModeSpecialCharpente] = useState(false);
   const [phase, setPhase] = useState<Phase>('config');
   const [famillesSelection, setFamillesSelection] = useState<Famille[]>([]);
   const [presetActif, setPresetActif] = useState<string | null>(null);
@@ -275,6 +279,14 @@ export function Quiz() {
     return <QuizPerfEnergetiqueSpecial onRetour={() => setModeSpecialPerf(false)} />;
   }
 
+  if (modeSpecialMenuiseries) {
+    return <QuizMenuiseriesSpecial onRetour={() => setModeSpecialMenuiseries(false)} />;
+  }
+
+  if (modeSpecialCharpente) {
+    return <QuizCharpenteCouvertureSpecial onRetour={() => setModeSpecialCharpente(false)} />;
+  }
+
   // ── Configuration ──
   if (phase === 'config') {
     return (
@@ -349,6 +361,56 @@ export function Quiz() {
               className="bework-btn-primary shrink-0 bg-emerald-600 hover:bg-emerald-700"
             >
               <Gauge className="h-4 w-4" aria-hidden />
+              Lancer
+            </button>
+          </div>
+        </div>
+
+        <div className="bework-card overflow-hidden border-2 border-orange-300/50 p-0">
+          <div className="flex flex-col gap-4 bg-gradient-to-r from-orange-50 to-amber-50 p-5 sm:flex-row sm:items-center sm:justify-between">
+            <div className="min-w-0">
+              <p className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-orange-900">
+                <Home className="h-4 w-4" aria-hidden />
+                Lot 03
+              </p>
+              <p className="font-display mt-1 text-lg font-bold text-bework-navy">
+                Quiz Charpente & couverture — 4 thèmes
+              </p>
+              <p className="mt-1 text-sm text-slate-600">
+                42 questions : fermettes, tuiles Canal S, zinguerie, EP, désenfumage et sécurité toiture.
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => setModeSpecialCharpente(true)}
+              className="bework-btn-primary shrink-0 bg-orange-600 hover:bg-orange-700"
+            >
+              <Home className="h-4 w-4" aria-hidden />
+              Lancer
+            </button>
+          </div>
+        </div>
+
+        <div className="bework-card overflow-hidden border-2 border-green-300/50 p-0">
+          <div className="flex flex-col gap-4 bg-gradient-to-r from-green-50 to-indigo-50 p-5 sm:flex-row sm:items-center sm:justify-between">
+            <div className="min-w-0">
+              <p className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-green-800">
+                <DoorOpen className="h-4 w-4" aria-hidden />
+                Lot 04
+              </p>
+              <p className="font-display mt-1 text-lg font-bold text-bework-navy">
+                Quiz Menuiseries extérieures — 4 thèmes
+              </p>
+              <p className="mt-1 text-sm text-slate-600">
+                42 questions : pose, fenêtres PVC, portes collectives, volets et étanchéité à l&apos;air.
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => setModeSpecialMenuiseries(true)}
+              className="bework-btn-primary shrink-0 bg-green-600 hover:bg-green-700"
+            >
+              <DoorOpen className="h-4 w-4" aria-hidden />
               Lancer
             </button>
           </div>

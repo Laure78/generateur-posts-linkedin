@@ -32,7 +32,7 @@ export type QuizLotTheme = {
   buttonClass: string;
   progressClass: string;
   borderClass: string;
-  icon: 'hard-hat' | 'paintbrush' | 'gauge';
+  icon: 'hard-hat' | 'paintbrush' | 'gauge' | 'door-open' | 'home';
   parcoursLabel?: string;
   /** Lien vers /lexique?parcours=… depuis l'écran résultat */
   parcoursId?: string;

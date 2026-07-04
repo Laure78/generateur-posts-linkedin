@@ -590,6 +590,82 @@ export const PARCOURS_BTP: ParcoursBtp[] = [
     ],
   },
   {
+    id: 'charpente-couverture',
+    titre: 'Charpente & couverture',
+    description:
+      'Fermettes, tuiles, zinguerie et évacuation EP — vocabulaire Lot 03 CCTP Millas Nord.',
+    duree: '7 min',
+    etapes: [
+      {
+        id: 'cc-charpente',
+        titre: '1. Charpente bois',
+        explication:
+          'Fermettes industrielles MITEK (entraxe 60 cm max) pour combles perdus — notes de calcul validées bureau de contrôle. Le charpentier assure la stabilité horizontale ; le GO reprend les efforts verticaux uniquement. Chevêtres pour trappes, fumées, VMC et désenfumage.',
+        astuce: 'Aucune fermette au-dessus d\'une trappe d\'accès combles.',
+        termesLies: ['fermette-industrielle', 'chevetre-charpente', 'stabilite-charpente-go', 'dtu-31-1'],
+      },
+      {
+        id: 'cc-couverture',
+        titre: '2. Couverture tuile',
+        explication:
+          'Tuiles romane Canal S sur liteaux 27×32 mm, pare-pluie DELTA-VENT S (sauf variante sans film). Chatières pour ventiler les combles. Faîtières et arêtiers scellés. 1 tuile sur 5 fixée mécaniquement.',
+        termesLies: ['tuile-canal-s', 'liteaux-contre-liteaux', 'pare-pluie-sous-toiture', 'chatieres-ventilation-combles', 'faitiere-aretiers'],
+      },
+      {
+        id: 'cc-zinguerie',
+        titre: '3. Zinguerie & eaux pluviales',
+        explication:
+          'Noues zinc/PREFAL sur fond bois, solins de rive, gouttières et descentes alu. Dauphins en pied si chemin piéton. Sorties toiture VMC posées par le lot charpente (fournies plomberie).',
+        termesLies: ['zinguerie-noue', 'solin-rive', 'gouttiere-descente-ep', 'dauphin-ep'],
+      },
+      {
+        id: 'cc-securite',
+        titre: '4. Accès, sécurité & interfaces',
+        explication:
+          'Châssis désenfumage Velux cages escalier collectifs. Châssis accès toiture GVT. Crochets sécurité double longe (2 000 daN). Tuiles PV intégrées maison 36 — coordination électricité.',
+        termesLies: ['chassis-desenfumage', 'chassis-acces-toiture', 'crochets-securite-toiture', 'tuiles-photovoltaiques-integrees'],
+      },
+    ],
+  },
+  {
+    id: 'menuiseries-exterieures',
+    titre: 'Menuiseries extérieures',
+    description:
+      'Fenêtres PVC, portes alu, volets et étanchéité — vocabulaire Lot 04 CCTP Millas Nord.',
+    duree: '7 min',
+    etapes: [
+      {
+        id: 'me-pose',
+        titre: '1. Pose et étanchéité',
+        explication:
+          'DTU 36.5. Scellement et calfeutrement = lot menuiseries. Relevé de cotes sur place avant fabrication. Compriband + silicone/BUTYL. Étanchéité à l\'air 4 faces si exigée MOE — impact Q4Pa-surf.',
+        astuce: 'Les dimensions CCTP sont indicatives : toujours mesurer sur chantier.',
+        termesLies: ['dtu-36-5', 'scellement-menuiseries', 'calfeutrement-menuiserie', 'releve-cotes-menuiseries', 'etancheite-air-4-faces'],
+      },
+      {
+        id: 'me-fenetres',
+        titre: '2. Fenêtres & portes logements',
+        explication:
+          'PVC blanc : crémone 3 points, double vitrage faible émissivité, Uw selon étude thermique. Satinovo SdB/WC, Stadip Protect RDC sans VR. Seuil PMR sur portes-fenêtres avec drainage.',
+        termesLies: ['uw-menuiserie', 'double-vitrage-faible-emissivite', 'cremone-3-points', 'seuil-pmr-menuiserie', 'vitrage-satinovo-stadip', 'compriband-appui'],
+      },
+      {
+        id: 'me-collectif',
+        titre: '3. Portes collectives & acoustique',
+        explication:
+          'Portes alu entrée immeuble : ventouses, ferme-porte force 3, passage 1 m, vitrage CEKAL. Affaiblissement acoustique façade 30 dB, fenêtres R = 31 dB.',
+        termesLies: ['porte-entree-collectif-alu', 'affaiblissement-acoustique-menuiserie', 'dormant-ouvrant'],
+      },
+      {
+        id: 'me-volets',
+        titre: '4. Volets & entrées d\'air',
+        explication:
+          'VR PVC manuel ou motorisé Thermobloc (coffre isolé). Barres anti-soulèvement RDC. Grilles entrée d\'air fournies lot VMC, mortaises par menuisier. Volets battants alu ou variante bois.',
+        termesLies: ['volet-roulant-thermobloc', 'barre-anti-soulevement', 'grille-entree-air-menuiserie'],
+      },
+    ],
+  },
+  {
     id: 'plateforme-terrassement',
     titre: 'Plateforme et compactage',
     description:

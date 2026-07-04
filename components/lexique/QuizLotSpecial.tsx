@@ -2,7 +2,7 @@
 
 import { useCallback, useMemo, useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Gauge, HardHat, Lightbulb, Paintbrush, RotateCcw } from 'lucide-react';
+import { ArrowLeft, DoorOpen, Gauge, HardHat, Home, Lightbulb, Paintbrush, RotateCcw } from 'lucide-react';
 import {
   preparerQuestionsLot,
   type QuestionQuizLotSpeciale,
@@ -30,6 +30,13 @@ const CHAPITRE_STYLE_DEFAULT: Record<string, string> = {
   'Schémas fluides': 'bg-cyan-50 text-cyan-900 border-cyan-200',
   'Lot MEP': 'bg-violet-50 text-violet-900 border-violet-200',
   Synthèse: 'bg-emerald-50 text-emerald-900 border-emerald-200',
+  'Généralités & pose': 'bg-indigo-50 text-indigo-900 border-indigo-200',
+  'Fenêtres & portes': 'bg-blue-50 text-blue-900 border-blue-200',
+  'Volets & fermetures': 'bg-violet-50 text-violet-900 border-violet-200',
+  Charpente: 'bg-amber-50 text-amber-900 border-amber-200',
+  Couverture: 'bg-orange-50 text-orange-900 border-orange-200',
+  Zinguerie: 'bg-slate-100 text-slate-800 border-slate-200',
+  'Interfaces & sécurité': 'bg-rose-50 text-rose-900 border-rose-200',
 };
 
 function messageScore(
@@ -72,7 +79,15 @@ export function QuizLotSpecial({
   const [indice, setIndice] = useState(false);
 
   const Icon =
-    theme.icon === 'paintbrush' ? Paintbrush : theme.icon === 'gauge' ? Gauge : HardHat;
+    theme.icon === 'paintbrush'
+      ? Paintbrush
+      : theme.icon === 'gauge'
+        ? Gauge
+        : theme.icon === 'door-open'
+          ? DoorOpen
+          : theme.icon === 'home'
+            ? Home
+            : HardHat;
 
   const demarrerModule = useCallback((module: QuizLotModule) => {
     setModuleActif(module);
