@@ -52,3 +52,20 @@ export function melangerQuestionsLot<T>(arr: T[]): T[] {
   }
   return copy;
 }
+
+/** Mélange les propositions (la bonne réponse n'est pas toujours en 1re position). */
+export function melangerOptionsQuestion(
+  question: QuestionQuizLotSpeciale,
+): QuestionQuizLotSpeciale {
+  return {
+    ...question,
+    options: melangerQuestionsLot(question.options),
+  };
+}
+
+/** Questions + options mélangées pour une partie. */
+export function preparerQuestionsLot(
+  questions: QuestionQuizLotSpeciale[],
+): QuestionQuizLotSpeciale[] {
+  return melangerQuestionsLot(questions.map(melangerOptionsQuestion));
+}

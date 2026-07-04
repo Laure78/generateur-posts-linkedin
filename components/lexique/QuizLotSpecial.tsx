@@ -4,7 +4,7 @@ import { useCallback, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, HardHat, Lightbulb, Paintbrush, RotateCcw } from 'lucide-react';
 import {
-  melangerQuestionsLot,
+  preparerQuestionsLot,
   type QuestionQuizLotSpeciale,
   type QuizLotModule,
   type QuizLotTheme,
@@ -71,7 +71,7 @@ export function QuizLotSpecial({
 
   const demarrerModule = useCallback((module: QuizLotModule) => {
     setModuleActif(module);
-    setQuestions(melangerQuestionsLot(module.questions));
+    setQuestions(preparerQuestionsLot(module.questions));
     setIndex(0);
     setChoix(null);
     setScore(0);
