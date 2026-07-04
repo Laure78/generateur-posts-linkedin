@@ -8,7 +8,7 @@ import { BeWorkLogo } from '@/components/brand/BeWorkLogo';
 import { BEWORK } from '@/lib/bework/config';
 import { Dictionnaire } from './Dictionnaire';
 import { Flashcards } from './Flashcards';
-import { Quiz } from './Quiz';
+import { Quiz, type QuizLotInitial } from './Quiz';
 import { ParcoursApprentissage } from './ParcoursApprentissage';
 
 type Mode = 'parcours' | 'dictionnaire' | 'flashcards' | 'quiz';
@@ -25,9 +25,16 @@ function parseMode(value: string | null): Mode {
   return 'parcours';
 }
 
+function parseLot(value: string | null): QuizLotInitial | null {
+  const lots: QuizLotInitial[] = ['go', 'enduits', 'charpente', 'menuiseries', 'perf'];
+  if (value && lots.includes(value as QuizLotInitial)) return value as QuizLotInitial;
+  return null;
+}
+
 function LexiqueAppInner() {
   const searchParams = useSearchParams();
   const parcoursInitial = searchParams.get('parcours');
+  const lotInitial = parseLot(searchParams.get('lot'));
   const [mode, setMode] = useState<Mode>(() => parseMode(searchParams.get('mode')));
 
   useEffect(() => {
@@ -95,7 +102,7 @@ function LexiqueAppInner() {
         )}
         {mode === 'dictionnaire' && <Dictionnaire />}
         {mode === 'flashcards' && <Flashcards />}
-        {mode === 'quiz' && <Quiz />}
+        {mode === 'quiz' && <Quiz lotInitial={lotInitial} />}
       </main>
 
       <footer className="border-t border-slate-200 bg-white px-4 py-6 text-center text-xs text-slate-500 sm:text-sm">

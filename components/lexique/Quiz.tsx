@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react';
 import { HardHat, Home, DoorOpen, Lightbulb, Paintbrush, Gauge, RotateCcw, Shuffle } from 'lucide-react';
 import type { Famille } from '@/data/lexique-btp';
 import { QuizGrosOeuvreSpecial } from '@/components/lexique/QuizGrosOeuvreSpecial';
@@ -95,7 +95,65 @@ function chipClass(actif: boolean) {
 
 type Phase = 'config' | 'jeu' | 'resultat';
 
-export function Quiz() {
+export type QuizLotInitial = 'go' | 'enduits' | 'charpente' | 'menuiseries' | 'perf';
+
+type QuizLotEncartProps = {
+  lotLabel: string;
+  titre: string;
+  description: string;
+  borderClass: string;
+  gradientClass: string;
+  labelClass: string;
+  buttonClass: string;
+  icon: ReactNode;
+  onLancer: () => void;
+  featured?: boolean;
+};
+
+function QuizLotEncart({
+  lotLabel,
+  titre,
+  description,
+  borderClass,
+  gradientClass,
+  labelClass,
+  buttonClass,
+  icon,
+  onLancer,
+  featured,
+}: QuizLotEncartProps) {
+  return (
+    <div
+      className={`bework-card overflow-hidden border-2 p-0 ${borderClass} ${
+        featured ? 'ring-2 ring-bework-navy/20 ring-offset-2' : ''
+      }`}
+    >
+      <div
+        className={`flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between ${gradientClass}`}
+      >
+        <div className="min-w-0">
+          <p className={`inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide ${labelClass}`}>
+            {icon}
+            {lotLabel}
+            {featured ? (
+              <span className="ml-1 rounded-full bg-white/90 px-2 py-0.5 text-[10px] font-bold text-bework-navy">
+                Nouveau
+              </span>
+            ) : null}
+          </p>
+          <p className="font-display mt-1 text-lg font-bold text-bework-navy">{titre}</p>
+          <p className="mt-1 text-sm text-slate-600">{description}</p>
+        </div>
+        <button type="button" onClick={onLancer} className={`bework-btn-primary shrink-0 ${buttonClass}`}>
+          {icon}
+          Lancer
+        </button>
+      </div>
+    </div>
+  );
+}
+
+export function Quiz({ lotInitial }: { lotInitial?: QuizLotInitial | null }) {
   const [modeSpecialGo, setModeSpecialGo] = useState(false);
   const [modeSpecialEnduits, setModeSpecialEnduits] = useState(false);
   const [modeSpecialPerf, setModeSpecialPerf] = useState(false);
@@ -116,6 +174,27 @@ export function Quiz() {
   useEffect(() => {
     setTermesSoumis(lireTermesSoumisQuiz());
   }, []);
+
+  useEffect(() => {
+    if (!lotInitial) return;
+    switch (lotInitial) {
+      case 'go':
+        setModeSpecialGo(true);
+        break;
+      case 'enduits':
+        setModeSpecialEnduits(true);
+        break;
+      case 'charpente':
+        setModeSpecialCharpente(true);
+        break;
+      case 'menuiseries':
+        setModeSpecialMenuiseries(true);
+        break;
+      case 'perf':
+        setModeSpecialPerf(true);
+        break;
+    }
+  }, [lotInitial]);
 
   const famillesActives = famillesSelection.length > 0 ? famillesSelection : null;
   const pool = useMemo(() => poolQuiz(famillesActives), [famillesActives]);
@@ -291,130 +370,79 @@ export function Quiz() {
   if (phase === 'config') {
     return (
       <div className="space-y-5">
-        <div className="bework-card overflow-hidden border-2 border-amber-300/50 p-0">
-          <div className="flex flex-col gap-4 bg-gradient-to-r from-amber-50 to-orange-50 p-5 sm:flex-row sm:items-center sm:justify-between">
-            <div className="min-w-0">
-              <p className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-amber-800">
-                <HardHat className="h-4 w-4" aria-hidden />
-                Lot 01
-              </p>
-              <p className="font-display mt-1 text-lg font-bold text-bework-navy">
-                Quiz Gros œuvre — 7 thèmes
-              </p>
-              <p className="mt-1 text-sm text-slate-600">
-                75 questions terrain : fondations, terrassement, béton, structure, réseaux, marché + parcours complet.
-              </p>
-            </div>
-            <button
-              type="button"
-              onClick={() => setModeSpecialGo(true)}
-              className="bework-btn-primary shrink-0 bg-amber-600 hover:bg-amber-700"
-            >
-              <HardHat className="h-4 w-4" aria-hidden />
-              Lancer
-            </button>
-          </div>
+        <div className="bework-card border-bework-navy/15 bg-white p-5">
+          <p className="font-display text-base font-semibold text-bework-navy">
+            Quiz terrain par lot CCTP
+          </p>
+          <p className="mt-1 text-sm text-slate-600">
+            Questions scénarisées avec explications — idéal pour débuter. Commencez par{' '}
+            <strong className="font-medium">Charpente</strong> ou{' '}
+            <strong className="font-medium">Menuiseries</strong> (Millas Nord).
+          </p>
         </div>
 
-        <div className="bework-card overflow-hidden border-2 border-sky-300/50 p-0">
-          <div className="flex flex-col gap-4 bg-gradient-to-r from-sky-50 to-blue-50 p-5 sm:flex-row sm:items-center sm:justify-between">
-            <div className="min-w-0">
-              <p className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-sky-800">
-                <Paintbrush className="h-4 w-4" aria-hidden />
-                Lot 02
-              </p>
-              <p className="font-display mt-1 text-lg font-bold text-bework-navy">
-                Quiz Enduits de façade — 7 thèmes
-              </p>
-              <p className="mt-1 text-sm text-slate-600">
-                75 questions : monocouche, supports RT/OC, application, points singuliers, modénatures, échafaudages + parcours complet.
-              </p>
-            </div>
-            <button
-              type="button"
-              onClick={() => setModeSpecialEnduits(true)}
-              className="bework-btn-primary shrink-0 bg-sky-600 hover:bg-sky-700"
-            >
-              <Paintbrush className="h-4 w-4" aria-hidden />
-              Lancer
-            </button>
-          </div>
+        <div className="grid gap-3 sm:grid-cols-2">
+          <QuizLotEncart
+            featured
+            lotLabel="Lot 03"
+            titre="Charpente & couverture"
+            description="42 questions : fermettes, tuiles, zinguerie, EP, sécurité toiture."
+            borderClass="border-orange-300/60"
+            gradientClass="bg-gradient-to-r from-orange-50 to-amber-50"
+            labelClass="text-orange-900"
+            buttonClass="bg-orange-600 hover:bg-orange-700"
+            icon={<Home className="h-4 w-4" aria-hidden />}
+            onLancer={() => setModeSpecialCharpente(true)}
+          />
+          <QuizLotEncart
+            featured
+            lotLabel="Lot 04"
+            titre="Menuiseries extérieures"
+            description="42 questions : pose, fenêtres PVC, portes, volets, étanchéité à l'air."
+            borderClass="border-green-300/60"
+            gradientClass="bg-gradient-to-r from-green-50 to-indigo-50"
+            labelClass="text-green-800"
+            buttonClass="bg-green-600 hover:bg-green-700"
+            icon={<DoorOpen className="h-4 w-4" aria-hidden />}
+            onLancer={() => setModeSpecialMenuiseries(true)}
+          />
         </div>
 
-        <div className="bework-card overflow-hidden border-2 border-emerald-300/50 p-0">
-          <div className="flex flex-col gap-4 bg-gradient-to-r from-emerald-50 to-teal-50 p-5 sm:flex-row sm:items-center sm:justify-between">
-            <div className="min-w-0">
-              <p className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-emerald-800">
-                <Gauge className="h-4 w-4" aria-hidden />
-                Famille 22
-              </p>
-              <p className="font-display mt-1 text-lg font-bold text-bework-navy">
-                Quiz Performance énergétique — 4 thèmes
-              </p>
-              <p className="mt-1 text-sm text-slate-600">
-                42 questions : Q4Pa-surf, infiltrométrie, schémas fluides, lot MEP, réservations + parcours complet.
-              </p>
-            </div>
-            <button
-              type="button"
-              onClick={() => setModeSpecialPerf(true)}
-              className="bework-btn-primary shrink-0 bg-emerald-600 hover:bg-emerald-700"
-            >
-              <Gauge className="h-4 w-4" aria-hidden />
-              Lancer
-            </button>
-          </div>
-        </div>
+        <QuizLotEncart
+          lotLabel="Lot 01"
+          titre="Gros œuvre — 7 thèmes"
+          description="75 questions : fondations, terrassement, béton, structure, réseaux, marché + parcours complet."
+          borderClass="border-amber-300/50"
+          gradientClass="bg-gradient-to-r from-amber-50 to-orange-50"
+          labelClass="text-amber-800"
+          buttonClass="bg-amber-600 hover:bg-amber-700"
+          icon={<HardHat className="h-4 w-4" aria-hidden />}
+          onLancer={() => setModeSpecialGo(true)}
+        />
 
-        <div className="bework-card overflow-hidden border-2 border-orange-300/50 p-0">
-          <div className="flex flex-col gap-4 bg-gradient-to-r from-orange-50 to-amber-50 p-5 sm:flex-row sm:items-center sm:justify-between">
-            <div className="min-w-0">
-              <p className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-orange-900">
-                <Home className="h-4 w-4" aria-hidden />
-                Lot 03
-              </p>
-              <p className="font-display mt-1 text-lg font-bold text-bework-navy">
-                Quiz Charpente & couverture — 4 thèmes
-              </p>
-              <p className="mt-1 text-sm text-slate-600">
-                42 questions : fermettes, tuiles Canal S, zinguerie, EP, désenfumage et sécurité toiture.
-              </p>
-            </div>
-            <button
-              type="button"
-              onClick={() => setModeSpecialCharpente(true)}
-              className="bework-btn-primary shrink-0 bg-orange-600 hover:bg-orange-700"
-            >
-              <Home className="h-4 w-4" aria-hidden />
-              Lancer
-            </button>
-          </div>
-        </div>
+        <QuizLotEncart
+          lotLabel="Lot 02"
+          titre="Enduits de façade — 7 thèmes"
+          description="75 questions : monocouche, RT/OC, application, modénatures, échafaudages + parcours complet."
+          borderClass="border-sky-300/50"
+          gradientClass="bg-gradient-to-r from-sky-50 to-blue-50"
+          labelClass="text-sky-800"
+          buttonClass="bg-sky-600 hover:bg-sky-700"
+          icon={<Paintbrush className="h-4 w-4" aria-hidden />}
+          onLancer={() => setModeSpecialEnduits(true)}
+        />
 
-        <div className="bework-card overflow-hidden border-2 border-green-300/50 p-0">
-          <div className="flex flex-col gap-4 bg-gradient-to-r from-green-50 to-indigo-50 p-5 sm:flex-row sm:items-center sm:justify-between">
-            <div className="min-w-0">
-              <p className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-green-800">
-                <DoorOpen className="h-4 w-4" aria-hidden />
-                Lot 04
-              </p>
-              <p className="font-display mt-1 text-lg font-bold text-bework-navy">
-                Quiz Menuiseries extérieures — 4 thèmes
-              </p>
-              <p className="mt-1 text-sm text-slate-600">
-                42 questions : pose, fenêtres PVC, portes collectives, volets et étanchéité à l&apos;air.
-              </p>
-            </div>
-            <button
-              type="button"
-              onClick={() => setModeSpecialMenuiseries(true)}
-              className="bework-btn-primary shrink-0 bg-green-600 hover:bg-green-700"
-            >
-              <DoorOpen className="h-4 w-4" aria-hidden />
-              Lancer
-            </button>
-          </div>
-        </div>
+        <QuizLotEncart
+          lotLabel="Famille 22"
+          titre="Performance énergétique — 4 thèmes"
+          description="42 questions : Q4Pa-surf, schémas fluides, lot MEP, réservations + parcours complet."
+          borderClass="border-emerald-300/50"
+          gradientClass="bg-gradient-to-r from-emerald-50 to-teal-50"
+          labelClass="text-emerald-800"
+          buttonClass="bg-emerald-600 hover:bg-emerald-700"
+          icon={<Gauge className="h-4 w-4" aria-hidden />}
+          onLancer={() => setModeSpecialPerf(true)}
+        />
 
         <div className="bework-card border-emerald-200 bg-emerald-50/80 p-5">
           <p className="font-display text-base font-semibold text-bework-navy">

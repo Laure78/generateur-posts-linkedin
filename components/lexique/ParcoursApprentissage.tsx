@@ -1,10 +1,20 @@
 'use client';
 
 import { useState } from 'react';
-import { ChevronRight, Lightbulb, BookMarked } from 'lucide-react';
+import Link from 'next/link';
+import { Brain, ChevronRight, Lightbulb, BookMarked } from 'lucide-react';
 import { PARCOURS_BTP, type ParcoursBtp } from '@/data/parcours-btp';
 import { LEXIQUE } from '@/data/lexique-btp';
 import { SchemaRenderer } from './schemas/SchemaRenderer';
+import type { QuizLotInitial } from './Quiz';
+
+const PARCOURS_QUIZ: Partial<Record<string, { lot: QuizLotInitial; label: string }>> = {
+  'fondations-gros-oeuvre': { lot: 'go', label: 'Quiz Gros œuvre' },
+  'enduits-facade': { lot: 'enduits', label: 'Quiz Enduits de façade' },
+  'charpente-couverture': { lot: 'charpente', label: 'Quiz Charpente & couverture' },
+  'menuiseries-exterieures': { lot: 'menuiseries', label: 'Quiz Menuiseries extérieures' },
+  'perf-energetique-f22': { lot: 'perf', label: 'Quiz Performance énergétique' },
+};
 
 function TermeLien({ id }: { id: string }) {
   const terme = LEXIQUE.find((t) => t.id === id);
@@ -26,6 +36,7 @@ function ParcoursDetail({
   const [etapeIndex, setEtapeIndex] = useState(0);
   const etape = parcours.etapes[etapeIndex];
   const derniere = etapeIndex === parcours.etapes.length - 1;
+  const quiz = PARCOURS_QUIZ[parcours.id];
 
   return (
     <div className="space-y-5">
@@ -87,6 +98,24 @@ function ParcoursDetail({
         )}
       </article>
 
+      {quiz ? (
+        <div className="bework-card border-2 border-bework-navy/10 bg-gradient-to-r from-slate-50 to-white p-5">
+          <p className="font-display text-base font-semibold text-bework-navy">
+            Tester vos acquis
+          </p>
+          <p className="mt-1 text-sm text-slate-600">
+            {quiz.label} — questions scénarisées avec explications détaillées.
+          </p>
+          <Link
+            href={`/lexique?mode=quiz&lot=${quiz.lot}`}
+            className="bework-btn-primary mt-4 inline-flex items-center gap-2"
+          >
+            <Brain className="h-4 w-4" aria-hidden />
+            Lancer le quiz
+          </Link>
+        </div>
+      ) : null}
+
       <div className="flex gap-3">
         {etapeIndex > 0 && (
           <button
@@ -139,7 +168,9 @@ export function ParcoursApprentissage({ initialParcoursId }: { initialParcoursId
       </div>
 
       <ul className="space-y-3" role="list">
-        {PARCOURS_BTP.map((parcours) => (
+        {PARCOURS_BTP.map((parcours) => {
+          const quiz = PARCOURS_QUIZ[parcours.id];
+          return (
           <li key={parcours.id}>
             <button
               type="button"
@@ -162,10 +193,12 @@ export function ParcoursApprentissage({ initialParcoursId }: { initialParcoursId
               <p className="mt-3 text-xs text-slate-400">
                 {parcours.etapes.length} étape{parcours.etapes.length > 1 ? 's' : ''}
                 {parcours.etapes.some((e) => e.schema) ? ' · avec schémas' : ''}
+                {quiz ? ' · quiz disponible' : ''}
               </p>
             </button>
           </li>
-        ))}
+          );
+        })}
       </ul>
     </div>
   );
