@@ -261,8 +261,13 @@ export const LEXIQUE_ENDUITS_FACADE: TermeLexique[] = [
     terme: 'Réaction au feu (Euroclasses)',
     famille: 'Enduits & façades',
     definition:
-      'Comportement au feu : A1 (incombustible) → F, + s (fumées) + d (gouttelettes).',
-    exemple: 'D-s3,d0 = combustible, fumées importantes, pas de gouttelettes enflammées.',
+      'Comportement d\'un matériau face au feu : s\'enflamme-t-il, contribue-t-il à propager l\'incendie ? Classé par Euroclasses (norme EN 13501-1) de A1 (incombustible — béton, pierre, laine de roche) à F (non classé). Entre les deux : A2, B, C, D, E. Complété par s (fumée : s1 à s3) et d (gouttelettes enflammées : d0 à d2). Remplace l\'ancien classement français M0 à M4.',
+    aQuoiCaSert:
+      'L\'Euroclasse dit si le matériau brûle — à ne pas confondre avec le REI qui mesure combien de temps l\'ouvrage tient pendant l\'incendie.',
+    exemple:
+      'Isolant B-s1,d0 = faiblement combustible, peu de fumée, pas de gouttelettes. Modénature façade D-s3,d0 = combustibilité plus marquée, fumées importantes.',
+    vigilance:
+      '« Classe feu » recouvre deux notions sur les chantiers : réaction au feu (Euroclasses, matériau) et résistance au feu (REI, élément de construction). Vérifier lequel est exigé dans le CCTP.',
   },
   {
     id: 'ton-pierre',

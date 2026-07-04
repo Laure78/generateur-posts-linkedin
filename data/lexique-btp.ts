@@ -264,6 +264,8 @@ export const LEXIQUE: TermeLexique[] = [
     famille: "Documents du marché",
     definition:
       "Le « code de la route » du bâtiment : un guide officiel qui explique comment poser un matériau dans les règles de l'art.",
+    aQuoiCaSert:
+      "Les DTU disent comment bien construire sur chantier ; les Eurocodes disent comment calculer et dimensionner la structure (bureau d'études).",
     vigilance:
       "Ne pas le respecter = l'assurance peut refuser de rembourser en cas de problème (ex : fuite).",
   },
@@ -1015,7 +1017,11 @@ export const LEXIQUE: TermeLexique[] = [
     terme: "Eurocodes (0 à 9)",
     famille: "Eurocodes & structure",
     definition:
-      "Normes européennes de calcul des structures. Ex : EC2 béton armé, EC3 acier, EC5 bois, EC7 géotechnique, EC8 parasismique. EC0 = base, EC1 = actions (poids, vent, neige).",
+      "Normes européennes harmonisées de conception et calcul des structures (bâtiment et génie civil). EC0 = bases de calcul, EC1 = actions (poids, neige, vent, séisme), EC2 béton, EC3 acier, EC5 bois, EC6 maçonnerie, EC7 géotechnique, EC8 parasismique. Les parties 1-2 traitent la résistance au feu (calcul REI).",
+    aQuoiCaSert:
+      "Les Eurocodes disent si la structure tient — travail du bureau d'études. Les DTU disent comment bien construire sur chantier — travail de l'entreprise.",
+    exemple:
+      "Dimensionner une poutre acier = EC3 ; poser un enduit monocouche = DTU 26.1.",
   },
   {
     id: "annexe-nationale",
@@ -1036,7 +1042,13 @@ export const LEXIQUE: TermeLexique[] = [
     terme: "REI (Résistance au feu)",
     famille: "Eurocodes & structure",
     definition:
-      "Norme évaluant la tenue au feu : R (résistance mécanique), E (étanchéité aux flammes/gaz), I (isolation thermique). REI 30 = tient 30 min ; REI 60 = 60 min (locaux à risque).",
+      "Tenue au feu d'un élément de construction (mur, plancher, poutre) — norme EN 13501-2. R = résistance mécanique (ça porte encore), E = étanchéité aux flammes et gaz chauds, I = isolation thermique (la face opposée ne chauffe pas). REI 60 = l'élément reste porteur, étanche et isolant 60 minutes. Calcul au feu via les Eurocodes partie 1-2 (EC2 pour le béton, EC3 pour l'acier…).",
+    aQuoiCaSert:
+      "Le REI dit combien de temps l'ouvrage tient pendant l'incendie — distinct de l'Euroclasse qui qualifie le comportement au feu d'un matériau seul.",
+    exemple:
+      "Plancher REI 60 exigé entre deux niveaux d'un ERP — le lot GO justifie la durée, pas seulement la nature du béton.",
+    vigilance:
+      "Ne pas confondre avec la réaction au feu (Euroclasses A1 à F) : un matériau A1 peut être exigé dans un ouvrage qui doit tenir REI 120.",
   },
 
   // ── Béton & aciers ──
