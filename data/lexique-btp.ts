@@ -2,6 +2,7 @@
 
 import { LEXIQUE_FONDATIONS_GROS_OEUVRE } from './lexique-btp-fondations-gros-oeuvre';
 import { LEXIQUE_ENDUITS_FACADE } from './lexique-btp-enduits-facade';
+import { LEXIQUE_PERF_ENERGETIQUE } from './lexique-btp-perf-energetique';
 
 export type Famille =
   | "Procédures & notation"
@@ -26,7 +27,8 @@ export type Famille =
   | "Marché privé (promoteur)"
   | "Sous-traitance"
   | "Divers techniques"
-  | "Enduits & façades";
+  | "Enduits & façades"
+  | "Performance énergétique & contrôles";
 
 export interface TermeLexique {
   id: string;
@@ -63,6 +65,7 @@ export const FAMILLES: Famille[] = [
   "Sous-traitance",
   "Divers techniques",
   "Enduits & façades",
+  "Performance énergétique & contrôles",
 ];
 
 export const LEXIQUE: TermeLexique[] = [
@@ -1410,6 +1413,9 @@ export const LEXIQUE: TermeLexique[] = [
 
   // ── Enduits de façade (CCTP Lot 02) ──
   ...LEXIQUE_ENDUITS_FACADE,
+
+  // ── Famille 22 — Performance énergétique & contrôles ──
+  ...LEXIQUE_PERF_ENERGETIQUE,
 ];
 
 // Helper : normalise (minuscule + sans accents) pour la recherche et le quiz

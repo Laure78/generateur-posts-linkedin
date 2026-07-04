@@ -1,10 +1,11 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { HardHat, Lightbulb, Paintbrush, RotateCcw, Shuffle } from 'lucide-react';
+import { HardHat, Lightbulb, Paintbrush, Gauge, RotateCcw, Shuffle } from 'lucide-react';
 import type { Famille } from '@/data/lexique-btp';
 import { QuizGrosOeuvreSpecial } from '@/components/lexique/QuizGrosOeuvreSpecial';
 import { QuizEnduitsFacadeSpecial } from '@/components/lexique/QuizEnduitsFacadeSpecial';
+import { QuizPerfEnergetiqueSpecial } from '@/components/lexique/QuizPerfEnergetiqueSpecial';
 import {
   FAMILLES,
   QUIZ_FAMILLE_AIDE,
@@ -95,6 +96,7 @@ type Phase = 'config' | 'jeu' | 'resultat';
 export function Quiz() {
   const [modeSpecialGo, setModeSpecialGo] = useState(false);
   const [modeSpecialEnduits, setModeSpecialEnduits] = useState(false);
+  const [modeSpecialPerf, setModeSpecialPerf] = useState(false);
   const [phase, setPhase] = useState<Phase>('config');
   const [famillesSelection, setFamillesSelection] = useState<Famille[]>([]);
   const [presetActif, setPresetActif] = useState<string | null>(null);
@@ -269,6 +271,10 @@ export function Quiz() {
     return <QuizEnduitsFacadeSpecial onRetour={() => setModeSpecialEnduits(false)} />;
   }
 
+  if (modeSpecialPerf) {
+    return <QuizPerfEnergetiqueSpecial onRetour={() => setModeSpecialPerf(false)} />;
+  }
+
   // ── Configuration ──
   if (phase === 'config') {
     return (
@@ -318,6 +324,31 @@ export function Quiz() {
               className="bework-btn-primary shrink-0 bg-sky-600 hover:bg-sky-700"
             >
               <Paintbrush className="h-4 w-4" aria-hidden />
+              Lancer
+            </button>
+          </div>
+        </div>
+
+        <div className="bework-card overflow-hidden border-2 border-emerald-300/50 p-0">
+          <div className="flex flex-col gap-4 bg-gradient-to-r from-emerald-50 to-teal-50 p-5 sm:flex-row sm:items-center sm:justify-between">
+            <div className="min-w-0">
+              <p className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-emerald-800">
+                <Gauge className="h-4 w-4" aria-hidden />
+                Famille 22
+              </p>
+              <p className="font-display mt-1 text-lg font-bold text-bework-navy">
+                Quiz Performance énergétique — 4 thèmes
+              </p>
+              <p className="mt-1 text-sm text-slate-600">
+                42 questions : Q4Pa-surf, infiltrométrie, schémas fluides, lot MEP, réservations + parcours complet.
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => setModeSpecialPerf(true)}
+              className="bework-btn-primary shrink-0 bg-emerald-600 hover:bg-emerald-700"
+            >
+              <Gauge className="h-4 w-4" aria-hidden />
               Lancer
             </button>
           </div>

@@ -529,6 +529,67 @@ export const PARCOURS_BTP: ParcoursBtp[] = [
     ],
   },
   {
+    id: 'perf-energetique-f22',
+    titre: 'Performance énergétique & contrôles',
+    description:
+      'Q4Pa-surf, tests d\'infiltrométrie, schémas fluides et coordination lot MEP (Famille 22 CCTP).',
+    duree: '6 min',
+    etapes: [
+      {
+        id: 'f22-perm-air',
+        titre: '1. Perméabilité à l\'air (Q4Pa-surf)',
+        explication:
+          'Le Q4Pa-surf mesure les fuites d\'air involontaires. Seuil courant : 1,00 m³/h·m² sous 4 Pa. Deux tests ventilateur obligatoires : au clos-couvert (murs, toit, menuiseries posés) et à l\'achèvement. Échec = réparation sous 5 jours ouvrés + retest aux frais de l\'entreprise responsable.',
+        astuce: 'Le plaquiste participe à l\'étanchéité en soignant les joints aux traversées de réseaux.',
+        termesLies: [
+          'q4pa-surf',
+          'infiltrometrie',
+          'test-perm-air-clos-couvert',
+          'test-perm-air-achevement',
+          'plaquiste-gaines-etancheite',
+        ],
+      },
+      {
+        id: 'f22-schemas',
+        titre: '2. Schémas fluides',
+        explication:
+          'Plans simplifiés de circulation des liquides et gaz : eau sanitaire, chauffage/clim, VMC. Carte routière pour installateurs — vannes, pompes, nourrices. Le conducteur de travaux s\'en sert pour coordonner et pour la maintenance future.',
+        termesLies: [
+          'schema-fluide',
+          'reseau-eau-sanitaire-schema',
+          'reseau-chauffage-clim-schema',
+          'vmc-ventilation-schema',
+          'nourrice-collecteur',
+        ],
+      },
+      {
+        id: 'f22-mep',
+        titre: '3. Lot MEP et réservations',
+        explication:
+          'MEP = Mechanical, Electrical, Plumbing (CVC, électricité, plomberie). Le maçon laisse des réservations dans le béton selon le schéma fluide — sinon perçage destructif. L\'électricien alimente PAC/VMC et évite les équipements sous canalisation d\'eau.',
+        astuce: 'Sans schéma fluide à temps, le béton coule partout — reprises très coûteuses.',
+        termesLies: [
+          'lot-mep',
+          'reservation-reseaux',
+          'macon-reservation-beton',
+          'electricien-mep',
+        ],
+      },
+      {
+        id: 'f22-coordination',
+        titre: '4. Coordination des métiers',
+        explication:
+          'Le plaquiste coffre les réseaux en gaines après le MEP. Le terrassier/VRD raccorde au réseau public selon le schéma fluide. Tous les lots techniques doivent s\'accorder avant que le second œuvre ne ferme les volumes.',
+        termesLies: [
+          'plaquiste-gaines-etancheite',
+          'terrassier-vrd-raccordement',
+          'lot-mep',
+          'schema-fluide',
+        ],
+      },
+    ],
+  },
+  {
     id: 'plateforme-terrassement',
     titre: 'Plateforme et compactage',
     description:

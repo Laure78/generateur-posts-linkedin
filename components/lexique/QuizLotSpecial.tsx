@@ -2,7 +2,7 @@
 
 import { useCallback, useMemo, useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, HardHat, Lightbulb, Paintbrush, RotateCcw } from 'lucide-react';
+import { ArrowLeft, Gauge, HardHat, Lightbulb, Paintbrush, RotateCcw } from 'lucide-react';
 import {
   preparerQuestionsLot,
   type QuestionQuizLotSpeciale,
@@ -26,6 +26,10 @@ const CHAPITRE_STYLE_DEFAULT: Record<string, string> = {
   Modénatures: 'bg-rose-50 text-rose-900 border-rose-200',
   Échafaudages: 'bg-slate-100 text-slate-800 border-slate-200',
   'Contrat & coordination': 'bg-emerald-50 text-emerald-900 border-emerald-200',
+  'Perméabilité à l\'air': 'bg-teal-50 text-teal-900 border-teal-200',
+  'Schémas fluides': 'bg-cyan-50 text-cyan-900 border-cyan-200',
+  'Lot MEP': 'bg-violet-50 text-violet-900 border-violet-200',
+  Synthèse: 'bg-emerald-50 text-emerald-900 border-emerald-200',
 };
 
 function messageScore(
@@ -67,7 +71,8 @@ export function QuizLotSpecial({
   const [score, setScore] = useState(0);
   const [indice, setIndice] = useState(false);
 
-  const Icon = theme.icon === 'paintbrush' ? Paintbrush : HardHat;
+  const Icon =
+    theme.icon === 'paintbrush' ? Paintbrush : theme.icon === 'gauge' ? Gauge : HardHat;
 
   const demarrerModule = useCallback((module: QuizLotModule) => {
     setModuleActif(module);

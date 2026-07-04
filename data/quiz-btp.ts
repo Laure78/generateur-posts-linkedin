@@ -46,6 +46,13 @@ export const QUIZ_PRESETS_DEBUTANT: {
     ],
   },
   {
+    id: 'perf-energetique-f22',
+    label: 'Performance énergétique (Famille 22)',
+    description:
+      'Q4Pa-surf, infiltrométrie, schémas fluides, lot MEP et réservations réseaux.',
+    familles: ['Performance énergétique & contrôles'],
+  },
+  {
     id: 'enduits-facade',
     label: 'Enduits de façade',
     description:
@@ -216,6 +223,10 @@ export const QUIZ_FAMILLE_AIDE: Record<
   'Enduits & façades': {
     resume: 'Monocouches, supports, finitions et coordination façade.',
     astuce: 'RT/OC : jamais d\'enduit plus dur que son support · DTU 26.1 = référence enduits.',
+  },
+  'Performance énergétique & contrôles': {
+    resume: 'Q4Pa-surf, tests d\'infiltrométrie, schémas fluides et lot MEP.',
+    astuce: '2 tests obligatoires (clos-couvert + achèvement) · échec = réparation sous 5 jours ouvrés.',
   },
 };
 
