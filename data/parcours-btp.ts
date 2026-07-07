@@ -8,7 +8,8 @@ export type SchemaId =
   | 'ordres-service-guide'
   | 'securite-chantier'
   | 'couverture-coupe'
-  | 'implantation-chantier';
+  | 'implantation-chantier'
+  | 'beton-arme-fondations';
 
 export interface EtapeParcours {
   id: string;
@@ -576,7 +577,7 @@ export const PARCOURS_BTP: ParcoursBtp[] = [
         id: 'bgo-armatures',
         titre: '9. Béton armé et armatures',
         explication:
-          'Béton = compression, acier = traction. Filants en bas de semelle, cadres (étriers) tous les 15–25 cm, treillis soudé pour dalles/radiers, aciers en attente pour les murs. HA8, HA10, HA12 = diamètre en mm.',
+          'Le béton résiste à la compression mais environ 10 fois moins à la traction — comme une planche entre deux tréteaux, la semelle est écrasée dessus et tendue dessous. L\'acier reprend la traction : filants en bas, cadres (étriers) tous les 15–25 cm, treillis soudé pour dalles/radiers, aciers en attente pour coudre murs et poteaux. HA8, HA10, HA12 = diamètre en mm.',
         termesLies: [
           'beton-arme',
           'traction-compression-beton',
@@ -587,6 +588,7 @@ export const PARCOURS_BTP: ParcoursBtp[] = [
           'treillis-soude',
           'aciers-en-attente',
         ],
+        schema: 'beton-arme-fondations',
       },
       {
         id: 'bgo-regles',

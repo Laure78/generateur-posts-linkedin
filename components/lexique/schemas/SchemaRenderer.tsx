@@ -9,6 +9,7 @@ import { SchemaPrixMarche } from './SchemaPrixMarche';
 import { SchemaSecuriteChantier } from './SchemaSecuriteChantier';
 import { SchemaCouvertureCoupe } from './SchemaCouvertureCoupe';
 import { SchemaImplantationChantier } from './SchemaImplantationChantier';
+import { SchemaBetonArmeFondations } from './SchemaBetonArmeFondations';
 
 const SCHEMAS: Record<SchemaId, ComponentType> = {
   'marche-public': SchemaMarchePublic,
@@ -20,11 +21,12 @@ const SCHEMAS: Record<SchemaId, ComponentType> = {
   'securite-chantier': SchemaSecuriteChantier,
   'couverture-coupe': SchemaCouvertureCoupe,
   'implantation-chantier': SchemaImplantationChantier,
+  'beton-arme-fondations': SchemaBetonArmeFondations,
 };
 
 export function SchemaRenderer({ id, titre }: { id: SchemaId; titre?: string }) {
   const Component = SCHEMAS[id];
-  const pleinFormat = id === 'ordres-service-guide';
+  const pleinFormat = id === 'ordres-service-guide' || id === 'beton-arme-fondations';
   return (
     <figure
       className={pleinFormat ? '' : 'bework-card overflow-hidden p-4 sm:p-5'}
