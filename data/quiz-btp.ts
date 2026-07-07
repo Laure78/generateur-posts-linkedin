@@ -53,6 +53,13 @@ export const QUIZ_PRESETS_DEBUTANT: {
     familles: ['Menuiseries extérieures'],
   },
   {
+    id: 'bases-gros-oeuvre-debutant',
+    label: 'Bases du gros œuvre (débutant)',
+    description:
+      'Fondations, armatures HA, enrobage, recouvrement — complète l\'implantation.',
+    familles: ['Terrassement & géotechnique', 'Béton & aciers', 'Implantation & nivellement'],
+  },
+  {
     id: 'implantation-nivellement',
     label: 'Implantation & nivellement',
     description:

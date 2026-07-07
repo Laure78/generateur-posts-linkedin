@@ -487,6 +487,125 @@ export const PARCOURS_BTP: ParcoursBtp[] = [
     ],
   },
   {
+    id: 'bases-gros-oeuvre',
+    titre: 'Les bases du gros œuvre',
+    description:
+      'Implantation, fondations et armatures en langage simple — fiche mémo débutant (avant le CCTP Lot 01).',
+    duree: '12 min',
+    etapes: [
+      {
+        id: 'bgo-intro',
+        titre: '1. Implanter, c\'est quoi ?',
+        explication:
+          'Dessiner le bâtiment en vraie grandeur sur le terrain, avant de creuser : OÙ le poser (distances rue et voisins) et À QUELLE HAUTEUR (sol fini). Une erreur de 50 cm peut obliger à démolir.',
+        astuce: 'Téléchargez la fiche mémo Word depuis le bandeau en haut du parcours.',
+        termesLies: ['implantation', 'planimetrie', 'altimetrie'],
+      },
+      {
+        id: 'bgo-docs',
+        titre: '2. Les 4 documents à rassembler',
+        explication:
+          'PC (plan masse = distances + cote NGF sol fini), PLU (reculs, limites, hauteur max), plans d\'architecte, étude de sol G2 (profondeur fondations, hors gel 60–90 cm en IDF).',
+        astuce: 'Le PC est la règle du jeu — non négociable.',
+        termesLies: ['permis-construire', 'plan-masse', 'plu', 'etude-sol-g2', 'profondeur-hors-gel'],
+      },
+      {
+        id: 'bgo-ref',
+        titre: '3. Position et hauteur',
+        explication:
+          'Planimétrie : bornes du géomètre, jamais le cadastre. Altimétrie : repère NGF protégé sur chantier → fond de fouille, fondations, dallage.',
+        termesLies: ['planimetrie', 'altimetrie', 'ngf', 'reper-ngf-chantier', 'cadastre', 'geometre'],
+      },
+      {
+        id: 'bgo-voisins',
+        titre: '4. Rue, voisins et réseaux',
+        explication:
+          'Alignement (arrêté mairie), bornage si doute, DT-DICT avant de creuser.',
+        astuce: 'Empiéter chez le voisin de 20 cm = contentieux garanti.',
+        termesLies: ['alignement-voirie', 'bornage', 'dict'],
+      },
+      {
+        id: 'bgo-chaises',
+        titre: '5. Chaises, cordeaux et équerrage',
+        explication:
+          'PV d\'implantation géomètre → chaises en retrait 1,50–2 m → cordeaux → triangle 3-4-5 et diagonales (± 1–2 cm) → trait de + 1,00 m → emprise fouilles peinte au sol.',
+        termesLies: [
+          'pv-implantation',
+          'chaises-implantation',
+          'cordeaux-implantation',
+          'equerrage-3-4-5',
+          'controle-diagonales',
+          'trait-niveau',
+          'emprise-fouilles',
+        ],
+        schema: 'implantation-chantier',
+      },
+      {
+        id: 'bgo-controle-beton',
+        titre: '6. Dernier contrôle avant béton',
+        explication:
+          'Revérifier cordeaux, diagonales et hauteur : une pelleteuse a pu heurter une chaise. Un béton coulé au mauvais endroit ne se rattrape pas.',
+        termesLies: ['implantation', 'chaises-implantation'],
+      },
+      {
+        id: 'bgo-fondations-role',
+        titre: '7. À quoi sert une fondation ?',
+        explication:
+          'Transmettre le poids du bâtiment (100–200 t pour une maison) au sol sans affaissement ni fissures. L\'étude G2 choisit le type : bon sol proche → fondation simple ; sol mou → on descend chercher le bon sol.',
+        astuce: 'Image : raquettes à neige = poids réparti, comme un radier.',
+        termesLies: ['portance-sol', 'etude-sol-g2', 'bon-sol', 'fondations-superficielles'],
+      },
+      {
+        id: 'bgo-familles',
+        titre: '8. Les 3 familles de fondations',
+        explication:
+          'Superficielles (bon sol < 3 m) : semelle filante, semelle isolée, radier. Semi-profondes (3–6 m) : puits + longrines. Profondes (> 6 m) : pieux forés/battus, micropieux.',
+        termesLies: [
+          'semelle-filante',
+          'semelle-isolee',
+          'radier',
+          'puits-fondation',
+          'longrine',
+          'pieux',
+          'micropieux',
+          'fondations-semi-profondes',
+          'fondations-profondes',
+        ],
+      },
+      {
+        id: 'bgo-armatures',
+        titre: '9. Béton armé et armatures',
+        explication:
+          'Béton = compression, acier = traction. Filants en bas de semelle, cadres (étriers) tous les 15–25 cm, treillis soudé pour dalles/radiers, aciers en attente pour les murs. HA8, HA10, HA12 = diamètre en mm.',
+        termesLies: [
+          'beton-arme',
+          'traction-compression-beton',
+          'acier-ha',
+          'filants-armature',
+          'cadres-etriers',
+          'cage-armatures',
+          'treillis-soude',
+          'aciers-en-attente',
+        ],
+      },
+      {
+        id: 'bgo-regles',
+        titre: '10. Les 3 règles d\'or',
+        explication:
+          '1. Enrobage 3–5 cm (cales sous la cage). 2. Béton de propreté (~5 cm) avant la cage. 3. Recouvrement ≈ 50 × diamètre (HA10 → 50 cm), fil de fer, pas de soudure courante.',
+        astuce: 'L\'étude G2 donne la profondeur ; le trait NGF donne la cote du fond de fouille.',
+        termesLies: [
+          'enrobage',
+          'cales-enrobage',
+          'beton-proprete',
+          'recouvrement-armature',
+          'etude-sol-g2',
+          'trait-niveau',
+        ],
+      },
+    ],
+  },
+  {
     id: 'enduits-facade',
     titre: 'Enduits de façade',
     description:

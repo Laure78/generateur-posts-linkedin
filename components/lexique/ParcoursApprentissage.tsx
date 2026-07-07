@@ -10,11 +10,33 @@ import type { QuizLotInitial } from './Quiz';
 
 const PARCOURS_QUIZ: Partial<Record<string, { lot: QuizLotInitial; label: string }>> = {
   'fondations-gros-oeuvre': { lot: 'go', label: 'Quiz Gros œuvre' },
+  'bases-gros-oeuvre': { lot: 'bases-go', label: 'Quiz Bases gros œuvre' },
   'implantation-batiment': { lot: 'implantation', label: 'Quiz Implantation' },
   'enduits-facade': { lot: 'enduits', label: 'Quiz Enduits de façade' },
   'charpente-couverture': { lot: 'charpente', label: 'Quiz Charpente & couverture' },
   'menuiseries-exterieures': { lot: 'menuiseries', label: 'Quiz Menuiseries extérieures' },
   'perf-energetique-f22': { lot: 'perf', label: 'Quiz Performance énergétique' },
+};
+
+const PARCOURS_RESSOURCES: Partial<
+  Record<string, { href: string; filename: string; borderClass: string; bgClass: string; textClass: string; subClass: string }>
+> = {
+  'implantation-batiment': {
+    href: '/ressources/Fiche_Memo_Implantation_Batiment.docx',
+    filename: 'Fiche_Memo_Implantation_Batiment.docx',
+    borderClass: 'border-violet-200',
+    bgClass: 'bg-violet-50/80 hover:bg-violet-100',
+    textClass: 'text-violet-900',
+    subClass: 'text-violet-700',
+  },
+  'bases-gros-oeuvre': {
+    href: '/ressources/Fiche_Memo_Bases_Gros_Oeuvre.docx',
+    filename: 'Fiche_Memo_Bases_Gros_Oeuvre.docx',
+    borderClass: 'border-amber-200',
+    bgClass: 'bg-amber-50/80 hover:bg-amber-100',
+    textClass: 'text-amber-900',
+    subClass: 'text-amber-700',
+  },
 };
 
 function ParcoursDetail({
@@ -28,6 +50,7 @@ function ParcoursDetail({
   const etape = parcours.etapes[etapeIndex];
   const derniere = etapeIndex === parcours.etapes.length - 1;
   const quiz = PARCOURS_QUIZ[parcours.id];
+  const ressource = PARCOURS_RESSOURCES[parcours.id];
 
   return (
     <div className="space-y-5">
@@ -54,17 +77,17 @@ function ParcoursDetail({
         Étape {etapeIndex + 1} sur {parcours.etapes.length}
       </p>
 
-      {parcours.id === 'implantation-batiment' ? (
+      {ressource ? (
         <a
-          href="/ressources/Fiche_Memo_Implantation_Batiment.docx"
+          href={ressource.href}
           download
-          className="bework-card flex items-center gap-3 border-violet-200 bg-violet-50/80 p-4 text-sm text-violet-900 transition hover:bg-violet-100"
+          className={`bework-card flex items-center gap-3 border p-4 text-sm transition ${ressource.borderClass} ${ressource.bgClass} ${ressource.textClass}`}
         >
           <Download className="h-5 w-5 shrink-0" aria-hidden />
           <span>
             <span className="font-semibold">Fiche mémo Word</span>
-            <span className="mt-0.5 block text-xs text-violet-700">
-              Télécharger Fiche_Memo_Implantation_Batiment.docx
+            <span className={`mt-0.5 block text-xs ${ressource.subClass}`}>
+              Télécharger {ressource.filename}
             </span>
           </span>
         </a>
@@ -173,6 +196,12 @@ export function ParcoursApprentissage({ initialParcoursId }: { initialParcoursId
           Pas besoin de tout savoir d&apos;un coup — avancez étape par étape.
         </p>
         <div className="mt-4 flex flex-wrap gap-2">
+          <Link
+            href="/lexique?parcours=bases-gros-oeuvre"
+            className="inline-flex items-center rounded-full bg-amber-100 px-3 py-1.5 text-xs font-semibold text-amber-900 transition hover:bg-amber-200"
+          >
+            Débutant — Bases gros œuvre
+          </Link>
           <Link
             href="/lexique?parcours=implantation-batiment"
             className="inline-flex items-center rounded-full bg-violet-100 px-3 py-1.5 text-xs font-semibold text-violet-900 transition hover:bg-violet-200"

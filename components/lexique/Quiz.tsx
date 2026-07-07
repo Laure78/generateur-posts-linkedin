@@ -9,6 +9,7 @@ import { QuizPerfEnergetiqueSpecial } from '@/components/lexique/QuizPerfEnerget
 import { QuizMenuiseriesSpecial } from '@/components/lexique/QuizMenuiseriesSpecial';
 import { QuizCharpenteCouvertureSpecial } from '@/components/lexique/QuizCharpenteCouvertureSpecial';
 import { QuizImplantationSpecial } from '@/components/lexique/QuizImplantationSpecial';
+import { QuizBasesGrosOeuvreSpecial } from '@/components/lexique/QuizBasesGrosOeuvreSpecial';
 import {
   FAMILLES,
   QUIZ_FAMILLE_AIDE,
@@ -96,7 +97,7 @@ function chipClass(actif: boolean) {
 
 type Phase = 'config' | 'jeu' | 'resultat';
 
-export type QuizLotInitial = 'go' | 'enduits' | 'charpente' | 'menuiseries' | 'perf' | 'implantation';
+export type QuizLotInitial = 'go' | 'enduits' | 'charpente' | 'menuiseries' | 'perf' | 'implantation' | 'bases-go';
 
 type QuizLotEncartProps = {
   lotLabel: string;
@@ -161,6 +162,7 @@ export function Quiz({ lotInitial }: { lotInitial?: QuizLotInitial | null }) {
   const [modeSpecialMenuiseries, setModeSpecialMenuiseries] = useState(false);
   const [modeSpecialCharpente, setModeSpecialCharpente] = useState(false);
   const [modeSpecialImplantation, setModeSpecialImplantation] = useState(false);
+  const [modeSpecialBasesGo, setModeSpecialBasesGo] = useState(false);
   const [phase, setPhase] = useState<Phase>('config');
   const [famillesSelection, setFamillesSelection] = useState<Famille[]>([]);
   const [presetActif, setPresetActif] = useState<string | null>(null);
@@ -197,6 +199,9 @@ export function Quiz({ lotInitial }: { lotInitial?: QuizLotInitial | null }) {
         break;
       case 'implantation':
         setModeSpecialImplantation(true);
+        break;
+      case 'bases-go':
+        setModeSpecialBasesGo(true);
         break;
     }
   }, [lotInitial]);
@@ -375,6 +380,10 @@ export function Quiz({ lotInitial }: { lotInitial?: QuizLotInitial | null }) {
     return <QuizImplantationSpecial onRetour={() => setModeSpecialImplantation(false)} />;
   }
 
+  if (modeSpecialBasesGo) {
+    return <QuizBasesGrosOeuvreSpecial onRetour={() => setModeSpecialBasesGo(false)} />;
+  }
+
   // ── Configuration ──
   if (phase === 'config') {
     return (
@@ -391,6 +400,18 @@ export function Quiz({ lotInitial }: { lotInitial?: QuizLotInitial | null }) {
         </div>
 
         <div className="grid gap-3 sm:grid-cols-2">
+          <QuizLotEncart
+            featured
+            lotLabel="Débutant"
+            titre="Bases du gros œuvre"
+            description="14 questions : implantation, fondations, armatures HA et règles d'enrobage."
+            borderClass="border-amber-300/60"
+            gradientClass="bg-gradient-to-r from-amber-50 to-orange-50"
+            labelClass="text-amber-900"
+            buttonClass="bg-amber-600 hover:bg-amber-700"
+            icon={<HardHat className="h-4 w-4" aria-hidden />}
+            onLancer={() => setModeSpecialBasesGo(true)}
+          />
           <QuizLotEncart
             featured
             lotLabel="Débutant"

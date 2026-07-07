@@ -6,6 +6,7 @@ import { LEXIQUE_PERF_ENERGETIQUE } from './lexique-btp-perf-energetique';
 import { LEXIQUE_MENUISERIES_EXTERIEURES } from './lexique-btp-menuiseries-exterieures';
 import { LEXIQUE_CHARPENTE_COUVERTURE } from './lexique-btp-charpente-couverture';
 import { LEXIQUE_IMPLANTATION } from './lexique-btp-implantation';
+import { LEXIQUE_BASES_GROS_OEUVRE } from './lexique-btp-bases-gros-oeuvre';
 
 export type Famille =
   | "Procédures & notation"
@@ -1446,6 +1447,9 @@ export const LEXIQUE: TermeLexique[] = [
 
   // ── Implantation & nivellement (fiche mémo débutant) ──
   ...LEXIQUE_IMPLANTATION,
+
+  // ── Bases gros œuvre — fondations & armatures (fiche mémo débutant) ──
+  ...LEXIQUE_BASES_GROS_OEUVRE,
 ];
 
 // Helper : normalise (minuscule + sans accents) pour la recherche et le quiz
