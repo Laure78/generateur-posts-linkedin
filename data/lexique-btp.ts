@@ -5,6 +5,7 @@ import { LEXIQUE_ENDUITS_FACADE } from './lexique-btp-enduits-facade';
 import { LEXIQUE_PERF_ENERGETIQUE } from './lexique-btp-perf-energetique';
 import { LEXIQUE_MENUISERIES_EXTERIEURES } from './lexique-btp-menuiseries-exterieures';
 import { LEXIQUE_CHARPENTE_COUVERTURE } from './lexique-btp-charpente-couverture';
+import { LEXIQUE_IMPLANTATION } from './lexique-btp-implantation';
 
 export type Famille =
   | "Procédures & notation"
@@ -32,7 +33,8 @@ export type Famille =
   | "Enduits & façades"
   | "Performance énergétique & contrôles"
   | "Menuiseries extérieures"
-  | "Charpente & couverture";
+  | "Charpente & couverture"
+  | "Implantation & nivellement";
 
 export interface TermeLexique {
   id: string;
@@ -72,6 +74,7 @@ export const FAMILLES: Famille[] = [
   "Performance énergétique & contrôles",
   "Menuiseries extérieures",
   "Charpente & couverture",
+  "Implantation & nivellement",
 ];
 
 export const LEXIQUE: TermeLexique[] = [
@@ -1440,6 +1443,9 @@ export const LEXIQUE: TermeLexique[] = [
 
   // ── Lot 03 — Charpente & couverture (Millas Nord) ──
   ...LEXIQUE_CHARPENTE_COUVERTURE,
+
+  // ── Implantation & nivellement (fiche mémo débutant) ──
+  ...LEXIQUE_IMPLANTATION,
 ];
 
 // Helper : normalise (minuscule + sans accents) pour la recherche et le quiz

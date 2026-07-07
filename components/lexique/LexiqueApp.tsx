@@ -26,7 +26,7 @@ function parseMode(value: string | null): Mode {
 }
 
 function parseLot(value: string | null): QuizLotInitial | null {
-  const lots: QuizLotInitial[] = ['go', 'enduits', 'charpente', 'menuiseries', 'perf'];
+  const lots: QuizLotInitial[] = ['go', 'enduits', 'charpente', 'menuiseries', 'perf', 'implantation'];
   if (value && lots.includes(value as QuizLotInitial)) return value as QuizLotInitial;
   return null;
 }
@@ -72,6 +72,7 @@ function LexiqueAppInner() {
             <p className="mt-2 max-w-xl text-base text-slate-500">
               Comprendre le vocabulaire des marchés publics et du chantier — explications simples,
               schémas, parcours{' '}
+              <strong className="font-medium text-slate-700">Implantation</strong>,{' '}
               <strong className="font-medium text-slate-700">Gros œuvre</strong>,{' '}
               <strong className="font-medium text-slate-700">Enduits</strong>,{' '}
               <strong className="font-medium text-slate-700">Charpente</strong>,{' '}

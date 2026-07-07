@@ -7,7 +7,8 @@ export type SchemaId =
   | 'ordres-service'
   | 'ordres-service-guide'
   | 'securite-chantier'
-  | 'couverture-coupe';
+  | 'couverture-coupe'
+  | 'implantation-chantier';
 
 export interface EtapeParcours {
   id: string;
@@ -419,6 +420,69 @@ export const PARCOURS_BTP: ParcoursBtp[] = [
           'garantie-decennale',
           'gpa',
         ],
+      },
+    ],
+  },
+  {
+    id: 'implantation-batiment',
+    titre: 'Implanter un bâtiment',
+    description:
+      'Dessiner le bâtiment en vraie grandeur sur le terrain : position (planimétrie), hauteur (NGF), chaises et cordeaux — fiche mémo débutant.',
+    duree: '8 min',
+    etapes: [
+      {
+        id: 'imp-quoi',
+        titre: '1. Implanter, c\'est quoi ?',
+        explication:
+          'C\'est dessiner le bâtiment en vraie grandeur sur le terrain, avant de creuser. Deux questions : OÙ le poser (distances rue et voisins) et À QUELLE HAUTEUR (niveau du sol fini). Une erreur de 50 cm peut obliger à démolir — on vérifie tout, deux fois.',
+        astuce: 'Téléchargez la fiche mémo Word depuis le bandeau en haut du parcours.',
+        termesLies: ['implantation', 'planimetrie', 'altimetrie'],
+      },
+      {
+        id: 'imp-docs',
+        titre: '2. Les 4 documents à rassembler',
+        explication:
+          'Permis de construire (plan masse = distances et cote NGF du sol fini). PLU (reculs, limites séparatives, hauteur max). Plans d\'architecte (dimensions, axes, cotes). Étude de sol G2 (profondeur des fondations, hors gel 60–90 cm en Île-de-France).',
+        astuce: 'Le PC est la règle du jeu sur le terrain — non négociable.',
+        termesLies: ['permis-construire', 'plan-masse', 'plu', 'etude-sol-g2', 'profondeur-hors-gel'],
+      },
+      {
+        id: 'imp-ref',
+        titre: '3. Position et hauteur : deux références',
+        explication:
+          'Planimétrie (le OÙ) : on se fie aux bornes du géomètre — jamais au cadastre. Altimétrie (la hauteur) : référence nationale NGF. Le géomètre matérialise un repère NGF protégé sur le chantier ; toutes les cotes en découlent (fond de fouille, fondations, dallage).',
+        termesLies: ['planimetrie', 'altimetrie', 'ngf', 'reper-ngf-chantier', 'cadastre', 'geometre', 'bornage'],
+      },
+      {
+        id: 'imp-voisins',
+        titre: '4. Rue, voisins et réseaux',
+        explication:
+          'Alignement = limite avec la rue (arrêté de mairie, pas au jugé). Bornage si bornes douteuses. DT-DICT obligatoire avant de creuser pour repérer gaz, électricité, eau.',
+        astuce: 'Empiéter chez le voisin de 20 cm = contentieux garanti.',
+        termesLies: ['alignement-voirie', 'bornage', 'dict'],
+      },
+      {
+        id: 'imp-chaises',
+        titre: '5. Chaises, cordeaux et équerrage',
+        explication:
+          'Le géomètre plante les piquets et signe un PV d\'implantation. Chaises en retrait de 1,50 à 2 m (axes conservés au terrassement). Cordeaux entre chaises opposées : le croisement redonne un angle. Contrôle : triangle 3-4-5 et diagonales égales (± 1 à 2 cm).',
+        termesLies: [
+          'pv-implantation',
+          'chaises-implantation',
+          'cordeaux-implantation',
+          'equerrage-3-4-5',
+          'controle-diagonales',
+          'piquetage',
+        ],
+        schema: 'implantation-chantier',
+      },
+      {
+        id: 'imp-niveau-beton',
+        titre: '6. Niveau, fouilles et dernier contrôle',
+        explication:
+          'Au laser : trait de + 1,00 m sur les chaises (1 m au-dessus du sol fini RDC). Tracé à la bombe de peinture de l\'emprise des fouilles. Terrassement à la profondeur G2. Juste avant le béton : revérifier cordeaux, diagonales et hauteur — une pelleteuse a pu heurter une chaise.',
+        astuce: 'Un béton coulé au mauvais endroit ne se rattrape pas.',
+        termesLies: ['trait-niveau', 'emprise-fouilles', 'implantation'],
       },
     ],
   },

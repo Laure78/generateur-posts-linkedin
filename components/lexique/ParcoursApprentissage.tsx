@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Brain, ChevronRight, Lightbulb, BookMarked } from 'lucide-react';
+import { Brain, ChevronRight, Download, Lightbulb, BookMarked } from 'lucide-react';
 import { PARCOURS_BTP, type ParcoursBtp } from '@/data/parcours-btp';
 import { SchemaRenderer } from './schemas/SchemaRenderer';
 import { LexiqueTermeLink } from './LexiqueTermeLink';
@@ -10,6 +10,7 @@ import type { QuizLotInitial } from './Quiz';
 
 const PARCOURS_QUIZ: Partial<Record<string, { lot: QuizLotInitial; label: string }>> = {
   'fondations-gros-oeuvre': { lot: 'go', label: 'Quiz Gros œuvre' },
+  'implantation-batiment': { lot: 'implantation', label: 'Quiz Implantation' },
   'enduits-facade': { lot: 'enduits', label: 'Quiz Enduits de façade' },
   'charpente-couverture': { lot: 'charpente', label: 'Quiz Charpente & couverture' },
   'menuiseries-exterieures': { lot: 'menuiseries', label: 'Quiz Menuiseries extérieures' },
@@ -52,6 +53,22 @@ function ParcoursDetail({
       <p className="text-xs text-slate-500">
         Étape {etapeIndex + 1} sur {parcours.etapes.length}
       </p>
+
+      {parcours.id === 'implantation-batiment' ? (
+        <a
+          href="/ressources/Fiche_Memo_Implantation_Batiment.docx"
+          download
+          className="bework-card flex items-center gap-3 border-violet-200 bg-violet-50/80 p-4 text-sm text-violet-900 transition hover:bg-violet-100"
+        >
+          <Download className="h-5 w-5 shrink-0" aria-hidden />
+          <span>
+            <span className="font-semibold">Fiche mémo Word</span>
+            <span className="mt-0.5 block text-xs text-violet-700">
+              Télécharger Fiche_Memo_Implantation_Batiment.docx
+            </span>
+          </span>
+        </a>
+      ) : null}
 
       <article className="bework-card-tech bework-card p-5 sm:p-6">
         <h3 className="font-display text-lg font-bold text-bework-navy">{etape.titre}</h3>
@@ -156,6 +173,12 @@ export function ParcoursApprentissage({ initialParcoursId }: { initialParcoursId
           Pas besoin de tout savoir d&apos;un coup — avancez étape par étape.
         </p>
         <div className="mt-4 flex flex-wrap gap-2">
+          <Link
+            href="/lexique?parcours=implantation-batiment"
+            className="inline-flex items-center rounded-full bg-violet-100 px-3 py-1.5 text-xs font-semibold text-violet-900 transition hover:bg-violet-200"
+          >
+            Débutant — Implantation
+          </Link>
           <Link
             href="/lexique?parcours=charpente-couverture"
             className="inline-flex items-center rounded-full bg-orange-100 px-3 py-1.5 text-xs font-semibold text-orange-900 transition hover:bg-orange-200"

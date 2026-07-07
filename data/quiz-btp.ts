@@ -53,6 +53,13 @@ export const QUIZ_PRESETS_DEBUTANT: {
     familles: ['Menuiseries extérieures'],
   },
   {
+    id: 'implantation-nivellement',
+    label: 'Implantation & nivellement',
+    description:
+      'PC, PLU, NGF, chaises d\'implantation, cordeaux et contrôles avant béton — niveau débutant.',
+    familles: ['Implantation & nivellement'],
+  },
+  {
     id: 'charpente-couverture',
     label: 'Charpente & couverture',
     description:
@@ -249,6 +256,10 @@ export const QUIZ_FAMILLE_AIDE: Record<
   'Charpente & couverture': {
     resume: 'Charpente bois, tuiles, zinguerie et évacuation des eaux pluviales.',
     astuce: 'Charpentier = stabilité horizontale · GO = efforts verticaux seulement.',
+  },
+  'Implantation & nivellement': {
+    resume: 'Position et hauteur du bâtiment : PC, bornes, NGF, chaises et cordeaux.',
+    astuce: 'Bornes géomètre pour le OÙ · repère NGF pour la hauteur · recontrôle avant béton.',
   },
 };
 
