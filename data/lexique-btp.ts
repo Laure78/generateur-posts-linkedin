@@ -7,6 +7,8 @@ import { LEXIQUE_MENUISERIES_EXTERIEURES } from './lexique-btp-menuiseries-exter
 import { LEXIQUE_CHARPENTE_COUVERTURE } from './lexique-btp-charpente-couverture';
 import { LEXIQUE_IMPLANTATION } from './lexique-btp-implantation';
 import { LEXIQUE_BASES_GROS_OEUVRE } from './lexique-btp-bases-gros-oeuvre';
+import { LEXIQUE_FONDATIONS_PLANCHERS } from './lexique-btp-fondations-planchers';
+import { LEXIQUE_MILLAS_NORD } from './lexique-btp-millas-nord';
 
 export type Famille =
   | "Procédures & notation"
@@ -35,7 +37,8 @@ export type Famille =
   | "Performance énergétique & contrôles"
   | "Menuiseries extérieures"
   | "Charpente & couverture"
-  | "Implantation & nivellement";
+  | "Implantation & nivellement"
+  | "Planchers & structures horizontales";
 
 export interface TermeLexique {
   id: string;
@@ -76,6 +79,7 @@ export const FAMILLES: Famille[] = [
   "Menuiseries extérieures",
   "Charpente & couverture",
   "Implantation & nivellement",
+  "Planchers & structures horizontales",
 ];
 
 export const LEXIQUE: TermeLexique[] = [
@@ -1450,6 +1454,12 @@ export const LEXIQUE: TermeLexique[] = [
 
   // ── Bases gros œuvre — fondations & armatures (fiche mémo débutant) ──
   ...LEXIQUE_BASES_GROS_OEUVRE,
+
+  // ── Fondations & planchers — gros œuvre porteur (fiche révision débutant) ──
+  ...LEXIQUE_FONDATIONS_PLANCHERS,
+
+  // ── Millas Nord — 4 lots DCE (fiche révision débutant) ──
+  ...LEXIQUE_MILLAS_NORD,
 ];
 
 // Helper : normalise (minuscule + sans accents) pour la recherche et le quiz

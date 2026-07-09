@@ -10,6 +10,7 @@ import { QuizMenuiseriesSpecial } from '@/components/lexique/QuizMenuiseriesSpec
 import { QuizCharpenteCouvertureSpecial } from '@/components/lexique/QuizCharpenteCouvertureSpecial';
 import { QuizImplantationSpecial } from '@/components/lexique/QuizImplantationSpecial';
 import { QuizBasesGrosOeuvreSpecial } from '@/components/lexique/QuizBasesGrosOeuvreSpecial';
+import { QuizFondationsPlanchersSpecial } from '@/components/lexique/QuizFondationsPlanchersSpecial';
 import {
   FAMILLES,
   QUIZ_FAMILLE_AIDE,
@@ -97,7 +98,7 @@ function chipClass(actif: boolean) {
 
 type Phase = 'config' | 'jeu' | 'resultat';
 
-export type QuizLotInitial = 'go' | 'enduits' | 'charpente' | 'menuiseries' | 'perf' | 'implantation' | 'bases-go';
+export type QuizLotInitial = 'go' | 'enduits' | 'charpente' | 'menuiseries' | 'perf' | 'implantation' | 'bases-go' | 'fondations-planchers';
 
 type QuizLotEncartProps = {
   lotLabel: string;
@@ -163,6 +164,7 @@ export function Quiz({ lotInitial }: { lotInitial?: QuizLotInitial | null }) {
   const [modeSpecialCharpente, setModeSpecialCharpente] = useState(false);
   const [modeSpecialImplantation, setModeSpecialImplantation] = useState(false);
   const [modeSpecialBasesGo, setModeSpecialBasesGo] = useState(false);
+  const [modeSpecialFondationsPlanchers, setModeSpecialFondationsPlanchers] = useState(false);
   const [phase, setPhase] = useState<Phase>('config');
   const [famillesSelection, setFamillesSelection] = useState<Famille[]>([]);
   const [presetActif, setPresetActif] = useState<string | null>(null);
@@ -202,6 +204,9 @@ export function Quiz({ lotInitial }: { lotInitial?: QuizLotInitial | null }) {
         break;
       case 'bases-go':
         setModeSpecialBasesGo(true);
+        break;
+      case 'fondations-planchers':
+        setModeSpecialFondationsPlanchers(true);
         break;
     }
   }, [lotInitial]);
@@ -384,6 +389,12 @@ export function Quiz({ lotInitial }: { lotInitial?: QuizLotInitial | null }) {
     return <QuizBasesGrosOeuvreSpecial onRetour={() => setModeSpecialBasesGo(false)} />;
   }
 
+  if (modeSpecialFondationsPlanchers) {
+    return (
+      <QuizFondationsPlanchersSpecial onRetour={() => setModeSpecialFondationsPlanchers(false)} />
+    );
+  }
+
   // ── Configuration ──
   if (phase === 'config') {
     return (
@@ -400,6 +411,18 @@ export function Quiz({ lotInitial }: { lotInitial?: QuizLotInitial | null }) {
         </div>
 
         <div className="grid gap-3 sm:grid-cols-2">
+          <QuizLotEncart
+            featured
+            lotLabel="Débutant"
+            titre="Fondations & planchers"
+            description="16 questions : étude de sol, semelles, armatures, hourdis, dalles, prédalles et règles de coulage."
+            borderClass="border-teal-300/60"
+            gradientClass="bg-gradient-to-r from-teal-50 to-cyan-50"
+            labelClass="text-teal-900"
+            buttonClass="bg-teal-600 hover:bg-teal-700"
+            icon={<HardHat className="h-4 w-4" aria-hidden />}
+            onLancer={() => setModeSpecialFondationsPlanchers(true)}
+          />
           <QuizLotEncart
             featured
             lotLabel="Débutant"

@@ -11,6 +11,7 @@ import type { QuizLotInitial } from './Quiz';
 const PARCOURS_QUIZ: Partial<Record<string, { lot: QuizLotInitial; label: string }>> = {
   'fondations-gros-oeuvre': { lot: 'go', label: 'Quiz Gros œuvre' },
   'bases-gros-oeuvre': { lot: 'bases-go', label: 'Quiz Bases gros œuvre' },
+  'fondations-planchers': { lot: 'fondations-planchers', label: 'Quiz Fondations & planchers' },
   'implantation-batiment': { lot: 'implantation', label: 'Quiz Implantation' },
   'enduits-facade': { lot: 'enduits', label: 'Quiz Enduits de façade' },
   'charpente-couverture': { lot: 'charpente', label: 'Quiz Charpente & couverture' },
@@ -36,6 +37,14 @@ const PARCOURS_RESSOURCES: Partial<
     bgClass: 'bg-amber-50/80 hover:bg-amber-100',
     textClass: 'text-amber-900',
     subClass: 'text-amber-700',
+  },
+  'fondations-planchers': {
+    href: '/ressources/Fiche_Revision_Fondations_Planchers_BeWork.docx',
+    filename: 'Fiche_Revision_Fondations_Planchers_BeWork.docx',
+    borderClass: 'border-teal-200',
+    bgClass: 'bg-teal-50/80 hover:bg-teal-100',
+    textClass: 'text-teal-900',
+    subClass: 'text-teal-700',
   },
 };
 
@@ -196,6 +205,12 @@ export function ParcoursApprentissage({ initialParcoursId }: { initialParcoursId
           Pas besoin de tout savoir d&apos;un coup — avancez étape par étape.
         </p>
         <div className="mt-4 flex flex-wrap gap-2">
+          <Link
+            href="/lexique?parcours=fondations-planchers"
+            className="inline-flex items-center rounded-full bg-teal-100 px-3 py-1.5 text-xs font-semibold text-teal-900 transition hover:bg-teal-200"
+          >
+            Débutant — Fondations & planchers
+          </Link>
           <Link
             href="/lexique?parcours=bases-gros-oeuvre"
             className="inline-flex items-center rounded-full bg-amber-100 px-3 py-1.5 text-xs font-semibold text-amber-900 transition hover:bg-amber-200"

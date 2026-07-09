@@ -13,6 +13,8 @@ import { MobileAppBanner } from '@/components/platform/MobileAppBanner';
 import { QuickMissionLauncher } from '@/components/platform/QuickMissionLauncher';
 import { DashboardStatusBar } from '@/components/platform/DashboardStatusBar';
 import { QuickMissionShortcuts } from '@/components/platform/QuickMissionShortcuts';
+import { PlatformPositioningSection } from '@/components/platform/PlatformPositioningSection';
+import { ASSISTANT_POSITIONNEMENT } from '@/lib/bework/assistant-positionnement';
 
 export default async function PlateformeDashboardPage({
   searchParams,
@@ -83,12 +85,15 @@ export default async function PlateformeDashboardPage({
 
       <header className="bework-card-tech bework-card flex flex-wrap items-center justify-between gap-4 p-6">
         <div>
-          <p className="bework-kicker">Entreprises BTP · BeWork</p>
+          <p className="bework-kicker">Assistant travaux BTP · BeWork</p>
           <h1 className="font-display mt-2 text-2xl font-bold text-[var(--bework-navy)]">
             Bonjour, {displayName}
           </h1>
           <p className="mt-1 text-sm text-slate-500">{profile.email}</p>
-          <p className="mt-2 max-w-md text-xs text-slate-500">{BEWORK.scopeLine}</p>
+          <p className="mt-2 max-w-lg text-xs leading-relaxed text-slate-500">{BEWORK.scopeLine}</p>
+          <p className="mt-1 max-w-lg text-xs font-medium text-[var(--bework-navy)]/80">
+            {ASSISTANT_POSITIONNEMENT.tagline}
+          </p>
         </div>
         <div className="flex shrink-0 flex-col gap-2">
           <Link href="/plateforme/demandes/nouvelle" className="bework-btn-primary">
@@ -112,6 +117,8 @@ export default async function PlateformeDashboardPage({
         aValider={aValider}
         showAdmin={showAdmin}
       />
+
+      <PlatformPositioningSection />
 
       <div className="mt-6">
         <QuickMissionLauncher />

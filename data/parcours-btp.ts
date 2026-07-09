@@ -608,6 +608,99 @@ export const PARCOURS_BTP: ParcoursBtp[] = [
     ],
   },
   {
+    id: 'fondations-planchers',
+    titre: 'Fondations & planchers',
+    description:
+      'Le gros œuvre porteur en langage simple : fondations, béton armé, planchers hourdis et dalles — fiche révision débutant.',
+    duree: '10 min',
+    etapes: [
+      {
+        id: 'fp-intro',
+        titre: '1. Fondations et planchers, c\'est quoi ?',
+        explication:
+          'La fondation transmet le poids du bâtiment au sol sans affaissement ni fissure. Le plancher porte chaque niveau et descend les charges vers les murs et les fondations. Image : les raquettes à neige — le même poids réparti sur une grande surface. Une maison pèse 100 à 200 t : une fondation mal choisie ou un plancher mal étayé ne se rattrape pas.',
+        astuce: 'Téléchargez la fiche révision Word depuis le bandeau en haut du parcours.',
+        termesLies: ['fondation-porteur', 'plancher-porteur'],
+      },
+      {
+        id: 'fp-familles',
+        titre: '2. Les 3 familles de fondations',
+        explication:
+          'C\'est l\'étude de sol qui décide — jamais une habitude. Superficielles (bon sol < 3 m) : semelle filante sous chaque mur, semelle isolée sous poteau, radier si sol médiocre partout. Semi-profondes (3–6 m) : puits + longrines. Profondes (> 6 m) : pieux. Maison légère à murs → semelles filantes. Immeuble lourd à poteaux → semelles isolées, radier ou pieux.',
+        termesLies: [
+          'etude-geotechnique',
+          'fondations-superficielles',
+          'semelle-filante',
+          'semelle-isolee',
+          'radier',
+          'puits-fondation',
+          'longrine',
+          'pieux',
+          'maison-semelle-immeuble-pieux',
+        ],
+      },
+      {
+        id: 'fp-acier',
+        titre: '3. Pourquoi le béton a besoin d\'acier',
+        explication:
+          'Le béton résiste à la compression mais environ 10 fois moins à la traction. Une semelle qui fléchit est tendue en bas : on y place des filants HA. Cadres et étriers tous les 15–25 cm, treillis soudé pour dalles, aciers en attente pour coudre murs et poteaux.',
+        termesLies: [
+          'beton-arme',
+          'traction-compression-beton',
+          'acier-ha',
+          'filants-armature',
+          'cadres-etriers',
+          'treillis-soude',
+          'aciers-en-attente',
+        ],
+        schema: 'beton-arme-fondations',
+      },
+      {
+        id: 'fp-regles-fond',
+        titre: '4. Les 3 règles d\'or des fondations',
+        explication:
+          '1. Enrobage 3 à 5 cm (cales sous la cage). 2. Béton de propreté (~5 cm) avant la cage. 3. Recouvrement ≈ 50 × diamètre (HA10 → 50 cm), fil de fer, pas de soudure courante.',
+        astuce: 'Aciers + humidité = rouille = béton qui éclate.',
+        termesLies: ['enrobage', 'cales-enrobage', 'beton-proprete', 'recouvrement-armature'],
+      },
+      {
+        id: 'fp-lien',
+        titre: '5. Du sol aux étages',
+        explication:
+          'Les fondations donnent le poids au sol ; les planchers portent chaque niveau et le descendent par les murs et poteaux jusqu\'aux fondations. Même matériau, même logique : le béton comprime, l\'acier tire.',
+        termesLies: ['fondation-porteur', 'plancher-porteur', 'gros-oeuvre'],
+      },
+      {
+        id: 'fp-hourdis',
+        titre: '6. Plancher poutrelles-hourdis',
+        explication:
+          'Le plus courant en maison. Image : une étagère — poutrelles précontraintes (elles portent), hourdis entre les poutrelles (remplissage, coffrage perdu), table de compression 4–5 cm + treillis (solidarise tout). Étais obligatoires jusqu\'au séchage. Ordre : poutrelles → hourdis → treillis → coulage → étais laissés en place.',
+        termesLies: [
+          'plancher-poutrelles-hourdis',
+          'poutrelle-precontrainte',
+          'hourdis-entrevous',
+          'table-compression-plancher',
+          'etais-plancher',
+        ],
+      },
+      {
+        id: 'fp-collectif',
+        titre: '7. Immeuble : dalle pleine et prédalles',
+        explication:
+          'Dalle pleine : coffrage + 2 nappes d\'armatures + 18 à 25 cm de béton coulé en place — logement collectif, charges plus fortes. Prédalles : demi-dalles préfabriquées + béton coulé sur place (gain de temps). Dallage sur terre-plein au RDC : hérisson + polyane + isolant + dalle 12–15 cm avec treillis.',
+        termesLies: ['dalle-pleine', 'predalle', 'dalle-compression', 'dallage-terre-plein'],
+      },
+      {
+        id: 'fp-regles-plancher',
+        titre: '8. Traction, appuis et 3 règles des planchers',
+        explication:
+          'En travée : plancher qui plie vers le bas → traction en bas, aciers en bas. Sur appui : plie à l\'envers → traction en haut, treillis remonté. Règle 1 : étais jusqu\'à résistance suffisante (21–28 j). Règle 2 : treillis en haut sur appuis, en bas en travée. Règle 3 : réservations (gaines, trémies) AVANT coulage.',
+        astuce: 'Percer après coulage = couper des aciers.',
+        termesLies: ['traction-appui-travee', 'etais-plancher', 'reservation-plancher', 'treillis-soude'],
+      },
+    ],
+  },
+  {
     id: 'enduits-facade',
     titre: 'Enduits de façade',
     description:

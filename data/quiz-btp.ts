@@ -53,6 +53,13 @@ export const QUIZ_PRESETS_DEBUTANT: {
     familles: ['Menuiseries extérieures'],
   },
   {
+    id: 'fondations-planchers-debutant',
+    label: 'Fondations & planchers (débutant)',
+    description:
+      'Étude de sol, semelles, radier, armatures HA, planchers hourdis, dalles et étais.',
+    familles: ['Planchers & structures horizontales', 'Terrassement & géotechnique', 'Béton & aciers'],
+  },
+  {
     id: 'bases-gros-oeuvre-debutant',
     label: 'Bases du gros œuvre (débutant)',
     description:
@@ -267,6 +274,10 @@ export const QUIZ_FAMILLE_AIDE: Record<
   'Implantation & nivellement': {
     resume: 'Position et hauteur du bâtiment : PC, bornes, NGF, chaises et cordeaux.',
     astuce: 'Bornes géomètre pour le OÙ · repère NGF pour la hauteur · recontrôle avant béton.',
+  },
+  'Planchers & structures horizontales': {
+    resume: 'Fondations porteuses, planchers hourdis, dalles, étais et armatures en travée/appui.',
+    astuce: 'L\'étude de sol choisit la fondation · les étais restent jusqu\'à ~28 jours · treillis en haut sur les appuis.',
   },
 };
 

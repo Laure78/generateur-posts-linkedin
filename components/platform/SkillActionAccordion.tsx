@@ -29,7 +29,8 @@ export function SkillActionAccordion() {
         <div>
           <h2 className="font-display text-lg font-semibold text-slate-900">Catalogue assistants métier</h2>
           <p className="mt-1 text-sm text-slate-600">
-            Checklist 3D MANAGER — thèmes A à H. Utilisez la recherche ou vos favoris pour aller plus vite.
+            Tâches confiables côté entreprise — thèmes A à H (administratif, documents, suivi financier, DOE…).
+            Utilisez la recherche ou vos favoris pour aller plus vite.
           </p>
         </div>
         <div className="flex gap-2 text-xs">

@@ -141,7 +141,7 @@ export default function HomePage() {
             {
               icon: Users,
               title: 'Entreprises BTP',
-              desc: 'PME, artisans et équipes qui répondent aux AO publics et aux marchés privés (promoteur, lots, contrats).',
+              desc: 'PME et équipes de travaux qui répondent aux AO publics et aux marchés privés (promoteur, lots, contrats).',
             },
           ].map(({ icon: Icon, title, desc }) => (
             <div key={title} className="bework-card p-6">

@@ -18,13 +18,13 @@ export const MOEX_PLATFORM = {
   /** Utilisateurs opérationnels (équipe BeWork + clients entreprise). */
   beworkerRole: 'Assistants travaux (Beworker)',
   platformRoleLine:
-    'Plateforme BeWork pour les entreprises du BTP : externalisez l\'administratif chantier et les dossiers de marché — réponses aux appels d\'offres publics (DCE, RC, mémoire technique) et suivi des marchés privés (courriers, réserves, DOE, relances).',
+    'Assistant travaux externalisé pour les entreprises d\'exécution : renfort administratif, documentaire et opérationnel — marchés publics (DCE, mémoires, AO) et privés (courriers, réserves, DOE). BeWork ne remplace pas la MOE.',
   scopeLine:
-    'Marchés publics et privés : CR, analyses DCE, mémoires, courriers MOA, PV de réception, situations de travaux — dépôt, suivi et livrables relus avant diffusion.',
+    'Prépare, structure et alerte : CR internes, synthèses DCE, relances, tableaux de suivi, DOE — chaque livrable engageant reste validé par votre équipe avant diffusion.',
   internalUseShort:
-    'BeWork — assistants travaux et équipes BTP. Les livrables IA sont des brouillons à valider avant envoi au maître d\'ouvrage ou au client.',
+    'BeWork — assistant travaux côté entreprise. Les livrables IA sont des brouillons à valider avant envoi au maître d\'ouvrage, à la MOE ou au client.',
   internalUseLong:
-    'BeWork accompagne les entreprises du BTP qui répondent aux marchés publics et aux marchés privés. L\'IA prépare CR, courriers, synthèses DCE et tableaux de suivi ; chaque document doit être relu et validé par un professionnel (assistant travaux, conducteur de travaux ou dirigeant) avant transmission.',
+    'BeWork est le bras droit administratif du conducteur de travaux : préparation, organisation, relance et classement. Les décisions techniques, financières, contractuelles et de sécurité restent validées par l\'entreprise. BeWork ne se substitue pas à la MOE ni au conducteur de travaux.',
   teamLeaderValidationAlert:
     'Validation par le chef d\'équipe ou le responsable entreprise obligatoire avant tout envoi au client ou au maître d\'ouvrage.',
   /** Libellés courts pour cartes landing / dashboard. */

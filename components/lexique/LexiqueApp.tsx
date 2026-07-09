@@ -26,7 +26,7 @@ function parseMode(value: string | null): Mode {
 }
 
 function parseLot(value: string | null): QuizLotInitial | null {
-  const lots: QuizLotInitial[] = ['go', 'enduits', 'charpente', 'menuiseries', 'perf', 'implantation', 'bases-go'];
+  const lots: QuizLotInitial[] = ['go', 'enduits', 'charpente', 'menuiseries', 'perf', 'implantation', 'bases-go', 'fondations-planchers'];
   if (value && lots.includes(value as QuizLotInitial)) return value as QuizLotInitial;
   return null;
 }
