@@ -60,6 +60,35 @@ export const QUIZ_PRESETS_DEBUTANT: {
     familles: ['Planchers & structures horizontales', 'Terrassement & géotechnique', 'Béton & aciers'],
   },
   {
+    id: 'millas-nord-debutant',
+    label: 'Millas Nord — 4 lots (débutant)',
+    description:
+      'DCE 38 logements Créon : gros œuvre, enduit, charpente, menuiseries — vocabulaire transversal.',
+    familles: [
+      'Documents du marché',
+      'Planchers & structures horizontales',
+      'Enduits & façades',
+      'Charpente & couverture',
+      'Menuiseries extérieures',
+    ],
+  },
+  {
+    id: 'millas-nord-second-oeuvre-debutant',
+    label: 'Millas Nord — lots 5 à 16 (débutant)',
+    description:
+      'Second œuvre, CVC, électricité, carrelage, VRD, paysage et désamiantage — DCE Créon.',
+    familles: [
+      'Préparation & exécution',
+      'Divers techniques',
+      'Réseaux & lots techniques',
+      'Sols & revêtements',
+      'Performance énergétique & contrôles',
+      'Terrassement & géotechnique',
+      'Amiante & plomb',
+      'Réception & garanties',
+    ],
+  },
+  {
     id: 'bases-gros-oeuvre-debutant',
     label: 'Bases du gros œuvre (débutant)',
     description:

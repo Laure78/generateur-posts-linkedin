@@ -3,7 +3,7 @@
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { BookOpen, GraduationCap, LayoutDashboard, PlusCircle, ExternalLink, Shield, Search } from 'lucide-react';
+import { BookOpen, GraduationCap, LayoutDashboard, PlusCircle, ExternalLink, Shield, Search, Route } from 'lucide-react';
 import { BEWORK } from '@/lib/bework/config';
 import { getMissionIcon } from '@/lib/bework/mission-icons';
 import { BeWorkLogo } from '@/components/brand/BeWorkLogo';
@@ -70,6 +70,7 @@ export function PlatformSidebar({ showAdminLink = false }: PlatformSidebarProps)
   const dashboardActive = pathname === '/plateforme';
   const adminActive = pathname.startsWith('/plateforme/admin');
   const ressourcesActive = pathname.startsWith('/plateforme/ressources');
+  const modeOperatoireActive = pathname.startsWith('/plateforme/mode-operatoire');
   const lexiqueActive = pathname.startsWith('/lexique');
   const nouvellePath = '/plateforme/demandes/nouvelle';
 
@@ -112,6 +113,19 @@ export function PlatformSidebar({ showAdminLink = false }: PlatformSidebarProps)
         >
           <LayoutDashboard size={18} strokeWidth={dashboardActive ? 2.25 : 2} />
           Tableau de bord
+        </Link>
+
+        <Link
+          href="/plateforme/mode-operatoire"
+          onClick={(e) => navigateClick(e, router, '/plateforme/mode-operatoire')}
+          className={`mb-2 flex shrink-0 items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
+            modeOperatoireActive
+              ? 'bg-[var(--bework-blue-soft)] text-[var(--bework-blue)]'
+              : 'text-slate-600 hover:bg-slate-50 hover:text-[var(--bework-navy)]'
+          }`}
+        >
+          <Route size={18} strokeWidth={modeOperatoireActive ? 2.25 : 2} />
+          Mode opératoire
         </Link>
 
         <Link

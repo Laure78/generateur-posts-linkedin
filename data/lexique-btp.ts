@@ -9,6 +9,7 @@ import { LEXIQUE_IMPLANTATION } from './lexique-btp-implantation';
 import { LEXIQUE_BASES_GROS_OEUVRE } from './lexique-btp-bases-gros-oeuvre';
 import { LEXIQUE_FONDATIONS_PLANCHERS } from './lexique-btp-fondations-planchers';
 import { LEXIQUE_MILLAS_NORD } from './lexique-btp-millas-nord';
+import { LEXIQUE_MILLAS_NORD_SECOND_OEUVRE } from './lexique-btp-millas-nord-second-oeuvre';
 
 export type Famille =
   | "Procédures & notation"
@@ -1460,6 +1461,9 @@ export const LEXIQUE: TermeLexique[] = [
 
   // ── Millas Nord — 4 lots DCE (fiche révision débutant) ──
   ...LEXIQUE_MILLAS_NORD,
+
+  // ── Millas Nord — lots 5 à 16 second œuvre & techniques (fiche révision débutant) ──
+  ...LEXIQUE_MILLAS_NORD_SECOND_OEUVRE,
 ];
 
 // Helper : normalise (minuscule + sans accents) pour la recherche et le quiz

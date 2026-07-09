@@ -12,6 +12,8 @@ const PARCOURS_QUIZ: Partial<Record<string, { lot: QuizLotInitial; label: string
   'fondations-gros-oeuvre': { lot: 'go', label: 'Quiz Gros œuvre' },
   'bases-gros-oeuvre': { lot: 'bases-go', label: 'Quiz Bases gros œuvre' },
   'fondations-planchers': { lot: 'fondations-planchers', label: 'Quiz Fondations & planchers' },
+  'millas-nord': { lot: 'millas-nord', label: 'Quiz Millas Nord — 4 lots' },
+  'millas-nord-second-oeuvre': { lot: 'millas-nord-second-oeuvre', label: 'Quiz Millas Nord — lots 5 à 16' },
   'implantation-batiment': { lot: 'implantation', label: 'Quiz Implantation' },
   'enduits-facade': { lot: 'enduits', label: 'Quiz Enduits de façade' },
   'charpente-couverture': { lot: 'charpente', label: 'Quiz Charpente & couverture' },
@@ -20,7 +22,18 @@ const PARCOURS_QUIZ: Partial<Record<string, { lot: QuizLotInitial; label: string
 };
 
 const PARCOURS_RESSOURCES: Partial<
-  Record<string, { href: string; filename: string; borderClass: string; bgClass: string; textClass: string; subClass: string }>
+  Record<
+    string,
+    {
+      href: string;
+      filename: string;
+      label?: string;
+      borderClass: string;
+      bgClass: string;
+      textClass: string;
+      subClass: string;
+    }
+  >
 > = {
   'implantation-batiment': {
     href: '/ressources/Fiche_Memo_Implantation_Batiment.docx',
@@ -45,6 +58,24 @@ const PARCOURS_RESSOURCES: Partial<
     bgClass: 'bg-teal-50/80 hover:bg-teal-100',
     textClass: 'text-teal-900',
     subClass: 'text-teal-700',
+  },
+  'millas-nord': {
+    href: '/ressources/Fiche_Revision_Lots_Millas_Nord_BeWork.pdf',
+    filename: 'Fiche_Revision_Lots_Millas_Nord_BeWork.pdf',
+    label: 'Fiche révision PDF',
+    borderClass: 'border-indigo-200',
+    bgClass: 'bg-indigo-50/80 hover:bg-indigo-100',
+    textClass: 'text-indigo-900',
+    subClass: 'text-indigo-700',
+  },
+  'millas-nord-second-oeuvre': {
+    href: '/ressources/Fiche_Revision_Lots_5_a_16_Millas_Nord_BeWork.pdf',
+    filename: 'Fiche_Revision_Lots_5_a_16_Millas_Nord_BeWork.pdf',
+    label: 'Fiche révision PDF',
+    borderClass: 'border-rose-200',
+    bgClass: 'bg-rose-50/80 hover:bg-rose-100',
+    textClass: 'text-rose-900',
+    subClass: 'text-rose-700',
   },
 };
 
@@ -94,7 +125,7 @@ function ParcoursDetail({
         >
           <Download className="h-5 w-5 shrink-0" aria-hidden />
           <span>
-            <span className="font-semibold">Fiche mémo Word</span>
+            <span className="font-semibold">{ressource.label ?? 'Fiche mémo Word'}</span>
             <span className={`mt-0.5 block text-xs ${ressource.subClass}`}>
               Télécharger {ressource.filename}
             </span>
@@ -205,6 +236,18 @@ export function ParcoursApprentissage({ initialParcoursId }: { initialParcoursId
           Pas besoin de tout savoir d&apos;un coup — avancez étape par étape.
         </p>
         <div className="mt-4 flex flex-wrap gap-2">
+          <Link
+            href="/lexique?parcours=millas-nord-second-oeuvre"
+            className="inline-flex items-center rounded-full bg-rose-100 px-3 py-1.5 text-xs font-semibold text-rose-900 transition hover:bg-rose-200"
+          >
+            Débutant — Millas Nord (lots 5-16)
+          </Link>
+          <Link
+            href="/lexique?parcours=millas-nord"
+            className="inline-flex items-center rounded-full bg-indigo-100 px-3 py-1.5 text-xs font-semibold text-indigo-900 transition hover:bg-indigo-200"
+          >
+            Débutant — Millas Nord (4 lots)
+          </Link>
           <Link
             href="/lexique?parcours=fondations-planchers"
             className="inline-flex items-center rounded-full bg-teal-100 px-3 py-1.5 text-xs font-semibold text-teal-900 transition hover:bg-teal-200"

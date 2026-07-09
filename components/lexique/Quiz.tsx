@@ -11,6 +11,8 @@ import { QuizCharpenteCouvertureSpecial } from '@/components/lexique/QuizCharpen
 import { QuizImplantationSpecial } from '@/components/lexique/QuizImplantationSpecial';
 import { QuizBasesGrosOeuvreSpecial } from '@/components/lexique/QuizBasesGrosOeuvreSpecial';
 import { QuizFondationsPlanchersSpecial } from '@/components/lexique/QuizFondationsPlanchersSpecial';
+import { QuizMillasNordSpecial } from '@/components/lexique/QuizMillasNordSpecial';
+import { QuizMillasNordSecondOeuvreSpecial } from '@/components/lexique/QuizMillasNordSecondOeuvreSpecial';
 import {
   FAMILLES,
   QUIZ_FAMILLE_AIDE,
@@ -98,7 +100,7 @@ function chipClass(actif: boolean) {
 
 type Phase = 'config' | 'jeu' | 'resultat';
 
-export type QuizLotInitial = 'go' | 'enduits' | 'charpente' | 'menuiseries' | 'perf' | 'implantation' | 'bases-go' | 'fondations-planchers';
+export type QuizLotInitial = 'go' | 'enduits' | 'charpente' | 'menuiseries' | 'perf' | 'implantation' | 'bases-go' | 'fondations-planchers' | 'millas-nord' | 'millas-nord-second-oeuvre';
 
 type QuizLotEncartProps = {
   lotLabel: string;
@@ -165,6 +167,8 @@ export function Quiz({ lotInitial }: { lotInitial?: QuizLotInitial | null }) {
   const [modeSpecialImplantation, setModeSpecialImplantation] = useState(false);
   const [modeSpecialBasesGo, setModeSpecialBasesGo] = useState(false);
   const [modeSpecialFondationsPlanchers, setModeSpecialFondationsPlanchers] = useState(false);
+  const [modeSpecialMillasNord, setModeSpecialMillasNord] = useState(false);
+  const [modeSpecialMillasNordSecondOeuvre, setModeSpecialMillasNordSecondOeuvre] = useState(false);
   const [phase, setPhase] = useState<Phase>('config');
   const [famillesSelection, setFamillesSelection] = useState<Famille[]>([]);
   const [presetActif, setPresetActif] = useState<string | null>(null);
@@ -207,6 +211,12 @@ export function Quiz({ lotInitial }: { lotInitial?: QuizLotInitial | null }) {
         break;
       case 'fondations-planchers':
         setModeSpecialFondationsPlanchers(true);
+        break;
+      case 'millas-nord':
+        setModeSpecialMillasNord(true);
+        break;
+      case 'millas-nord-second-oeuvre':
+        setModeSpecialMillasNordSecondOeuvre(true);
         break;
     }
   }, [lotInitial]);
@@ -395,6 +405,18 @@ export function Quiz({ lotInitial }: { lotInitial?: QuizLotInitial | null }) {
     );
   }
 
+  if (modeSpecialMillasNord) {
+    return <QuizMillasNordSpecial onRetour={() => setModeSpecialMillasNord(false)} />;
+  }
+
+  if (modeSpecialMillasNordSecondOeuvre) {
+    return (
+      <QuizMillasNordSecondOeuvreSpecial
+        onRetour={() => setModeSpecialMillasNordSecondOeuvre(false)}
+      />
+    );
+  }
+
   // ── Configuration ──
   if (phase === 'config') {
     return (
@@ -405,12 +427,37 @@ export function Quiz({ lotInitial }: { lotInitial?: QuizLotInitial | null }) {
           </p>
           <p className="mt-1 text-sm text-slate-600">
             Questions scénarisées avec explications — idéal pour débuter. Commencez par{' '}
+            <strong className="font-medium">Millas Nord (4 lots)</strong>,{' '}
             <strong className="font-medium">Charpente</strong> ou{' '}
-            <strong className="font-medium">Menuiseries</strong> (Millas Nord).
+            <strong className="font-medium">Menuiseries</strong>.
           </p>
         </div>
 
         <div className="grid gap-3 sm:grid-cols-2">
+          <QuizLotEncart
+            featured
+            lotLabel="Débutant"
+            titre="Millas Nord — 4 lots"
+            description="16 questions : gros œuvre, enduit, charpente, menuiseries — DCE 38 logements Créon."
+            borderClass="border-indigo-300/60"
+            gradientClass="bg-gradient-to-r from-indigo-50 to-violet-50"
+            labelClass="text-indigo-900"
+            buttonClass="bg-indigo-600 hover:bg-indigo-700"
+            icon={<Home className="h-4 w-4" aria-hidden />}
+            onLancer={() => setModeSpecialMillasNord(true)}
+          />
+          <QuizLotEncart
+            featured
+            lotLabel="Débutant"
+            titre="Millas Nord — lots 5 à 16"
+            description="16 questions : second œuvre, CVC, électricité, VRD, paysage et désamiantage."
+            borderClass="border-rose-300/60"
+            gradientClass="bg-gradient-to-r from-rose-50 to-pink-50"
+            labelClass="text-rose-900"
+            buttonClass="bg-rose-600 hover:bg-rose-700"
+            icon={<DoorOpen className="h-4 w-4" aria-hidden />}
+            onLancer={() => setModeSpecialMillasNordSecondOeuvre(true)}
+          />
           <QuizLotEncart
             featured
             lotLabel="Débutant"

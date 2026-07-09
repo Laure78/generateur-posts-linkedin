@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { ArrowLeft, GraduationCap } from 'lucide-react';
+import { ArrowLeft, GraduationCap, Route } from 'lucide-react';
 import { PlatformGuideContent } from '@/components/platform/PlatformGuideContent';
 import { createAppPageMetadata } from '@/lib/bework/seo';
 
@@ -30,8 +30,26 @@ export default function PlateformeRessourcesPage() {
       </p>
 
       <Link
-        href="/lexique"
+        href="/plateforme/mode-operatoire"
         className="bework-card-tech bework-card mt-6 flex items-start gap-4 p-5 transition-shadow hover:shadow-md"
+      >
+        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[var(--bework-blue-soft)] text-[var(--bework-blue)]">
+          <Route className="h-6 w-6" aria-hidden />
+        </span>
+        <div>
+          <p className="bework-kicker">Offre &amp; méthode</p>
+          <p className="font-display mt-0.5 text-base font-bold text-[var(--bework-navy)]">
+            Assistant travaux externalisé — mode opératoire
+          </p>
+          <p className="mt-1 text-sm text-slate-500">
+            4 phases de cadrage, 8 étapes J0 → DOE, périmètre client et livrables types.
+          </p>
+        </div>
+      </Link>
+
+      <Link
+        href="/lexique"
+        className="bework-card-tech bework-card mt-4 flex items-start gap-4 p-5 transition-shadow hover:shadow-md"
       >
         <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[var(--bework-blue-soft)] text-[var(--bework-blue)]">
           <GraduationCap className="h-6 w-6" aria-hidden />

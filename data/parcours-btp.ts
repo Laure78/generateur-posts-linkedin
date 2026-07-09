@@ -984,6 +984,103 @@ export const PARCOURS_BTP: ParcoursBtp[] = [
     ],
   },
   {
+    id: 'millas-nord',
+    titre: 'Millas Nord — les 4 lots',
+    description:
+      'Comprendre le DCE 38 logements à Créon : gros œuvre, enduit, charpente-couverture et menuiseries — vocabulaire transversal et pièges CCTP.',
+    duree: '12 min',
+    etapes: [
+      {
+        id: 'mn-projet',
+        titre: '1. Le projet Millas Nord',
+        explication:
+          '38 logements individuels et collectifs à Créon (33), maître d\'ouvrage Gironde Habitat, phase DCE. Le chantier est découpé en lots comme les chapitres d\'un livre : lot 01 fondations/gros œuvre, lot 02 enduit, lot 03 charpente-couverture, lot 04 menuiseries extérieures — chacun avec son CCTP.',
+        astuce: 'Téléchargez la fiche révision PDF depuis le bandeau en haut du parcours.',
+        termesLies: ['millas-nord-operation', 'dce', 'cctp', 'moa'],
+      },
+      {
+        id: 'mn-cctp',
+        titre: '2. CCTP + plans = un tout',
+        explication:
+          'Le CCTP est la « recette de cuisine » détaillée d\'un corps de métier. CCTP et plans de l\'architecte forment UN TOUT : ce qui est dessiné mais pas écrit (et inversement) est quand même dû, et c\'est toujours la solution la plus contraignante qui s\'applique.',
+        astuce: 'Une lecture incomplète = des travaux non chiffrés à faire gratuitement.',
+        termesLies: ['cctp-plans-solution-contraignante', 'cctp', 'ccap', 'dpgf'],
+      },
+      {
+        id: 'mn-lot01',
+        titre: '3. Lot 01 — Gros œuvre',
+        explication:
+          'Le squelette du bâtiment : installation de chantier pour tous les lots, implantation géomètre (NGF), fouilles, assainissement sous dalle (caméra), fondations (propreté → semelles → longrines), plancher porté sur vide d\'air, murs + chaînages, planchers d\'étage. Classe XA2 à Créon : béton C35/45 hydrofuge. Arase étanche + film anti-termites.',
+        astuce: 'Plans BET ≠ plans EXE : l\'entreprise dessine ses EXE à ses frais, visa DEKRA avant coulage.',
+        termesLies: [
+          'installation-chantier',
+          'classe-exposition-xa2',
+          'plancher-porte-vide-air',
+          'plans-exe-entreprise',
+          'constat-huissier',
+          'passage-camera-assainissement',
+        ],
+      },
+      {
+        id: 'mn-lot02',
+        titre: '4. Lot 02 — Enduit de façade',
+        explication:
+          'La « peau » du bâtiment : enduit monocouche WEBER PRAL F ou équivalent, teinté dans la masse, CSTB, OC2/OC3 (DTU 26.1). 2 passes frais sur frais, renforts treillis aux points singuliers, surfaces témoins validées avant généralisation. Réception écrite des supports GO obligatoire.',
+        astuce: 'Météo : +5 à +30 °C — mortier rebattu interdit (à la benne).',
+        termesLies: [
+          'enduit-monocouche',
+          'reception-supports-ecrite',
+          'conditions-meteo-enduit',
+          'surface-temoin-facade',
+          'modenature',
+        ],
+      },
+      {
+        id: 'mn-lot03',
+        titre: '5. Lot 03 — Charpente & couverture',
+        explication:
+          'Fermettes en W tous les 60 cm (sapin classe 2, combles perdus) — stabilité horizontale due par le charpentier. Tuiles Canal S EDILIANS, 1/5 fixée, chatières, zinguerie alu, noues zinc, dauphins si piétons. 3 variantes exigées : fermettes carports, fermettes celliers, suppression film sous-toiture sauf maison I (logement 36, PV).',
+        astuce: 'Aucune fermette au-dessus d\'une trappe d\'accès combles.',
+        termesLies: [
+          'entraxe-fermettes-60',
+          'variantes-exigees-lot03',
+          'tuile-romane-canal-s',
+          'kit-photovoltaique-logement36',
+          'dauphin-ep',
+        ],
+      },
+      {
+        id: 'mn-lot04',
+        titre: '6. Lot 04 — Menuiseries extérieures',
+        explication:
+          'Fenêtres PVC blanc Uw ≈ 1,4, crémone 3 points, 30 dB façade. Halls collectifs en alu (ventouses, PMR). Volets motorisés sur portes-fenêtres et logements PMR 17-21. Relevé de cotes sur place avant fabrication — nomenclature indicative. Calfeutrement 4 faces + Compriband.',
+        astuce: 'Fabriquer sans relever les cotes = fenêtres qui ne rentrent pas dans les baies.',
+        termesLies: [
+          'uw-millas-14',
+          'nomenclature-indicative',
+          'releve-cotes-menuiseries',
+          'compriband-appui',
+          'etancheite-air-4-faces',
+        ],
+      },
+      {
+        id: 'mn-pieges',
+        titre: '7. Pièges classiques à retenir',
+        explication:
+          'Lot 01 : constat d\'huissier voisinage avant travaux, réservations des lots techniques (oublis refacturés). Lot 02 : sans PV réception, supports réputés acceptés. Lot 03 : lire les variantes avant de chiffrer. Lot 04 : quantitatifs indicatifs — l\'entreprise engage ses propres quantités.',
+        termesLies: ['constat-huissier', 'reservation-reseaux', 'variantes-exigees-lot03', 'nomenclature-indicative'],
+      },
+      {
+        id: 'mn-acteurs',
+        titre: '8. Acteurs, réception et DOE',
+        explication:
+          'MOA commande (Gironde Habitat) → MOE conçoit et dirige → entreprise exécute selon CCTP + plans → bureau de contrôle (DEKRA) et SPS vérifient → réception avec réserves → DOE + garanties (GPA 1 an, décennale 10 ans). Retenue de garantie souvent 5 %.',
+        astuce: 'DOE Millas Nord : 6 exemplaires + reproductible au lot 01.',
+        termesLies: ['moa', 'moe', 'bet', 'rict', 'doe-six-exemplaires', 'gpa'],
+      },
+    ],
+  },
+  {
     id: 'plateforme-terrassement',
     titre: 'Plateforme et compactage',
     description:
@@ -1004,6 +1101,145 @@ export const PARCOURS_BTP: ParcoursBtp[] = [
           'PF1 (20-50 MPa) = sol trop mou pour dallage direct. PF2 = standard. PF3/PF4 = sols très résistants. Un PF1 impose traitement ou surépaisseur.',
         astuce: 'Un sol dur mais mal compacté (ratio > 2) sera refusé même avec une bonne valeur EV2.',
         termesLies: ['portance-pf', 'purge', 'gnt'],
+      },
+    ],
+  },
+  {
+    id: 'millas-nord',
+    titre: 'Millas Nord — 4 lots (clos-couvert)',
+    description:
+      'Comprendre le DCE 38 logements Créon : gros œuvre, enduit, charpente-couverture et menuiseries extérieures — fiche révision débutant.',
+    duree: '12 min',
+    etapes: [
+      {
+        id: 'mn-intro',
+        titre: '1. Le CCTP et le projet',
+        explication:
+          'Millas Nord : 38 logements à Créon (33), maître d\'ouvrage Gironde Habitat. Le CCTP est la « recette » de chaque lot. CCTP + plans = un tout : ce qui est dessiné mais pas écrit (et inversement) est dû — la solution la plus contraignante s\'applique.',
+        astuce: 'Téléchargez la fiche révision PDF depuis le bandeau en haut du parcours.',
+        termesLies: ['millas-nord-operation', 'cctp-plans-solution-contraignante', 'dce'],
+      },
+      {
+        id: 'mn-lot01',
+        titre: '2. Lot 01 — Gros œuvre',
+        explication:
+          'Le lot 01 ouvre le chantier (base vie, clôture, panneau) pour tous. Enchaînement : implantation géomètre → terrassements (VRD puis fouilles) → réseaux sous dalle (caméra) → fondations XA2 (C35/45 + hydrofuge) → plancher sur vide d\'air → murs + chaînages → planchers d\'étage. Plans EXE à viser par DEKRA avant coulage.',
+        termesLies: [
+          'classe-exposition-xa2',
+          'plancher-porte-vide-air',
+          'trait-anti-termites-creon',
+          'passage-camera-assainissement',
+          'plans-exe-entreprise',
+        ],
+      },
+      {
+        id: 'mn-lot02',
+        titre: '3. Lot 02 — Enduit de façade',
+        explication:
+          'Réception écrite des supports GO obligatoire. Enduit monocouche WEBER PRAL F (ou équivalent), CSTB, OC2/OC3. Météo : +5 à +30 °C, pas de mortier rebattu. Surfaces témoins validées avant généralisation. Renforts treillis aux points singuliers.',
+        termesLies: ['reception-supports-ecrite', 'conditions-meteo-enduit', 'enduit-monocouche', 'modenature'],
+      },
+      {
+        id: 'mn-lot03',
+        titre: '4. Lot 03 — Charpente & couverture',
+        explication:
+          'Fermettes W tous les 60 cm (stabilité due par le charpentier). Tuiles Canal S, 1/5 fixée. 3 variantes exigées : fermettes carports, fermettes celliers, suppression film sous-toiture sauf maison I (logement 36, PV). Zinguerie alu, dauphins, châssis désenfumage.',
+        termesLies: [
+          'entraxe-fermettes-60',
+          'variantes-exigees-lot03',
+          'kit-photovoltaique-logement36',
+          'stabilite-charpente-go',
+          'tuile-romane-canal-s',
+        ],
+      },
+      {
+        id: 'mn-lot04',
+        titre: '5. Lot 04 — Menuiseries extérieures',
+        explication:
+          'PVC blanc, Uw ≈ 1,4, 30 dB façade, crémone 3 points. Cotes CCTP indicatives — relevé sur place obligatoire. Calfeutrement 4 faces + Compriband. Volets motorisés sur portes-fenêtres et logements PMR 17-21. Entrées d\'air VMC posées par le menuisier.',
+        termesLies: ['uw-millas-14', 'nomenclature-indicative', 'compriband-appui', 'uw-menuiserie'],
+      },
+      {
+        id: 'mn-bework',
+        titre: '6. BeWork et lexique transversal',
+        explication:
+          'Synthèse DCE, mémoire technique, PPSPS, DICT, PV de réception, visas plans EXE, situations, DOE (6 exemplaires) — le bureau délocalisable. MOA commande, MOE conçoit, entreprise exécute, bureau de contrôle et SPS vérifient, réception avec réserves.',
+        termesLies: ['doe-six-exemplaires', 'moa', 'moe', 'ppsps', 'gpa'],
+      },
+    ],
+  },
+  {
+    id: 'millas-nord-second-oeuvre',
+    titre: 'Millas Nord — lots 5 à 16',
+    description:
+      'Second œuvre, fluides, VRD, paysage et désamiantage — suite du DCE 38 logements Créon (Gironde Habitat).',
+    duree: '14 min',
+    etapes: [
+      {
+        id: 'mnso-intro',
+        titre: '1. Après le clos-couvert',
+        explication:
+          'Les lots 1 à 4 ont mis le bâtiment hors d\'eau et hors d\'air. Place au second œuvre (lots 5-7, 10-11), aux lots techniques (8-9), aux VRD et extérieurs (12-15). Le lot 16 (démolition-désamiantage) intervient en réalité tout au début.',
+        astuce: 'Téléchargez la fiche révision PDF lots 5 à 16 depuis le bandeau.',
+        termesLies: ['second-oeuvre-millas', 'cctp-plans-solution-contraignante'],
+      },
+      {
+        id: 'mnso-05-07',
+        titre: '2. Lots 05 à 07 — Intérieur',
+        explication:
+          'Lot 05 : blocs-portes (entrée blindée 38 dB, palière EI 30), détalonnage 15 mm pour VMC, placards, escaliers — réglages APRÈS le peintre. Lot 06 : garde-corps 1,01 m / 10 cm, QUALIMARINE dehors. Lot 07 : doublages, cloisons BA13, hydrofuge en pièces d\'eau, étanchéité à l\'air RE2020.',
+        termesLies: [
+          'bloc-porte-millas',
+          'detalonnage-vmc',
+          'garde-corps-nf-p01',
+          'cloison-distribution-ba13',
+          'etancheite-air-re2020',
+        ],
+      },
+      {
+        id: 'mnso-08-09',
+        titre: '3. Lots 08 à 09 — Fluides & électricité',
+        explication:
+          'Lot 08 : PAC double service (maisons), CET + chauffage électrique (collectifs), EF/ECS, EU/EV, VMC hygroréglable. Lot 09 : Linky, GTL, CFO (prises, éclairage, terre) + CFA (RJ45, fibre, TV), DAAF, BAES — Consuel obligatoire.',
+        termesLies: [
+          'pac-double-service',
+          'ballon-thermodynamique-cet',
+          'vmc-hygroreglable',
+          'cfo-cfa',
+          'consuel',
+        ],
+      },
+      {
+        id: 'mnso-10-11',
+        titre: '4. Lots 10 à 11 — Revêtements & peinture',
+        explication:
+          'Lot 10 : carrelage/faïence/sols souples — UPEC, SPEC, chape flottante sur résilient (ΔLw), PV réception chapes. Lot 11 : réception subjectiles par écrit, teintes RAL, signalétique d\'évacuation.',
+        termesLies: [
+          'classement-upec',
+          'spec-etancheite-carrelage',
+          'chape-flottante-resilient',
+          'subjectile-peinture',
+        ],
+      },
+      {
+        id: 'mnso-12-15',
+        titre: '5. Lots 12 à 15 — Extérieurs',
+        explication:
+          'Lot 12 VRD : réseau séparatif EU/EP, compactage, BBSG. Lot 13 : fourreaux et chambres AVANT enrobés, IRVE, Enedis/télécom. Lot 14 : AEP, DECI (bâche 120 m³). Lot 15 : plantations en saison, garantie de reprise, terre végétale.',
+        termesLies: [
+          'reseau-separatif-eu-ep',
+          'fourreau-grillage-avertisseur',
+          'irve',
+          'aep-deci',
+          'garantie-reprise-paysage',
+        ],
+      },
+      {
+        id: 'mnso-16',
+        titre: '6. Lot 16 — Démolition & amiante',
+        explication:
+          'Repérage amiante/plomb avant travaux. Plan de retrait, notification inspection du travail. Contrôles d\'air libératoires, BSDA, constat d\'huissier, DICT. BeWork peut prendre en charge tout le volet documentaire.',
+        termesLies: ['plan-retrait-amiante', 'bsda-amiante', 'controle-liberatoire-amiante'],
       },
     ],
   },

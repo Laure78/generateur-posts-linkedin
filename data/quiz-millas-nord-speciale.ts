@@ -197,7 +197,7 @@ const APPROFONDISSEMENT_QUESTIONS: QuizLotModule['questions'] = [
     ],
     bonneReponse: 'a',
     explication: 'VRD = plateforme · GO = fouilles rigoles/trous + évacuation terres excédentaires.',
-    termesLies: ['vrd', 'semelle-filante', 'semelle-isolee'],
+    termesLies: ['terrassier-vrd-raccordement', 'semelle-filante', 'semelle-isolee'],
   },
   {
     id: 'mn10',

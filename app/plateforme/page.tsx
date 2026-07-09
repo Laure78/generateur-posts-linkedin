@@ -13,6 +13,7 @@ import { MobileAppBanner } from '@/components/platform/MobileAppBanner';
 import { QuickMissionLauncher } from '@/components/platform/QuickMissionLauncher';
 import { DashboardStatusBar } from '@/components/platform/DashboardStatusBar';
 import { QuickMissionShortcuts } from '@/components/platform/QuickMissionShortcuts';
+import { AssistantTravauxOfferingTeaser } from '@/components/platform/AssistantTravauxOfferingContent';
 import { PlatformPositioningSection } from '@/components/platform/PlatformPositioningSection';
 import { ASSISTANT_POSITIONNEMENT } from '@/lib/bework/assistant-positionnement';
 
@@ -119,6 +120,10 @@ export default async function PlateformeDashboardPage({
       />
 
       <PlatformPositioningSection />
+
+      <div className="mt-4">
+        <AssistantTravauxOfferingTeaser />
+      </div>
 
       <div className="mt-6">
         <QuickMissionLauncher />
