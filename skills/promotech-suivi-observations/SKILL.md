@@ -1,12 +1,12 @@
 ---
 name: promotech-suivi-observations
-description: Pilote le suivi des observations de chantier d'un MOEX PROMOTECH d'une réunion à l'autre. Construit le tableau de suivi des points ouverts, repère les retards, prépare les relances entreprises et l'ordre du jour de la prochaine réunion. Déclencher dès que l'utilisateur écrit : tableau de suivi des observations, points en attente, points en retard, qu'est-ce qui n'est pas levé, relancer les entreprises, ordre du jour de la réunion, suivi des réserves de chantier.
+description: Pilote le suivi des observations de chantier d'un PROMOTECH d'une réunion à l'autre. Construit le tableau de suivi des points ouverts, repère les retards, prépare les relances entreprises et l'ordre du jour de la prochaine réunion. Déclencher dès que l'utilisateur écrit : tableau de suivi des observations, points en attente, points en retard, qu'est-ce qui n'est pas levé, relancer les entreprises, ordre du jour de la réunion, suivi des réserves de chantier.
 ---
 
-# Skill PROMOTECH — Suivi des observations (MOEX)
+# Skill PROMOTECH — Suivi des observations 
 
 ## Contexte
-PROMOTECH — MOEX, logements collectifs Île-de-France. Vient après le CR (skill promotech-cr-chantier). Objectif : qu'aucun point ouvert ne se perde entre deux réunions, et préparer la suivante.
+PROMOTECH — logements collectifs Île-de-France. Vient après le CR (skill promotech-cr-chantier). Objectif : qu'aucun point ouvert ne se perde entre deux réunions, et préparer la suivante.
 
 ## Déclencheurs
 « tableau de suivi des observations », « points en retard », « ce qui n'est pas levé », « relancer les entreprises », « ordre du jour de la réunion », « suivi des réserves ».
@@ -27,7 +27,7 @@ PROMOTECH — MOEX, logements collectifs Île-de-France. Vient après le CR (ski
 ## Règles
 - Toute relance est datée et tracée par écrit (preuve en cas de pénalités).
 - Rester factuel ; s'appuyer sur les n° d'observation et les échéances des CR.
-- L'IA structure et priorise ; le MOEX décide des relances et arbitrages.
+- L'IA structure et priorise ; le client décide des relances et arbitrages.
 
 ## Enchaînement
 ← promotech-cr-chantier (source des observations).

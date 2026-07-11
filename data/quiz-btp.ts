@@ -153,7 +153,7 @@ export const QUIZ_PRESETS_DEBUTANT: {
   },
   {
     id: 'moex-promoteur',
-    label: 'MOEX & promoteur',
+    label: 'Promoteur & marchés privés',
     description:
       'RE2020, suivi chantier, marché privé, sous-traitance et plateforme (PF).',
     familles: [

@@ -3,10 +3,10 @@ name: promotech-analyse-dce
 description: Analyse un DCE (RC, CCAP, CCTP, DPGF) du point de vue d'un maître d'œuvre d'exécution PROMOTECH sur des opérations de logements collectifs en Île-de-France. Produit une fiche d'analyse structurée. Déclencher dès que l'utilisateur écrit : analyse ce DCE, décrypte ce dossier de consultation, synthèse du DCE, que dit ce dossier, analyse le marché, points de vigilance du DCE, ou colle / dépose un RC, CCAP, CCTP ou DPGF.
 ---
 
-# Skill PROMOTECH — Analyse de DCE (MOEX)
+# Skill PROMOTECH — Analyse de DCE 
 
 ## Contexte
-PROMOTECH — maîtrise d'œuvre d'exécution (MOEX), logements collectifs Île-de-France.
+PROMOTECH — maîtrise d'œuvre d'exécution , logements collectifs Île-de-France.
 L'objectif est de comprendre vite un dossier et de préparer l'analyse des offres, PAS de chiffrer.
 
 ## Déclencheurs
@@ -30,5 +30,5 @@ L'objectif est de comprendre vite un dossier et de préparer l'analyse des offre
 
 ## Règles
 - Citer l'article (RC / CCAP / CCTP) pour chaque point. Si une info est absente : « non précisé ».
-- Ne rien inventer. L'IA structure et alerte ; la décision reste au MOEX.
+- Ne rien inventer. L'IA structure et alerte ; la décision reste au client.
 - Ne pas chiffrer (voir skill comparatif/offres).

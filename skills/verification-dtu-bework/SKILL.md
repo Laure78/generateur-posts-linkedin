@@ -110,8 +110,8 @@ C'est le cœur de la valeur ajoutée. Au-delà du rapprochement ligne ↔ DTU, s
 
 ```json
 "alertes": [
-  "MANQUE_CLASSE: classe de finition A/B/C/D non précisée",
-  "MANQUE_ACCESSOIRES: pas de SEL/SPEC chiffré alors que local humide"
+ "MANQUE_CLASSE: classe de finition A/B/C/D non précisée",
+ "MANQUE_ACCESSOIRES: pas de SEL/SPEC chiffré alors que local humide"
 ]
 ```
 
@@ -138,14 +138,14 @@ Construire un JSON conforme au format attendu par le script (cf. exemple plus ba
 
 ```bash
 python3 /mnt/skills/user/verification-dtu-bework/scripts/generer_rapport_dtu.py \
-  /home/claude/dtu_input_[client].json \
-  /home/claude/Rapport_DTU_[Client]_[AAAAMMJJ].docx
+ /home/claude/dtu_input_[client].json \
+ /home/claude/Rapport_DTU_[Client]_[AAAAMMJJ].docx
 ```
 
 Puis convertir en PDF :
 ```bash
 python3 /mnt/skills/public/docx/scripts/office/soffice.py --headless --convert-to pdf \
-  /home/claude/Rapport_DTU_[Client]_[AAAAMMJJ].docx
+ /home/claude/Rapport_DTU_[Client]_[AAAAMMJJ].docx
 ```
 
 Copier les deux fichiers vers `/mnt/user-data/outputs/` et les présenter via `present_files`.
@@ -154,22 +154,22 @@ Copier les deux fichiers vers `/mnt/user-data/outputs/` et les présenter via `p
 
 ```json
 {
-  "client": "Entreprise Dupont SARL",
-  "projet": "Lot 04 — Revêtements sols / Rénovation Paris 11",
-  "date": "15/05/2026",
-  "redacteur": "BeWork",
-  "lignes": [
-    {
-      "ligne_devis": "Libellé exact de la ligne du devis",
-      "ouvrage_detecte": "Catégorisation BTP",
-      "dtu_probable": "NF DTU XX.X",
-      "dtu_titre_court": "Titre court du DTU",
-      "articles_a_verifier": ["point 1", "point 2", "point 3"],
-      "niveau_confiance": "Élevé",
-      "alertes": ["MANQUE_CLASSE: classe de finition non précisée"],
-      "notes": "Note libre, ou chaîne vide"
-    }
-  ]
+ "client": "Entreprise Dupont SARL",
+ "projet": "Lot 04 — Revêtements sols / Rénovation Paris 11",
+ "date": "15/05/2026",
+ "redacteur": "BeWork",
+ "lignes": [
+ {
+ "ligne_devis": "Libellé exact de la ligne du devis",
+ "ouvrage_detecte": "Catégorisation BTP",
+ "dtu_probable": "NF DTU XX.X",
+ "dtu_titre_court": "Titre court du DTU",
+ "articles_a_verifier": ["point 1", "point 2", "point 3"],
+ "niveau_confiance": "Élevé",
+ "alertes": ["MANQUE_CLASSE: classe de finition non précisée"],
+ "notes": "Note libre, ou chaîne vide"
+ }
+ ]
 }
 ```
 
@@ -199,12 +199,12 @@ Pour enrichir la base : ajouter une entrée dans le fichier JSON en suivant le f
 ## CHARTE BEWORK OFFICIELLE (alignée bework.fr, mai 2026)
 
 ```
-BLUE       = #1D4ED8  (Tailwind blue-700 — couleur officielle site bework.fr)
-LIGHT_BLUE = #DBEAFE  (bordures fines, fond bandeaux)
-DARK       = #0F172A  (texte principal, slate-900)
-GRAY       = #64748B  (texte secondaire, slate-500)
-LIGHT_GRAY = #F1F5F9  (fond encadrés, alternance ligne)
-FONT       = Century Gothic (fallback Calibri)
+BLUE = #1D4ED8 (Tailwind blue-700 — couleur officielle site bework.fr)
+LIGHT_BLUE = #DBEAFE (bordures fines, fond bandeaux)
+DARK = #0F172A (texte principal, slate-900)
+GRAY = #64748B (texte secondaire, slate-500)
+LIGHT_GRAY = #F1F5F9 (fond encadrés, alternance ligne)
+FONT = Century Gothic (fallback Calibri)
 ```
 
 **Logo officiel** : `/mnt/skills/user/verification-dtu-bework/assets/BeWork_logo_officiel.jpg` (style blueprint, ratio 3:1, à utiliser tel quel, ne pas recréer). Source : https://www.bework.fr/BeWork.logo.blueprint.png

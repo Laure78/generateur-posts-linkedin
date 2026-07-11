@@ -1,12 +1,12 @@
 ---
 name: promotech-pv-reserves
-description: Produit les PV de réception et listes de réserves d'un MOEX PROMOTECH (logements collectifs IDF), classés par lot, et assure le suivi de leur levée. Déclencher dès que l'utilisateur écrit : fais le PV de réception, liste des réserves, PV de réception avec réserves, OPR, pré-réception, tableau de suivi des réserves, constat de levée, relance de réserves.
+description: Produit les PV de réception et listes de réserves d'un PROMOTECH (logements collectifs IDF), classés par lot, et assure le suivi de leur levée. Déclencher dès que l'utilisateur écrit : fais le PV de réception, liste des réserves, PV de réception avec réserves, OPR, pré-réception, tableau de suivi des réserves, constat de levée, relance de réserves.
 ---
 
-# Skill PROMOTECH — PV de réception & réserves (MOEX)
+# Skill PROMOTECH — PV de réception & réserves 
 
 ## Contexte
-PROMOTECH — MOEX, logements collectifs Île-de-France. La réception fait courir les garanties : les réserves doivent être précises, datées et suivies jusqu'à leur levée.
+PROMOTECH — logements collectifs Île-de-France. La réception fait courir les garanties : les réserves doivent être précises, datées et suivies jusqu'à leur levée.
 
 ## Déclencheurs
 « fais le PV de réception », « liste des réserves », « OPR / pré-réception », « tableau de suivi des réserves », « constat de levée », « relance de réserves ».
@@ -26,7 +26,7 @@ PROMOTECH — MOEX, logements collectifs Île-de-France. La réception fait cour
 
 ## Règles
 - Libellé précis obligatoire : jamais « à revoir » ou « finitions ».
-- L'IA met en forme et suit ; la décision de réception et les arbitrages restent au MOEX et au MOA.
+- L'IA met en forme et suit ; la décision de réception et les arbitrages restent au client et au MOA.
 - Dater, numéroter, conserver : une réserve sans constat de levée reste réputée ouverte.
 
 ## Enchaînement

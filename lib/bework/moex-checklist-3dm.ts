@@ -1,6 +1,6 @@
 /**
- * Checklist d'externalisation 3D MANAGER (MOEX / BET TCE).
- * Source : Checklist_BeWork_3DManager — 1 ligne = 1 type de mission, sans doublon.
+ * Checklist d'externalisation BeWork — thèmes métier (chantier, marchés, DOE…).
+ * Source historique : checklist 3D MANAGER (référence métier, sans libellé client).
  */
 
 export type MoexChecklistThemeId =
@@ -32,7 +32,7 @@ export const MOEX_CHECKLIST_THEMES: MoexChecklistTheme[] = [
     id: 'pilotage-entreprises',
     letter: 'B',
     label: 'Pilotage & coordination des entreprises',
-    description: 'Relances, plans EXE, ordres de service, courriers MOEX',
+    description: 'Relances, plans EXE, ordres de service, courriers chantier',
   },
   {
     id: 'consultation-marches',
@@ -73,7 +73,7 @@ export const MOEX_CHECKLIST_THEMES: MoexChecklistTheme[] = [
   {
     id: 'autre',
     letter: '',
-    label: 'Besoin MOEX non listé',
+    label: 'Besoin non listé',
     description: 'Demande administrative hors checklist — qualification par le Beworker',
   },
 ];
@@ -88,7 +88,7 @@ export type MoexChecklistTask = {
 export const MOEX_CHECKLIST_TASKS: MoexChecklistTask[] = [
   // A — Suivi de chantier & réunions
   { id: 'cr-chantier-3dm', theme: 'suivi-chantier', label: 'Mise en forme des CR de réunion de chantier' },
-  { id: 'cr-chantier-moex', theme: 'suivi-chantier', label: 'CR chantier (format MOEX / PROMOTECH)' },
+  { id: 'cr-chantier-moex', theme: 'suivi-chantier', label: 'CR chantier (format PROMOTECH)' },
   { id: 'suivi-observations', theme: 'suivi-chantier', label: 'Suivi tableau des observations (CR à CR)' },
   { id: 'ordre-du-jour-reunions', theme: 'suivi-chantier', label: "Préparation de l'ordre du jour des réunions" },
   { id: 'diffusion-cr-ged', theme: 'suivi-chantier', label: 'Diffusion des CR et classement (GED)' },
@@ -107,7 +107,7 @@ export const MOEX_CHECKLIST_TASKS: MoexChecklistTask[] = [
   { id: 'tableau-dpgf', theme: 'consultation-marches', label: 'Saisie / mise à jour des tableaux DPGF (quantitatifs)' },
   { id: 'comparatif-offres', theme: 'consultation-marches', label: 'Mise en forme du comparatif des offres / RAO' },
   { id: 'relances-consultation', theme: 'consultation-marches', label: 'Relances candidats pendant la consultation' },
-  { id: 'analyse-dce-moex', theme: 'consultation-marches', label: 'Analyse DCE (MOEX) — fiche de synthèse' },
+  { id: 'analyse-dce-moex', theme: 'consultation-marches', label: 'Analyse DCE — fiche de synthèse' },
   { id: 'conformite-offre', theme: 'consultation-marches', label: 'Conformité offre au CCTP' },
 
   // D — Suivi financier
@@ -167,7 +167,7 @@ export const MOEX_CHECKLIST_TASKS: MoexChecklistTask[] = [
   { id: 'registre-sous-traitants', theme: 'sous-traitance', label: 'Tenue du registre de suivi des sous-traitants par lot' },
 
   // Hors checklist PDF — besoin libre
-  { id: 'autre', theme: 'autre', label: 'Demande administrative MOEX diverse' },
+  { id: 'autre', theme: 'autre', label: 'Demande administrative diverse' },
 ];
 
 export const MOEX_CHECKLIST_TASK_IDS = MOEX_CHECKLIST_TASKS.map((t) => t.id);

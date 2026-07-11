@@ -34,7 +34,7 @@ Puis scanner le QR code avec Expo Go (iOS/Android).
 | Écran | Description |
 |-------|-------------|
 | **Demandes** | Liste, recherche, filtre « À valider » |
-| **Nouvelle** | Création demande MOEX, champs CR, import PDF/Word |
+| **Nouvelle** | Création demande champs CR, import PDF/Word |
 | **Admin** | File validation chef (rôles `chef_equipe` / `admin`) |
 | **Compte** | Profil et déconnexion |
 | **Détail** | Suivi IA, validation livrable, lien téléchargement |

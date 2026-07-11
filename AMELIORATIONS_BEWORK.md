@@ -1,4 +1,4 @@
-# Améliorations BeWork — plateforme MOEX
+# Améliorations BeWork — plateforme BeWork
 
 ## Déjà livré (2026)
 

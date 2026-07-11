@@ -66,7 +66,7 @@ const SPECIFIC_META: Record<string, Partial<MissionMeta>> = {
     category: 'pilotage-entreprises',
     titlePlaceholder: 'Ex. : Relance Lot 02 GO — réserves non levées',
     briefPlaceholder: 'Destinataire, faits, dates des relances antérieures, action attendue et délai…',
-    briefHint: 'Relance entreprise, mise en demeure, courrier au MOA ou note de diffusion MOEX.',
+    briefHint: 'Relance entreprise, mise en demeure, courrier au MOA ou note de diffusion.',
   },
   'pv-reserves': {
     titlePlaceholder: 'Ex. : PV réception — Phase 2',
@@ -77,12 +77,12 @@ const SPECIFIC_META: Record<string, Partial<MissionMeta>> = {
     category: 'pilotage-entreprises',
     titlePlaceholder: 'Ex. : OS prolongation délai — Lot 14 CVC',
     briefPlaceholder: 'Type d’OS (prolongation, arrêt, reprise, prescription), motif, délai, entreprise…',
-    briefHint: 'Mentions obligatoires MOEX et traçabilité contractuelle.',
+    briefHint: 'Mentions obligatoires et traçabilité contractuelle.',
   },
   'analyse-dce-moex': {
     titlePlaceholder: 'Ex. : Analyse DCE — Résidence Bel Air',
     briefPlaceholder: 'Collez ou décrivez les pièces : RC, CCAP, CCTP, DPGF. Indiquez l’opération et le lot…',
-    briefHint: 'Fiche d’analyse MOEX — clauses à risque et questions au MOA.',
+    briefHint: 'Fiche d’analyse — clauses à risque et questions au MOA.',
   },
   'comparatif-offres': {
     titlePlaceholder: 'Ex. : Comparatif Lot 05 menuiserie',

@@ -1,6 +1,6 @@
 /**
  * Missions confiées à BeWork — source : Missions_BeWork_par_lot.pdf
- * Vue « par lot » (entreprise d’exécution) distincte de la checklist MOEX 3D MANAGER.
+ * Vue « par lot » (entreprise d’exécution), complémentaire du catalogue d’assistants.
  */
 
 export type MissionPhaseId = 'avant' | 'pendant' | 'fin';
@@ -13,7 +13,7 @@ export type LotMissionItem = {
   /** Description / périmètre */
   description: string;
   /**
-   * Type de mission plateforme à ouvrir (catalogue MOEX).
+   * Type de mission plateforme à ouvrir (catalogue assistants).
    * Si absent → `autre`.
    */
   mapsToMissionType?: string;

@@ -3,10 +3,10 @@ name: promotech-cr-chantier
 description: Rédige le compte rendu d'une réunion de chantier pour un maître d'œuvre d'exécution PROMOTECH (logements collectifs IDF), à partir de notes ou d'une dictée en vrac. Structure par corps d'état, numérote les observations, reprend les points non soldés du CR précédent. Déclencher dès que l'utilisateur écrit : rédige le CR de la visite, génère le compte rendu de chantier, mets en forme mes notes de chantier, CR de réunion de chantier — ou dicte / colle des constats de visite.
 ---
 
-# Skill PROMOTECH — Compte rendu de chantier (MOEX)
+# Skill PROMOTECH — Compte rendu de chantier 
 
 ## Contexte
-PROMOTECH — MOEX, logements collectifs Île-de-France. Réunions de chantier hebdomadaires, CR à diffuser sous 24h. Le CR fait foi : il doit être factuel, neutre et exhaustif.
+PROMOTECH — logements collectifs Île-de-France. Réunions de chantier hebdomadaires, CR à diffuser sous 24h. Le CR fait foi : il doit être factuel, neutre et exhaustif.
 
 ## Déclencheurs
 « rédige le CR de la visite », « génère le compte rendu de chantier », « mets en forme mes notes de chantier », dictée / collage de constats.
@@ -29,7 +29,7 @@ PROMOTECH — MOEX, logements collectifs Île-de-France. Réunions de chantier h
 ## Règles
 - Ton factuel et neutre : aucune observation reformulée ne doit changer de sens.
 - Pas de jugement de valeur (« mal fait » → décrire le défaut + la référence : DTU / plan / CCTP).
-- L'IA met en forme ; le MOEX constate et valide avant diffusion.
+- L'IA met en forme ; le client constate et valide avant diffusion.
 - Anonymiser les données sensibles ; les photos restent gérées hors de l'outil si nécessaire.
 
 ## Enchaînement

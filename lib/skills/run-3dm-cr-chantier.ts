@@ -5,10 +5,10 @@ import { generate3dmCrDocx } from './generate-3dm-cr-docx';
 import type { MissionForSkill } from './run-mission';
 import { setMissionRunUsage } from './run-usage';
 
-const CR_JSON_SYSTEM = `Tu es l'assistant compte rendu de chantier 3D MANAGER (bureau d'études TCE, MOEX certifié ISO 9001, agence Île-de-France).
-Le CR fait foi : factuel, neutre, exhaustif, traçable. Le MOEX valide ; tu produis le JSON pour le .docx à la charte graphique officielle.
+const CR_JSON_SYSTEM = `Tu es l'assistant compte rendu de chantier 3D MANAGER (bureau d'études TCE, certifié ISO 9001, agence Île-de-France).
+Le CR fait foi : factuel, neutre, exhaustif, traçable. Le client valide ; tu produis le JSON pour le .docx à la charte graphique officielle.
 
-À partir du brief, produis UN SEUL objet JSON valide pour scripts/generate_cr.py (charte officielle : anthracite #2A2A2A, rouge #CC2A2A, fonds #F2F2F2, logo blanc sur bandeau anthracite, liséré noir #000000 sous le bandeau, pied de page BET TCE · MOEX · ISO 9001 et réseau d'agences).
+À partir du brief, produis UN SEUL objet JSON valide pour scripts/generate_cr.py (charte officielle : anthracite #2A2A2A, rouge #CC2A2A, fonds #F2F2F2, logo blanc sur bandeau anthracite, liséré noir #000000 sous le bandeau, pied de page BET TCE · ISO 9001 et réseau d'agences).
 
 Schéma obligatoire :
 operation, adresse, moex (défaut "3D MANAGER · Agence Île-de-France"), architecte, bureau_controle, csps,
@@ -45,7 +45,7 @@ function buildCrSummary(
 Le document à la charte **3D MANAGER** a été généré : **${filename}**.
 ${outputFormat && outputFormat !== 'docx' ? `\nUn export **.${outputFormat}** est également disponible au téléchargement.` : ''}
 
-Téléchargez le fichier ci-dessous, relisez-le, faites valider par le **chef d'équipe**, puis transmettez au MOEX ou au client selon votre circuit (délai d’approbation mentionné dans le CR).
+Téléchargez le fichier ci-dessous, relisez-le, faites valider par le **chef d'équipe**, puis transmettez au client selon votre circuit (délai d’approbation mentionné dans le CR).
 
 ### Avancement (extrait)
 ${String(crData.avancement ?? '—')}

@@ -94,7 +94,7 @@ const SIZES = {
   lg: { box: 'h-12 w-12', icon: 24 },
 } as const;
 
-/** Icône assistant MOEX — style moderne, bleu BeWork. */
+/** Icône assistant BeWork — style moderne, bleu BeWork. */
 export function MissionIcon({ missionTypeId, size = 'md', className = '' }: MissionIconProps) {
   const IconComponent = getMissionIcon(missionTypeId);
   const s = SIZES[size];

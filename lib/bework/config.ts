@@ -25,7 +25,7 @@ export const BEWORK = {
   logoBlueprint: '/images/bework-logo.png',
 } as const;
 
-/** Types de demande MOEX — 1 entrée = 1 skill (voir lib/skills/registry.ts) */
+/** Types de demande BeWork — 1 entrée = 1 skill (voir lib/skills/registry.ts) */
 export const MISSION_TYPES = MOEX_MISSION_TYPES;
 
 export type MissionTypeId = (typeof MISSION_TYPES)[number]['id'];

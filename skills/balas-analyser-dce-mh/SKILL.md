@@ -90,9 +90,9 @@ Analyse ce DCE et produis une FICHE D'ANALYSE PATRIMOINE structurée comportant 
 
 ## 5. EXIGENCES ÉLIMINATOIRES (DRAPEAU ROUGE — VÉRIFIER SYSTÉMATIQUEMENT)
 - Qualifications Qualibat exigées (codes précis) :
-  * Lot couverture/plomb : 3194 obligatoire, 3163 mention ornement
-  * Lot maçonnerie/pierre/ravalement : 2194 obligatoire, 6593 souhaité
-  * Mention RGE éventuelle
+ * Lot couverture/plomb : 3194 obligatoire, 3163 mention ornement
+ * Lot maçonnerie/pierre/ravalement : 2194 obligatoire, 6593 souhaité
+ * Mention RGE éventuelle
 - Nombre de références MH < 5 ans exigées, avec spécificités (plomb d'art, modénatures, taille de pierre)
 - Effectif minimum / encadrement / compagnons qualifiés (PNJP, Compagnons du Devoir)
 - Assurances RC et décennale spécifiques MH

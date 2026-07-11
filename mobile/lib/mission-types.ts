@@ -1,4 +1,4 @@
-/** Types de mission MOEX — alignés sur lib/bework/moex-checklist-3dm.ts */
+/** Types de mission — alignés sur lib/bework/moex-checklist-3dm.ts */
 import { MOEX_CHECKLIST_TASKS } from '../../lib/bework/moex-checklist-3dm';
 
 export const MISSION_TYPES = MOEX_CHECKLIST_TASKS.map((t) => ({

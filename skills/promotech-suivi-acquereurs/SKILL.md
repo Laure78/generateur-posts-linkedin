@@ -1,12 +1,12 @@
 ---
 name: promotech-suivi-acquereurs
-description: Gère la relation acquéreurs en VEFA pour un MOEX PROMOTECH (logements collectifs IDF) — réponses aux réclamations, réserves acquéreurs à la livraison, courriers de levée, suivi de la garantie de parfait achèvement. Déclencher dès que l'utilisateur écrit : réponds à l'acquéreur, réclamation acquéreur, réserves acquéreur, courrier de livraison, levée acquéreur, suivi GPA, désordre en GPA, parfait achèvement.
+description: Gère la relation acquéreurs en VEFA pour un PROMOTECH (logements collectifs IDF) — réponses aux réclamations, réserves acquéreurs à la livraison, courriers de levée, suivi de la garantie de parfait achèvement. Déclencher dès que l'utilisateur écrit : réponds à l'acquéreur, réclamation acquéreur, réserves acquéreur, courrier de livraison, levée acquéreur, suivi GPA, désordre en GPA, parfait achèvement.
 ---
 
-# Skill PROMOTECH — Suivi acquéreurs & GPA (MOEX)
+# Skill PROMOTECH — Suivi acquéreurs & GPA 
 
 ## Contexte
-PROMOTECH — MOEX, logements collectifs VEFA. À la livraison, chaque acquéreur signale ses réserves ; pendant l'année de garantie de parfait achèvement (GPA), il signale les désordres. Les réponses doivent être rapides, claires et tracées.
+PROMOTECH — logements collectifs VEFA. À la livraison, chaque acquéreur signale ses réserves ; pendant l'année de garantie de parfait achèvement (GPA), il signale les désordres. Les réponses doivent être rapides, claires et tracées.
 
 ## Déclencheurs
 « réponds à l'acquéreur », « réclamation acquéreur », « réserves acquéreur », « courrier de livraison », « levée acquéreur », « suivi GPA », « désordre en GPA ».

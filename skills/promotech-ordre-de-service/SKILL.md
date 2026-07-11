@@ -3,10 +3,10 @@ name: promotech-ordre-de-service
 description: Rédige des ordres de service (OS) conformes pour un maître d'œuvre d'exécution PROMOTECH (logements collectifs IDF) — prolongation de délai, arrêt/reprise, prescription technique. Garantit les mentions obligatoires et l'opposabilité. Déclencher dès que l'utilisateur écrit : rédige un OS, ordre de service, OS de prolongation, OS d'arrêt, OS de reprise, prescription par OS, prolonger le délai du lot, suspendre les travaux.
 ---
 
-# Skill PROMOTECH — Ordre de service (MOEX)
+# Skill PROMOTECH — Ordre de service 
 
 ## Contexte
-PROMOTECH — MOEX, logements collectifs Île-de-France. L'OS est un acte qui engage : il n'est opposable que complet et notifié dans les formes.
+PROMOTECH — logements collectifs Île-de-France. L'OS est un acte qui engage : il n'est opposable que complet et notifié dans les formes.
 
 ## Déclencheurs
 « rédige un OS », « OS de prolongation / d'arrêt / de reprise », « prescription par OS », « prolonger le délai », « suspendre les travaux ».
@@ -28,7 +28,7 @@ PROMOTECH — MOEX, logements collectifs Île-de-France. L'OS est un acte qui en
 
 ## Règles
 - Rattacher toute prescription à une pièce (plan / CCTP / décision MOA).
-- Ton neutre et factuel. L'IA met en forme ; la décision reste au MOEX (et au MOA quand requis).
+- Ton neutre et factuel. L'IA met en forme ; la décision reste au client (et au MOA quand requis).
 - Toujours préciser l'incidence prix, même nulle. Dater, numéroter, notifier.
 
 ## Enchaînement

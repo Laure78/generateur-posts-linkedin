@@ -3,10 +3,10 @@ name: promotech-conformite-offre
 description: Vérifie la conformité d'une offre d'entreprise au CCTP pour un maître d'œuvre d'exécution PROMOTECH. Détecte non-conformités, variantes, postes manquants ou sous-évalués, incohérences mémoire/prix. Déclencher dès que l'utilisateur écrit : vérifie la conformité de cette offre, cette offre respecte-t-elle le CCTP, analyse l'offre de [entreprise], non-conformités, variantes proposées, postes oubliés dans l'offre, cohérence de l'offre — ou colle le mémoire technique / la proposition d'une entreprise.
 ---
 
-# Skill PROMOTECH — Conformité d'une offre au CCTP (MOEX)
+# Skill PROMOTECH — Conformité d'une offre au CCTP 
 
 ## Contexte
-PROMOTECH — MOEX, logements collectifs Île-de-France. On analyse UNE offre à la fois face au CCTP du DCE (le comparatif entre entreprises se fait avec le skill dédié).
+PROMOTECH — logements collectifs Île-de-France. On analyse UNE offre à la fois face au CCTP du DCE (le comparatif entre entreprises se fait avec le skill dédié).
 
 ## Déclencheurs
 « vérifie la conformité de cette offre », « analyse l'offre de [entreprise] », « non-conformités », « variantes », « postes oubliés », dépôt d'une offre / mémoire technique.
@@ -28,4 +28,4 @@ PROMOTECH — MOEX, logements collectifs Île-de-France. On analyse UNE offre à
 ## Règles
 - Citer l'article du CCTP pour chaque écart. Ne rien inventer.
 - Un poste oublié = risque d'avenant : le signaler explicitement.
-- L'IA alerte, le MOEX tranche. Recouper chaque écart avec la source avant transmission au MOA.
+- L'IA alerte, le client tranche. Recouper chaque écart avec la source avant transmission au MOA.

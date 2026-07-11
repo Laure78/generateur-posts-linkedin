@@ -1,6 +1,6 @@
-# BeWork — Plateforme assistants travaux (MOEX)
+# BeWork — Plateforme assistants travaux BTP
 
-Outil interne pour les **assistants travaux (Beworkers)** : traitement des demandes des MOEX externalisés (CR chantier, courriers, marchés, GPA). L'IA prépare des brouillons ; **validation chef d'équipe** obligatoire avant envoi client.
+Outil pour les **assistants travaux (Beworkers)** : traitement des demandes des entreprises d'exécution (CR chantier, courriers, marchés, GPA). L'IA prépare des brouillons ; **validation chef d'équipe** obligatoire avant envoi client.
 
 - App : [app.laureolivie.fr](https://app.laureolivie.fr)
 - Site : [bework.fr](https://www.bework.fr)

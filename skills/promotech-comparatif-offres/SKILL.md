@@ -1,12 +1,12 @@
 ---
 name: promotech-comparatif-offres
-description: Compare les offres d'un lot et prépare la recommandation d'attribution au maître d'ouvrage pour un MOEX PROMOTECH. Produit un tableau comparatif multi-critères, l'analyse des prix anormalement bas, les questions de mise au point et une trame de rapport d'analyse des offres (RAO). Déclencher dès que l'utilisateur écrit : compare ces offres, tableau comparatif des offres, classer les offres, quelle entreprise retenir, recommandation d'attribution, rapport d'analyse des offres, RAO, mise au point, prix anormalement bas.
+description: Compare les offres d'un lot et prépare la recommandation d'attribution au maître d'ouvrage pour un PROMOTECH. Produit un tableau comparatif multi-critères, l'analyse des prix anormalement bas, les questions de mise au point et une trame de rapport d'analyse des offres (RAO). Déclencher dès que l'utilisateur écrit : compare ces offres, tableau comparatif des offres, classer les offres, quelle entreprise retenir, recommandation d'attribution, rapport d'analyse des offres, RAO, mise au point, prix anormalement bas.
 ---
 
-# Skill PROMOTECH — Comparatif des offres & RAO (MOEX)
+# Skill PROMOTECH — Comparatif des offres & RAO 
 
 ## Contexte
-PROMOTECH — MOEX, logements collectifs Île-de-France. Étape qui suit l'analyse de conformité offre par offre (skill promotech-conformite-offre). Objectif : éclairer la décision d'attribution du maître d'ouvrage, de façon factuelle et traçable.
+PROMOTECH — logements collectifs Île-de-France. Étape qui suit l'analyse de conformité offre par offre (skill promotech-conformite-offre). Objectif : éclairer la décision d'attribution du maître d'ouvrage, de façon factuelle et traçable.
 
 ## Déclencheurs
 « compare ces offres », « tableau comparatif », « classe les offres », « quelle entreprise retenir », « recommandation d'attribution », « RAO », « mise au point », « prix anormalement bas ».
@@ -29,4 +29,4 @@ PROMOTECH — MOEX, logements collectifs Île-de-France. Étape qui suit l'analy
 ## Règles
 - Rester factuel et neutre, strictement appuyé sur les critères du RC (sécurise la décision du MOA).
 - Tracer par écrit toute demande de justification ou de mise au point.
-- L'IA propose un classement ; la décision d'attribution appartient au MOA, sur recommandation du MOEX.
+- L'IA propose un classement ; la décision d'attribution appartient au MOA, sur recommandation du client.

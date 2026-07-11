@@ -26,12 +26,12 @@ export const BEWORK_SKILLS: SkillDefinition[] = [
     id: '3dmanager-cr-chantier',
     name: 'CR chantier — charte 3D MANAGER',
     description:
-      'Compte rendu MOEX TCE à la charte officielle 3D MANAGER (anthracite/rouge, logo, liséré noir, ISO 9001), observations par lot, reprise des points ouverts.',
+      'Compte rendu à la charte officielle 3D MANAGER (anthracite/rouge, logo, liséré noir, ISO 9001), observations par lot, reprise des points ouverts.',
     missionTypes: ['cr-chantier-3dm'],
   },
   {
     id: 'promotech-cr-chantier',
-    name: 'CR chantier — MOEX PROMOTECH',
+    name: 'CR chantier — PROMOTECH',
     description: 'Compte rendu de chantier logements collectifs IDF, format PROMOTECH.',
     missionTypes: ['cr-chantier-moex'],
   },
@@ -45,7 +45,7 @@ export const BEWORK_SKILLS: SkillDefinition[] = [
   {
     id: 'promotech-courrier-moe',
     name: 'Courriers MOA / relances entreprises',
-    description: 'Relances, mises en demeure, courriers au MOA, notes de diffusion, certificats administratifs MOEX.',
+    description: 'Relances, mises en demeure, courriers au MOA, notes de diffusion, certificats administratifs.',
     missionTypes: ['courrier-moe'],
   },
   {
@@ -88,13 +88,13 @@ export const BEWORK_SKILLS: SkillDefinition[] = [
   {
     id: 'promotech-ordre-de-service',
     name: 'Ordre de service',
-    description: 'OS de prolongation, arrêt, reprise ou prescription technique — mentions obligatoires MOEX.',
+    description: 'OS de prolongation, arrêt, reprise ou prescription technique — mentions obligatoires et traçabilité contractuelle.',
     missionTypes: ['ordre-service'],
   },
   {
     id: 'promotech-analyse-dce',
-    name: 'Analyse DCE — MOEX',
-    description: 'Fiche d’analyse RC / CCAP / CCTP / DPGF pour maîtrise d’œuvre d’exécution (logements collectifs).',
+    name: 'Analyse DCE',
+    description: 'Fiche d’analyse RC / CCAP / CCTP / DPGF pour entreprises d’exécution (logements collectifs).',
     missionTypes: ['analyse-dce-moex'],
   },
   {
@@ -149,9 +149,9 @@ export const BEWORK_SKILLS: SkillDefinition[] = [
   },
   {
     id: 'assistant-travaux',
-    name: 'Assistant MOEX — tâche administrative',
+    name: 'Assistant travaux — tâche administrative',
     description:
-      'Tâches checklist 3D MANAGER sans assistant IA dédié : mise en forme, suivi, GED, reporting, etc.',
+      'Tâches checklist sans assistant IA dédié : mise en forme, suivi, GED, reporting, etc.',
     missionTypes: [
       'ordre-du-jour-reunions',
       'diffusion-cr-ged',

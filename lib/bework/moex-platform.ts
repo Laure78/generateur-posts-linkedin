@@ -1,7 +1,6 @@
 /**
  * Périmètre produit : plateforme BeWork pour les entreprises du BTP
  * (marchés publics — AO, DCE — et marchés privés — promoteur, lots, contrats).
- * Les assistants métier (skills MOEX, promoteur, etc.) restent inchangés côté technique.
  */
 
 import {
@@ -14,7 +13,7 @@ export const MOEX_PLATFORM = {
   /** Public cible de la plateforme. */
   audience: 'Entreprises BTP',
   audienceLong:
-    'entreprises du bâtiment et des travaux publics — marchés publics (appels d\'offres, DCE, mémoires) et marchés privés (promoteur, maîtrise d\'œuvre, lots)',
+    'entreprises du bâtiment et des travaux publics — marchés publics (appels d\'offres, DCE, mémoires) et marchés privés (promoteur, lots, contrats)',
   /** Utilisateurs opérationnels (équipe BeWork + clients entreprise). */
   beworkerRole: 'Assistants travaux (Beworker)',
   platformRoleLine:
