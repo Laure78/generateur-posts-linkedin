@@ -14,6 +14,7 @@ const PARCOURS_QUIZ: Partial<Record<string, { lot: QuizLotInitial; label: string
   'fondations-planchers': { lot: 'fondations-planchers', label: 'Quiz Fondations & planchers' },
   'millas-nord': { lot: 'millas-nord', label: 'Quiz Millas Nord — 4 lots' },
   'millas-nord-second-oeuvre': { lot: 'millas-nord-second-oeuvre', label: 'Quiz Millas Nord — lots 5 à 16' },
+  'millas-nord-16-lots': { lot: 'millas-nord-16-lots', label: 'Quiz Millas Nord — 16 lots' },
   'implantation-batiment': { lot: 'implantation', label: 'Quiz Implantation' },
   'enduits-facade': { lot: 'enduits', label: 'Quiz Enduits de façade' },
   'charpente-couverture': { lot: 'charpente', label: 'Quiz Charpente & couverture' },
@@ -76,6 +77,15 @@ const PARCOURS_RESSOURCES: Partial<
     bgClass: 'bg-rose-50/80 hover:bg-rose-100',
     textClass: 'text-rose-900',
     subClass: 'text-rose-700',
+  },
+  'millas-nord-16-lots': {
+    href: '/ressources/Fiche_Revision_Lots_1_a_16_Millas_Nord_BeWork.pdf',
+    filename: 'Fiche_Revision_Lots_1_a_16_Millas_Nord_BeWork.pdf',
+    label: 'Fiche révision PDF — lots 1 à 16',
+    borderClass: 'border-emerald-200',
+    bgClass: 'bg-emerald-50/80 hover:bg-emerald-100',
+    textClass: 'text-emerald-900',
+    subClass: 'text-emerald-700',
   },
 };
 
@@ -236,6 +246,12 @@ export function ParcoursApprentissage({ initialParcoursId }: { initialParcoursId
           Pas besoin de tout savoir d&apos;un coup — avancez étape par étape.
         </p>
         <div className="mt-4 flex flex-wrap gap-2">
+          <Link
+            href="/lexique?parcours=millas-nord-16-lots"
+            className="inline-flex items-center rounded-full bg-emerald-100 px-3 py-1.5 text-xs font-semibold text-emerald-900 transition hover:bg-emerald-200"
+          >
+            Nouveau — Millas Nord (16 lots)
+          </Link>
           <Link
             href="/lexique?parcours=millas-nord-second-oeuvre"
             className="inline-flex items-center rounded-full bg-rose-100 px-3 py-1.5 text-xs font-semibold text-rose-900 transition hover:bg-rose-200"

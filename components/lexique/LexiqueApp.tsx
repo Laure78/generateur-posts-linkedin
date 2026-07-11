@@ -26,7 +26,19 @@ function parseMode(value: string | null): Mode {
 }
 
 function parseLot(value: string | null): QuizLotInitial | null {
-  const lots: QuizLotInitial[] = ['go', 'enduits', 'charpente', 'menuiseries', 'perf', 'implantation', 'bases-go', 'fondations-planchers', 'millas-nord', 'millas-nord-second-oeuvre'];
+  const lots: QuizLotInitial[] = [
+    'go',
+    'enduits',
+    'charpente',
+    'menuiseries',
+    'perf',
+    'implantation',
+    'bases-go',
+    'fondations-planchers',
+    'millas-nord',
+    'millas-nord-second-oeuvre',
+    'millas-nord-16-lots',
+  ];
   if (value && lots.includes(value as QuizLotInitial)) return value as QuizLotInitial;
   return null;
 }
