@@ -43,14 +43,16 @@ function NouvelleDemandeForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const typeParam = searchParams.get('type');
+  const titleParam = searchParams.get('title');
+  const briefParam = searchParams.get('brief');
   const hasPresetType = isValidMissionTypeId(typeParam);
 
   const [step, setStep] = useState<1 | 2>(hasPresetType ? 2 : 1);
   const [type, setType] = useState<string>(() => missionTypeFromSearchParam(typeParam));
 
   useSyncMissionTypeFromUrl(setType, setStep);
-  const [title, setTitle] = useState('');
-  const [brief, setBrief] = useState('');
+  const [title, setTitle] = useState(() => titleParam?.trim() ?? '');
+  const [brief, setBrief] = useState(() => briefParam?.trim() ?? '');
   const [chantier, setChantier] = useState('');
   const [outputFormat, setOutputFormat] = useState<DeliverableFormat>(DEFAULT_DELIVERABLE_FORMAT);
   const [useSkillCharter, setUseSkillCharter] = useState(true);

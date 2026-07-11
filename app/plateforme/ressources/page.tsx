@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { ArrowLeft, GraduationCap, Route } from 'lucide-react';
+import { ArrowLeft, GraduationCap, Route, Layers } from 'lucide-react';
 import { PlatformGuideContent } from '@/components/platform/PlatformGuideContent';
 import { createAppPageMetadata } from '@/lib/bework/seo';
 
@@ -43,6 +43,25 @@ export default function PlateformeRessourcesPage() {
           </p>
           <p className="mt-1 text-sm text-slate-500">
             4 phases de cadrage, 8 étapes J0 → DOE, périmètre client et livrables types.
+          </p>
+        </div>
+      </Link>
+
+      <Link
+        href="/plateforme/missions"
+        className="bework-card-tech bework-card mt-4 flex items-start gap-4 p-5 transition-shadow hover:shadow-md"
+      >
+        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-700">
+          <Layers className="h-6 w-6" aria-hidden />
+        </span>
+        <div>
+          <p className="bework-kicker">Nouveau</p>
+          <p className="font-display mt-0.5 text-base font-bold text-[var(--bework-navy)]">
+            Missions confiées — tous lots &amp; lot par lot
+          </p>
+          <p className="mt-1 text-sm text-slate-500">
+            Catalogue des missions BeWork : transversales (démarrage, exécution, fin) et spécifiques
+            lots 01 à 16 — lancer une demande en un clic.
           </p>
         </div>
       </Link>
