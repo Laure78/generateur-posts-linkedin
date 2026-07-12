@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
-import { ArrowRight, Download, Layers, Search } from 'lucide-react';
+import { ArrowRight, Download, Layers, Search, AlertTriangle, ShieldAlert, TrendingUp } from 'lucide-react';
 import {
   ALL_MISSION_GROUPS,
   MISSIONS_PAR_LOT,
@@ -17,6 +17,45 @@ function normalize(q: string): string {
     .toLowerCase()
     .normalize('NFD')
     .replace(/\p{Diacritic}/gu, '');
+}
+
+function PitchBlock({
+  title,
+  icon,
+  items,
+  tone,
+}: {
+  title: string;
+  icon: React.ReactNode;
+  items: string[];
+  tone: 'amber' | 'rose' | 'emerald';
+}) {
+  const tones = {
+    amber: 'border-amber-200/80 bg-amber-50/50 text-amber-950',
+    rose: 'border-rose-200/80 bg-rose-50/50 text-rose-950',
+    emerald: 'border-emerald-200/80 bg-emerald-50/50 text-emerald-950',
+  } as const;
+  const titleTone = {
+    amber: 'text-amber-900',
+    rose: 'text-rose-900',
+    emerald: 'text-emerald-900',
+  } as const;
+
+  return (
+    <div className={`rounded-xl border px-3.5 py-3 ${tones[tone]}`}>
+      <p className={`flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide ${titleTone[tone]}`}>
+        {icon}
+        {title}
+      </p>
+      <ul className="mt-2 space-y-1.5">
+        {items.map((item) => (
+          <li key={item.slice(0, 48)} className="text-xs leading-relaxed text-slate-700">
+            {item}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 }
 
 function MissionGroupPanel({ group }: { group: LotMissionGroup }) {
@@ -35,6 +74,30 @@ function MissionGroupPanel({ group }: { group: LotMissionGroup }) {
         </h3>
         <p className="mt-1 text-sm text-slate-500">{group.audience}</p>
       </div>
+
+      {group.pitch ? (
+        <div className="grid gap-3 border-b border-slate-100 bg-white p-4 md:grid-cols-3">
+          <PitchBlock
+            title="La douleur qu’on enlève"
+            tone="amber"
+            icon={<AlertTriangle size={12} aria-hidden />}
+            items={group.pitch.douleur}
+          />
+          <PitchBlock
+            title="Le risque qu’on couvre"
+            tone="rose"
+            icon={<ShieldAlert size={12} aria-hidden />}
+            items={group.pitch.risque}
+          />
+          <PitchBlock
+            title="Le gain concret"
+            tone="emerald"
+            icon={<TrendingUp size={12} aria-hidden />}
+            items={group.pitch.gain}
+          />
+        </div>
+      ) : null}
+
       <ul className="divide-y divide-slate-100">
         {group.missions.map((mission) => {
           const href = newDemandeUrlFromLotMission(group, mission);
@@ -74,16 +137,23 @@ export function MissionsParLotContent() {
 
     if (!q) return base;
     return base
-      .map((g) => ({
-        ...g,
-        missions: g.missions.filter(
+      .map((g) => {
+        const pitchText = g.pitch
+          ? [...g.pitch.douleur, ...g.pitch.risque, ...g.pitch.gain].join(' ')
+          : '';
+        const missions = g.missions.filter(
           (m) =>
             normalize(m.title).includes(q) ||
             normalize(m.description).includes(q) ||
-            normalize(g.label).includes(q),
-        ),
-      }))
-      .filter((g) => g.missions.length > 0);
+            normalize(g.label).includes(q) ||
+            normalize(pitchText).includes(q),
+        );
+        // Keep group if pitch matches even when mission list empty of search hits on titles
+        if (missions.length > 0) return { ...g, missions };
+        if (normalize(pitchText).includes(q) || normalize(g.label).includes(q)) return g;
+        return { ...g, missions: [] };
+      })
+      .filter((g) => g.missions.length > 0 || (g.pitch && normalize([...(g.pitch.douleur), ...(g.pitch.risque), ...(g.pitch.gain)].join(' ')).includes(q)));
   }, [lotFilter, query]);
 
   return (
@@ -123,6 +193,9 @@ export function MissionsParLotContent() {
             </div>
           ))}
         </div>
+        <p className="border-t border-slate-100 px-5 py-4 text-sm leading-relaxed text-slate-600 md:px-6">
+          {MISSIONS_PAR_LOT_INTRO.remember}
+        </p>
       </div>
 
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
@@ -136,7 +209,7 @@ export function MissionsParLotContent() {
             type="search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Rechercher une mission (DOE, DICT, Consuel, réserves…)"
+            placeholder="Rechercher une mission ou un argument (DOE, Consuel, DICT…)"
             className="bework-input w-full pl-9"
             aria-label="Rechercher une mission confiable"
           />

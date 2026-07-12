@@ -1,7 +1,9 @@
 /**
- * Missions confiées à BeWork — source : Missions_BeWork_par_lot.pdf
+ * Missions confiées à BeWork — source : Missions_BeWork_par_lot.pdf (v2)
  * Vue « par lot » (entreprise d’exécution), complémentaire du catalogue d’assistants.
  */
+
+import { LOT_PITCHES } from './missions-par-lot-pitch';
 
 export type MissionPhaseId = 'avant' | 'pendant' | 'fin';
 
@@ -29,10 +31,16 @@ export type LotMissionGroup = {
   lotNumber: number;
   phase?: MissionPhaseId;
   missions: LotMissionItem[];
+  /** Arguments commerciaux (PDF v2 — lots uniquement) */
+  pitch?: {
+    douleur: string[];
+    risque: string[];
+    gain: string[];
+  };
 };
 
 export const MISSIONS_PAR_LOT_INTRO = {
-  title: 'Ce que nous prenons en charge',
+  title: 'Missions et arguments',
   subtitle: 'Le bras droit administratif de vos conducteurs de travaux — sur tous les lots et lot par lot.',
   role:
     'BeWork est un assistant travaux externalisé : il prépare, relance, classe et compile. L’entreprise garde le chantier et les décisions.',
@@ -45,6 +53,8 @@ export const MISSIONS_PAR_LOT_INTRO = {
     'BeWork met en forme et archive la version validée.',
     'L’entreprise ou BeWork envoie selon la délégation prévue.',
   ],
+  remember:
+    'Tout ce qui se lit, se rédige, se relance, se classe ou se compile dans un marché de travaux peut être confié à BeWork. Les décisions techniques, financières et contractuelles restent à l’entreprise.',
   pdfHref: '/ressources/Missions_BeWork_par_lot.pdf',
   pdfFilename: 'Missions_BeWork_par_lot.pdf',
 } as const;
@@ -98,7 +108,7 @@ export const MISSIONS_TRANSVERSALES: LotMissionGroup[] = [
         id: 'tx-memoire-technique',
         title: 'Mémoire technique',
         description: 'Rédaction et mise en forme du mémoire technique pour la remise d’offre.',
-        mapsToMissionType: 'dossier-candidature',
+        mapsToMissionType: 'memoire-technique-ao',
       },
       {
         id: 'tx-reunion-lancement',
@@ -218,8 +228,8 @@ export const MISSIONS_TRANSVERSALES: LotMissionGroup[] = [
   },
 ];
 
-/** Missions spécifiques lot par lot (01 → 16) */
-export const MISSIONS_PAR_LOT: LotMissionGroup[] = [
+/** Missions spécifiques lot par lot (01 → 16) — sans pitch (injecté ci-dessous). */
+const MISSIONS_PAR_LOT_BASE: LotMissionGroup[] = [
   {
     id: 'lot-01',
     label: 'Lot 01 — Gros œuvre',
@@ -237,14 +247,14 @@ export const MISSIONS_PAR_LOT: LotMissionGroup[] = [
         title: 'Essais et contrôles',
         description:
           'Suivi des PV d’essais béton et Proctor, transmission au bureau de contrôle, tenue du dossier de contrôle interne.',
-        mapsToMissionType: 'reporting-projet',
+        mapsToMissionType: 'essais-beton-proctor',
       },
       {
         id: 'lot01-reservations',
         title: 'Réservations et réseaux',
         description:
           'Collecte des plans de réservations des lots techniques, relances, traçabilité pour refacturer les oublis ; plan de récolement des réseaux, rapports caméra et hydrocurage.',
-        mapsToMissionType: 'registre-plans-exe',
+        mapsToMissionType: 'reservations-reseaux',
       },
     ],
   },
@@ -643,6 +653,12 @@ export const MISSIONS_PAR_LOT: LotMissionGroup[] = [
     ],
   },
 ];
+
+/** Lots 01–16 avec arguments (douleur / risque / gain) issus du PDF v2. */
+export const MISSIONS_PAR_LOT: LotMissionGroup[] = MISSIONS_PAR_LOT_BASE.map((group) => ({
+  ...group,
+  pitch: LOT_PITCHES[group.id],
+}));
 
 export const ALL_MISSION_GROUPS: LotMissionGroup[] = [
   ...MISSIONS_TRANSVERSALES,

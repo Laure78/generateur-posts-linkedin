@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { ArrowLeft, GraduationCap, Route, Layers } from 'lucide-react';
+import { ArrowLeft, GraduationCap, Route, Layers, HardHat } from 'lucide-react';
 import { PlatformGuideContent } from '@/components/platform/PlatformGuideContent';
 import { createAppPageMetadata } from '@/lib/bework/seo';
 
@@ -62,6 +62,25 @@ export default function PlateformeRessourcesPage() {
           <p className="mt-1 text-sm text-slate-500">
             Catalogue des missions BeWork : transversales (démarrage, exécution, fin) et spécifiques
             lots 01 à 16 — lancer une demande en un clic.
+          </p>
+        </div>
+      </Link>
+
+      <Link
+        href="/plateforme/outils/gros-oeuvre"
+        className="bework-card-tech bework-card mt-4 flex items-start gap-4 p-5 transition-shadow hover:shadow-md"
+      >
+        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-amber-50 text-amber-800">
+          <HardHat className="h-6 w-6" aria-hidden />
+        </span>
+        <div>
+          <p className="bework-kicker">CRM Construction · Lot 01</p>
+          <p className="font-display mt-0.5 text-base font-bold text-[var(--bework-navy)]">
+            Kit gros œuvre — outils Beworker
+          </p>
+          <p className="mt-1 text-sm text-slate-500">
+            Checklists et assistants pour démarches, réservations, PV béton, AO bailleurs, situations,
+            sous-traitance et DOE.
           </p>
         </div>
       </Link>

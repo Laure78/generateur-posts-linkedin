@@ -102,9 +102,31 @@ const SPECIFIC_META: Record<string, Partial<MissionMeta>> = {
   },
   'dossier-intervention': {
     category: 'autres-besoins',
-    titlePlaceholder: 'Ex. : Dossier intervention réseaux',
-    briefPlaceholder: 'Nature de l’intervention, planning, pièces déjà disponibles et manquantes…',
-    briefHint: 'DT/DICT, autorisations et pièces réglementaires.',
+    titlePlaceholder: 'Ex. : Dossier intervention — ouverture chantier Amiens',
+    briefPlaceholder:
+      'Nature des travaux, emprise, planning, pièces déjà disponibles (DICT, voirie, huissier) et manquantes…',
+    briefHint: 'DT/DICT, autorisations de voirie, constat d’huissier et pièces réglementaires.',
+  },
+  'essais-beton-proctor': {
+    category: 'autres-besoins',
+    titlePlaceholder: 'Ex. : Suivi essais béton — Semaine 12',
+    briefPlaceholder:
+      'Listez les PV reçus (béton, Proctor), exigences CCTP/BC, destinataires et PV manquants…',
+    briefHint: 'Tableau de suivi + transmission bureau de contrôle.',
+  },
+  'reservations-reseaux': {
+    category: 'pilotage-entreprises',
+    titlePlaceholder: 'Ex. : Réservations lots techniques — Bâtiment A',
+    briefPlaceholder:
+      'Lots concernés, plans reçus/manquants, relances déjà faites, percements à tracer, éléments de récolement…',
+    briefHint: 'Registre réservations, relances et suivi récolement.',
+  },
+  'memoire-technique-ao': {
+    category: 'consultation-marches',
+    titlePlaceholder: 'Ex. : Mémoire technique — 48 logements HLM Évreux',
+    briefPlaceholder:
+      'Joignez RC (critères), CCTP du lot, références chantier, moyens et certifications à valoriser…',
+    briefHint: 'Rédaction / structure du mémoire pour AO bailleur.',
   },
   'suivi-acquereurs': {
     titlePlaceholder: 'Ex. : Réclamation logement B12',

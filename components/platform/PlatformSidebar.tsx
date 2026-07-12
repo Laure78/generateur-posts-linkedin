@@ -3,7 +3,7 @@
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { BookOpen, GraduationCap, LayoutDashboard, PlusCircle, ExternalLink, Shield, Search, Route, Layers } from 'lucide-react';
+import { BookOpen, GraduationCap, LayoutDashboard, PlusCircle, ExternalLink, Shield, Search, Route, Layers, HardHat } from 'lucide-react';
 import { BEWORK } from '@/lib/bework/config';
 import { getMissionIcon } from '@/lib/bework/mission-icons';
 import { BeWorkLogo } from '@/components/brand/BeWorkLogo';
@@ -71,6 +71,7 @@ export function PlatformSidebar({ showAdminLink = false }: PlatformSidebarProps)
   const adminActive = pathname.startsWith('/plateforme/admin');
   const ressourcesActive = pathname.startsWith('/plateforme/ressources');
   const missionsActive = pathname.startsWith('/plateforme/missions');
+  const grosOeuvreActive = pathname.startsWith('/plateforme/outils/gros-oeuvre');
   const modeOperatoireActive = pathname.startsWith('/plateforme/mode-operatoire');
   const lexiqueActive = pathname.startsWith('/lexique');
   const nouvellePath = '/plateforme/demandes/nouvelle';
@@ -140,6 +141,19 @@ export function PlatformSidebar({ showAdminLink = false }: PlatformSidebarProps)
         >
           <Layers size={18} strokeWidth={missionsActive ? 2.25 : 2} />
           Missions par lot
+        </Link>
+
+        <Link
+          href="/plateforme/outils/gros-oeuvre"
+          onClick={(e) => navigateClick(e, router, '/plateforme/outils/gros-oeuvre')}
+          className={`mb-2 flex shrink-0 items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
+            grosOeuvreActive
+              ? 'bg-[var(--bework-blue-soft)] text-[var(--bework-blue)]'
+              : 'text-slate-600 hover:bg-slate-50 hover:text-[var(--bework-navy)]'
+          }`}
+        >
+          <HardHat size={18} strokeWidth={grosOeuvreActive ? 2.25 : 2} />
+          Kit gros œuvre
         </Link>
 
         <Link

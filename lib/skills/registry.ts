@@ -23,6 +23,36 @@ export const BEWORK_SKILLS: SkillDefinition[] = [
     toolPath: '/plateforme/outils/verification-dtu',
   },
   {
+    id: 'kit-gros-oeuvre',
+    name: 'Kit gros œuvre',
+    description:
+      'Hub Beworker : démarches, réservations, PV béton, AO bailleurs, situations, sous-traitance, DOE.',
+    missionTypes: ['kit-gros-oeuvre'],
+    integrated: true,
+    toolPath: '/plateforme/outils/gros-oeuvre',
+  },
+  {
+    id: 'bework-essais-beton',
+    name: 'PV essais béton & Proctor',
+    description:
+      'Tableau de suivi des essais, transmission bureau de contrôle et classement DOE (gros œuvre).',
+    missionTypes: ['essais-beton-proctor'],
+  },
+  {
+    id: 'bework-reservations-reseaux',
+    name: 'Réservations & récolement',
+    description:
+      'Registre des réservations lots techniques, relances, refacturation des oublis et récolement réseaux.',
+    missionTypes: ['reservations-reseaux'],
+  },
+  {
+    id: 'bework-memoire-technique-ao',
+    name: 'Mémoire technique AO',
+    description:
+      'Structure et rédaction du mémoire technique pour AO bailleurs / marchés publics (gros œuvre).',
+    missionTypes: ['memoire-technique-ao'],
+  },
+  {
     id: '3dmanager-cr-chantier',
     name: 'CR chantier — charte 3D MANAGER',
     description:

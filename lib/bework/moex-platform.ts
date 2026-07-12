@@ -45,6 +45,7 @@ const MOEX_LABELS: Record<string, string> = Object.fromEntries(
 /** Libellés historiques (anciennes demandes hors périmètre actuel). */
 const LEGACY_LABELS: Record<string, string> = {
   'verification-dtu': 'Vérification DTU × devis',
+  'kit-gros-oeuvre': 'Kit gros œuvre (CRM / lot 01)',
   'analyse-dce-mh': 'Analyse DCE Monument Historique',
   'gonogo-mh': 'Go / No Go AO patrimoine',
   'controle-memoire': 'Contrôle mémoire technique',
@@ -76,6 +77,9 @@ export const MOEX_DASHBOARD_MISSION_TYPES: MoexMissionTypeId[] = [
   'ordre-service',
   'comparatif-offres',
   'situation-travaux',
+  'reservations-reseaux',
+  'essais-beton-proctor',
+  'memoire-technique-ao',
   'pv-reserves',
   'dc4-sous-traitance',
   'autre',

@@ -31,6 +31,9 @@ import {
   HardHat,
   Archive,
   BarChart3,
+  FlaskConical,
+  Network,
+  FileSpreadsheet,
 } from 'lucide-react';
 import type { MoexMissionTypeId } from './moex-platform';
 
@@ -42,6 +45,7 @@ const ICONS: Partial<Record<MoexMissionTypeId, LucideIcon>> = {
   'diffusion-cr-ged': Send,
   'courrier-moe': Mail,
   'registre-plans-exe': BookOpen,
+  'reservations-reseaux': Network,
   'ordre-service': FilePen,
   'pieces-ecrites-dce': Layers,
   'tableau-dpgf': TableProperties,
@@ -49,6 +53,7 @@ const ICONS: Partial<Record<MoexMissionTypeId, LucideIcon>> = {
   'relances-consultation': Mail,
   'analyse-dce-moex': Layers,
   'conformite-offre': ShieldCheck,
+  'memoire-technique-ao': FileSpreadsheet,
   'situation-travaux': Receipt,
   'tableau-financier-affaire': Calculator,
   'decompte-general-definitif': Landmark,
@@ -66,6 +71,7 @@ const ICONS: Partial<Record<MoexMissionTypeId, LucideIcon>> = {
   'dossier-candidature': FileSignature,
   'controle-attestations-entreprises': BadgeCheck,
   'dossier-intervention': HardHat,
+  'essais-beton-proctor': FlaskConical,
   'ppsps-plan-prevention': Shield,
   'accueil-telephonique': Phone,
   'presentations-clients': Presentation,

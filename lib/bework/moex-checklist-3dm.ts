@@ -100,6 +100,11 @@ export const MOEX_CHECKLIST_TASKS: MoexChecklistTask[] = [
     label: 'Relances entreprises & courriers (relance, mise en demeure, diffusion)',
   },
   { id: 'registre-plans-exe', theme: 'pilotage-entreprises', label: "Suivi du registre des plans d'exécution remis / visés" },
+  {
+    id: 'reservations-reseaux',
+    theme: 'pilotage-entreprises',
+    label: 'Réservations lots techniques & récolement (gros œuvre)',
+  },
   { id: 'ordre-service', theme: 'pilotage-entreprises', label: 'Mise en forme des ordres de service (OS)' },
 
   // C — Consultation & marchés
@@ -109,6 +114,11 @@ export const MOEX_CHECKLIST_TASKS: MoexChecklistTask[] = [
   { id: 'relances-consultation', theme: 'consultation-marches', label: 'Relances candidats pendant la consultation' },
   { id: 'analyse-dce-moex', theme: 'consultation-marches', label: 'Analyse DCE — fiche de synthèse' },
   { id: 'conformite-offre', theme: 'consultation-marches', label: 'Conformité offre au CCTP' },
+  {
+    id: 'memoire-technique-ao',
+    theme: 'consultation-marches',
+    label: 'Mémoire technique AO (bailleurs / marchés publics)',
+  },
 
   // D — Suivi financier
   { id: 'situation-travaux', theme: 'suivi-financier', label: 'Vérification & mise en forme des situations de travaux mensuelles' },
@@ -138,6 +148,11 @@ export const MOEX_CHECKLIST_TASKS: MoexChecklistTask[] = [
     label: 'Contrôle des attestations entreprises (URSSAF, décennale, Kbis)',
   },
   { id: 'dossier-intervention', theme: 'autres-besoins', label: 'Déclarations réglementaires (DT / DICT)' },
+  {
+    id: 'essais-beton-proctor',
+    theme: 'autres-besoins',
+    label: 'Suivi PV essais béton & Proctor (gros œuvre)',
+  },
   { id: 'ppsps-plan-prevention', theme: 'autres-besoins', label: 'Mise en forme PPSPS / plan de prévention' },
   { id: 'accueil-telephonique', theme: 'autres-besoins', label: 'Accueil téléphonique, filtrage & prise de messages' },
   { id: 'presentations-clients', theme: 'autres-besoins', label: 'Mise en forme de présentations & supports clients' },
