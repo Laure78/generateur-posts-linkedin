@@ -32,17 +32,40 @@ export async function POST(request: Request) {
   const supabase = await createClient();
   const siteUrl = getSiteUrl();
 
-  const { data, error } = await supabase.auth.signUp({
-    email,
-    password,
-    options: {
-      data: { company_name },
-      emailRedirectTo: `${siteUrl}/auth/connexion?next=/plateforme`,
-    },
-  });
-
-  if (error) {
-    return NextResponse.json({ error: error.message }, { status: 400 });
+  let data;
+  try {
+    const result = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: { company_name },
+        emailRedirectTo: `${siteUrl}/auth/connexion?next=/plateforme`,
+      },
+    });
+    data = result.data;
+    if (result.error) {
+      const msg = result.error.message || '';
+      if (/fetch failed|failed to fetch|network/i.test(msg)) {
+        return NextResponse.json(
+          {
+            error:
+              'Impossible de joindre Supabase depuis le serveur. Vérifiez que le projet Supabase est actif et que NEXT_PUBLIC_SUPABASE_URL est correct dans Railway.',
+          },
+          { status: 503 }
+        );
+      }
+      return NextResponse.json({ error: msg }, { status: 400 });
+    }
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : 'Erreur serveur';
+    return NextResponse.json(
+      {
+        error: /fetch failed|failed to fetch/i.test(msg)
+          ? 'Connexion à Supabase impossible. Projet en pause ou URL incorrecte dans Railway.'
+          : msg,
+      },
+      { status: 503 }
+    );
   }
 
   if (data.user) {

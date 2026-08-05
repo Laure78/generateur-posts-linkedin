@@ -43,11 +43,19 @@ export default function InscriptionPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password, company_name: company }),
       });
-      const data = (await res.json()) as {
+
+      let data: {
         error?: string;
         needsEmailConfirmation?: boolean;
         message?: string;
-      };
+      } = {};
+      try {
+        data = await res.json();
+      } catch {
+        throw new Error(
+          'Le serveur n’a pas répondu correctement. Rechargez la page (Cmd+Shift+R) et réessayez.'
+        );
+      }
 
       if (!res.ok) {
         throw new Error(data.error || 'Inscription impossible');
