@@ -80,14 +80,29 @@ export default function InscriptionPage() {
 
   return (
     <AuthShell
-      title="Compte entreprise BTP"
-      subtitle="Inscription BeWork pour les entreprises du bâtiment et des travaux publics qui répondent aux marchés publics et aux marchés privés."
+      title="Créer votre compte BeWork"
+      subtitle="BeWork est un logiciel SaaS pour les PME du BTP : appels d’offres, suivi des travaux et administration de chantier — un seul outil pour le bureau et le terrain."
       footer={
         <p className="text-slate-600">
           Déjà inscrit ? <AuthFooterLink href="/auth/connexion">Se connecter</AuthFooterLink>
         </p>
       }
     >
+      <ul className="mb-6 space-y-2 rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-700">
+        <li>
+          <span className="font-semibold text-[var(--bework-navy)]">Appels d’offres</span> — Go/No Go, analyse
+          DCE, chiffrage, mémoire technique
+        </li>
+        <li>
+          <span className="font-semibold text-[var(--bework-navy)]">Suivi des travaux</span> — planning,
+          commandes, CR, PPSPS
+        </li>
+        <li>
+          <span className="font-semibold text-[var(--bework-navy)]">Admin de chantier</span> — remontées
+          terrain, relances, documents et traçabilité
+        </li>
+      </ul>
+
       {DEV_BYPASS && (
         <p className="mb-4 rounded-lg bg-[var(--bework-blue-soft)] px-3 py-2 text-sm text-[var(--bework-blue-dark)]">
           Mode local actif — pas besoin de Supabase pour tester.

@@ -116,7 +116,7 @@ function ConnexionPageContent() {
   return (
     <AuthShell
       title="Connexion BeWork"
-      subtitle="Entreprises du BTP — marchés publics (appels d'offres, DCE) et marchés privés : déposez et suivez vos demandes administratives."
+      subtitle="Logiciel SaaS pour PME BTP — appels d’offres, suivi des travaux et administration de chantier."
       footer={
         <>
           {deconnected && (
