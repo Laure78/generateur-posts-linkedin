@@ -3,7 +3,7 @@
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { BookOpen, GraduationCap, LayoutDashboard, PlusCircle, ExternalLink, Shield, Search, Route, Layers, HardHat } from 'lucide-react';
+import { BookOpen, GraduationCap, LayoutDashboard, PlusCircle, ExternalLink, Shield, Search, Layers } from 'lucide-react';
 import { BEWORK } from '@/lib/bework/config';
 import { getMissionIcon } from '@/lib/bework/mission-icons';
 import { BeWorkLogo } from '@/components/brand/BeWorkLogo';
@@ -71,8 +71,6 @@ export function PlatformSidebar({ showAdminLink = false }: PlatformSidebarProps)
   const adminActive = pathname.startsWith('/plateforme/admin');
   const ressourcesActive = pathname.startsWith('/plateforme/ressources');
   const missionsActive = pathname.startsWith('/plateforme/missions');
-  const grosOeuvreActive = pathname.startsWith('/plateforme/outils/gros-oeuvre');
-  const modeOperatoireActive = pathname.startsWith('/plateforme/mode-operatoire');
   const lexiqueActive = pathname.startsWith('/lexique');
   const nouvellePath = '/plateforme/demandes/nouvelle';
 
@@ -118,19 +116,6 @@ export function PlatformSidebar({ showAdminLink = false }: PlatformSidebarProps)
         </Link>
 
         <Link
-          href="/plateforme/mode-operatoire"
-          onClick={(e) => navigateClick(e, router, '/plateforme/mode-operatoire')}
-          className={`mb-2 flex shrink-0 items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
-            modeOperatoireActive
-              ? 'bg-[var(--bework-blue-soft)] text-[var(--bework-blue)]'
-              : 'text-slate-600 hover:bg-slate-50 hover:text-[var(--bework-navy)]'
-          }`}
-        >
-          <Route size={18} strokeWidth={modeOperatoireActive ? 2.25 : 2} />
-          Mode opératoire
-        </Link>
-
-        <Link
           href="/plateforme/missions"
           onClick={(e) => navigateClick(e, router, '/plateforme/missions')}
           className={`mb-2 flex shrink-0 items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
@@ -141,19 +126,6 @@ export function PlatformSidebar({ showAdminLink = false }: PlatformSidebarProps)
         >
           <Layers size={18} strokeWidth={missionsActive ? 2.25 : 2} />
           Missions par lot
-        </Link>
-
-        <Link
-          href="/plateforme/outils/gros-oeuvre"
-          onClick={(e) => navigateClick(e, router, '/plateforme/outils/gros-oeuvre')}
-          className={`mb-2 flex shrink-0 items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
-            grosOeuvreActive
-              ? 'bg-[var(--bework-blue-soft)] text-[var(--bework-blue)]'
-              : 'text-slate-600 hover:bg-slate-50 hover:text-[var(--bework-navy)]'
-          }`}
-        >
-          <HardHat size={18} strokeWidth={grosOeuvreActive ? 2.25 : 2} />
-          Kit gros œuvre
         </Link>
 
         <Link
@@ -199,10 +171,10 @@ export function PlatformSidebar({ showAdminLink = false }: PlatformSidebarProps)
 
         <div
           className="-mx-1 min-h-0 flex-1 overflow-y-auto overscroll-y-contain px-1 pb-2 [scrollbar-gutter:stable]"
-          aria-label="Liste des assistants métier BTP"
+          aria-label="Liste des cas d'usage BTP"
         >
           <p className="px-3 py-2 text-[0.65rem] font-semibold uppercase tracking-wider text-slate-400">
-            Assistants — marchés publics &amp; privés
+            Cas d&apos;usage
           </p>
 
           <div className="relative mb-2 px-2">
@@ -215,14 +187,14 @@ export function PlatformSidebar({ showAdminLink = false }: PlatformSidebarProps)
               type="search"
               value={sidebarQuery}
               onChange={(e) => setSidebarQuery(e.target.value)}
-              placeholder="Filtrer…"
+              placeholder="Filtrer un cas d'usage…"
               className="w-full rounded-lg border border-slate-200 py-2 pl-8 pr-2 text-xs text-slate-700 placeholder:text-slate-400 focus:border-[var(--bework-blue)] focus:outline-none focus:ring-1 focus:ring-[var(--bework-blue)]/30"
-              aria-label="Filtrer les assistants"
+              aria-label="Filtrer les cas d'usage"
             />
           </div>
 
           {assistantGroups.length === 0 && sidebarQuery.trim() && (
-            <p className="px-3 py-2 text-xs text-slate-500">Aucun assistant pour cette recherche.</p>
+            <p className="px-3 py-2 text-xs text-slate-500">Aucun cas d&apos;usage pour cette recherche.</p>
           )}
 
           {assistantGroups.map(({ category, items }) => (
