@@ -1,10 +1,10 @@
 /**
  * Positionnement assistant travaux BTP — source : document de cadrage BeWork.
- * BeWork ne remplace pas la MOE ; il renforce l'entreprise d'exécution.
+ * BeWork renforce l'entreprise d'exécution (pas un substitut à la direction technique).
  */
 
 export const ASSISTANT_POSITIONNEMENT = {
-  tagline: 'BeWork ne remplace pas la MOE. BeWork renforce l\'entreprise travaux.',
+  tagline: 'BeWork renforce l\'entreprise travaux.',
   summary:
     'Assistant travaux externalisé pour les entreprises d\'exécution : renfort administratif, documentaire et opérationnel. BeWork prépare, organise, relance et classe — les décisions techniques, financières, contractuelles et de sécurité restent validées par votre équipe.',
   interlocuteurs:
@@ -79,14 +79,15 @@ export const ASSISTANT_DOES = [
   'Constituer le DOE au fil de l\'eau.',
 ] as const;
 
+/** Ce qui reste du ressort de l'entreprise — 1ʳᵉ personne client, sans nommer la direction technique externe. */
 export const ASSISTANT_DOES_NOT = [
-  'Remplacer la maîtrise d\'œuvre ou l\'architecte.',
-  'Viser officiellement les plans ou notes de calcul.',
-  'Donner des ordres de service ou instructions contractuelles.',
-  'Valider une solution technique à la place du BET, de la MOE ou du bureau de contrôle.',
-  'Engager juridiquement ou financièrement l\'entreprise.',
-  'Réceptionner officiellement les travaux à la place du MOA ou de la MOE.',
-  'Se substituer au conducteur de travaux sur les arbitrages chantier.',
+  'Nous gardons les arbitrages de conception et de direction technique.',
+  'Nous visons officiellement les plans ou notes de calcul.',
+  'Nous donnons les ordres de service ou instructions contractuelles.',
+  'Nous validons les solutions techniques (BET, bureau de contrôle) — BeWork prépare uniquement.',
+  'Nous engageons juridiquement ou financièrement notre entreprise.',
+  'Nous réceptionnons officiellement les travaux auprès du maître d\'ouvrage.',
+  'Notre conducteur de travaux conserve les arbitrages chantier.',
 ] as const;
 
 export const ASSISTANT_WHEN_TO_USE = [

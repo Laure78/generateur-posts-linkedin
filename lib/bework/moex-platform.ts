@@ -17,13 +17,15 @@ export const MOEX_PLATFORM = {
   /** Utilisateurs opérationnels (équipe BeWork + clients entreprise). */
   beworkerRole: 'Assistants travaux (Beworker)',
   platformRoleLine:
-    'Assistant travaux externalisé pour les entreprises d\'exécution : renfort administratif, documentaire et opérationnel — marchés publics (DCE, mémoires, AO) et privés (courriers, réserves, DOE). BeWork ne remplace pas la MOE.',
+    'Assistant travaux externalisé pour les entreprises d\'exécution : renfort administratif, documentaire et opérationnel — marchés publics (DCE, mémoires, AO) et privés (courriers, réserves, DOE).',
+  /** Phrase de positionnement — footer et page Périmètre uniquement. */
+  reinforceLine: 'BeWork renforce l\'entreprise travaux.',
   scopeLine:
     'Prépare, structure et alerte : CR internes, synthèses DCE, relances, tableaux de suivi, DOE — chaque livrable engageant reste validé par votre équipe avant diffusion.',
   internalUseShort:
-    'BeWork — assistant travaux côté entreprise. Les livrables IA sont des brouillons à valider avant envoi au maître d\'ouvrage, à la MOE ou au client.',
+    'BeWork — assistant travaux côté entreprise. Les livrables IA sont des brouillons à valider avant envoi au maître d\'ouvrage ou au client.',
   internalUseLong:
-    'BeWork est le bras droit administratif du conducteur de travaux : préparation, organisation, relance et classement. Les décisions techniques, financières, contractuelles et de sécurité restent validées par l\'entreprise. BeWork ne se substitue pas à la MOE ni au conducteur de travaux.',
+    'BeWork est le bras droit administratif du conducteur de travaux : préparation, organisation, relance et classement. Les décisions techniques, financières, contractuelles et de sécurité restent validées par l\'entreprise. BeWork ne se substitue pas au conducteur de travaux.',
   teamLeaderValidationAlert:
     'Validation par le chef d\'équipe ou le responsable entreprise obligatoire avant tout envoi au client ou au maître d\'ouvrage.',
   /** Libellés courts pour cartes landing / dashboard. */

@@ -30,7 +30,7 @@ export const BEWORK_ONBOARDING_PHASES: readonly OfferingPhase[] = [
     objective:
       'Identifier le chantier, les interlocuteurs, les pièces disponibles, les urgences et le niveau de délégation.',
     tasks: [
-      'Recenser opération, lots, maître d\'ouvrage, MOE et contacts clés.',
+      'Recenser opération, lots, maître d\'ouvrage et contacts clés.',
       'Définir le circuit de validation interne (conducteur, dirigeant, chef d\'équipe).',
       'Lister les urgences documentaires et les échéances des 30 premiers jours.',
       'Préciser ce que BeWork peut envoyer seul et ce qui exige validation préalable.',
@@ -74,7 +74,7 @@ export const BEWORK_ONBOARDING_PHASES: readonly OfferingPhase[] = [
     tasks: [
       'Créer le tableau de bord chantier (actions, responsables, dates, preuves).',
       'Paramétrer les statuts : À faire · En cours · En attente · Validé · Soldé.',
-      'Brancher les relances fournisseurs, visas MOE et pièces manquantes.',
+      'Brancher les relances fournisseurs, visas et pièces manquantes.',
       'Partager le tableau avec le conducteur de travaux et valider les priorités.',
     ],
     deliverable: 'Tableau de bord chantier',
@@ -213,7 +213,7 @@ export const CLIENT_OFFER_CHECKLIST: readonly ClientChecklistSection[] = [
     subtitle: 'Suivi continu bureau ↔ chantier',
     items: [
       'Comptes rendus internes après réunions ou échanges terrain',
-      'Suivi des visas (fiches techniques, plans, notes, retours MOE)',
+      'Suivi des visas (fiches techniques, plans, notes, retours)',
       'Relances fournisseurs et sous-traitants (réponses, pièces reçues ou manquantes)',
       'Suivi commandes et livraisons (confirmations, retards, points bloquants)',
       'Tableau des aléas (sujets bloquants, impacts, décision attendue, responsable)',
@@ -221,7 +221,7 @@ export const CLIENT_OFFER_CHECKLIST: readonly ClientChecklistSection[] = [
       'Préparation devis modificatifs (mise en forme et pièces justificatives)',
       'Suivi situations mensuelles (avancement, pièces nécessaires, relances internes)',
       'Centralisation qualité & sécurité (PPSPS, EPI, attestations, PV)',
-      'Coordination documentaire MOE / promoteur (courriers, synthèses, relances)',
+      'Coordination documentaire maître d\'ouvrage / promoteur (courriers, synthèses, relances)',
     ],
   },
   {
@@ -250,7 +250,7 @@ export const VALIDATION_CIRCUIT = [
 
 export const TYPICAL_DELIVERABLES = [
   { label: 'Tableau de suivi chantier', detail: 'Actions, responsables, échéances, statut, preuves' },
-  { label: 'Tableau des visas', detail: 'Document, indice, envoi, retour MOE, observations' },
+  { label: 'Tableau des visas', detail: 'Document, indice, envoi, retour visa, observations' },
   { label: 'Tableau fournisseurs', detail: 'Commande, contact, livraison, documents associés' },
   { label: 'Tableau sous-traitants', detail: 'Agréments, attestations, pièces manquantes, relances' },
   { label: 'Compte rendu interne', detail: 'Décisions, points bloquants, actions, urgence, responsable' },
